@@ -1,0 +1,213 @@
+#!/usr/bin/env bash
+
+set -Eeuo pipefail
+
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+COLLECTION_DIR="$(cd -- "$SCRIPT_DIR/.." && pwd)"
+BUILD_DIR=""
+RETAIN_BUILD=false
+
+usage() {
+    cat <<'EOF'
+Usage: gen TARGET -as FORMAT [verbose]
+
+Examples:
+  gen dissertation_template -as pdf
+  gen dissertation_template -as pdf verbose
+  gen dissertation_template -as md
+  gen dissertation_template -as md verbose
+
+The command runs every file in TARGET/code, in filename order, then converts
+TARGET/NAME.tex, where NAME is the target name without the _template suffix.
+Final documents are written to TARGET/media.
+
+Formats:
+  pdf                 Generate NAME.pdf
+  md                  Generate NAME.md
+
+Modifier:
+  verbose             Show full tool output and retain TARGET/build
+EOF
+}
+
+die() {
+    printf 'gen: %s\n' "$*" >&2
+    exit 1
+}
+
+require_command() {
+    command -v "$1" >/dev/null 2>&1 || die "required command not found: $1"
+}
+
+cleanup_current_build() {
+    if [[ "$RETAIN_BUILD" != true && -n "$BUILD_DIR" && -d "$BUILD_DIR" ]]; then
+        rm -rf -- "$BUILD_DIR"
+    fi
+}
+
+run_code_file() {
+    local file="$1"
+
+    printf '→ code/%s\n' "$(basename -- "$file")"
+    case "$file" in
+        *.jl)    require_command julia;   julia "$file" ;;
+        *.py)    require_command python3; python3 "$file" ;;
+        *.R|*.r) require_command Rscript; Rscript "$file" ;;
+        *.sh)    require_command bash;    bash "$file" ;;
+        *.bash)  require_command bash;    bash "$file" ;;
+        *.zsh)   require_command zsh;     zsh "$file" ;;
+        *)
+            if [[ -x "$file" ]]; then
+                "$file"
+            else
+                die "cannot run code/$(basename -- "$file"): unknown type and not executable"
+            fi
+            ;;
+    esac
+}
+
+run_code_stage() {
+    local code_count=0
+    local file
+
+    while IFS= read -r file; do
+        code_count=$((code_count + 1))
+        (cd -- "$TARGET_DIR" && run_code_file "$file")
+    done < <(find "$CODE_DIR" -maxdepth 1 -type f ! -name '.*' -print | LC_ALL=C sort)
+
+    (( code_count > 0 )) || printf '→ code/ is empty\n'
+}
+
+render_tex_pdf() {
+    local source="$1"
+    local stem="$2"
+    local verbose="$3"
+
+    require_command latexmk
+    if [[ "$verbose" == true ]]; then
+        TEXINPUTS="$SCRIPT_DIR//:${TEXINPUTS:-}" \
+            latexmk -pdf -interaction=nonstopmode -halt-on-error \
+            -outdir="$BUILD_DIR" "$source"
+    elif ! TEXINPUTS="$SCRIPT_DIR//:${TEXINPUTS:-}" \
+        latexmk -pdf -interaction=nonstopmode -halt-on-error \
+        -outdir="$BUILD_DIR" "$source" >/dev/null 2>&1; then
+        die "PDF build failed; rerun with -as pdf verbose for details"
+    fi
+
+    mv -- "$BUILD_DIR/$stem.pdf" "$MEDIA_DIR/$stem.pdf"
+}
+
+render_document() {
+    local file="$1"
+    local output_format="$2"
+    local verbose="$3"
+    local name stem
+    name="$(basename -- "$file")"
+    stem="${name%.*}"
+
+    printf '→ %s → %s\n' "$name" "$output_format"
+    case "$output_format:$file" in
+        pdf:*.tex)
+            render_tex_pdf "$file" "$stem" "$verbose"
+            ;;
+        md:*.tex)
+            require_command pandoc
+            if [[ "$verbose" == true ]]; then
+                pandoc --from=latex --to=gfm --wrap=none \
+                    "$file" -o "$MEDIA_DIR/$stem.md"
+            elif ! pandoc --from=latex --to=gfm --wrap=none \
+                "$file" -o "$MEDIA_DIR/$stem.md" >/dev/null 2>&1; then
+                die "Markdown build failed; rerun with -as md verbose for details"
+            fi
+            ;;
+        *)
+            die "cannot render $name as $output_format"
+            ;;
+    esac
+}
+
+run_build() {
+    local verbose="$1"
+    shift
+    local output_format
+
+    [[ -d "$CODE_DIR" ]] || die "missing directory: $CODE_DIR"
+    [[ -f "$DOCUMENT_FILE" ]] || die "missing document source: $DOCUMENT_FILE"
+    mkdir -p -- "$MEDIA_DIR"
+
+    if [[ "$verbose" == true ]]; then
+        BUILD_DIR="$TARGET_DIR/build"
+        RETAIN_BUILD=true
+        mkdir -p -- "$BUILD_DIR"
+    else
+        BUILD_DIR="$(mktemp -d "$MEDIA_DIR/.gen.XXXXXX")"
+        RETAIN_BUILD=false
+    fi
+
+    run_code_stage
+
+    for output_format in "$@"; do
+        (cd -- "$TARGET_DIR" && render_document "$DOCUMENT_FILE" "$output_format" "$verbose")
+    done
+
+    if [[ "$RETAIN_BUILD" != true ]]; then
+        cleanup_current_build
+    fi
+    BUILD_DIR=""
+    RETAIN_BUILD=false
+}
+
+[[ $# -eq 0 ]] && { usage; exit 2; }
+[[ "$1" == "-h" || "$1" == "--help" ]] && { usage; exit 0; }
+[[ $# -eq 3 || $# -eq 4 ]] || { usage >&2; exit 2; }
+
+TARGET="$1"
+[[ "$2" == "-as" || "$2" == "--as" ]] || die "expected -as FORMAT"
+ACTION="$(printf '%s' "$3" | tr '[:upper:]' '[:lower:]')"
+VERBOSE=false
+
+if [[ $# -eq 4 ]]; then
+    MODIFIER="$(printf '%s' "$4" | tr '[:upper:]' '[:lower:]')"
+    [[ "$MODIFIER" == "verbose" ]] || die "unsupported modifier: $4"
+    VERBOSE=true
+fi
+
+case "$ACTION" in
+    pdf|md) ;;
+    *) die "unsupported action: $ACTION" ;;
+esac
+
+if [[ -d "$TARGET" ]]; then
+    TARGET_DIR="$(cd -- "$TARGET" && pwd)"
+elif [[ -d "$COLLECTION_DIR/$TARGET" ]]; then
+    TARGET_DIR="$(cd -- "$COLLECTION_DIR/$TARGET" && pwd)"
+else
+    die "target not found: $TARGET"
+fi
+
+TARGET_NAME="$(basename -- "$TARGET_DIR")"
+DOCUMENT_STEM="${TARGET_NAME%_template}"
+DOCUMENT_FILE="$TARGET_DIR/$DOCUMENT_STEM.tex"
+CODE_DIR="$TARGET_DIR/code"
+MEDIA_DIR="$TARGET_DIR/media"
+
+trap cleanup_current_build EXIT
+
+case "$ACTION" in
+    pdf)
+        run_build "$VERBOSE" pdf
+        ;;
+    md)
+        run_build "$VERBOSE" md
+        ;;
+esac
+
+case "$ACTION" in
+    pdf|md)
+        if [[ "$VERBOSE" == true ]]; then
+            printf '✓ %s completed: %s verbose\n' "$TARGET_NAME" "$ACTION"
+        else
+            printf '✓ %s completed: %s\n' "$TARGET_NAME" "$ACTION"
+        fi
+        ;;
+esac

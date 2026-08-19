@@ -1,0 +1,111 @@
+% Highlight the dissertation mode of the custom document class.
+
+\documentclass[dissertation]{template}
+
+\begin{document}
+
+    \genFront{<Title Content>}{
+        <Author Content>
+    }{
+        <University Content>
+    }{
+        <Department Content>
+    }{
+        <Advisor Content>
+    }{
+        <Date Content>
+    }{
+        <Abstract Content>
+    }{
+        <Acknowledgments Content>
+    }
+
+    \genPart{<Chapter Title>}{num}{toc}{
+        <Chapter Content>
+
+        \genSubPart{<Section Title>}{inh}{inh}{
+            <Section Content>
+
+            \genTHM{<Theorem Title>}{inh}{inh}{
+                <Theorem Content>
+            }
+
+            \genDEF{<Definition Title>}{inh}{inh}{
+                <Definition Content>
+            }
+
+            \genFIG{<Figure Title>}{inh}{inh}{H}{0.40}
+            {./code_assets/asset.png}{
+                <Figure Caption>
+            }
+
+        }
+
+        \genSubPart{<Section Title>}{nonum}{inh}{
+            <Section Content>
+
+            \genTHM{<Theorem Title>}{inh}{inh}{
+                <Theorem Content>
+            }
+
+            \genDEF{<Definition Title>}{inh}{inh}{
+                <Definition Content>
+            }
+
+            \genFIG{<Figure Title>}{inh}{inh}{H}{0.40}
+            {./code_assets/asset.png}{
+                <Figure Caption>
+            }
+
+        }
+
+        \genSubPart{<Section Title>}{inh}{notoc}{
+            <Section Content>
+
+            \genTHM{<Theorem Title>}{inh}{inh}{
+                <Theorem Content>
+            }
+
+            \genDEF{<Definition Title>}{inh}{inh}{
+                <Definition Content>
+            }
+
+            \genFIG{<Figure Title>}{inh}{inh}{H}{0.40}
+            {./code_assets/asset.png}{
+                <Figure Caption>
+            }
+
+        }
+
+        \genSubPart{<Section Title>}{nonum}{notoc}{
+            <Section Content>
+
+            \genTHM{<Theorem Title>}{inh}{inh}{
+                <Theorem Content>
+            }
+
+            \genDEF{<Definition Title>}{inh}{inh}{
+                <Definition Content>
+            }
+
+            \genFIG{<Figure Title>}{inh}{inh}{H}{0.40}
+            {./code_assets/asset.png}{
+                <Figure Caption>
+            }
+
+        }
+
+    }
+
+    \genPart{Proofs}{nonum}{toc}{
+        <Proofs Content> \\
+
+        \noindent Test References: \cite{1970hirsch, 2002peyret, 2013ahmadi,
+        2018kvalheim} \\
+
+        \noindent Test Code Output: \input{./code_assets/_natural_numbers.tex}
+    }
+
+    \genBack
+
+\end{document}
