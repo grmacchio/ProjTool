@@ -1,5 +1,3 @@
-% Highlight the dissertation mode of the custom document class.
-
 \documentclass[dissertation]{template}
 
 \begin{document}
@@ -20,90 +18,115 @@
         <Acknowledgments Content>
     }
 
-    \genPart{<Chapter Title>}{num}{toc}{
-        <Chapter Content>
+    \genPart{<Chapter Title 1>}{num}{toc}{
+        <Chapter Content 1>
 
-        \genSubPart{<Section Title>}{inh}{inh}{
-            <Section Content>
+        \genSubPart{<Section Title 1>}{inh}{inh}{
+            <Section Content 1>
 
-            \genTHM{<Theorem Title>}{inh}{inh}{
-                <Theorem Content>
+            \genTHM{<Theorem Title 1>}{inh}{inh}{
+                <Theorem Statement 1>
+            }{
+                <Theorem Proof 1>
             }
 
-            \genDEF{<Definition Title>}{inh}{inh}{
-                <Definition Content>
+            \genDEF{<Definition Title 1>}{inh}{inh}{
+                <Definition Statement 1>
             }
 
-            \genFIG{<Figure Title>}{inh}{inh}{H}{0.40}
-            {./code_assets/asset.png}{
-                <Figure Caption>
+            \genFIG{<Figure Title 1>}{inh}{inh}{H}{0.40}
+            {./output/results/asset.png}{
+                <Figure Caption 1>
             }
+
+            \noindent Test Hyper-References:
+            \genRef{thm}{<Theorem Title 1>}
+            \genRef{def}{<Definition Title 1>}
+            \genRef{fig}{<Figure Title 1>}
 
         }
 
-        \genSubPart{<Section Title>}{nonum}{inh}{
-            <Section Content>
+        \genSubPart{<Section Title 2>}{nonum}{inh}{
+            <Section Content 2>
 
-            \genTHM{<Theorem Title>}{inh}{inh}{
-                <Theorem Content>
+            \genTHM{<Theorem Title 2>}{inh}{inh}{
+                <Theorem Statement 2>
+            }{
+                <Theorem Proof 2>
             }
 
-            \genDEF{<Definition Title>}{inh}{inh}{
-                <Definition Content>
+            \genDEF{<Definition Title 2>}{inh}{inh}{
+                <Definition Statement 2>
             }
 
-            \genFIG{<Figure Title>}{inh}{inh}{H}{0.40}
-            {./code_assets/asset.png}{
-                <Figure Caption>
+            \genFIG{<Figure Title 2>}{inh}{inh}{H}{0.40}
+            {./output/results/asset.png}{
+                <Figure Caption 2>
             }
+
+            \noindent Test Hyper-References:
+            \genRef{thm}{<Theorem Title 2>}
+            \genRef{def}{<Definition Title 2>}
+            \genRef{fig}{<Figure Title 2>}
 
         }
 
-        \genSubPart{<Section Title>}{inh}{notoc}{
-            <Section Content>
+        \genSubPart{<Section Title 3>}{inh}{notoc}{
+            <Section Content 3>
 
-            \genTHM{<Theorem Title>}{inh}{inh}{
-                <Theorem Content>
+            \genTHM{<Theorem Title 3>}{inh}{inh}{
+                <Theorem Statement 3>
+            }{
+                <Theorem Proof 3>
             }
 
-            \genDEF{<Definition Title>}{inh}{inh}{
-                <Definition Content>
+            \genDEF{<Definition Title 3>}{inh}{inh}{
+                <Definition Statement 3>
             }
 
-            \genFIG{<Figure Title>}{inh}{inh}{H}{0.40}
-            {./code_assets/asset.png}{
-                <Figure Caption>
+            \genFIG{<Figure Title 3>}{inh}{inh}{H}{0.40}
+            {./output/results/asset.png}{
+                <Figure Caption 3>
             }
+
+            \noindent Test Hyper-References:
+            \genRef{thm}{<Theorem Title 3>}
+            \genRef{def}{<Definition Title 3>}
+            \genRef{fig}{<Figure Title 3>}
 
         }
 
-        \genSubPart{<Section Title>}{nonum}{notoc}{
-            <Section Content>
+        \genSubPart{<Section Title 4>}{nonum}{notoc}{
+            <Section Content 4>
 
-            \genTHM{<Theorem Title>}{inh}{inh}{
-                <Theorem Content>
+            \genTHM{<Theorem Title 4>}{inh}{inh}{
+                <Theorem Statement 4>
+            }{
+                <Theorem Proof 4>
             }
 
-            \genDEF{<Definition Title>}{inh}{inh}{
-                <Definition Content>
+            \genDEF{<Definition Title 4>}{inh}{inh}{
+                <Definition Statement 4>
             }
 
-            \genFIG{<Figure Title>}{inh}{inh}{H}{0.40}
-            {./code_assets/asset.png}{
-                <Figure Caption>
+            \genFIG{<Figure Title 4>}{inh}{inh}{H}{0.40}
+            {./output/results/asset.png}{
+                <Figure Caption 4>
             }
+
+            \noindent Test Hyper-References:
+            \genRef{thm}{<Theorem Title 4>}
+            \genRef{def}{<Definition Title 4>}
+            \genRef{fig}{<Figure Title 4>} \\
+
+            \noindent Test References:
+            \cite{1970test, 2002test, 2013test, 2018test} \\
+
+            \noindent Test Code Output:
+            \input{./output/results/natural_numbers.tex}
 
         }
 
-    }
-
-    \genPart{Proofs}{nonum}{toc}{
-        <Proofs Content> \\
-
-        \noindent Test References: \cite{1970hirsch, 2002peyret, 2013ahmadi,
-        2018kvalheim} \\
-
-        \noindent Test Code Output: \input{./code_assets/_natural_numbers.tex}
     }
 
     \genBack

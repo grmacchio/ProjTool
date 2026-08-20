@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" version="1.0" class="in-text">
+  <info>
+    <title>LaTeXTo Numeric References</title>
+    <id>https://latexto.local/styles/numeric-references</id>
+    <updated>2026-08-20T00:00:00+00:00</updated>
+  </info>
+  <macro name="date">
+    <date variable="issued">
+      <date-part name="year"/>
+    </date>
+  </macro>
+  <macro name="authors">
+    <names variable="author">
+      <name initialize-with=". " delimiter=", " and="text"/>
+    </names>
+  </macro>
+  <macro name="type">
+    <choose>
+      <if type="article-journal" match="any">
+        <text value="Paper"/>
+      </if>
+      <else-if type="book" match="any">
+        <text value="Book"/>
+      </else-if>
+      <else-if type="thesis" match="any">
+        <text value="Ph.D. Thesis"/>
+      </else-if>
+      <else>
+        <text value="Preprint"/>
+      </else>
+    </choose>
+  </macro>
+  <citation>
+    <sort>
+      <key variable="issued"/>
+      <key variable="author"/>
+      <key variable="title"/>
+    </sort>
+    <layout prefix="[" suffix="]" delimiter=", ">
+      <text variable="citation-number"/>
+    </layout>
+  </citation>
+  <bibliography second-field-align="flush" entry-spacing="1" line-spacing="1">
+    <sort>
+      <key variable="issued"/>
+      <key variable="author"/>
+      <key variable="title"/>
+    </sort>
+    <layout>
+      <text variable="citation-number" prefix="[" suffix="]"/>
+      <group>
+        <group display="block">
+          <text value="Date:" font-weight="bold" suffix=" "/>
+          <text macro="date"/>
+        </group>
+        <group display="block">
+          <text value="Authors:" font-weight="bold" suffix=" "/>
+          <text macro="authors"/>
+        </group>
+        <group display="block">
+          <text value="Title:" font-weight="bold" suffix=" "/>
+          <text variable="title"/>
+        </group>
+        <group display="block">
+          <text value="Type:" font-weight="bold" suffix=" "/>
+          <text macro="type"/>
+        </group>
+        <choose>
+          <if type="article-journal" match="any">
+            <group display="block">
+              <text value="Publisher:" font-weight="bold" suffix=" "/>
+              <text variable="container-title"/>
+            </group>
+          </if>
+          <else-if type="book" match="any">
+            <group display="block">
+              <text value="Publisher:" font-weight="bold" suffix=" "/>
+              <text variable="publisher"/>
+            </group>
+          </else-if>
+          <else-if type="thesis" match="any">
+            <group display="block">
+              <text value="School:" font-weight="bold" suffix=" "/>
+              <text variable="publisher"/>
+            </group>
+          </else-if>
+        </choose>
+        <group display="block">
+          <text variable="URL"/>
+        </group>
+      </group>
+    </layout>
+  </bibliography>
+</style>

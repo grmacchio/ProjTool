@@ -96,6 +96,7 @@
     \RequirePackage{tikz}
     \RequirePackage{caption}
     \RequirePackage{float}
+    \captionsetup[figure]{labelfont=bf,labelsep=space}
     \NewDocumentCommand{\genFIG}{m m m m m m +m}{
         \templateResolveNumMode{##2}{\genFIGNumMode}{\genFIG}
         \templateResolveTocMode{##3}{\genFIGTocMode}{\genFIG}
@@ -104,7 +105,7 @@
                 \begin{figure}[##4]
                     \centering
                     \includegraphics[width=##5\textwidth]{##6}
-                    \caption{\textbf{##1} ##7}
+                    \caption{(##1)\textbf{.} ##7}
                     \label{fig:##1}
                     \addcontentsline{toc}{subsection}{
                         \protect\numberline{\thefigure}
@@ -115,7 +116,7 @@
                 \begin{figure}[##4]
                     \centering
                     \includegraphics[width=##5\textwidth]{##6}
-                    \caption{\textbf{##1} ##7}
+                    \caption{(##1)\textbf{.} ##7}
                     \label{fig:##1}
                 \end{figure}
             }
@@ -124,15 +125,18 @@
                 \begin{figure}[##4]
                     \centering
                     \includegraphics[width=##5\textwidth]{##6}
-                    \caption*{\textbf{##1} ##7}
+                    \caption*{\textbf{Figure} (##1)\textbf{.} ##7}
                     \phantomsection
+                    \label{fig:##1}
                     \addcontentsline{toc}{subsection}{##1}
                 \end{figure}
             }{
                 \begin{figure}[##4]
                     \centering
                     \includegraphics[width=##5\textwidth]{##6}
-                    \caption*{\textbf{##1} ##7}
+                    \caption*{\textbf{Figure} (##1)\textbf{.} ##7}
+                    \phantomsection
+                    \label{fig:##1}
                 \end{figure}
             }
         }
@@ -183,7 +187,24 @@
     \theoremstyle{definition}
     \newtheorem{theorem}{Theorem}[section]
     \newtheorem*{theoremstar}{Theorem}
-    \NewDocumentCommand{\genTHM}{m m m +m}{
+    \newcommand{\templateTheoremProofs}{}
+    \newcommand{\templateQueueTheoremProof}[2]{
+        \gappto\templateTheoremProofs{
+            \genSubPart{Proof of \genRef{thm}{##1}}{inh}{notoc}{
+                \phantomsection
+                \label{proof:##1}
+                ##2
+            }
+        }
+    }
+    \newcommand{\templateRenderTheoremProofs}{
+        \ifdefempty{\templateTheoremProofs}{}{
+            \genPart{Proofs}{nonum}{toc}{
+                \templateTheoremProofs
+            }
+        }
+    }
+    \NewDocumentCommand{\genTHM}{m m m +m +m}{
         \templateResolveNumMode{##2}{\genTHMNumMode}{\genTHM}
         \templateResolveTocMode{##3}{\genTHMTocMode}{\genTHM}
         \ifdefstring{\genTHMNumMode}{num}{
@@ -211,6 +232,7 @@
             \ifdefstring{\genTHMTocMode}{toc}{
                 \begin{theoremstar}[##1]
                     \phantomsection
+                    \label{thm:##1}
                     \addcontentsline{toc}{subsection}{##1}
                     \edef\templateCurrentNumMode{\genTHMNumMode}
                     \edef\templateCurrentTocMode{\genTHMTocMode}
@@ -218,12 +240,18 @@
                 \end{theoremstar}
             }{
                 \begin{theoremstar}[##1]
+                    \phantomsection
+                    \label{thm:##1}
                     \edef\templateCurrentNumMode{\genTHMNumMode}
                     \edef\templateCurrentTocMode{\genTHMTocMode}
                     ##4
                 \end{theoremstar}
             }
         }
+        \begin{proof}
+            See \hyperref[proof:##1]{Proof of ##1}.
+        \end{proof}
+        \templateQueueTheoremProof{##1}{##5}
     }
     \theoremstyle{definition}
     \newtheorem{definition}[theorem]{Definition}
@@ -256,6 +284,7 @@
             \ifdefstring{\genDEFTocMode}{toc}{
                 \begin{definitionstar}[##1]
                     \phantomsection
+                    \label{def:##1}
                     \addcontentsline{toc}{subsection}{##1}
                     \edef\templateCurrentNumMode{\genDEFNumMode}
                     \edef\templateCurrentTocMode{\genDEFTocMode}
@@ -263,6 +292,8 @@
                 \end{definitionstar}
             }{
                 \begin{definitionstar}[##1]
+                    \phantomsection
+                    \label{def:##1}
                     \edef\templateCurrentNumMode{\genDEFNumMode}
                     \edef\templateCurrentTocMode{\genDEFTocMode}
                     ##4
@@ -280,52 +311,108 @@
         sorting=ynt,
         maxbibnames=99
     ]{biblatex}
-    \addbibresource{./code_assets/references.bib}
+    \RequirePackage{tabularx}
+    \addbibresource{./references.bib}
     \DeclareFieldFormat[article]{title}{##1}
-    \DeclareFieldFormat{url}{\href{##1}{Download Location}}
+    \DeclareFieldFormat[article]{journaltitle}{##1}
+    \DeclareFieldFormat{url}{%
+        \href{##1}{\begingroup\urlstyle{same}\nolinkurl{##1}\endgroup}}
+    \newcolumntype{Z}{%
+        !{\vrule width 1.2pt}
+        @{\hspace{0.5em}}>{\centering\arraybackslash}m{2em}@{\hspace{0.5em}}|
+        @{}X@{}
+        !{\vrule width 1.2pt}}
+    \newcolumntype{Y}{%
+        @{\hspace{0.5em}}>{\bfseries\raggedright\arraybackslash}p{5.2em}@{\hspace{0.5em}}|
+        @{\hspace{0.5em}}>{\raggedright\arraybackslash}%
+        p{\dimexpr\linewidth-7.2em-\arrayrulewidth\relax}@{\hspace{0.5em}}}
+    \newcommand{\templateReferenceOuterRule}{%
+        \noalign{\hrule height 1.2pt}}
+    \defbibenvironment{bibliography}
+        {\list{}
+            {\setlength{\leftmargin}{0pt}
+             \setlength{\itemindent}{0pt}
+             \setlength{\labelwidth}{0pt}
+             \setlength{\labelsep}{0pt}
+             \setlength{\itemsep}{\bibitemsep}
+             \setlength{\parsep}{\bibparsep}}}
+        {\endlist}
+        {\item}
     \DeclareBibliographyDriver{article}{%
-        \textbf{Date:} \printfield{year}\par
-        \textbf{Authors:} \printnames{author}\par
-        \textbf{Title:} \printfield{title}\par
-        \textbf{Type:} Paper\par
-        \textbf{Publisher:} \printfield{journaltitle}\par
-        \printfield{url}\nopunct
+        \begin{tabularx}{\linewidth}{Z}
+            \templateReferenceOuterRule
+            \mkbibbrackets{\printfield{labelprefix}\printfield{labelnumber}} &
+            \begin{tabular}{Y}
+                Date: & \printfield{year}\tabularnewline\hline
+                Authors: & \printnames{author}\tabularnewline\hline
+                Title: & \printfield{title}\tabularnewline\hline
+                Type: & Paper\tabularnewline\hline
+                Publisher: & \printfield{journaltitle}\tabularnewline\hline
+                Location: & \printfield{url}
+            \end{tabular}\tabularnewline
+            \templateReferenceOuterRule
+        \end{tabularx}\nopunct
         \finentry
     }
     \DeclareFieldFormat[thesis]{title}{##1}
     \DeclareBibliographyDriver{thesis}{%
-        \textbf{Date:} \printfield{year}\par
-        \textbf{Authors:} \printnames{author}\par
-        \textbf{Title:} \printfield{title}\par
-        \textbf{Type:} Ph.D. Thesis\par
-        \textbf{School:} \printlist{institution}\par
-        \printfield{url}\nopunct
+        \begin{tabularx}{\linewidth}{Z}
+            \templateReferenceOuterRule
+            \mkbibbrackets{\printfield{labelprefix}\printfield{labelnumber}} &
+            \begin{tabular}{Y}
+                Date: & \printfield{year}\tabularnewline\hline
+                Authors: & \printnames{author}\tabularnewline\hline
+                Title: & \printfield{title}\tabularnewline\hline
+                Type: & Ph.D. Thesis\tabularnewline\hline
+                School: & \printlist{institution}\tabularnewline\hline
+                Location: & \printfield{url}
+            \end{tabular}\tabularnewline
+            \templateReferenceOuterRule
+        \end{tabularx}\nopunct
         \finentry
     }
     \DeclareFieldFormat[book]{title}{##1}
     \DeclareBibliographyDriver{book}{%
-        \textbf{Date:} \printfield{year}\par
-        \textbf{Authors:} \printnames{author}\par
-        \textbf{Title:} \printfield{title}\par
-        \textbf{Type:} Book \par
-        \textbf{Publisher:} \printlist{publisher}\par
-        \printfield{url}\nopunct
+        \begin{tabularx}{\linewidth}{Z}
+            \templateReferenceOuterRule
+            \mkbibbrackets{\printfield{labelprefix}\printfield{labelnumber}} &
+            \begin{tabular}{Y}
+                Date: & \printfield{year}\tabularnewline\hline
+                Authors: & \printnames{author}\tabularnewline\hline
+                Title: & \printfield{title}\tabularnewline\hline
+                Type: & Book\tabularnewline\hline
+                Publisher: & \printlist{publisher}\tabularnewline\hline
+                Location: & \printfield{url}
+            \end{tabular}\tabularnewline
+            \templateReferenceOuterRule
+        \end{tabularx}\nopunct
         \finentry
     }
     \DeclareFieldFormat[misc]{title}{##1}
     \DeclareBibliographyDriver{misc}{%
-        \textbf{Date:} \printfield{year}\par
-        \textbf{Authors:} \printnames{author}\par
-        \textbf{Title:} \printfield{title}\par
-        \textbf{Type:} Preprint \par
-        \printfield{url}\nopunct
+        \begin{tabularx}{\linewidth}{Z}
+            \templateReferenceOuterRule
+            \mkbibbrackets{\printfield{labelprefix}\printfield{labelnumber}} &
+            \begin{tabular}{Y}
+                Date: & \printfield{year}\tabularnewline\hline
+                Authors: & \printnames{author}\tabularnewline\hline
+                Title: & \printfield{title}\tabularnewline\hline
+                Type: & Preprint\tabularnewline\hline
+                Location: & \printfield{url}
+            \end{tabular}\tabularnewline
+            \templateReferenceOuterRule
+        \end{tabularx}\nopunct
         \finentry
     }
     \newcommand{\genBack}{
+        \templateRenderTheoremProofs
         \clearpage
         \phantomsection
         \addcontentsline{toc}{chapter}{References}
         \printbibliography[title={References}]
+    }
+    \newcommand{\genRef}[2]{
+        \hyperref[##1:##2]{##2}
     }
 }
 
