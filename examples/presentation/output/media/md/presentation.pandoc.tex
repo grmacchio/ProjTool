@@ -1,3 +1,12 @@
+\newcommand{\genFront}[5]{\subsection{\textbf{Title}: #1}\textbf{Authors:} #2\par\textbf{Affiliations:} #3\par\textbf{Acknowledgments:} #4\par\textbf{Date:} #5\par\subsection{\textbf{LaTeXToTOC}}}
+\newcommand{\genPart}[2]{\subsection{\textbf{LaTeXToPart} \textbf{nonum} \textbf{toc} #1}#2}
+\newcommand{\genSubPart}[2]{\subsubsection{\textbf{LaTeXToSubPart} \textbf{inh} \textbf{notoc} #1}#2}
+\newcommand{\genTHM}[2]{\paragraph{\textbf{LaTeXToTheorem} #1}#2}
+\newcommand{\genDEF}[2]{\paragraph{\textbf{LaTeXToDefinition} #1}#2}
+\newcommand{\genFIG}[5]{\par\includegraphics[width=#3\textwidth]{#4}\par\paragraph{\textbf{LaTeXToFigure} #1}#5}
+\newcommand{\togglefalse}[1]{}\newcommand{\toggletrue}[1]{}\newcommand{\bo}[2]{\begin{#1}}\newcommand{\eo}[1]{\end{#1}}\newcommand{\bi}[2]{\begin{#1}}\newcommand{\ei}[1]{\end{#1}}\newcommand{\bitem}[1]{\item \textbf{#1}}\newcommand{\iitem}[1]{\item \textit{#1}}
+\newcommand{\genRef}[2]{\href{latex-to-ref:#1}{#2}}
+\newcommand{\genBack}{\subsection{\textbf{LaTeXToAppendixTOC}}}
 \documentclass[presentation]{template}
 
 \toggletrue{allowAnimations}
@@ -23,13 +32,13 @@
                 \bi{itemize}{0.15cm}
                     \item{<Nested Frame Content 1>}
                 \ei{itemize}
-                \item[] \genDEF{<Definition Title 1>}{
+                \item \textbf{ProjToolEmptyItem} \genDEF{<Definition Title 1>}{
                     <Definition Statement 1>
                 }
-                \item[] \genTHM{<Theorem Title 1>}{
+                \item \textbf{ProjToolEmptyItem} \genTHM{<Theorem Title 1>}{
                     <Theorem Statement 1>
                 }
-                \item[] \genFIG{<Figure Title 1>}{H}{0.40}
+                \item \textbf{ProjToolEmptyItem} \genFIG{<Figure Title 1>}{H}{0.40}
                     {./output/results/image.png}{
                         <Figure Caption 1>
                     }
@@ -44,13 +53,13 @@
                 \bi{itemize}{0.15cm}
                     \item{<Nested Frame Content 2>}
                 \ei{itemize}
-                \item[] \genDEF{<Definition Title 2>}{
+                \item \textbf{ProjToolEmptyItem} \genDEF{<Definition Title 2>}{
                     <Definition Statement 2>
                 }
-                \item[] \genTHM{<Theorem Title 2>}{
+                \item \textbf{ProjToolEmptyItem} \genTHM{<Theorem Title 2>}{
                     <Theorem Statement 2>
                 }
-                \item[] \genFIG{<Figure Title 2>}{H}{0.40}
+                \item \textbf{ProjToolEmptyItem} \genFIG{<Figure Title 2>}{H}{0.40}
                 {./output/results/image.png}{
                     <Figure Caption 2>
                 }
@@ -68,13 +77,13 @@
                 \bi{itemize}{0.15cm}
                     \item{<Nested Frame Content 3>}
                 \ei{itemize}
-                \item[] \genDEF{<Definition Title 3>}{
+                \item \textbf{ProjToolEmptyItem} \genDEF{<Definition Title 3>}{
                     <Definition Statement 3>
                 }
-                \item[] \genTHM{<Theorem Title 3>}{
+                \item \textbf{ProjToolEmptyItem} \genTHM{<Theorem Title 3>}{
                     <Theorem Statement 3>
                 }
-                \item[] \genFIG{<Figure Title 3>}{H}{0.40}
+                \item \textbf{ProjToolEmptyItem} \genFIG{<Figure Title 3>}{H}{0.40}
                 {./output/results/image.png}{
                     <Figure Caption 3>
                 }
@@ -89,13 +98,13 @@
                 \bi{itemize}{0.15cm}
                     \item{<Nested Frame Content 4>}
                 \ei{itemize}
-                \item[] \genDEF{<Definition Title 4>}{
+                \item \textbf{ProjToolEmptyItem} \genDEF{<Definition Title 4>}{
                     <Definition Statement 4>
                 }
-                \item[] \genTHM{<Theorem Title 4>}{
+                \item \textbf{ProjToolEmptyItem} \genTHM{<Theorem Title 4>}{
                     <Theorem Statement 4>
                 }
-                \item[] \genFIG{<Figure Title 4>}{H}{0.40}
+                \item \textbf{ProjToolEmptyItem} \genFIG{<Figure Title 4>}{H}{0.40}
                 {./output/results/image.png}{
                     <Figure Caption 4>
                 }

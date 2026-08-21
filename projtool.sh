@@ -168,6 +168,13 @@ render_pdf() {
 
 write_markdown_build_file() {
     local front_command
+    local part_command='\newcommand{\genPart}[4]{\subsection{\textbf{LaTeXToPart} \textbf{#2} \textbf{#3} #1}#4}'
+    local subpart_command='\newcommand{\genSubPart}[4]{\subsubsection{\textbf{LaTeXToSubPart} \textbf{#2} \textbf{#3} #1}#4}'
+    local theorem_command='\newcommand{\genTHM}[5]{\paragraph{\textbf{LaTeXToTheorem} \textbf{#2} \textbf{#3} #1}#4\paragraph{\textbf{LaTeXToProofInline}}\textbf{LaTeXToProofLink} #1\subparagraph{\textbf{LaTeXToProofStart} #1}#5\subparagraph{\textbf{LaTeXToProofEnd}}}'
+    local definition_command='\newcommand{\genDEF}[4]{\paragraph{\textbf{LaTeXToDefinition} \textbf{#2} \textbf{#3} #1}#4}'
+    local figure_command='\newcommand{\genFIG}[7]{\par\includegraphics[width=#5\textwidth]{#6}\par\paragraph{\textbf{LaTeXToFigure} \textbf{#2} \textbf{#3} #1}#7}'
+    local back_command='\newcommand{\genBack}{\subsection{\textbf{LaTeXToReferences}}}'
+    local presentation_commands=''
 
     MARKDOWN_BUILD_FILE="$MD_OUTPUT_DIR/$DOCUMENT_STEM.pandoc.tex"
 
@@ -175,6 +182,15 @@ write_markdown_build_file() {
         front_command='\newcommand{\genFront}[7]{\subsection{\textbf{Title}: #1}\textbf{Intended Journal:} #2\par\textbf{Authors:} #3\par\textbf{Affiliations:} #4\par\textbf{Date:} #5\par\subsection{\textbf{Abstract}}#6\subsection{\textbf{Acknowledgments}}#7\subsection{\textbf{LaTeXToTOC}}}'
     elif [[ "$TEMPLATE_TYPE" == "note" ]]; then
         front_command='\newcommand{\genFront}[4]{\subsection{\textbf{Title}: #1}\textbf{Authors:} #2\par\textbf{Affiliations:} #3\par\textbf{Date:} #4\par\subsection{\textbf{LaTeXToTOC}}}'
+    elif [[ "$TEMPLATE_TYPE" == "presentation" ]]; then
+        front_command='\newcommand{\genFront}[5]{\subsection{\textbf{Title}: #1}\textbf{Authors:} #2\par\textbf{Affiliations:} #3\par\textbf{Acknowledgments:} #4\par\textbf{Date:} #5\par\subsection{\textbf{LaTeXToTOC}}}'
+        part_command='\newcommand{\genPart}[2]{\subsection{\textbf{LaTeXToPart} \textbf{nonum} \textbf{toc} #1}#2}'
+        subpart_command='\newcommand{\genSubPart}[2]{\subsubsection{\textbf{LaTeXToSubPart} \textbf{inh} \textbf{notoc} #1}#2}'
+        theorem_command='\newcommand{\genTHM}[2]{\paragraph{\textbf{LaTeXToTheorem} #1}#2}'
+        definition_command='\newcommand{\genDEF}[2]{\paragraph{\textbf{LaTeXToDefinition} #1}#2}'
+        figure_command='\newcommand{\genFIG}[5]{\par\includegraphics[width=#3\textwidth]{#4}\par\paragraph{\textbf{LaTeXToFigure} #1}#5}'
+        back_command='\newcommand{\genBack}{\subsection{\textbf{LaTeXToAppendixTOC}}}'
+        presentation_commands='\newcommand{\togglefalse}[1]{}\newcommand{\toggletrue}[1]{}\newcommand{\bo}[2]{\begin{#1}}\newcommand{\eo}[1]{\end{#1}}\newcommand{\bi}[2]{\begin{#1}}\newcommand{\ei}[1]{\end{#1}}\newcommand{\bitem}[1]{\item \textbf{#1}}\newcommand{\iitem}[1]{\item \textit{#1}}'
     else
         front_command='\newcommand{\genFront}[8]{\subsection{\textbf{Title}: #1}\textbf{Author:} #2\par\textbf{University:} #3\par\textbf{Department:} #4\par\textbf{Advisor:} #5\par\textbf{Date:} #6\par\subsection{\textbf{Abstract}}#7\subsection{\textbf{Acknowledgments}}#8\subsection{\textbf{LaTeXToTOC}}}'
     fi
@@ -182,14 +198,20 @@ write_markdown_build_file() {
     {
         printf '%s\n' \
             "$front_command" \
-            '\newcommand{\genPart}[4]{\subsection{\textbf{LaTeXToPart} \textbf{#2} \textbf{#3} #1}#4}' \
-            '\newcommand{\genSubPart}[4]{\subsubsection{\textbf{LaTeXToSubPart} \textbf{#2} \textbf{#3} #1}#4}' \
-            '\newcommand{\genTHM}[5]{\paragraph{\textbf{LaTeXToTheorem} \textbf{#2} \textbf{#3} #1}#4\paragraph{\textbf{LaTeXToProofInline}}\textbf{LaTeXToProofLink} #1\subparagraph{\textbf{LaTeXToProofStart} #1}#5\subparagraph{\textbf{LaTeXToProofEnd}}}' \
-            '\newcommand{\genDEF}[4]{\paragraph{\textbf{LaTeXToDefinition} \textbf{#2} \textbf{#3} #1}#4}' \
-            '\newcommand{\genFIG}[7]{\par\includegraphics[width=#5\textwidth]{#6}\par\paragraph{\textbf{LaTeXToFigure} \textbf{#2} \textbf{#3} #1}#7}' \
+            "$part_command" \
+            "$subpart_command" \
+            "$theorem_command" \
+            "$definition_command" \
+            "$figure_command" \
+            "$presentation_commands" \
             '\newcommand{\genRef}[2]{\href{latex-to-ref:#1}{#2}}' \
-            '\newcommand{\genBack}{\subsection{\textbf{LaTeXToReferences}}}'
-        cat -- "$DOCUMENT_FILE"
+            "$back_command"
+        if [[ "$TEMPLATE_TYPE" == "presentation" ]]; then
+            sed 's/\\item\[\]/\\item \\textbf{ProjToolEmptyItem}/g' \
+                "$DOCUMENT_FILE"
+        else
+            cat -- "$DOCUMENT_FILE"
+        fi
     } > "$MARKDOWN_BUILD_FILE"
 }
 
@@ -201,6 +223,10 @@ render_md() {
     local reference_filter_file="$SCRIPT_DIR/format-references.lua"
     local -a citation_options=()
     local -a template_options=(--metadata="template-type:${TEMPLATE_TYPE:-dissertation}")
+
+    if [[ "$TEMPLATE_TYPE" == "presentation" ]]; then
+        citation_options=(--metadata=link-citations:false)
+    fi
 
     if [[ -f "$bibliography_file" ]]; then
         [[ -f "$citation_style_file" ]] ||

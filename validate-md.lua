@@ -230,6 +230,43 @@ local function add_toc(state, level, label, target)
     end
 end
 
+local function is_empty_item_marker(block)
+    if block.t ~= "Para" and block.t ~= "Plain" then
+        return false
+    end
+    return pandoc.utils.stringify(block) == "ProjToolEmptyItem"
+end
+
+local function flatten_presentation_lists(blocks)
+    local output = {}
+    for _, block in ipairs(blocks) do
+        if block.t == "BulletList" then
+            local items = {}
+            local function flush_items()
+                if #items > 0 then
+                    append(output, pandoc.BulletList(items))
+                    items = {}
+                end
+            end
+            for _, item in ipairs(block.content) do
+                local item_blocks = flatten_presentation_lists(item)
+                if item_blocks[1] and
+                    is_empty_item_marker(item_blocks[1]) then
+                    flush_items()
+                    table.remove(item_blocks, 1)
+                    extend(output, item_blocks)
+                else
+                    append(items, item_blocks)
+                end
+            end
+            flush_items()
+        else
+            append(output, block)
+        end
+    end
+    return output
+end
+
 local function toc_items(entries)
     local items = {}
     for _, entry in ipairs(entries) do
@@ -244,21 +281,13 @@ local function toc_items(entries)
     return items
 end
 
-local function toc_blocks(state)
+local function toc_blocks(entries, identifier, title)
     local blocks = {
-        anchor("table-of-contents"),
-        pandoc.Header(2, {
-            pandoc.Strong({
-                pandoc.Str("Table"),
-                pandoc.Space(),
-                pandoc.Str("of"),
-                pandoc.Space(),
-                pandoc.Str("Contents")
-            })
-        })
+        anchor(identifier),
+        pandoc.Header(2, {pandoc.Strong(title)})
     }
-    if #state.toc > 0 then
-        append(blocks, pandoc.BulletList(toc_items(state.toc)))
+    if #entries > 0 then
+        append(blocks, pandoc.BulletList(toc_items(entries)))
     end
     return blocks
 end
@@ -297,6 +326,7 @@ end
 function Pandoc(document)
     local template_type = pandoc.utils.stringify(
         document.meta["template-type"] or "dissertation")
+    local presentation = template_type == "presentation"
     local part_label = "Chapter"
     local subpart_label = "Section"
     local subpart_level = 2
@@ -304,6 +334,11 @@ function Pandoc(document)
         part_label = "Section"
         subpart_label = "Subsection"
         subpart_level = 3
+    elseif presentation then
+        subpart_level = 3
+    end
+    if presentation then
+        document.blocks = flatten_presentation_lists(document.blocks)
     end
     local output = {}
     local proofs = {}
@@ -312,11 +347,13 @@ function Pandoc(document)
         chapter = 0,
         section = 0,
         object = 0,
+        figure = 0,
         part_num = nil,
         part_toc = nil,
         subpart_num = nil,
         subpart_toc = nil,
         toc = {},
+        main_toc = nil,
         toc_part = nil,
         toc_section = nil
     }
@@ -329,17 +366,25 @@ function Pandoc(document)
         local subpart_fields, subpart_title = structured_marker(
             block, "LaTeXToSubPart", 2)
         local theorem_fields, theorem_title = structured_marker(
-            block, "LaTeXToTheorem", 2)
+            block, "LaTeXToTheorem", presentation and 0 or 2)
         local definition_fields, definition_title = structured_marker(
-            block, "LaTeXToDefinition", 2)
+            block, "LaTeXToDefinition", presentation and 0 or 2)
         local figure_fields, figure_title = structured_marker(
-            block, "LaTeXToFigure", 2)
+            block, "LaTeXToFigure", presentation and 0 or 2)
         local proof_link = marker_content(block, "LaTeXToProofLink")
         local proof_inline = marker_content(block, "LaTeXToProofInline")
         local proof_title = marker_content(block, "LaTeXToProofStart")
 
         if marker_content(block, "LaTeXToTOC") then
             append(output, pandoc.RawBlock("latex-to-placeholder", "toc"))
+        elseif presentation and
+            marker_content(block, "LaTeXToAppendixTOC") then
+            state.main_toc = state.toc
+            state.toc = {}
+            state.toc_part = nil
+            state.toc_section = nil
+            append(output, pandoc.RawBlock(
+                "latex-to-placeholder", "appendix-toc"))
         elseif part_fields then
             state.part_num = root_mode(
                 part_fields[1], "num", "nonum", "genPart")
@@ -349,13 +394,18 @@ function Pandoc(document)
             state.object = 0
             state.toc_section = nil
             local number = nil
-            if state.part_num == "num" then
+            if not presentation and state.part_num == "num" then
                 state.chapter = state.chapter + 1
                 number = tostring(state.chapter)
             end
             local identifier = "chapter-" .. slug(part_title)
             append(output, anchor(identifier))
-            append(output, titled_header(2, part_label, number, part_title))
+            if presentation then
+                append(output, pandoc.Header(2, part_title))
+            else
+                append(output,
+                    titled_header(2, part_label, number, part_title))
+            end
             if state.part_toc == "toc" then
                 add_toc(state, 0, toc_label(number, part_title), identifier)
             else
@@ -374,8 +424,12 @@ function Pandoc(document)
             end
             local identifier = "section-" .. slug(subpart_title)
             append(output, anchor(identifier))
-            append(output, titled_header(
-                subpart_level, subpart_label, number, subpart_title))
+            if presentation then
+                append(output, pandoc.Header(subpart_level, subpart_title))
+            else
+                append(output, titled_header(
+                    subpart_level, subpart_label, number, subpart_title))
+            end
             if state.subpart_toc == "toc" then
                 add_toc(state, 1, toc_label(number, subpart_title), identifier)
             else
@@ -387,15 +441,23 @@ function Pandoc(document)
             local name = theorem_fields and "Theorem" or
                 (definition_fields and "Definition" or "Figure")
             local prefix = name:lower()
-            local num_mode = resolved_mode(fields[1], state.subpart_num,
-                "num", "nonum", "gen" .. name)
-            local toc_mode = resolved_mode(fields[2], state.subpart_toc,
-                "toc", "notoc", "gen" .. name)
             local number = nil
-            if num_mode == "num" then
-                state.object = state.object + 1
-                number = state.chapter .. "." .. state.section .. "." ..
-                    state.object
+            local toc_mode = "notoc"
+            if presentation then
+                if name == "Figure" then
+                    state.figure = state.figure + 1
+                    number = tostring(state.figure)
+                end
+            else
+                local num_mode = resolved_mode(fields[1], state.subpart_num,
+                    "num", "nonum", "gen" .. name)
+                toc_mode = resolved_mode(fields[2], state.subpart_toc,
+                    "toc", "notoc", "gen" .. name)
+                if num_mode == "num" then
+                    state.object = state.object + 1
+                    number = state.chapter .. "." .. state.section .. "." ..
+                        state.object
+                end
             end
             local identifier = prefix .. "-" .. slug(title)
             append(output, anchor(identifier))
@@ -470,11 +532,32 @@ function Pandoc(document)
     end
 
     local final_output = {}
-    local generated_toc = toc_blocks(state)
+    local main_toc = state.main_toc or state.toc
+    local generated_toc = toc_blocks(main_toc, "table-of-contents", {
+        pandoc.Str("Table"),
+        pandoc.Space(),
+        pandoc.Str("of"),
+        pandoc.Space(),
+        pandoc.Str("Contents")
+    })
+    local generated_appendix_toc = toc_blocks(
+        state.toc, "appendix-table-of-contents", {
+            pandoc.Str("Appendix"),
+            pandoc.Space(),
+            pandoc.Str("Table"),
+            pandoc.Space(),
+            pandoc.Str("of"),
+            pandoc.Space(),
+            pandoc.Str("Contents")
+        })
     for _, block in ipairs(output) do
         if block.t == "RawBlock" and
             block.format == "latex-to-placeholder" then
-            extend(final_output, generated_toc)
+            if block.text == "appendix-toc" then
+                extend(final_output, generated_appendix_toc)
+            else
+                extend(final_output, generated_toc)
+            end
         else
             append(final_output, block)
         end

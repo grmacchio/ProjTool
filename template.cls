@@ -86,8 +86,13 @@
 
 % Define formatting-related package.
 \newcommand{\loadFormatPackage}{
-    \RequirePackage[colorlinks=true, linkcolor=crimson, citecolor=crimson,
-                    urlcolor=crimson]{hyperref}
+    \@ifpackageloaded{hyperref}{
+        \hypersetup{colorlinks=true, linkcolor=crimson, citecolor=crimson,
+                    urlcolor=crimson}
+    }{
+        \RequirePackage[colorlinks=true, linkcolor=crimson, citecolor=crimson,
+                        urlcolor=crimson]{hyperref}
+    }
     \RequirePackage[T1]{fontenc}
 }
 
@@ -185,8 +190,8 @@
     \newcommand{\Range}{\text{Range}\:}
     \newcommand{\mathinsection}[1]{\texorpdfstring{$##1$}{}}
     \theoremstyle{definition}
-    \newtheorem{theorem}{Theorem}[section]
-    \newtheorem*{theoremstar}{Theorem}
+    \@ifundefined{theorem}{\newtheorem{theorem}{Theorem}[section]}{}
+    \@ifundefined{theoremstar}{\newtheorem*{theoremstar}{Theorem}}{}
     \newcommand{\templateTheoremProofs}{}
     \newcommand{\templateQueueTheoremProof}[2]{
         \gappto\templateTheoremProofs{
@@ -254,8 +259,10 @@
         \templateQueueTheoremProof{##1}{##5}
     }
     \theoremstyle{definition}
-    \newtheorem{definition}[theorem]{Definition}
-    \newtheorem*{definitionstar}{Definition}
+    \@ifundefined{definition}{\newtheorem{definition}[theorem]{Definition}}{}
+    \@ifundefined{definitionstar}{
+        \newtheorem*{definitionstar}{Definition}
+    }{}
     \NewDocumentCommand{\genDEF}{m m m +m}{
         \templateResolveNumMode{##2}{\genDEFNumMode}{\genDEF}
         \templateResolveTocMode{##3}{\genDEFTocMode}{\genDEF}
@@ -677,78 +684,111 @@
 
 % PRESENTATION:
 \ifdefstring{\templateType}{presentation}{
-    % Load the document class, load packages, and flag the template as loaded
     \LoadClass{beamer}
     \RequirePackage{appendixnumberbeamer}
-    \RequirePackage{comment}
     \loadPackagesSharedByAll
     \toggletrue{TemplateTypeLoaded}
-    % Load theme, font, and beamer template
     \usetheme{Madrid}
-    \usecolortheme[named=PrincetonOrange]{structure}
+    \usecolortheme[named=crimson]{structure}
+    \setbeamercolor{alerted text}{use=structure,fg=structure.fg}
     \usefonttheme{serif}
     \setbeamertemplate{blocks}[rounded]
     \setbeamertemplate{navigation symbols}{}
     \setbeamertemplate{footline}[frame number]
-    \titlegraphic{\includegraphics[scale=0.07]{./logo.png}}
-    % Define footnote size.
+    \setbeamertemplate{caption}[default]
     \renewcommand{\footnotesize}{\tiny}
-    % Define animations and first-section toggles
     \newtoggle{allowAnimations}
     \toggletrue{allowAnimations}
-    \newtoggle{firstSectionHasNotBeenCalled}
-    \toggletrue{firstSectionHasNotBeenCalled}
-    % Define command that generates the front matter.
-    \newcommand{\firstOutline}{
+    \newtoggle{presentationAppendix}
+    \togglefalse{presentationAppendix}
+    \newtoggle{firstPresentationSection}
+    \toggletrue{firstPresentationSection}
+    \newcommand{\SectionName}{}
+    \newcommand{\fullOutline}{
         \begin{frame}{Outline}
-            \tableofcontents
+            \iftoggle{presentationAppendix}{
+                \tableofcontents[part=1]
+            }{
+                \tableofcontents[part=0]
+            }
+        \end{frame}
+    }
+    \newcommand{\sectionOutline}{
+        \iftoggle{firstPresentationSection}{
+            \addtocounter{framenumber}{-1}
+            \togglefalse{firstPresentationSection}
+        }{}
+        \begin{frame}{Outline}
+            \iftoggle{presentationAppendix}{
+                \tableofcontents[part=1,currentsection]
+            }{
+                \tableofcontents[part=0,currentsection]
+            }
         \end{frame}
     }
     \newcommand{\titleAndOutline}{
         \frame{\titlepage}
-        \firstOutline
+        \fullOutline
     }
-    \newcommand{\genFront}[3]{
+    \newcommand{\genFront}[5]{
         \title{#1}
         \author{#2}
-        \date{#3}
+        \institute{
+            \textbf{Affiliations:} #3\\[0.5em]
+            \textbf{Acknowledgments:} #4
+        }
+        \date{#5}
         \titleAndOutline
     }
-    % Define command that generates a section.
-    \newcommand{\ro}{
-        \begin{frame}{Outline}
-            \tableofcontents[currentsection]
-        \end{frame}
-    }
-    \newcommand{\genPart}[1]{
-        \iftoggle{firstSectionHasNotBeenCalled}{
-            \newcommand{\SectionName}{#1}
-            \togglefalse{firstSectionHasNotBeenCalled}
-        }{
-            \renewcommand{\SectionName}{#1}
-        }
+    \NewDocumentCommand{\genPart}{m +m}{
+        \renewcommand{\SectionName}{#1}
         \section{#1}
-        \ro
+        \sectionOutline
+        #2
     }
-    % Define command that generates a frame.
-    \newcommand{\genSubPart}[3][true]{
-        \iftoggle{allowAnimations}{
-            \ifbool{#1}{
-                \begin{frame}{#2}{\SectionName}
-                    % Make empty frame
+    \NewDocumentCommand{\genSubPart}{m +m}{
+        \iftoggle{presentationAppendix}{
+            \iftoggle{allowAnimations}{
+                \begin{frame}[noframenumbering]{#1}{\SectionName}
+                \end{frame}
+            }{}
+            \begin{frame}[noframenumbering,shrink=10]{#1}{\SectionName}
+                #2
+            \end{frame}
+        }{
+            \iftoggle{allowAnimations}{
+                \begin{frame}{#1}{\SectionName}
                 \end{frame}
                 \addtocounter{framenumber}{-1}
-            }{
-                % Do nothing
-            }
-        }{
-            % Do nothing
+            }{}
+            \begin{frame}[shrink=10]{#1}{\SectionName}
+                #2
+            \end{frame}
         }
-        \begin{frame}{#2}{\SectionName}
-            #3
-        \end{frame}
     }
-    % Define animation-capable environments for enumerations and itemizations.
+    \RenewDocumentCommand{\genTHM}{m +m}{
+        \begin{block}{Theorem (#1)}
+            \label{thm:#1}
+            #2
+        \end{block}
+    }
+    \RenewDocumentCommand{\genDEF}{m +m}{
+        \begin{block}{Definition (#1)}
+            \label{def:#1}
+            #2
+        \end{block}
+    }
+    \RenewDocumentCommand{\genFIG}{m m m m +m}{
+        \begin{figure}[#2]
+            \centering
+            \includegraphics[width=#3\textwidth]{#4}
+            \caption{(#1)\textbf{.} #5}
+            \label{fig:#1}
+        \end{figure}
+    }
+    \newcommand{\genRef}[2]{
+        \hyperref[#1:#2]{#2}
+    }
     \newcommand{\bo}[2]{
         \iftoggle{allowAnimations}{
             \begin{#1}[<+->]\setlength\itemsep{#2}
@@ -766,10 +806,18 @@
     \newcommand{\ei}[1]{
         \end{#1}
     }
-    % Define command that generates the appendix.
+    \newcommand{\genBack}{
+        \appendix
+        \setcounter{section}{0}
+        \global\beamer@tocsectionnumber=0\relax
+        \toggletrue{presentationAppendix}
+        \setbeamertemplate{footline}{}
+        \fullOutline
+    }
     \renewcommand\appendixname{Appendix}
+    \newcommand{\iitem}[1]{\item \textit{#1}}
+    \newcommand{\bitem}[1]{\item \textbf{#1}}
 }{
-    % Do nothing
 }
 
 % NOTE:

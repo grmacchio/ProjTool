@@ -1,0 +1,4 @@
+\beamer@sectionintoc {1}{<Section Title 1>}{3}{0}{1}
+\beamer@sectionintoc {2}{<Section Title 2>}{20}{0}{2}
+\beamer@sectionintoc {1}{<Appendix Section Title 1>}{38}{1}{1}
+\beamer@sectionintoc {2}{<Appendix Section Title 2>}{44}{1}{2}
