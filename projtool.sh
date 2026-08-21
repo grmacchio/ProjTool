@@ -13,10 +13,28 @@ usage() {
 Usage: projtool COMMAND ...
 
 Commands:
+  init                Initialize the current directory from an example
   gen                 Generate results, media, or a README
   rem                 Remove generated output or README files
 
-Run "projtool gen --help" or "projtool rem --help" for details.
+Run "projtool init --help", "projtool gen --help", or
+"projtool rem --help" for details.
+EOF
+}
+
+usage_init() {
+    cat <<'EOF'
+Usage: projtool init TYPE
+
+Examples:
+  projtool init dissertation
+  projtool init note
+  projtool init preprint
+  projtool init presentation
+
+Copies the selected example into the current directory.
+Excludes output, TYPE.md, TYPE.pdf, README.md, and .DS_Store.
+Existing paths are never overwritten.
 EOF
 }
 
@@ -335,6 +353,53 @@ remove_path() {
     fi
 }
 
+main_init() {
+    local example_type
+    local source_dir
+    local target_dir
+    local entry
+    local name
+    local destination
+    local -a entries=()
+
+    [[ $# -eq 0 ]] && { usage_init; exit 2; }
+    [[ "$1" == "-h" || "$1" == "--help" ]] && {
+        usage_init
+        exit 0
+    }
+    [[ $# -eq 1 ]] || die "init requires exactly one example type"
+
+    example_type="$(printf '%s' "$1" | tr '[:upper:]' '[:lower:]')"
+    [[ "$example_type" =~ ^[a-z0-9][a-z0-9_-]*$ ]] ||
+        die "invalid example type: $1"
+    source_dir="$SCRIPT_DIR/examples/$example_type"
+    [[ -d "$source_dir" ]] || die "example not found: $example_type"
+    target_dir="$(pwd)"
+
+    while IFS= read -r -d '' entry; do
+        name="$(basename -- "$entry")"
+        case "$name" in
+            .DS_Store|output|README.md|"$example_type.md"|"$example_type.pdf")
+                continue
+                ;;
+        esac
+        entries+=("$entry")
+    done < <(find "$source_dir" -mindepth 1 -maxdepth 1 -print0)
+
+    for entry in "${entries[@]}"; do
+        destination="$target_dir/$(basename -- "$entry")"
+        if [[ -e "$destination" || -L "$destination" ]]; then
+            die "destination already exists: $destination"
+        fi
+    done
+
+    for entry in "${entries[@]}"; do
+        cp -R -p -- "$entry" "$target_dir/"
+    done
+
+    printf '✓ %s initialized in %s\n' "$example_type" "$target_dir"
+}
+
 main_gen() {
     [[ $# -eq 0 ]] && { usage_gen; exit 2; }
     [[ "$1" == "-h" || "$1" == "--help" ]] && { usage_gen; exit 0; }
@@ -452,6 +517,7 @@ MODE="$(printf '%s' "$1" | tr '[:upper:]' '[:lower:]')"
 shift
 
 case "$MODE" in
+    init) main_init "$@" ;;
     gen) main_gen "$@" ;;
     rem) main_rem "$@" ;;
     *)
