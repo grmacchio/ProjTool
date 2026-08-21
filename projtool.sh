@@ -33,6 +33,7 @@ Examples:
   projtool init presentation
 
 Copies the selected example into the current directory.
+Renames the main TeX file to match the current directory.
 Excludes output, TYPE.md, TYPE.pdf, README.md, and .DS_Store.
 Existing paths are never overwritten.
 EOF
@@ -105,6 +106,8 @@ require_command() {
 
 resolve_target() {
     local target="$1"
+    local candidate
+    local -a document_candidates=()
 
     if [[ -d "$target" ]]; then
         TARGET_DIR="$(cd -- "$target" && pwd)"
@@ -117,6 +120,16 @@ resolve_target() {
     TARGET_NAME="$(basename -- "$TARGET_DIR")"
     DOCUMENT_STEM="${TARGET_NAME%_template}"
     DOCUMENT_FILE="$TARGET_DIR/$DOCUMENT_STEM.tex"
+    if [[ ! -f "$DOCUMENT_FILE" ]]; then
+        while IFS= read -r -d '' candidate; do
+            document_candidates+=("$candidate")
+        done < <(find "$TARGET_DIR" -mindepth 1 -maxdepth 1 -type f \
+            -name '*.tex' ! -name '*.pandoc.tex' -print0)
+        if [[ ${#document_candidates[@]} -eq 1 ]]; then
+            DOCUMENT_FILE="${document_candidates[0]}"
+            DOCUMENT_STEM="$(basename -- "${DOCUMENT_FILE%.tex}")"
+        fi
+    fi
     if [[ -f "$DOCUMENT_FILE" ]]; then
         TEMPLATE_TYPE="$(sed -nE 's/^[[:space:]]*\\documentclass\[([^]]+)\]\{template\}.*/\1/p' "$DOCUMENT_FILE")"
     fi
@@ -360,7 +373,12 @@ main_init() {
     local entry
     local name
     local destination
+    local line
     local -a entries=()
+    local projtool_command
+    local settings_file
+    local settings_temp
+    local target_name
 
     [[ $# -eq 0 ]] && { usage_init; exit 2; }
     [[ "$1" == "-h" || "$1" == "--help" ]] && {
@@ -375,6 +393,7 @@ main_init() {
     source_dir="$SCRIPT_DIR/examples/$example_type"
     [[ -d "$source_dir" ]] || die "example not found: $example_type"
     target_dir="$(pwd)"
+    target_name="$(basename -- "$target_dir")"
 
     while IFS= read -r -d '' entry; do
         name="$(basename -- "$entry")"
@@ -387,15 +406,40 @@ main_init() {
     done < <(find "$source_dir" -mindepth 1 -maxdepth 1 -print0)
 
     for entry in "${entries[@]}"; do
-        destination="$target_dir/$(basename -- "$entry")"
+        name="$(basename -- "$entry")"
+        if [[ "$name" == "$example_type.tex" ]]; then
+            name="${target_name%_template}.tex"
+        fi
+        destination="$target_dir/$name"
         if [[ -e "$destination" || -L "$destination" ]]; then
             die "destination already exists: $destination"
         fi
     done
 
     for entry in "${entries[@]}"; do
-        cp -R -p -- "$entry" "$target_dir/"
+        name="$(basename -- "$entry")"
+        if [[ "$name" == "$example_type.tex" ]]; then
+            name="${target_name%_template}.tex"
+        fi
+        destination="$target_dir/$name"
+        cp -R -p -- "$entry" "$destination"
     done
+
+    settings_file="$target_dir/.vscode/settings.json"
+    if [[ -f "$settings_file" ]]; then
+        settings_temp="$(mktemp "$target_dir/.projtool-settings.XXXXXX")"
+        cp -p -- "$settings_file" "$settings_temp"
+        projtool_command="$SCRIPT_DIR/projtool.sh"
+        projtool_command="${projtool_command//\\/\\\\}"
+        projtool_command="${projtool_command//\"/\\\"}"
+        while IFS= read -r line || [[ -n "$line" ]]; do
+            if [[ "$line" == *'"command": "../../projtool.sh"'* ]]; then
+                line="${line%%../../projtool.sh*}$projtool_command${line#*../../projtool.sh}"
+            fi
+            printf '%s\n' "$line"
+        done < "$settings_file" > "$settings_temp"
+        mv -f -- "$settings_temp" "$settings_file"
+    fi
 
     printf '✓ %s initialized in %s\n' "$example_type" "$target_dir"
 }
