@@ -543,8 +543,45 @@
     % Load the document class, load packages, and flag the template as loaded
     \LoadClass[11pt]{article}
     \RequirePackage[margin=1in]{geometry}
+    \RequirePackage{authblk}
     \loadPackagesSharedByAll
     \loadPackagesSharedByDocs
+    \counterwithin{theorem}{subsection}
+    \let\c@figure\c@theorem
+    \renewcommand{\thefigure}{\thetheorem}
+    \renewcommand{\theHfigure}{\theHtheorem}
+    \csletcs{templatePreprintGenTHMCode}{genTHM code}
+    \csletcs{templatePreprintGenDEFCode}{genDEF code}
+    \csletcs{templatePreprintGenFIGCode}{genFIG code}
+    \newcommand{\templatePreprintObjectToc}[1]{
+        \begingroup
+            \let\templatePreprintAddContentsLine\addcontentsline
+            \renewcommand{\addcontentsline}[3]{
+                \ifstrequal{##2}{subsection}{
+                    \templatePreprintAddContentsLine
+                        {##1}{subsubsection}{##3}
+                }{
+                    \templatePreprintAddContentsLine{##1}{##2}{##3}
+                }
+            }
+            #1
+        \endgroup
+    }
+    \RenewDocumentCommand{\genTHM}{m m m +m +m}{
+        \templatePreprintObjectToc{
+            \templatePreprintGenTHMCode{#1}{#2}{#3}{#4}{#5}
+        }
+    }
+    \RenewDocumentCommand{\genDEF}{m m m +m}{
+        \templatePreprintObjectToc{
+            \templatePreprintGenDEFCode{#1}{#2}{#3}{#4}
+        }
+    }
+    \RenewDocumentCommand{\genFIG}{m m m m m m +m}{
+        \templatePreprintObjectToc{
+            \templatePreprintGenFIGCode{#1}{#2}{#3}{#4}{#5}{#6}{#7}
+        }
+    }
     \toggletrue{TemplateTypeLoaded}
     % Define command that generates a section.
     \NewDocumentCommand{\genPart}{m m m +m}{
@@ -607,9 +644,32 @@
         \endgroup
     }
     % Define command that generates the front matter.
-    \newcommand{\genFront}[8]{
-        % Do something
+    \newcommand{\genFront}[7]{
+        \title{\vspace{-1.5cm}#1\\[0.5em]
+            \large\normalfont\textit{preprint to be submitted to #2}}
+        \author{#3\\#4}
+        \date{#5}
+        \maketitle
+        \begin{abstract}
+            #6
+        \end{abstract}
         \tableofcontents
+        \begingroup
+            \renewcommand\thefootnote{}
+            \renewcommand\theHfootnote{\arabic{footnote}}
+            \NoHyper
+                \footnotetext{\textbf{Acknowledgments:} #7}
+            \endNoHyper
+            \addtocounter{footnote}{-1}
+        \endgroup
+        \newpage
+    }
+    \renewcommand{\genBack}{
+        \templateRenderTheoremProofs
+        \clearpage
+        \phantomsection
+        \addcontentsline{toc}{section}{References}
+        \printbibliography[title={References}]
     }
 }{
     % Do nothing

@@ -1,3 +1,7 @@
+import Pkg
+
+activation_output = get(ENV, "PROJTOOL_VERBOSE", "false") == "true" ? stderr : devnull
+Pkg.activate(@__DIR__; io=activation_output)
 ENV["GKSwstype"] = "nul"
 
 using Plots

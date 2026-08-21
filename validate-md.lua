@@ -295,6 +295,16 @@ local function emit_references(output, state)
 end
 
 function Pandoc(document)
+    local template_type = pandoc.utils.stringify(
+        document.meta["template-type"] or "dissertation")
+    local part_label = "Chapter"
+    local subpart_label = "Section"
+    local subpart_level = 2
+    if template_type == "preprint" then
+        part_label = "Section"
+        subpart_label = "Subsection"
+        subpart_level = 3
+    end
     local output = {}
     local proofs = {}
     local proofs_emitted = false
@@ -345,7 +355,7 @@ function Pandoc(document)
             end
             local identifier = "chapter-" .. slug(part_title)
             append(output, anchor(identifier))
-            append(output, titled_header(2, "Chapter", number, part_title))
+            append(output, titled_header(2, part_label, number, part_title))
             if state.part_toc == "toc" then
                 add_toc(state, 0, toc_label(number, part_title), identifier)
             else
@@ -364,7 +374,8 @@ function Pandoc(document)
             end
             local identifier = "section-" .. slug(subpart_title)
             append(output, anchor(identifier))
-            append(output, titled_header(2, "Section", number, subpart_title))
+            append(output, titled_header(
+                subpart_level, subpart_label, number, subpart_title))
             if state.subpart_toc == "toc" then
                 add_toc(state, 1, toc_label(number, subpart_title), identifier)
             else

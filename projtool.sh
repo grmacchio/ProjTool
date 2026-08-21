@@ -6,6 +6,7 @@ SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 COLLECTION_DIR="$(cd -- "$SCRIPT_DIR/.." && pwd)"
 RESULTS_WORK_DIR=""
 MODE=""
+TEMPLATE_TYPE=""
 
 usage() {
     cat <<'EOF'
@@ -98,6 +99,9 @@ resolve_target() {
     TARGET_NAME="$(basename -- "$TARGET_DIR")"
     DOCUMENT_STEM="${TARGET_NAME%_template}"
     DOCUMENT_FILE="$TARGET_DIR/$DOCUMENT_STEM.tex"
+    if [[ -f "$DOCUMENT_FILE" ]]; then
+        TEMPLATE_TYPE="$(sed -nE 's/^[[:space:]]*\\documentclass\[([^]]+)\]\{template\}.*/\1/p' "$DOCUMENT_FILE")"
+    fi
     OUTPUT_DIR="$TARGET_DIR/output"
     RESULTS_OUTPUT_DIR="$OUTPUT_DIR/results"
     RESULTS_SCRIPT="$TARGET_DIR/results.sh"
@@ -110,6 +114,18 @@ cleanup_results_work() {
     if [[ -n "$RESULTS_WORK_DIR" && -d "$RESULTS_WORK_DIR" ]]; then
         rm -rf -- "$RESULTS_WORK_DIR"
     fi
+}
+
+cleanup_source_build_files() {
+    local suffix
+    local -a suffixes=(
+        aux bbl bcf blg fdb_latexmk fls log nav out run.xml snm
+        synctex.gz toc vrb xdv
+    )
+
+    for suffix in "${suffixes[@]}"; do
+        rm -f -- "$TARGET_DIR/$DOCUMENT_STEM.$suffix"
+    done
 }
 
 run_results_stage() {
@@ -151,11 +167,19 @@ render_pdf() {
 }
 
 write_markdown_build_file() {
+    local front_command
+
     MARKDOWN_BUILD_FILE="$MD_OUTPUT_DIR/$DOCUMENT_STEM.pandoc.tex"
+
+    if [[ "$TEMPLATE_TYPE" == "preprint" ]]; then
+        front_command='\newcommand{\genFront}[7]{\subsection{\textbf{Title}: #1}\textbf{Intended Journal:} #2\par\textbf{Author:} #3\par\textbf{Affiliation:} #4\par\textbf{Date:} #5\par\subsection{\textbf{Abstract}}#6\subsection{\textbf{Acknowledgments}}#7\subsection{\textbf{LaTeXToTOC}}}'
+    else
+        front_command='\newcommand{\genFront}[8]{\subsection{\textbf{Title}: #1}\textbf{Author:} #2\par\textbf{University:} #3\par\textbf{Department:} #4\par\textbf{Advisor:} #5\par\textbf{Date:} #6\par\subsection{\textbf{Abstract}}#7\subsection{\textbf{Acknowledgments}}#8\subsection{\textbf{LaTeXToTOC}}}'
+    fi
 
     {
         printf '%s\n' \
-        '\newcommand{\genFront}[8]{\subsection{\textbf{Title}: #1}\textbf{Author:} #2\par\textbf{University:} #3\par\textbf{Department:} #4\par\textbf{Advisor:} #5\par\textbf{Date:} #6\par\subsection{\textbf{Abstract}}#7\subsection{\textbf{Acknowledgments}}#8\subsection{\textbf{LaTeXToTOC}}}' \
+            "$front_command" \
             '\newcommand{\genPart}[4]{\subsection{\textbf{LaTeXToPart} \textbf{#2} \textbf{#3} #1}#4}' \
             '\newcommand{\genSubPart}[4]{\subsubsection{\textbf{LaTeXToSubPart} \textbf{#2} \textbf{#3} #1}#4}' \
             '\newcommand{\genTHM}[5]{\paragraph{\textbf{LaTeXToTheorem} \textbf{#2} \textbf{#3} #1}#4\paragraph{\textbf{LaTeXToProofInline}}\textbf{LaTeXToProofLink} #1\subparagraph{\textbf{LaTeXToProofStart} #1}#5\subparagraph{\textbf{LaTeXToProofEnd}}}' \
@@ -174,6 +198,7 @@ render_md() {
     local citation_style_file="$SCRIPT_DIR/references.csl"
     local reference_filter_file="$SCRIPT_DIR/format-references.lua"
     local -a citation_options=()
+    local -a template_options=(--metadata="template-type:${TEMPLATE_TYPE:-dissertation}")
 
     if [[ -f "$bibliography_file" ]]; then
         [[ -f "$citation_style_file" ]] ||
@@ -197,6 +222,7 @@ render_md() {
     if [[ "$VERBOSE" == true ]]; then
         if ! pandoc --from=latex --to=gfm --wrap=none --fail-if-warnings \
             --lua-filter="$SCRIPT_DIR/validate-md.lua" \
+            "${template_options[@]}" \
             "${citation_options[@]}" \
             "$MARKDOWN_BUILD_FILE" -o "$md_temp_file"; then
             rm -f -- "$md_temp_file"
@@ -204,6 +230,7 @@ render_md() {
         fi
     elif ! pandoc --from=latex --to=gfm --wrap=none \
         --fail-if-warnings --lua-filter="$SCRIPT_DIR/validate-md.lua" \
+        "${template_options[@]}" \
         "${citation_options[@]}" \
         "$MARKDOWN_BUILD_FILE" -o "$md_temp_file" >/dev/null; then
         rm -f -- "$md_temp_file"
@@ -314,7 +341,8 @@ main_gen() {
     esac
 
     resolve_target "$TARGET"
-    trap cleanup_results_work EXIT
+    cleanup_source_build_files
+    trap 'cleanup_results_work; cleanup_source_build_files' EXIT
 
     case "$ACTION" in
         output)
