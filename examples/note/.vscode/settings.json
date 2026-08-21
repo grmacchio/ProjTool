@@ -1,0 +1,38 @@
+{
+
+    "editor.rulers": [
+        79
+    ],
+
+    "cSpell.words": [
+        
+    ],
+    
+    "latex-workshop.latex.recipes": [
+        {
+            "name": "gen media",
+            "tools": [
+                "gen media"
+            ]
+        }
+    ],
+    "latex-workshop.latex.tools": [
+        {
+            "name": "gen media",
+            "command": "../../projtool.sh",
+            "args": ["gen", "media"],
+            "cwd": "%DIR%"
+        }
+    ],
+    "latex-workshop.latex.recipe.default": "gen media",
+    "latex-workshop.latex.autoBuild.run": "onSave",
+    "latex-workshop.latex.outDir": "%DIR%/output/media/pdf",
+    "latex-workshop.view.outline.sections": [
+        "part",
+        "chapter|genFront|genPart",
+        "section|genSubPart",
+        "subsection|genTHM|genDEF|genFIG",
+        "subsubsection"
+    ]
+
+}

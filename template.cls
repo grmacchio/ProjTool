@@ -774,10 +774,121 @@
 
 % NOTE:
 \ifdefstring{\templateType}{note}{
+    \LoadClass[11pt]{article}
+    \RequirePackage[margin=1in]{geometry}
+    \RequirePackage{authblk}
     \loadPackagesSharedByAll
     \loadPackagesSharedByDocs
+    \counterwithin{theorem}{subsection}
+    \let\c@figure\c@theorem
+    \renewcommand{\thefigure}{\thetheorem}
+    \renewcommand{\theHfigure}{\theHtheorem}
+    \csletcs{templateNoteGenTHMCode}{genTHM code}
+    \csletcs{templateNoteGenDEFCode}{genDEF code}
+    \csletcs{templateNoteGenFIGCode}{genFIG code}
+    \newcommand{\templateNoteObjectToc}[1]{
+        \begingroup
+            \let\templateNoteAddContentsLine\addcontentsline
+            \renewcommand{\addcontentsline}[3]{
+                \ifstrequal{##2}{subsection}{
+                    \templateNoteAddContentsLine
+                        {##1}{subsubsection}{##3}
+                }{
+                    \templateNoteAddContentsLine{##1}{##2}{##3}
+                }
+            }
+            #1
+        \endgroup
+    }
+    \RenewDocumentCommand{\genTHM}{m m m +m +m}{
+        \templateNoteObjectToc{
+            \templateNoteGenTHMCode{#1}{#2}{#3}{#4}{#5}
+        }
+    }
+    \RenewDocumentCommand{\genDEF}{m m m +m}{
+        \templateNoteObjectToc{
+            \templateNoteGenDEFCode{#1}{#2}{#3}{#4}
+        }
+    }
+    \RenewDocumentCommand{\genFIG}{m m m m m m +m}{
+        \templateNoteObjectToc{
+            \templateNoteGenFIGCode{#1}{#2}{#3}{#4}{#5}{#6}{#7}
+        }
+    }
     \toggletrue{TemplateTypeLoaded}
-    % Do something
+    \NewDocumentCommand{\genPart}{m m m +m}{
+        \templateResolveRootNumMode{#2}{\genPartNumMode}{\genPart}
+        \templateResolveRootTocMode{#3}{\genPartTocMode}{\genPart}
+        \ifdefstring{\genPartNumMode}{num}{
+            \ifdefstring{\genPartTocMode}{toc}{
+                \section{#1}
+                \label{part:#1}
+            }{
+                \let\templateAddContentsLine\addcontentsline
+                \let\addcontentsline\@gobblethree
+                \section{#1}
+                \let\addcontentsline\templateAddContentsLine
+                \label{part:#1}
+            }
+        }{
+            \ifdefstring{\genPartTocMode}{toc}{
+                \section*{#1}
+                \phantomsection
+                \addcontentsline{toc}{section}{#1}
+            }{
+                \section*{#1}
+            }
+        }
+        \begingroup
+            \edef\templateCurrentNumMode{\genPartNumMode}
+            \edef\templateCurrentTocMode{\genPartTocMode}
+            #4
+        \endgroup
+    }
+    \NewDocumentCommand{\genSubPart}{m m m +m}{
+        \templateResolveNumMode{#2}{\genSubPartNumMode}{\genSubPart}
+        \templateResolveTocMode{#3}{\genSubPartTocMode}{\genSubPart}
+        \ifdefstring{\genSubPartNumMode}{num}{
+            \ifdefstring{\genSubPartTocMode}{toc}{
+                \subsection{#1}
+                \label{subpart:#1}
+            }{
+                \let\templateAddContentsLine\addcontentsline
+                \let\addcontentsline\@gobblethree
+                \subsection{#1}
+                \let\addcontentsline\templateAddContentsLine
+                \label{subpart:#1}
+            }
+        }{
+            \ifdefstring{\genSubPartTocMode}{toc}{
+                \subsection*{#1}
+                \phantomsection
+                \addcontentsline{toc}{subsection}{#1}
+            }{
+                \subsection*{#1}
+            }
+        }
+        \begingroup
+            \edef\templateCurrentNumMode{\genSubPartNumMode}
+            \edef\templateCurrentTocMode{\genSubPartTocMode}
+            #4
+        \endgroup
+    }
+    \newcommand{\genFront}[4]{
+        \title{\vspace{-1.5cm}#1}
+        \author{#2\\#3}
+        \date{#4}
+        \maketitle
+        \tableofcontents
+        \newpage
+    }
+    \renewcommand{\genBack}{
+        \templateRenderTheoremProofs
+        \clearpage
+        \phantomsection
+        \addcontentsline{toc}{section}{References}
+        \printbibliography[title={References}]
+    }
 }{
     % Do nothing
 }

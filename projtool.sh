@@ -172,7 +172,9 @@ write_markdown_build_file() {
     MARKDOWN_BUILD_FILE="$MD_OUTPUT_DIR/$DOCUMENT_STEM.pandoc.tex"
 
     if [[ "$TEMPLATE_TYPE" == "preprint" ]]; then
-        front_command='\newcommand{\genFront}[7]{\subsection{\textbf{Title}: #1}\textbf{Intended Journal:} #2\par\textbf{Author:} #3\par\textbf{Affiliation:} #4\par\textbf{Date:} #5\par\subsection{\textbf{Abstract}}#6\subsection{\textbf{Acknowledgments}}#7\subsection{\textbf{LaTeXToTOC}}}'
+        front_command='\newcommand{\genFront}[7]{\subsection{\textbf{Title}: #1}\textbf{Intended Journal:} #2\par\textbf{Authors:} #3\par\textbf{Affiliations:} #4\par\textbf{Date:} #5\par\subsection{\textbf{Abstract}}#6\subsection{\textbf{Acknowledgments}}#7\subsection{\textbf{LaTeXToTOC}}}'
+    elif [[ "$TEMPLATE_TYPE" == "note" ]]; then
+        front_command='\newcommand{\genFront}[4]{\subsection{\textbf{Title}: #1}\textbf{Authors:} #2\par\textbf{Affiliations:} #3\par\textbf{Date:} #4\par\subsection{\textbf{LaTeXToTOC}}}'
     else
         front_command='\newcommand{\genFront}[8]{\subsection{\textbf{Title}: #1}\textbf{Author:} #2\par\textbf{University:} #3\par\textbf{Department:} #4\par\textbf{Advisor:} #5\par\textbf{Date:} #6\par\subsection{\textbf{Abstract}}#7\subsection{\textbf{Acknowledgments}}#8\subsection{\textbf{LaTeXToTOC}}}'
     fi
@@ -262,6 +264,7 @@ write_readme() {
     local has_pdf=false
     local has_md=false
     local intro
+    local attribution="This project was generated using [ProjTool](https://github.com/grmacchio/LaTeXTo)."
 
     [[ -f "$pdf_file" ]] && has_pdf=true
     [[ -f "$md_file" ]] && has_md=true
@@ -287,7 +290,7 @@ write_readme() {
             -e 's#src="../../results/#src="./output/results/#g' \
             "$md_file" > "$target_md"
     fi
-    printf '%s\n' "$intro" > "$readme_file"
+    printf '%s\n\n%s\n' "$intro" "$attribution" > "$readme_file"
 
     if [[ "$has_md" == true ]]; then
         printf '\n' >> "$readme_file"

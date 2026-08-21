@@ -1,12 +1,12 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.8)  20 AUG 2026 22:38
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.8)  20 AUG 2026 22:42
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **/Users/gregorymacchio/Documents/Mirror/laptop/global/writing/software/ProjToo
-l/examples/preprint/preprint.tex
+l/examples/note/note.tex
 
 (/Users/gregorymacchio/Documents/Mirror/laptop/global/writing/software/ProjTool
-/examples/preprint/preprint.tex
+/examples/note/note.tex
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
 
@@ -911,8 +911,8 @@ Package: array 2024/10/17 v2.6g Tabular extension package (FMi)
 \@quotelevel=\count453
 \@quotereset=\count454
 
-(output/media/pdf/preprint.aux)
-\openout1 = `preprint.aux'.
+(output/media/pdf/note.aux)
+\openout1 = `note.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 3.
 LaTeX Font Info:    ... okay on input line 3.
@@ -991,9 +991,9 @@ e
 ))
 Package hyperref Info: Link coloring ON on input line 3.
 
-(output/media/pdf/preprint.out) (output/media/pdf/preprint.out)
+(output/media/pdf/note.out) (output/media/pdf/note.out)
 \@outlinefile=\write5
-\openout5 = `preprint.out'.
+\openout5 = `note.out'.
 
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: float package is loaded.
@@ -1007,29 +1007,29 @@ File: english.lbx 2024/03/21 v3.20 biblatex localization (PK/MW)
 Package biblatex Info: Input encoding 'utf8' detected.
 Package biblatex Info: Automatic encoding selection.
 (biblatex)             Assuming data encoding 'utf8'.
-\openout4 = `preprint.bcf'.
+\openout4 = `note.bcf'.
 
 Package biblatex Info: Trying to load bibliographic data...
-Package biblatex Info: ... file 'preprint.bbl' found.
+Package biblatex Info: ... file 'note.bbl' found.
 
-(output/media/pdf/preprint.bbl)
+(output/media/pdf/note.bbl)
 Package biblatex Info: Reference section=0 on input line 3.
 Package biblatex Info: Reference segment=0 on input line 3.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 17.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 11.
 
 
 (/usr/local/texlive/2025/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 17.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 11.
 
 
 (/usr/local/texlive/2025/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-(output/media/pdf/preprint.toc)
+(output/media/pdf/note.toc)
 \tf@toc=\write6
-\openout6 = `preprint.toc'.
+\openout6 = `note.toc'.
 
 
 
@@ -1037,33 +1037,33 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
 {/usr/local/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/usr/loc
 al/texlive/2025/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}]
-<./output/results/image.png, id=80, 602.25pt x 401.5pt>
+<./output/results/image.png, id=75, 602.25pt x 401.5pt>
 File: ./output/results/image.png Graphic file (type png)
 <use ./output/results/image.png>
-Package pdftex.def Info: ./output/results/image.png  used on input line 128.
+Package pdftex.def Info: ./output/results/image.png  used on input line 122.
 (pdftex.def)             Requested size: 187.89914pt x 125.26627pt.
 File: ./output/results/image.png Graphic file (type png)
 <use ./output/results/image.png>
-Package pdftex.def Info: ./output/results/image.png  used on input line 128.
+Package pdftex.def Info: ./output/results/image.png  used on input line 122.
 (pdftex.def)             Requested size: 187.89914pt x 125.26627pt.
 
 
 [2 <./output/results/image.png>]
 File: ./output/results/image.png Graphic file (type png)
 <use ./output/results/image.png>
-Package pdftex.def Info: ./output/results/image.png  used on input line 128.
+Package pdftex.def Info: ./output/results/image.png  used on input line 122.
 (pdftex.def)             Requested size: 187.89914pt x 125.26627pt.
 File: ./output/results/image.png Graphic file (type png)
 <use ./output/results/image.png>
-Package pdftex.def Info: ./output/results/image.png  used on input line 128.
+Package pdftex.def Info: ./output/results/image.png  used on input line 122.
 (pdftex.def)             Requested size: 187.89914pt x 125.26627pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 128--128
+Underfull \hbox (badness 10000) in paragraph at lines 122--122
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 128--128
+Underfull \hbox (badness 10000) in paragraph at lines 122--122
 
  []
 
@@ -1075,42 +1075,37 @@ Underfull \hbox (badness 10000) in paragraph at lines 128--128
 
 [5
 
-] (output/media/pdf/preprint.aux)
+] (output/media/pdf/note.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
-Package rerunfilecheck Info: File `preprint.out' has not changed.
+Package rerunfilecheck Info: File `note.out' has not changed.
 (rerunfilecheck)             Checksum: 6C92FF8E834665AF04871AF269B08F33;1609.
-Package logreq Info: Writing requests to 'preprint.run.xml'.
-\openout1 = `preprint.run.xml'.
+Package logreq Info: Writing requests to 'note.run.xml'.
+\openout1 = `note.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 30082 strings out of 473190
- 566496 string characters out of 5715801
- 1365536 words of memory out of 5000000
- 52853 multiletter control sequences out of 15000+600000
- 577842 words of font info for 83 fonts, out of 8000000 for 9000
+ 30053 strings out of 473190
+ 566028 string characters out of 5715801
+ 1365358 words of memory out of 5000000
+ 52836 multiletter control sequences out of 15000+600000
+ 571122 words of font info for 68 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 121i,18n,123p,1282b,1533s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 121i,18n,123p,1274b,1533s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><
-/usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfbx0900.pfb></u
-sr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfbx1000.pfb></usr
-/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfbx1095.pfb></usr/l
-ocal/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></usr/loc
-al/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></usr/local
-/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm0900.pfb></usr/local/t
-exlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></usr/local/tex
-live/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb></usr/local/texli
-ve/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive
-/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1728.pfb></usr/local/texlive/2
-025/texmf-dist/fonts/type1/public/cm-super/sfti1095.pfb></usr/local/texlive/202
-5/texmf-dist/fonts/type1/public/cm-super/sfti1200.pfb>
-Output written on output/media/pdf/preprint.pdf (5 pages, 233817 bytes).
+/usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfbx1095.pfb></u
+sr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></usr
+/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></usr/l
+ocal/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb></usr/loc
+al/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local
+/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1728.pfb></usr/local/t
+exlive/2025/texmf-dist/fonts/type1/public/cm-super/sfti1095.pfb>
+Output written on output/media/pdf/note.pdf (5 pages, 150631 bytes).
 PDF statistics:
- 230 PDF objects out of 1000 (max. 8388607)
- 186 compressed objects within 2 object streams
+ 205 PDF objects out of 1000 (max. 8388607)
+ 171 compressed objects within 2 object streams
  45 named destinations out of 1000 (max. 500000)
  106 words of extra memory for PDF output out of 10000 (max. 10000000)
 

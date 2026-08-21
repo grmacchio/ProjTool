@@ -1,20 +1,10 @@
 ## **Title**: \<Title Content\>
 
-**Intended Journal:** \<Intended Journal Content\>
-
 **Authors:** \<Author Content 1\>$`^1`$ and \<Author Content 2\>$`^1`$
 
 **Affiliations:** $`^1`$\<Affiliation Content\>
 
 **Date:** \<Date\>
-
-## **Abstract**
-
-\<Abstract Content\>
-
-## **Acknowledgments**
-
-\<Acknowledgments Content\>
 
 <a id="table-of-contents"></a>
 

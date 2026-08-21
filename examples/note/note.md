@@ -1,20 +1,10 @@
 ## **Title**: \<Title Content\>
 
-**Intended Journal:** \<Intended Journal Content\>
-
 **Authors:** \<Author Content 1\>$`^1`$ and \<Author Content 2\>$`^1`$
 
 **Affiliations:** $`^1`$\<Affiliation Content\>
 
 **Date:** \<Date\>
-
-## **Abstract**
-
-\<Abstract Content\>
-
-## **Acknowledgments**
-
-\<Acknowledgments Content\>
 
 <a id="table-of-contents"></a>
 
@@ -54,7 +44,7 @@
 
 **Definition 1.1.2** (\<Definition Title 1\>)**.** \<Definition Statement 1\>
 
-<p align="center"><img src="../../results/image.png" alt="image" width="40%" style="image-rendering: pixelated; image-rendering: crisp-edges;"></p>
+<p align="center"><img src="./output/results/image.png" alt="image" width="40%" style="image-rendering: pixelated; image-rendering: crisp-edges;"></p>
 
 <a id="figure-figure-title-1"></a>
 
@@ -78,7 +68,7 @@ Test Hyper-References: [\<Theorem Title 1\>](#theorem-theorem-title-1) [\<Defini
 
 **Definition** (\<Definition Title 2\>)**.** \<Definition Statement 2\>
 
-<p align="center"><img src="../../results/image.png" alt="image" width="40%" style="image-rendering: pixelated; image-rendering: crisp-edges;"></p>
+<p align="center"><img src="./output/results/image.png" alt="image" width="40%" style="image-rendering: pixelated; image-rendering: crisp-edges;"></p>
 
 <a id="figure-figure-title-2"></a>
 
@@ -102,7 +92,7 @@ Test Hyper-References: [\<Theorem Title 2\>](#theorem-theorem-title-2) [\<Defini
 
 **Definition 1.2.2** (\<Definition Title 3\>)**.** \<Definition Statement 3\>
 
-<p align="center"><img src="../../results/image.png" alt="image" width="40%" style="image-rendering: pixelated; image-rendering: crisp-edges;"></p>
+<p align="center"><img src="./output/results/image.png" alt="image" width="40%" style="image-rendering: pixelated; image-rendering: crisp-edges;"></p>
 
 <a id="figure-figure-title-3"></a>
 
@@ -126,7 +116,7 @@ Test Hyper-References: [\<Theorem Title 3\>](#theorem-theorem-title-3) [\<Defini
 
 **Definition** (\<Definition Title 4\>)**.** \<Definition Statement 4\>
 
-<p align="center"><img src="../../results/image.png" alt="image" width="40%" style="image-rendering: pixelated; image-rendering: crisp-edges;"></p>
+<p align="center"><img src="./output/results/image.png" alt="image" width="40%" style="image-rendering: pixelated; image-rendering: crisp-edges;"></p>
 
 <a id="figure-figure-title-4"></a>
 

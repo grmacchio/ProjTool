@@ -1,5 +1,7 @@
 The media developed in the project includes a [PDF file](./dissertation.pdf) and [Markdown file](./dissertation.md). The Markdown file is also included below.
 
+This project was generated using [ProjTool](https://github.com/grmacchio/LaTeXTo).
+
 ## **Title**: &lt;Title Content&gt;
 
 **Author:** &lt;Author Content&gt;

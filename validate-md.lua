@@ -300,7 +300,7 @@ function Pandoc(document)
     local part_label = "Chapter"
     local subpart_label = "Section"
     local subpart_level = 2
-    if template_type == "preprint" then
+    if template_type == "preprint" or template_type == "note" then
         part_label = "Section"
         subpart_label = "Subsection"
         subpart_level = 3
