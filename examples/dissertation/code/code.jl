@@ -1,3 +1,5 @@
+ENV["GKSwstype"] = "nul"
+
 using Plots
 
 open("natural_numbers.tex", "w") do file
@@ -6,4 +8,4 @@ end
 
 x = range(-1, 1; length=200)
 plot(x, exp.(x); legend=false, xlabel="x", ylabel="e^x", linewidth=2)
-savefig("asset.png")
+savefig("image.png")

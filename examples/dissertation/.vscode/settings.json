@@ -1,0 +1,38 @@
+{
+
+    "editor.rulers": [
+        79
+    ],
+
+    "cSpell.words": [
+        
+    ],
+    
+    "latex-workshop.latex.recipes": [
+        {
+            "name": "gen dissertation PDF",
+            "tools": [
+                "gen dissertation PDF"
+            ]
+        }
+    ],
+    "latex-workshop.latex.tools": [
+        {
+            "name": "gen dissertation PDF",
+            "command": "./projtool.sh",
+            "args": ["gen", "pdf", "-f", "./examples/dissertation"],
+            "cwd": "%WORKSPACE_FOLDER%"
+        }
+    ],
+    "latex-workshop.latex.recipe.default": "gen dissertation PDF",
+    "latex-workshop.latex.autoBuild.run": "onSave",
+    "latex-workshop.latex.outDir": "%DIR%/output/media/pdf",
+    "latex-workshop.view.outline.sections": [
+        "part",
+        "chapter|genFront|genPart",
+        "section|genSubPart",
+        "subsection|genTHM|genDEF|genFIG",
+        "subsubsection"
+    ]
+
+}

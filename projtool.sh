@@ -9,29 +9,29 @@ MODE=""
 
 usage() {
     cat <<'EOF'
-Usage: projtool.sh COMMAND ...
+Usage: projtool COMMAND ...
 
 Commands:
   gen                 Generate results, media, or a README
   rem                 Remove generated output or README files
 
-Run "projtool.sh gen --help" or "projtool.sh rem --help" for details.
+Run "projtool gen --help" or "projtool rem --help" for details.
 EOF
 }
 
 usage_gen() {
     cat <<'EOF'
-Usage: projtool.sh gen ACTION -f TARGET [-w verbose]
+Usage: projtool gen ACTION [-f TARGET] [-w verbose]
 
 Examples:
-  projtool.sh gen results -f ./examples/dissertation
-  projtool.sh gen media -f ./examples/dissertation
-  projtool.sh gen output -f ./examples/dissertation
-  projtool.sh gen readme -f ./examples/dissertation
-  projtool.sh gen pdf -f ./examples/dissertation
-  projtool.sh gen pdf -f ./examples/dissertation -w verbose
-  projtool.sh gen md -f ./examples/dissertation
-  projtool.sh gen md -f ./examples/dissertation -w verbose
+  projtool gen results
+  projtool gen media
+  projtool gen output
+  projtool gen readme
+  projtool gen pdf -f ./examples/dissertation
+  projtool gen pdf -f ./examples/dissertation -w verbose
+  projtool gen md -f ./examples/dissertation
+  projtool gen md -f ./examples/dissertation -w verbose
 
 Actions:
   results             Write results to TARGET/output/results
@@ -42,7 +42,7 @@ Actions:
   md                  Generate Markdown in TARGET/output/media/md
 
 Options:
-  -f TARGET           Read source files from TARGET
+  -f TARGET           Read source files from TARGET; defaults to the working directory
   -w verbose          Show tool output in the terminal
 
 Choose which code files run by listing them explicitly in TARGET/results.sh.
@@ -52,15 +52,15 @@ EOF
 
 usage_rem() {
     cat <<'EOF'
-Usage: projtool.sh rem SCOPE -f TARGET
+Usage: projtool rem SCOPE [-f TARGET]
 
 Examples:
-  projtool.sh rem output -f ./examples/dissertation
-  projtool.sh rem readme -f ./examples/dissertation
-  projtool.sh rem results -f ./examples/dissertation
-  projtool.sh rem media -f ./examples/dissertation
-  projtool.sh rem pdf -f ./examples/dissertation
-  projtool.sh rem md -f ./examples/dissertation
+  projtool rem output
+  projtool rem readme
+  projtool rem results
+  projtool rem media -f ./examples/dissertation
+  projtool rem pdf -f ./examples/dissertation
+  projtool rem md -f ./examples/dissertation
 
 Scopes:
   output              Remove TARGET/output
@@ -69,6 +69,9 @@ Scopes:
   media               Remove TARGET/output/media
   pdf                 Remove TARGET/output/media/pdf
   md                  Remove TARGET/output/media/md
+
+Options:
+  -f TARGET           Remove files from TARGET; defaults to the working directory
 EOF
 }
 
@@ -241,10 +244,10 @@ write_readme() {
             intro="The media developed in the project includes a [PDF file](./$DOCUMENT_STEM.pdf)."
             ;;
         false:true)
-            intro="The media developed in the project includes a [Markdown file](./$DOCUMENT_STEM.md). The contents of the Markdown file can also be found below."
+            intro="The media developed in the project includes a [Markdown file](./$DOCUMENT_STEM.md). The Markdown file is also included below."
             ;;
         true:true)
-            intro="The media developed in the project includes a [PDF file](./$DOCUMENT_STEM.pdf) and [Markdown file](./$DOCUMENT_STEM.md). The contents of the Markdown file can also be found below."
+            intro="The media developed in the project includes a [PDF file](./$DOCUMENT_STEM.pdf) and [Markdown file](./$DOCUMENT_STEM.md). The Markdown file is also included below."
             ;;
         false:false)
             die "no generated PDF or Markdown found in $MEDIA_OUTPUT_DIR"
@@ -279,19 +282,31 @@ remove_path() {
 main_gen() {
     [[ $# -eq 0 ]] && { usage_gen; exit 2; }
     [[ "$1" == "-h" || "$1" == "--help" ]] && { usage_gen; exit 0; }
-    [[ $# -eq 3 || $# -eq 5 ]] || { usage_gen >&2; exit 2; }
 
     ACTION="$(printf '%s' "$1" | tr '[:upper:]' '[:lower:]')"
-    [[ "$2" == "-f" || "$2" == "--from" ]] || die "expected -f TARGET"
-    TARGET="$3"
+    shift
+    TARGET="."
     VERBOSE=false
 
-    if [[ $# -eq 5 ]]; then
-        [[ "$4" == "-w" || "$4" == "--with" ]] || die "expected -w verbose"
-        MODIFIER="$(printf '%s' "$5" | tr '[:upper:]' '[:lower:]')"
-        [[ "$MODIFIER" == "verbose" ]] || die "unsupported modifier: $5"
-        VERBOSE=true
-    fi
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            -f|--from)
+                [[ $# -ge 2 ]] || die "missing target after $1"
+                TARGET="$2"
+                shift 2
+                ;;
+            -w|--with)
+                [[ $# -ge 2 ]] || die "missing modifier after $1"
+                MODIFIER="$(printf '%s' "$2" | tr '[:upper:]' '[:lower:]')"
+                [[ "$MODIFIER" == "verbose" ]] || die "unsupported modifier: $2"
+                VERBOSE=true
+                shift 2
+                ;;
+            *)
+                die "unexpected argument: $1"
+                ;;
+        esac
+    done
 
     case "$ACTION" in
         output|results|media|readme|pdf|md) ;;
@@ -326,11 +341,25 @@ main_gen() {
 main_rem() {
     [[ $# -eq 0 ]] && { usage_rem; exit 2; }
     [[ "$1" == "-h" || "$1" == "--help" ]] && { usage_rem; exit 0; }
-    [[ $# -eq 3 ]] || { usage_rem >&2; exit 2; }
 
     SCOPE="$(printf '%s' "$1" | tr '[:upper:]' '[:lower:]')"
-    [[ "$2" == "-f" || "$2" == "--from" ]] || die "expected -f TARGET"
-    TARGET="$3"
+    shift
+    TARGET="."
+    DEFAULT_TARGET=true
+
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            -f|--from)
+                [[ $# -ge 2 ]] || die "missing target after $1"
+                TARGET="$2"
+                DEFAULT_TARGET=false
+                shift 2
+                ;;
+            *)
+                die "unexpected argument: $1"
+                ;;
+        esac
+    done
 
     case "$SCOPE" in
         output) OUTPUT_PATH="output" ;;
@@ -343,6 +372,10 @@ main_rem() {
     esac
 
     resolve_target "$TARGET"
+
+    if [[ "$DEFAULT_TARGET" == true && ! -f "$DOCUMENT_FILE" && ! -f "$RESULTS_SCRIPT" ]]; then
+        die "working directory is not a ProjTool project"
+    fi
 
     if [[ "$SCOPE" == readme ]]; then
         remove_path "$TARGET_DIR/$DOCUMENT_STEM.pdf"
