@@ -1,13 +1,13 @@
 # Fdb version 4
-["biber output/media/pdf/dissertation"] 1787271147.02951 "output/media/pdf/dissertation.bcf" "output/media/pdf/dissertation.bbl" "output/media/pdf/dissertation" 1787271151.44753 0
+["biber output/media/pdf/dissertation"] 1787273569.16442 "output/media/pdf/dissertation.bcf" "output/media/pdf/dissertation.bbl" "output/media/pdf/dissertation" 1787273573.36269 0
   "./references.bib" 1787266807.90211 607 7a84edea850a66bda40cbd17c250c3cc ""
-  "output/media/pdf/dissertation.bcf" 1787271151.34117 108658 a6140a39659bdcc1b9a1d16a9ea2e76f "pdflatex"
+  "output/media/pdf/dissertation.bcf" 1787273573.26517 108658 a6140a39659bdcc1b9a1d16a9ea2e76f "pdflatex"
   (generated)
   "output/media/pdf/dissertation.bbl"
   "output/media/pdf/dissertation.blg"
   (rewritten before read)
-["pdflatex"] 1787271150.43311 "/Users/gregorymacchio/Documents/Mirror/laptop/global/writing/software/ProjTool/examples/dissertation/dissertation.tex" "output/media/pdf/dissertation.pdf" "dissertation" 1787271151.44778 0
-  "/Users/gregorymacchio/Documents/Mirror/laptop/global/writing/software/ProjTool/examples/dissertation/dissertation.tex" 1787270238.91938 3386 7c357b5b973a47d63197dd803aecc169 ""
+["pdflatex"] 1787273572.37259 "/Users/gregorymacchio/Documents/Mirror/laptop/global/writing/software/ProjTool/examples/dissertation/dissertation.tex" "output/media/pdf/dissertation.pdf" "dissertation" 1787273573.36296 0
+  "/Users/gregorymacchio/Documents/Mirror/laptop/global/writing/software/ProjTool/examples/dissertation/dissertation.tex" 1787273568.03126 3386 7c357b5b973a47d63197dd803aecc169 ""
   "/Users/gregorymacchio/Documents/Mirror/laptop/global/writing/software/ProjTool/template.cls" 1787266437.11554 25429 45921efd348c38de62f252b0e7be2bb3 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1136849721 2971 def0b6c1f0b107b3b936def894055589 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -194,14 +194,14 @@
   "/usr/local/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1769657775 5467155 19efa205003f9ecad95fbbaa6ff24da1 ""
   "/usr/local/texlive/2025/texmf-var/web2c/pdftex/pdflatex.fmt" 1741450574 3345740 46b66fdb0378f7bf5921b5eabf1762b8 ""
   "/usr/local/texlive/2025/texmf.cnf" 1741450484 577 418a7058ec8e006d8704f60ecd22c938 ""
-  "dissertation.tex" 1787270238.91938 3386 7c357b5b973a47d63197dd803aecc169 ""
-  "output/media/pdf/dissertation.aux" 1787271151.33983 4281 55f5b384d28d58aa790ea8251e35cbdb "pdflatex"
-  "output/media/pdf/dissertation.bbl" 1787271148.41167 5147 d085c53d75bc04fdadc1141141180098 "biber output/media/pdf/dissertation"
-  "output/media/pdf/dissertation.out" 1787271151.34043 1568 5b89c82c335794e2964bcae83e9b0b89 "pdflatex"
-  "output/media/pdf/dissertation.run.xml" 1787271151.34172 2363 7aa00b774d46edd9c8d7280b8161f47c "pdflatex"
-  "output/media/pdf/dissertation.toc" 1787271151.34178 761 2d3c2691ce10d02b57e24ab375be2cf3 "pdflatex"
-  "output/results/image.png" 1787271145.90214 15057 a100dcd019ce3a8cd83a854c6b405beb ""
-  "output/results/natural_numbers.tex" 1787271145.68468 29 7f7901fcc2406d5dfddf9e24d9b37fa7 ""
+  "dissertation.tex" 1787273568.03126 3386 7c357b5b973a47d63197dd803aecc169 ""
+  "output/media/pdf/dissertation.aux" 1787273573.26364 4281 55f5b384d28d58aa790ea8251e35cbdb "pdflatex"
+  "output/media/pdf/dissertation.bbl" 1787273570.35382 5147 d085c53d75bc04fdadc1141141180098 "biber output/media/pdf/dissertation"
+  "output/media/pdf/dissertation.out" 1787273573.26443 1568 5b89c82c335794e2964bcae83e9b0b89 "pdflatex"
+  "output/media/pdf/dissertation.run.xml" 1787273573.2657 2363 7aa00b774d46edd9c8d7280b8161f47c "pdflatex"
+  "output/media/pdf/dissertation.toc" 1787273573.26575 761 2d3c2691ce10d02b57e24ab375be2cf3 "pdflatex"
+  "output/results/image.png" 1787273555.20433 15057 a100dcd019ce3a8cd83a854c6b405beb ""
+  "output/results/natural_numbers.tex" 1787273554.98899 29 7f7901fcc2406d5dfddf9e24d9b37fa7 ""
   (generated)
   "output/media/pdf/dissertation.aux"
   "output/media/pdf/dissertation.bcf"

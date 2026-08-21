@@ -113,19 +113,19 @@ cleanup_results_work() {
 }
 
 run_results_stage() {
-    local file
+    local entry
     local result
 
     [[ -f "$RESULTS_SCRIPT" ]] || die "missing results runner: $RESULTS_SCRIPT"
     mkdir -p -- "$RESULTS_OUTPUT_DIR"
     RESULTS_WORK_DIR="$(mktemp -d "$OUTPUT_DIR/.results.XXXXXX")"
 
-    while IFS= read -r file; do
-        ln -s -- "$file" "$RESULTS_WORK_DIR/$(basename -- "$file")"
-    done < <(find "$TARGET_DIR" -maxdepth 1 -type f -print | LC_ALL=C sort)
+    while IFS= read -r entry; do
+        ln -s -- "$entry" "$RESULTS_WORK_DIR/$(basename -- "$entry")"
+    done < <(find "$TARGET_DIR" -mindepth 1 -maxdepth 1 ! -name output -print | LC_ALL=C sort)
 
     printf '%s\n' '-> running results.sh'
-    (cd -- "$RESULTS_WORK_DIR" && bash ./results.sh)
+    (cd -- "$RESULTS_WORK_DIR" && PROJTOOL_VERBOSE="$VERBOSE" bash ./results.sh)
 
     while IFS= read -r result; do
         mv -f -- "$result" "$RESULTS_OUTPUT_DIR/"
