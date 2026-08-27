@@ -154,10 +154,9 @@
     \RequirePackage{amssymb}
     \RequirePackage{amsthm}
     \RequirePackage{cancel}
+    \newcommand{\Arg}{\mathrm{Arg} \:}
     \newcommand{\ra}{\rightarrow}
     \newcommand{\la}{\leftarrow}
-    \renewcommand{\l}{\left}
-    \renewcommand{\r}{\right}
     \newcommand{\p}{\partial}
     \newcommand{\floor}[1]{\left \lfloor ##1 \right \rfloor}
     \renewcommand{\d}{\mathrm{d}}
@@ -176,12 +175,11 @@
     \newcommand{\Q}{\mathbb{Q}}
     \newcommand{\norm}[1]{\left\| ##1 \right\|}
     \renewcommand{\exp}[1]{\mathrm{exp}\left( ##1 \right)}
-    \newcommand{\Arg}{\mathrm{Arg} \:}
     \newcommand{\Log}{\mathrm{Log} \:}
-    \newcommand{\abs}[1]{\l| ##1 \r|}
+    \newcommand{\abs}[1]{\left| ##1 \right|}
     \renewcommand{\sb}[1]{\left[ ##1 \right]}
-    \newcommand{\cb}[1]{\l\{ ##1 \r\}}
-    \newcommand{\pb}[1]{\l( ##1 \r)}
+    \newcommand{\cb}[1]{\left\{ ##1 \right\}}
+    \newcommand{\pb}[1]{\left( ##1 \right)}
     \newcommand{\innerprod}[2]{\langle ##1, ##2 \rangle}
     \newcommand{\pd}[3]{\frac{\partial^{##1} ##2}{\partial^{##1} ##3}}
     \newcommand{\sgn}{\text{sgn}}
@@ -312,7 +310,7 @@
 
 % Define references-related package.
 \newcommand{\loadReferencesPackage}{
-    \usepackage[
+    \RequirePackage[
         backend=biber,
         style=numeric,
         sorting=ynt,
