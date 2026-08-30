@@ -1,13 +1,13 @@
 # Fdb version 4
-["biber output/media/pdf/preprint"] 1788103580.15503 "output/media/pdf/preprint.bcf" "output/media/pdf/preprint.bbl" "output/media/pdf/preprint" 1788105542.37121 0
+["biber output/media/pdf/preprint"] 1788103580.15503 "output/media/pdf/preprint.bcf" "output/media/pdf/preprint.bbl" "output/media/pdf/preprint" 1788105953.08744 0
   "./references.bib" 1787272255.8603 607 7a84edea850a66bda40cbd17c250c3cc ""
-  "output/media/pdf/preprint.bcf" 1788105542.24023 108910 1ba1888b4230e1bcf8d153551e398624 "pdflatex"
+  "output/media/pdf/preprint.bcf" 1788105952.95733 108910 1ba1888b4230e1bcf8d153551e398624 "pdflatex"
   (generated)
   "output/media/pdf/preprint.bbl"
   "output/media/pdf/preprint.blg"
   (rewritten before read)
-["pdflatex"] 1788105541.20899 "/Users/gregorymacchio/Documents/Mirror/laptop/global/writing/software/ProjTool/examples/preprint/preprint.tex" "output/media/pdf/preprint.pdf" "preprint" 1788105542.3715 0
-  "/Users/gregorymacchio/Documents/Mirror/laptop/global/writing/software/ProjTool/examples/preprint/preprint.tex" 1788105533.50181 2140 cbef47ecb8be43dbff9fe7c474ca474e ""
+["pdflatex"] 1788105951.96105 "/Users/gregorymacchio/Documents/Mirror/laptop/global/writing/software/ProjTool/examples/preprint/preprint.tex" "output/media/pdf/preprint.pdf" "preprint" 1788105953.08771 0
+  "/Users/gregorymacchio/Documents/Mirror/laptop/global/writing/software/ProjTool/examples/preprint/preprint.tex" 1788105940.53104 2198 b2ddbe3aa2a2d73493a80a10c178c7f4 ""
   "/Users/gregorymacchio/Documents/Mirror/laptop/global/writing/software/ProjTool/template.cls" 1788104144.7522 40182 aeeeea04d92b9d572ba405b4b4674906 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1136849721 2971 def0b6c1f0b107b3b936def894055589 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -17,6 +17,7 @@
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/jknappen/ec/ecbx1200.tfm" 1136768653 3584 402da0b29eafbad07963b1224b222f18 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/jknappen/ec/ecbx1440.tfm" 1136768653 3584 13049b61b922a28b158a38aeff75ee9b ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/jknappen/ec/ecrm0600.tfm" 1136768653 3584 291a5713401683441e0a8c8f4417b17b ""
+  "/usr/local/texlive/2025/texmf-dist/fonts/tfm/jknappen/ec/ecrm0800.tfm" 1136768653 3584 49064b465390a8e316a3c8417a050403 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/jknappen/ec/ecrm0900.tfm" 1136768653 3584 d3d8ac8b25ca19c0a40b86a5db1e8ccc ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/jknappen/ec/ecrm1000.tfm" 1136768653 3584 adb004a0c8e7c46ee66cad73671f37b4 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/jknappen/ec/ecrm1095.tfm" 1136768653 3584 929cdff2b7a8c11bd4d49fd68cb0ae70 ""
@@ -49,12 +50,12 @@
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/public/cm/cmsy6.tfm" 1136768653 1116 933a60c408fc0a863a92debe84b2d294 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/public/cm/cmsy8.tfm" 1136768653 1120 8b7d695260f3cff42e636090a8002094 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/public/cm/cmsy9.tfm" 1136768653 1116 25a7bf822c58caf309a702ef79f4afbb ""
-  "/usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb" 1248133631 32726 0a1aea6fcd6468ee2cf64d891f5c43c8 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfbx0900.pfb" 1215737283 143961 201304b65f97bc643fbd0bcf0685d1fe ""
   "/usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfbx1000.pfb" 1215737283 145408 43d44302ca7d82d487f511f83e309505 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfbx1095.pfb" 1215737283 154600 ea54091d31de803b613ba9e80ca51709 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb" 1215737283 140176 d4962f948b4cc0adf4d3dde77a128c95 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb" 1215737283 135942 859a90cad7494a1e79c94baf546d7de5 ""
+  "/usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm0800.pfb" 1215737283 164227 3df942b4ff2124425d8fb1b6d3e01c7a ""
   "/usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm0900.pfb" 1215737283 149037 995a6f1e12c1d647b99b1cf55db78699 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb" 1215737283 138258 6525c253f16cededa14c7fd0da7f67b2 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb" 1215737283 145929 f25e56369a345c4ff583b067cd87ce8e ""
@@ -211,14 +212,14 @@
   "/usr/local/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1769657775 5467155 19efa205003f9ecad95fbbaa6ff24da1 ""
   "/usr/local/texlive/2025/texmf-var/web2c/pdftex/pdflatex.fmt" 1741450574 3345740 46b66fdb0378f7bf5921b5eabf1762b8 ""
   "/usr/local/texlive/2025/texmf.cnf" 1741450484 577 418a7058ec8e006d8704f60ecd22c938 ""
-  "output/media/pdf/preprint.aux" 1788105542.23877 3482 e4cb9c16943e1a4a5ad3c60629fd7fbe "pdflatex"
+  "output/media/pdf/preprint.aux" 1788105952.95498 3482 5262ef4f5277a34a6e9ea9a55e28d307 "pdflatex"
   "output/media/pdf/preprint.bbl" 1788103581.54995 5147 d085c53d75bc04fdadc1141141180098 "biber output/media/pdf/preprint"
-  "output/media/pdf/preprint.out" 1788105542.23948 1092 c34d338de29b425479768c293dbfcb97 "pdflatex"
-  "output/media/pdf/preprint.run.xml" 1788105542.24078 2335 43f50a0e5857aa005f6ce72829417481 "pdflatex"
-  "output/media/pdf/preprint.toc" 1788105542.24083 862 826700b12652cf252570584d1f1f2cfe "pdflatex"
-  "output/results/image.png" 1788105541.06609 15057 a100dcd019ce3a8cd83a854c6b405beb ""
-  "output/results/natural_numbers.tex" 1788105540.84555 29 7f7901fcc2406d5dfddf9e24d9b37fa7 ""
-  "preprint.tex" 1788105533.50181 2140 cbef47ecb8be43dbff9fe7c474ca474e ""
+  "output/media/pdf/preprint.out" 1788105952.95635 1092 c34d338de29b425479768c293dbfcb97 "pdflatex"
+  "output/media/pdf/preprint.run.xml" 1788105952.95795 2335 43f50a0e5857aa005f6ce72829417481 "pdflatex"
+  "output/media/pdf/preprint.toc" 1788105952.95801 862 826700b12652cf252570584d1f1f2cfe "pdflatex"
+  "output/results/image.png" 1788105950.63922 15057 a100dcd019ce3a8cd83a854c6b405beb ""
+  "output/results/natural_numbers.tex" 1788105950.40318 29 7f7901fcc2406d5dfddf9e24d9b37fa7 ""
+  "preprint.tex" 1788105940.53104 2198 b2ddbe3aa2a2d73493a80a10c178c7f4 ""
   (generated)
   "output/media/pdf/preprint.aux"
   "output/media/pdf/preprint.bcf"

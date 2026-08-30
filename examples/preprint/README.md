@@ -6,9 +6,9 @@ This project was generated using [ProjTool](https://github.com/grmacchio/LaTeXTo
 
 **Intended Journal:** \<Intended Journal Content\>
 
-**Authors:** \<Author Content 1\> $^1$ and \<Author Content 2\> $^1$
+**Authors:** \<Author Content 1\><sup>1</sup> and \<Author Content 2\><sup>1</sup>
 
-**Affiliations:** $^1$ \<Affiliation Content\>
+**Affiliations:** <sup>1</sup>\<Affiliation Content\>
 
 **Date:** \<Date\>
 
