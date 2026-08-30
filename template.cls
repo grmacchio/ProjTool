@@ -999,11 +999,67 @@
     \LoadClass[11pt]{article}
     \RequirePackage[margin=1in]{geometry}
     \RequirePackage{titlesec}
-    \titlespacing*{\section}{0pt}{0pt}{0pt}
-    \titlespacing*{\subsection}{0pt}{0pt}{0pt}
+    \newlength{\templateNoteSectionBeforeSpace}
+    \newlength{\templateNoteSectionAfterSpace}
+    \newlength{\templateNoteSubsectionBeforeSpace}
+    \newlength{\templateNoteSubsectionAfterSpace}
+    \newlength{\templateNoteFigureBeforeSpace}
+    \newlength{\templateNoteCaptionSpace}
+    \setlength{\templateNoteSectionBeforeSpace}{\baselineskip}
+    \addtolength{\templateNoteSectionBeforeSpace}{-1.6pt}
+    \setlength{\templateNoteSectionAfterSpace}{\baselineskip}
+    \addtolength{\templateNoteSectionAfterSpace}{.7pt}
+    \setlength{\templateNoteSubsectionBeforeSpace}{\baselineskip}
+    \addtolength{\templateNoteSubsectionBeforeSpace}{.5pt}
+    \setlength{\templateNoteSubsectionAfterSpace}{\baselineskip}
+    \addtolength{\templateNoteSubsectionAfterSpace}{.3pt}
+    \titlespacing*{\section}{0pt}{\templateNoteSectionBeforeSpace}{
+        \templateNoteSectionAfterSpace}
+    \titlespacing*{\subsection}{0pt}{\templateNoteSubsectionBeforeSpace}{
+        \templateNoteSubsectionAfterSpace}
     \RequirePackage{authblk}
+    \setlength{\affilsep}{1.4em}
+    \patchcmd{\@maketitle}
+        {\vskip 1.5em}
+        {\vskip 1.31em}
+        {}
+        {\ClassError{template}{Could not set note author spacing}{}}
+    \patchcmd{\@maketitle}
+        {\vskip 1em}
+        {\vskip .25em}
+        {}
+        {\ClassError{template}{Could not set note date spacing}{}}
+    \patchcmd{\@maketitle}
+        {\vskip 1.5em}
+        {\vskip .255em}
+        {}
+        {\ClassError{template}{Could not set note contents spacing}{}}
     \loadPackagesSharedByAll
     \loadPackagesSharedByDocs
+    \setlength{\templateSubTOCIndent}{-0.33em}
+    \patchcmd{\l@section}
+        {\addvspace{1.0em \@plus\p@}}
+        {\addvspace{\baselineskip}}
+        {}
+        {\ClassError{template}{Could not set note TOC spacing}{}}
+    \newtheoremstyle{templateNoteDefinition}
+        {\baselineskip}{\baselineskip}
+        {\normalfont}{}{\bfseries}{.}{5pt plus 1pt minus 1pt}{}
+    \csletcs{th@definition}{th@templateNoteDefinition}
+    \setlength{\intextsep}{.7\baselineskip}
+    \setlength{\templateNoteFigureBeforeSpace}{-\intextsep}
+    \addtolength{\templateNoteFigureBeforeSpace}{1pt}
+    \BeforeBeginEnvironment{figure}{
+        \vspace{\templateNoteFigureBeforeSpace}}
+    \setlength{\templateNoteCaptionSpace}{\baselineskip}
+    \addtolength{\templateNoteCaptionSpace}{2pt}
+    \captionsetup[figure]{skip=\templateNoteCaptionSpace}
+    \setlength{\bibitemsep}{\baselineskip}
+    \addtolength{\bibitemsep}{1.6pt}
+    \defbibheading{bibliography}[\refname]{
+        \section*{#1}
+        \vspace{-.5pt}}
+    \renewcommand{\templateProofsInitialSpacing}{\vspace{-1.8pt}}
     \counterwithin{theorem}{subsection}
     \let\c@figure\c@theorem
     \renewcommand{\thefigure}{\thetheorem}
@@ -1068,7 +1124,7 @@
             \edef\templateCurrentNumMode{\genPartNumMode}
             \edef\templateCurrentTocMode{\genPartTocMode}
             \ifdefstring{\genPartTocMode}{toc}{
-                \templateSubTOC{subsection}{subsubsection}
+                \templateSubTOC{subsubsection}{subsection}
             }{}
             #4
         \endgroup
@@ -1099,6 +1155,9 @@
         \begingroup
             \edef\templateCurrentNumMode{\genSubPartNumMode}
             \edef\templateCurrentTocMode{\genSubPartTocMode}
+            \ifdefstring{\genSubPartTocMode}{toc}{
+                \templateSubTOC{subsection}{subsubsection}
+            }{}
             #4
         \endgroup
     }
@@ -1107,12 +1166,20 @@
         \author{#2\\#3}
         \date{#4}
         \maketitle
-        \templateMainTOC{section}
+        \begingroup
+            \etocsettocstyle{
+                \section*{\contentsname}
+                \vspace{-\baselineskip}
+            }{}
+            \templateMainTOC{section}
+        \endgroup
     }
     \renewcommand{\genBack}{
+        \clearpage
         \templateRenderTheoremProofs
         \clearpage
         \phantomsection
+        \addcontentsline{toc}{section}{References}
         \printbibliography[title={References}]
     }
 }{

@@ -362,7 +362,7 @@ function Pandoc(document)
         document.meta["template-type"] or "dissertation")
     local presentation = template_type == "presentation"
     local plain_titles = template_type == "dissertation" or
-        template_type == "preprint"
+        template_type == "preprint" or template_type == "note"
     local bold_titles = not plain_titles
     local part_label = "Chapter"
     local subpart_label = "Section"

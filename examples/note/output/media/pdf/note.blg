@@ -1,20 +1,20 @@
 [0] Config.pm:308> INFO - This is Biber 2.20
 [0] Config.pm:311> INFO - Logfile is 'output/media/pdf/note.blg'
-[34] biber-darwin:340> INFO - === Thu Aug 20, 2026, 22:41:58
+[35] biber-darwin:340> INFO - === Thu Aug 27, 2026, 17:14:54
 [43] Biber.pm:420> INFO - Reading 'output/media/pdf/note.bcf'
-[82] Biber.pm:994> INFO - Found 4 citekeys in bib section 0
-[89] Biber.pm:4463> INFO - Processing section 0
-[97] Biber.pm:4654> INFO - Looking for bibtex file './references.bib' for section 0
-[97] bibtex.pm:1713> INFO - LaTeX decoding ...
-[99] bibtex.pm:1519> INFO - Found BibTeX data source './references.bib'
-[121] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[121] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
-[121] Biber.pm:4283> INFO - Sorting list 'ynt/global//global/global/global' of type 'entry' with template 'ynt' and locale 'en-US'
-[121] Biber.pm:4289> INFO - No sort tailoring available for locale 'en-US'
-[125] bbl.pm:676> INFO - Writing 'output/media/pdf/note.bbl' with encoding 'UTF-8'
-[126] bbl.pm:779> INFO - Output to output/media/pdf/note.bbl
-[126] Biber.pm:131> WARN - legacy year field '<Date>' in entry '1970test' is not an integer - this will probably not sort properly.
-[126] Biber.pm:131> WARN - legacy year field '<Date>' in entry '2002test' is not an integer - this will probably not sort properly.
-[126] Biber.pm:131> WARN - legacy year field '<Date>' in entry '2013test' is not an integer - this will probably not sort properly.
-[126] Biber.pm:131> WARN - legacy year field '<Date>' in entry '2018test' is not an integer - this will probably not sort properly.
-[126] Biber.pm:133> INFO - WARNINGS: 4
+[83] Biber.pm:994> INFO - Found 4 citekeys in bib section 0
+[90] Biber.pm:4463> INFO - Processing section 0
+[95] Biber.pm:4654> INFO - Looking for bibtex file './references.bib' for section 0
+[95] bibtex.pm:1713> INFO - LaTeX decoding ...
+[97] bibtex.pm:1519> INFO - Found BibTeX data source './references.bib'
+[119] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[119] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[119] Biber.pm:4283> INFO - Sorting list 'ynt/global//global/global/global' of type 'entry' with template 'ynt' and locale 'en-US'
+[119] Biber.pm:4289> INFO - No sort tailoring available for locale 'en-US'
+[123] bbl.pm:676> INFO - Writing 'output/media/pdf/note.bbl' with encoding 'UTF-8'
+[124] bbl.pm:779> INFO - Output to output/media/pdf/note.bbl
+[124] Biber.pm:131> WARN - legacy year field '<Date>' in entry '1970test' is not an integer - this will probably not sort properly.
+[124] Biber.pm:131> WARN - legacy year field '<Date>' in entry '2002test' is not an integer - this will probably not sort properly.
+[124] Biber.pm:131> WARN - legacy year field '<Date>' in entry '2013test' is not an integer - this will probably not sort properly.
+[124] Biber.pm:131> WARN - legacy year field '<Date>' in entry '2018test' is not an integer - this will probably not sort properly.
+[124] Biber.pm:133> INFO - WARNINGS: 4

@@ -212,7 +212,7 @@ write_markdown_build_file() {
     if [[ "$TEMPLATE_TYPE" == "preprint" ]]; then
         front_command='\newcommand{\genFront}[7]{\subsection{#1}\textbf{Intended Journal:} #2\par\textbf{Authors:} #3\par\textbf{Affiliations:} #4\par\textbf{Date:} #5\par\subsection{Abstract}#6\subsection{Acknowledgments}#7\subsection{\textbf{LaTeXToTOC}}}'
     elif [[ "$TEMPLATE_TYPE" == "note" ]]; then
-        front_command='\newcommand{\genFront}[4]{\subsection{\textbf{Title}: #1}\textbf{Authors:} #2\par\textbf{Affiliations:} #3\par\textbf{Date:} #4\par\subsection{\textbf{LaTeXToTOC}}}'
+        front_command='\newcommand{\genFront}[4]{\subsection{#1}\textbf{Authors:} #2\par\textbf{Affiliations:} #3\par\textbf{Date:} #4\par\subsection{\textbf{LaTeXToTOC}}}'
     elif [[ "$TEMPLATE_TYPE" == "presentation" ]]; then
         front_command='\newcommand{\genFront}[5]{\subsection{\textbf{Title}: #1}\textbf{Authors:} #2\par\textbf{Affiliations:} #3\par\textbf{Acknowledgments:} #4\par\textbf{Date:} #5\par\subsection{\textbf{LaTeXToTOC}}}'
         part_command='\newcommand{\genPart}[2]{\subsection{\textbf{LaTeXToPart} \textbf{nonum} \textbf{toc} #1}#2}'
