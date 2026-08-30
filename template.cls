@@ -310,7 +310,7 @@
         maxbibnames=99
     ]{biblatex}
     \RequirePackage{tabularx}
-    \addbibresource{./references.bib}
+    \addbibresource[glob]{./references/*/*.bib}
     \DeclareFieldFormat[article]{title}{##1}
     \DeclareFieldFormat[article]{journaltitle}{##1}
     \DeclareFieldFormat{url}{%

@@ -1,20 +1,26 @@
 [0] Config.pm:308> INFO - This is Biber 2.20
 [0] Config.pm:311> INFO - Logfile is 'output/media/pdf/note.blg'
-[35] biber-darwin:340> INFO - === Thu Aug 27, 2026, 17:14:54
-[43] Biber.pm:420> INFO - Reading 'output/media/pdf/note.bcf'
+[35] biber-darwin:340> INFO - === Sun Aug 30, 2026, 14:52:29
+[44] Biber.pm:420> INFO - Reading 'output/media/pdf/note.bcf'
 [83] Biber.pm:994> INFO - Found 4 citekeys in bib section 0
 [90] Biber.pm:4463> INFO - Processing section 0
-[95] Biber.pm:4654> INFO - Looking for bibtex file './references.bib' for section 0
-[95] bibtex.pm:1713> INFO - LaTeX decoding ...
-[97] bibtex.pm:1519> INFO - Found BibTeX data source './references.bib'
-[119] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
-[119] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[119] Biber.pm:4283> INFO - Sorting list 'ynt/global//global/global/global' of type 'entry' with template 'ynt' and locale 'en-US'
-[119] Biber.pm:4289> INFO - No sort tailoring available for locale 'en-US'
-[123] bbl.pm:676> INFO - Writing 'output/media/pdf/note.bbl' with encoding 'UTF-8'
-[124] bbl.pm:779> INFO - Output to output/media/pdf/note.bbl
-[124] Biber.pm:131> WARN - legacy year field '<Date>' in entry '1970test' is not an integer - this will probably not sort properly.
-[124] Biber.pm:131> WARN - legacy year field '<Date>' in entry '2002test' is not an integer - this will probably not sort properly.
-[124] Biber.pm:131> WARN - legacy year field '<Date>' in entry '2013test' is not an integer - this will probably not sort properly.
-[124] Biber.pm:131> WARN - legacy year field '<Date>' in entry '2018test' is not an integer - this will probably not sort properly.
-[124] Biber.pm:133> INFO - WARNINGS: 4
+[91] Utils.pm:85> INFO - Globbing data source './references/*/*.bib'
+[91] Utils.pm:96> INFO - Globbed data source './references/*/*.bib' to './references/1970author/1970author.bib,./references/2002author/2002author.bib,./references/2013author/2013author.bib,./references/2018author/2018author.bib'
+[98] Biber.pm:4654> INFO - Looking for bibtex file './references/1970author/1970author.bib' for section 0
+[98] bibtex.pm:1713> INFO - LaTeX decoding ...
+[99] bibtex.pm:1519> INFO - Found BibTeX data source './references/1970author/1970author.bib'
+[113] Biber.pm:4654> INFO - Looking for bibtex file './references/2002author/2002author.bib' for section 0
+[113] bibtex.pm:1713> INFO - LaTeX decoding ...
+[114] bibtex.pm:1519> INFO - Found BibTeX data source './references/2002author/2002author.bib'
+[115] Biber.pm:4654> INFO - Looking for bibtex file './references/2013author/2013author.bib' for section 0
+[115] bibtex.pm:1713> INFO - LaTeX decoding ...
+[116] bibtex.pm:1519> INFO - Found BibTeX data source './references/2013author/2013author.bib'
+[117] Biber.pm:4654> INFO - Looking for bibtex file './references/2018author/2018author.bib' for section 0
+[118] bibtex.pm:1713> INFO - LaTeX decoding ...
+[118] bibtex.pm:1519> INFO - Found BibTeX data source './references/2018author/2018author.bib'
+[124] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[124] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[124] Biber.pm:4283> INFO - Sorting list 'ynt/global//global/global/global' of type 'entry' with template 'ynt' and locale 'en-US'
+[124] Biber.pm:4289> INFO - No sort tailoring available for locale 'en-US'
+[129] bbl.pm:676> INFO - Writing 'output/media/pdf/note.bbl' with encoding 'UTF-8'
+[129] bbl.pm:779> INFO - Output to output/media/pdf/note.bbl

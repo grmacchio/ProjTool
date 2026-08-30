@@ -121,7 +121,7 @@ Test Code Output: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
 <tr>
 <td width="48" align="center" valign="middle" style="border:1px solid currentColor" rowspan="6">[1]</td>
 <td width="96" align="left" valign="top" nowrap style="border:1px solid currentColor"><strong>Date:</strong></td>
-<td width="100%" align="left" valign="top" style="border:1px solid currentColor">&lt;Date&gt;</td>
+<td width="100%" align="left" valign="top" style="border:1px solid currentColor">1970</td>
 </tr>
 <tr>
 <td width="96" align="left" valign="top" nowrap style="border:1px solid currentColor"><strong>Authors:</strong></td>
@@ -152,7 +152,7 @@ Test Code Output: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
 <tr>
 <td width="48" align="center" valign="middle" style="border:1px solid currentColor" rowspan="6">[2]</td>
 <td width="96" align="left" valign="top" nowrap style="border:1px solid currentColor"><strong>Date:</strong></td>
-<td width="100%" align="left" valign="top" style="border:1px solid currentColor">&lt;Date&gt;</td>
+<td width="100%" align="left" valign="top" style="border:1px solid currentColor">2002</td>
 </tr>
 <tr>
 <td width="96" align="left" valign="top" nowrap style="border:1px solid currentColor"><strong>Authors:</strong></td>
@@ -183,7 +183,7 @@ Test Code Output: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
 <tr>
 <td width="48" align="center" valign="middle" style="border:1px solid currentColor" rowspan="5">[3]</td>
 <td width="96" align="left" valign="top" nowrap style="border:1px solid currentColor"><strong>Date:</strong></td>
-<td width="100%" align="left" valign="top" style="border:1px solid currentColor">&lt;Date&gt;</td>
+<td width="100%" align="left" valign="top" style="border:1px solid currentColor">2013</td>
 </tr>
 <tr>
 <td width="96" align="left" valign="top" nowrap style="border:1px solid currentColor"><strong>Authors:</strong></td>
@@ -210,7 +210,7 @@ Test Code Output: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
 <tr>
 <td width="48" align="center" valign="middle" style="border:1px solid currentColor" rowspan="6">[4]</td>
 <td width="96" align="left" valign="top" nowrap style="border:1px solid currentColor"><strong>Date:</strong></td>
-<td width="100%" align="left" valign="top" style="border:1px solid currentColor">&lt;Date&gt;</td>
+<td width="100%" align="left" valign="top" style="border:1px solid currentColor">2018</td>
 </tr>
 <tr>
 <td width="96" align="left" valign="top" nowrap style="border:1px solid currentColor"><strong>Authors:</strong></td>

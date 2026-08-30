@@ -1,14 +1,17 @@
 # Fdb version 4
-["biber output/media/pdf/note"] 1787865293.52083 "output/media/pdf/note.bcf" "output/media/pdf/note.bbl" "output/media/pdf/note" 1788106661.23757 0
-  "./references.bib" 1787278485.25077 607 7a84edea850a66bda40cbd17c250c3cc ""
-  "output/media/pdf/note.bcf" 1788106661.12912 108910 1ba1888b4230e1bcf8d153551e398624 "pdflatex"
+["biber output/media/pdf/note"] 1788115948.19822 "output/media/pdf/note.bcf" "output/media/pdf/note.bbl" "output/media/pdf/note" 1788115952.98186 0
+  "./references/1970author/1970author.bib" 1788115647.61564 157 80ade23eaea446bb0bdf11b86d7b5224 ""
+  "./references/2002author/2002author.bib" 1788115647.61752 156 23e175d00be542abb5a06619373a4bc8 ""
+  "./references/2013author/2013author.bib" 1788115647.61921 127 91b6fd01a377bb0bfc525cccf84c282e ""
+  "./references/2018author/2018author.bib" 1788115647.62039 156 3dc7314431018d7898166a2df1c65657 ""
+  "output/media/pdf/note.bcf" 1788115952.87927 108913 f96c5835e8a8d228c6adb2cead355f9b "pdflatex"
   (generated)
   "output/media/pdf/note.bbl"
   "output/media/pdf/note.blg"
   (rewritten before read)
-["pdflatex"] 1788106660.08054 "/Users/gregorymacchio/Documents/Mirror/laptop/global/writing/software/ProjTool/examples/note/note.tex" "output/media/pdf/note.pdf" "note" 1788106661.23782 0
+["pdflatex"] 1788115951.86064 "/Users/gregorymacchio/Documents/Mirror/laptop/global/writing/software/ProjTool/examples/note/note.tex" "output/media/pdf/note.pdf" "note" 1788115952.98213 0
   "/Users/gregorymacchio/Documents/Mirror/laptop/global/writing/software/ProjTool/examples/note/note.tex" 1788106135.59886 2077 405eb5a2c2abb6ae5699c9e6366eca88 ""
-  "/Users/gregorymacchio/Documents/Mirror/laptop/global/writing/software/ProjTool/template.cls" 1788106647.71125 43015 b173c74f6c6961cee0539885db2d7690 ""
+  "/Users/gregorymacchio/Documents/Mirror/laptop/global/writing/software/ProjTool/template.cls" 1788115772.65871 43025 f1dff255b207a553940cd5ebcfe83927 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1136849721 2971 def0b6c1f0b107b3b936def894055589 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/jknappen/ec/ecbx1095.tfm" 1136768653 3584 21b378cca2e40816b0e6d74a4dc98f04 ""
@@ -195,13 +198,13 @@
   "/usr/local/texlive/2025/texmf-var/web2c/pdftex/pdflatex.fmt" 1741450574 3345740 46b66fdb0378f7bf5921b5eabf1762b8 ""
   "/usr/local/texlive/2025/texmf.cnf" 1741450484 577 418a7058ec8e006d8704f60ecd22c938 ""
   "note.tex" 1788106135.59886 2077 405eb5a2c2abb6ae5699c9e6366eca88 ""
-  "output/media/pdf/note.aux" 1788106661.12751 3482 9b904c48dafbd622f06d1601e145a591 "pdflatex"
-  "output/media/pdf/note.bbl" 1787865294.89605 5147 d085c53d75bc04fdadc1141141180098 "biber output/media/pdf/note"
-  "output/media/pdf/note.out" 1788106661.12829 1092 c34d338de29b425479768c293dbfcb97 "pdflatex"
-  "output/media/pdf/note.run.xml" 1788106661.12969 2307 d0e51b083939a915c5c64a9b00fbbc55 "pdflatex"
-  "output/media/pdf/note.toc" 1788106661.12976 862 6fb8c3ccd1dbe090131c72b572349098 "pdflatex"
-  "output/results/image.png" 1788106153.02733 15057 a100dcd019ce3a8cd83a854c6b405beb ""
-  "output/results/natural_numbers.tex" 1788106152.79462 29 7f7901fcc2406d5dfddf9e24d9b37fa7 ""
+  "output/media/pdf/note.aux" 1788115952.87801 3482 14ad8703dd01b3d1d91f3c3f50371e80 "pdflatex"
+  "output/media/pdf/note.bbl" 1788115949.57668 5139 19bcb626a1004e8427ba9721434cec8d "biber output/media/pdf/note"
+  "output/media/pdf/note.out" 1788115952.87855 1092 c34d338de29b425479768c293dbfcb97 "pdflatex"
+  "output/media/pdf/note.run.xml" 1788115952.87977 2311 ab6bda26b719dbcdfb1f368e290a169d "pdflatex"
+  "output/media/pdf/note.toc" 1788115952.87983 862 6fb8c3ccd1dbe090131c72b572349098 "pdflatex"
+  "output/results/image.png" 1788115946.83782 15057 a100dcd019ce3a8cd83a854c6b405beb ""
+  "output/results/natural_numbers.tex" 1788115946.59742 29 7f7901fcc2406d5dfddf9e24d9b37fa7 ""
   (generated)
   "output/media/pdf/note.aux"
   "output/media/pdf/note.bcf"

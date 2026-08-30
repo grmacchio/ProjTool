@@ -250,8 +250,10 @@ render_md() {
     local md_file="$MD_OUTPUT_DIR/$DOCUMENT_STEM.md"
     local md_temp_file="$MD_OUTPUT_DIR/.$DOCUMENT_STEM.md.tmp"
     local bibliography_file="$TARGET_DIR/references.bib"
+    local bibliography_entry
     local citation_style_file="$SCRIPT_DIR/references.csl"
     local reference_filter_file="$SCRIPT_DIR/format-references.lua"
+    local -a bibliography_files=()
     local -a citation_options=()
     local -a template_options=(--metadata="template-type:${TEMPLATE_TYPE:-dissertation}")
 
@@ -260,17 +262,30 @@ render_md() {
     fi
 
     if [[ -f "$bibliography_file" ]]; then
+        bibliography_files+=("$bibliography_file")
+    elif [[ -d "$TARGET_DIR/references" ]]; then
+        while IFS= read -r -d '' bibliography_entry; do
+            bibliography_files+=("$bibliography_entry")
+        done < <(
+            find "$TARGET_DIR/references" -type f -name '*.bib' -print0 |
+                LC_ALL=C sort -z
+        )
+    fi
+
+    if [[ ${#bibliography_files[@]} -gt 0 ]]; then
         [[ -f "$citation_style_file" ]] ||
             die "missing citation style: $citation_style_file"
         [[ -f "$reference_filter_file" ]] ||
             die "missing reference filter: $reference_filter_file"
         citation_options=(
-            --bibliography="$bibliography_file"
             --csl="$citation_style_file"
             --metadata=link-citations:true
             --citeproc
             --lua-filter="$reference_filter_file"
         )
+        for bibliography_entry in "${bibliography_files[@]}"; do
+            citation_options+=(--bibliography="$bibliography_entry")
+        done
     fi
 
     require_command pandoc

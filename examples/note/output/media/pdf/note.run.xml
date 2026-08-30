@@ -79,7 +79,7 @@
       <file>note.bcf</file>
     </requires>
     <requires type="editable">
-      <file>./references.bib</file>
+      <file>./references/*/*.bib</file>
     </requires>
   </external>
 </requests>

@@ -34,13 +34,13 @@
       \strng{authorfullhash}{5b329fc02fa556c521329adce42730f2}
       \strng{authorfullhashraw}{5b329fc02fa556c521329adce42730f2}
       \field{extraname}{1}
-      \field{sortinit}{D}
-      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{journaltitle}{<Publisher>}
       \field{title}{<Title>}
-      \field{year}{<Date>}
+      \field{year}{1970}
       \verb{urlraw}
       \verb https://www.google.com/search?q=test
       \endverb
@@ -66,12 +66,12 @@
       \strng{authorfullhash}{5b329fc02fa556c521329adce42730f2}
       \strng{authorfullhashraw}{5b329fc02fa556c521329adce42730f2}
       \field{extraname}{2}
-      \field{sortinit}{D}
-      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{title}{<Title>}
-      \field{year}{<Date>}
+      \field{year}{2002}
       \verb{urlraw}
       \verb https://www.google.com/search?q=test
       \endverb
@@ -94,12 +94,12 @@
       \strng{authorfullhash}{5b329fc02fa556c521329adce42730f2}
       \strng{authorfullhashraw}{5b329fc02fa556c521329adce42730f2}
       \field{extraname}{3}
-      \field{sortinit}{D}
-      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{title}{<Title>}
-      \field{year}{<Date>}
+      \field{year}{2013}
       \verb{urlraw}
       \verb https://www.google.com/search?q=test
       \endverb
@@ -125,12 +125,12 @@
       \strng{authorfullhash}{5b329fc02fa556c521329adce42730f2}
       \strng{authorfullhashraw}{5b329fc02fa556c521329adce42730f2}
       \field{extraname}{4}
-      \field{sortinit}{D}
-      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{title}{<Title>}
-      \field{year}{<Date>}
+      \field{year}{2018}
       \verb{urlraw}
       \verb https://www.google.com/search?q=test
       \endverb
