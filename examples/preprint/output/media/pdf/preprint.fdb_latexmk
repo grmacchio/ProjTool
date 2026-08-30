@@ -1,13 +1,13 @@
 # Fdb version 4
-["biber output/media/pdf/preprint"] 1788103580.15503 "output/media/pdf/preprint.bcf" "output/media/pdf/preprint.bbl" "output/media/pdf/preprint" 1788104150.1639 0
+["biber output/media/pdf/preprint"] 1788103580.15503 "output/media/pdf/preprint.bcf" "output/media/pdf/preprint.bbl" "output/media/pdf/preprint" 1788105371.43628 0
   "./references.bib" 1787272255.8603 607 7a84edea850a66bda40cbd17c250c3cc ""
-  "output/media/pdf/preprint.bcf" 1788104150.0338 108910 1ba1888b4230e1bcf8d153551e398624 "pdflatex"
+  "output/media/pdf/preprint.bcf" 1788105371.30419 108910 1ba1888b4230e1bcf8d153551e398624 "pdflatex"
   (generated)
   "output/media/pdf/preprint.bbl"
   "output/media/pdf/preprint.blg"
   (rewritten before read)
-["pdflatex"] 1788104148.96925 "/Users/gregorymacchio/Documents/Mirror/laptop/global/writing/software/ProjTool/examples/preprint/preprint.tex" "output/media/pdf/preprint.pdf" "preprint" 1788104150.1642 0
-  "/Users/gregorymacchio/Documents/Mirror/laptop/global/writing/software/ProjTool/examples/preprint/preprint.tex" 1788103692.72017 2137 0b61cf436261b1a1f6efc10960f0c181 ""
+["pdflatex"] 1788105370.25773 "/Users/gregorymacchio/Documents/Mirror/laptop/global/writing/software/ProjTool/examples/preprint/preprint.tex" "output/media/pdf/preprint.pdf" "preprint" 1788105371.43654 0
+  "/Users/gregorymacchio/Documents/Mirror/laptop/global/writing/software/ProjTool/examples/preprint/preprint.tex" 1788105361.54592 2141 df9d8a60072a073924e711f2c11ef179 ""
   "/Users/gregorymacchio/Documents/Mirror/laptop/global/writing/software/ProjTool/template.cls" 1788104144.7522 40182 aeeeea04d92b9d572ba405b4b4674906 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1136849721 2971 def0b6c1f0b107b3b936def894055589 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -211,14 +211,14 @@
   "/usr/local/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1769657775 5467155 19efa205003f9ecad95fbbaa6ff24da1 ""
   "/usr/local/texlive/2025/texmf-var/web2c/pdftex/pdflatex.fmt" 1741450574 3345740 46b66fdb0378f7bf5921b5eabf1762b8 ""
   "/usr/local/texlive/2025/texmf.cnf" 1741450484 577 418a7058ec8e006d8704f60ecd22c938 ""
-  "output/media/pdf/preprint.aux" 1788104150.03205 3482 e4cb9c16943e1a4a5ad3c60629fd7fbe "pdflatex"
+  "output/media/pdf/preprint.aux" 1788105371.30272 3482 e4cb9c16943e1a4a5ad3c60629fd7fbe "pdflatex"
   "output/media/pdf/preprint.bbl" 1788103581.54995 5147 d085c53d75bc04fdadc1141141180098 "biber output/media/pdf/preprint"
-  "output/media/pdf/preprint.out" 1788104150.03288 1092 c34d338de29b425479768c293dbfcb97 "pdflatex"
-  "output/media/pdf/preprint.run.xml" 1788104150.03442 2335 43f50a0e5857aa005f6ce72829417481 "pdflatex"
-  "output/media/pdf/preprint.toc" 1788104150.0345 862 826700b12652cf252570584d1f1f2cfe "pdflatex"
-  "output/results/image.png" 1788103696.02909 15057 a100dcd019ce3a8cd83a854c6b405beb ""
-  "output/results/natural_numbers.tex" 1788103695.81409 29 7f7901fcc2406d5dfddf9e24d9b37fa7 ""
-  "preprint.tex" 1788103692.72017 2137 0b61cf436261b1a1f6efc10960f0c181 ""
+  "output/media/pdf/preprint.out" 1788105371.30346 1092 c34d338de29b425479768c293dbfcb97 "pdflatex"
+  "output/media/pdf/preprint.run.xml" 1788105371.30482 2335 43f50a0e5857aa005f6ce72829417481 "pdflatex"
+  "output/media/pdf/preprint.toc" 1788105371.30487 862 826700b12652cf252570584d1f1f2cfe "pdflatex"
+  "output/results/image.png" 1788105370.12223 15057 a100dcd019ce3a8cd83a854c6b405beb ""
+  "output/results/natural_numbers.tex" 1788105369.90482 29 7f7901fcc2406d5dfddf9e24d9b37fa7 ""
+  "preprint.tex" 1788105361.54592 2141 df9d8a60072a073924e711f2c11ef179 ""
   (generated)
   "output/media/pdf/preprint.aux"
   "output/media/pdf/preprint.bcf"
