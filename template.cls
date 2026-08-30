@@ -640,11 +640,81 @@
     \LoadClass[11pt]{article}
     \RequirePackage[margin=1in]{geometry}
     \RequirePackage{titlesec}
-    \titlespacing*{\section}{0pt}{0pt}{0pt}
-    \titlespacing*{\subsection}{0pt}{0pt}{0pt}
+    \newlength{\templatePreprintSectionBeforeSpace}
+    \newlength{\templatePreprintSectionAfterSpace}
+    \newlength{\templatePreprintSubsectionBeforeSpace}
+    \newlength{\templatePreprintSubsectionAfterSpace}
+    \newlength{\templatePreprintFigureBeforeSpace}
+    \newlength{\templatePreprintCaptionSpace}
+    \setlength{\templatePreprintSectionBeforeSpace}{\baselineskip}
+    \addtolength{\templatePreprintSectionBeforeSpace}{-1.6pt}
+    \setlength{\templatePreprintSectionAfterSpace}{\baselineskip}
+    \addtolength{\templatePreprintSectionAfterSpace}{.7pt}
+    \setlength{\templatePreprintSubsectionBeforeSpace}{\baselineskip}
+    \addtolength{\templatePreprintSubsectionBeforeSpace}{.5pt}
+    \setlength{\templatePreprintSubsectionAfterSpace}{\baselineskip}
+    \addtolength{\templatePreprintSubsectionAfterSpace}{.3pt}
+    \titlespacing*{\section}{0pt}{\templatePreprintSectionBeforeSpace}{
+        \templatePreprintSectionAfterSpace}
+    \titlespacing*{\subsection}{0pt}{\templatePreprintSubsectionBeforeSpace}{
+        \templatePreprintSubsectionAfterSpace}
     \RequirePackage{authblk}
+    \RequirePackage[bottom]{footmisc}
+    \renewcommand\@makefntext[1]{
+        \parindent 1em
+        \noindent\hb@xt@1.8em{\hss\@makefnmark}#1}
+    \setlength{\affilsep}{1.4em}
+    \patchcmd{\@maketitle}
+        {\vskip 1.5em}
+        {\vskip 1.31em}
+        {}
+        {\ClassError{template}{Could not set preprint author spacing}{}}
+    \patchcmd{\@maketitle}
+        {\vskip 1em}
+        {\vskip .25em}
+        {}
+        {\ClassError{template}{Could not set preprint date spacing}{}}
+    \patchcmd{\@maketitle}
+        {\vskip 1.5em}
+        {\vskip .255em}
+        {}
+        {\ClassError{template}{Could not set preprint abstract spacing}{}}
     \loadPackagesSharedByAll
     \loadPackagesSharedByDocs
+    \setlength{\templateSubTOCIndent}{-0.33em}
+    \patchcmd{\l@section}
+        {\addvspace{1.0em \@plus\p@}}
+        {\addvspace{\baselineskip}}
+        {}
+        {\ClassError{template}{Could not set preprint TOC spacing}{}}
+    \patchcmd{\abstract}
+        {\small}
+        {\vspace{-12.14pt}\small}
+        {}
+        {\ClassError{template}{Could not set preprint abstract position}{}}
+    \patchcmd{\abstract}
+        {\vspace{-.5em}}
+        {\vspace{.195em}}
+        {}
+        {\ClassError{template}{Could not set preprint abstract spacing}{}}
+    \newtheoremstyle{templatePreprintDefinition}
+        {\baselineskip}{\baselineskip}
+        {\normalfont}{}{\bfseries}{.}{5pt plus 1pt minus 1pt}{}
+    \csletcs{th@definition}{th@templatePreprintDefinition}
+    \setlength{\intextsep}{.7\baselineskip}
+    \setlength{\templatePreprintFigureBeforeSpace}{-\intextsep}
+    \addtolength{\templatePreprintFigureBeforeSpace}{1pt}
+    \BeforeBeginEnvironment{figure}{
+        \vspace{\templatePreprintFigureBeforeSpace}}
+    \setlength{\templatePreprintCaptionSpace}{\baselineskip}
+    \addtolength{\templatePreprintCaptionSpace}{2pt}
+    \captionsetup[figure]{skip=\templatePreprintCaptionSpace}
+    \setlength{\bibitemsep}{\baselineskip}
+    \addtolength{\bibitemsep}{1.6pt}
+    \defbibheading{bibliography}[\refname]{
+        \section*{#1}
+        \vspace{-.5pt}}
+    \renewcommand{\templateProofsInitialSpacing}{\vspace{-1.8pt}}
     \counterwithin{theorem}{subsection}
     \let\c@figure\c@theorem
     \renewcommand{\thefigure}{\thetheorem}
@@ -710,7 +780,7 @@
             \edef\templateCurrentNumMode{\genPartNumMode}
             \edef\templateCurrentTocMode{\genPartTocMode}
             \ifdefstring{\genPartTocMode}{toc}{
-                \templateSubTOC{subsection}{subsubsection}
+                \templateSubTOC{subsubsection}{subsection}
             }{}
             #4
         \endgroup
@@ -742,12 +812,15 @@
         \begingroup
             \edef\templateCurrentNumMode{\genSubPartNumMode}
             \edef\templateCurrentTocMode{\genSubPartTocMode}
+            \ifdefstring{\genSubPartTocMode}{toc}{
+                \templateSubTOC{subsection}{subsubsection}
+            }{}
             #4
         \endgroup
     }
     % Define command that generates the front matter.
     \newcommand{\genFront}[7]{
-        \title{\vspace{-1.5cm}#1\\[0.5em]
+        \title{\vspace{-1.5cm}#1\\[.939em]
             \large\normalfont\textit{preprint to be submitted to #2}}
         \author{#3\\#4}
         \date{#5}
@@ -755,7 +828,13 @@
         \begin{abstract}
             #6
         \end{abstract}
-        \templateMainTOC{section}
+        \begingroup
+            \etocsettocstyle{
+                \section*{\contentsname}
+                \vspace{-\baselineskip}
+            }{}
+            \templateMainTOC{section}
+        \endgroup
         \begingroup
             \renewcommand\thefootnote{}
             \renewcommand\theHfootnote{\arabic{footnote}}
@@ -766,9 +845,11 @@
         \endgroup
     }
     \renewcommand{\genBack}{
+        \clearpage
         \templateRenderTheoremProofs
         \clearpage
         \phantomsection
+        \addcontentsline{toc}{section}{References}
         \printbibliography[title={References}]
     }
 }{

@@ -361,7 +361,9 @@ function Pandoc(document)
     local template_type = pandoc.utils.stringify(
         document.meta["template-type"] or "dissertation")
     local presentation = template_type == "presentation"
-    local bold_titles = template_type ~= "dissertation"
+    local plain_titles = template_type == "dissertation" or
+        template_type == "preprint"
+    local bold_titles = not plain_titles
     local part_label = "Chapter"
     local subpart_label = "Section"
     local subpart_level = 2
@@ -439,7 +441,7 @@ function Pandoc(document)
             append(output, anchor(identifier))
             if presentation then
                 append(output, pandoc.Header(2, part_title))
-            elseif template_type == "dissertation" then
+            elseif plain_titles then
                 append(output, pandoc.Header(2, toc_label(number, part_title)))
             else
                 append(output,
@@ -471,7 +473,7 @@ function Pandoc(document)
             append(output, anchor(identifier))
             if presentation then
                 append(output, pandoc.Header(subpart_level, subpart_title))
-            elseif template_type == "dissertation" then
+            elseif plain_titles then
                 append(output,
                     pandoc.Header(subpart_level,
                         toc_label(number, subpart_title)))
@@ -575,7 +577,7 @@ function Pandoc(document)
             emit_proofs(output, state, proofs, bold_titles)
             proofs_emitted = true
             emit_references(
-                output, state, template_type == "dissertation", bold_titles)
+                output, state, plain_titles, bold_titles)
         else
             append(output, block)
         end
@@ -596,7 +598,7 @@ function Pandoc(document)
         main_toc_depth = 2
     end
     local main_toc_title = {pandoc.Str("Contents")}
-    if template_type ~= "dissertation" then
+    if not plain_titles then
         main_toc_title = {
             pandoc.Str("Table"),
             pandoc.Space(),
