@@ -112,10 +112,7 @@
                     \includegraphics[width=##5\textwidth]{##6}
                     \caption{(##1)\textbf{.} ##7}
                     \label{fig:##1}
-                    \addcontentsline{toc}{subsection}{
-                        \protect\numberline{\thefigure}
-                        ##1
-                    }
+                    \addcontentsline{toc}{subsection}{\protect\numberline{\thefigure}##1}
                 \end{figure}
             }{
                 \begin{figure}[##4]
@@ -191,6 +188,7 @@
     \@ifundefined{theorem}{\newtheorem{theorem}{Theorem}[section]}{}
     \@ifundefined{theoremstar}{\newtheorem*{theoremstar}{Theorem}}{}
     \newcommand{\templateTheoremProofs}{}
+    \newcommand{\templateProofsInitialSpacing}{}
     \newcommand{\templateQueueTheoremProof}[2]{
         \gappto\templateTheoremProofs{
             \genSubPart{Proof of \genRef{thm}{##1}}{inh}{notoc}{
@@ -203,6 +201,7 @@
     \newcommand{\templateRenderTheoremProofs}{
         \ifdefempty{\templateTheoremProofs}{}{
             \genPart{Proofs}{nonum}{toc}{
+                \templateProofsInitialSpacing
                 \templateTheoremProofs
             }
         }
@@ -214,10 +213,7 @@
             \ifdefstring{\genTHMTocMode}{toc}{
                 \begin{theorem}[##1]
                     \phantomsection
-                    \addcontentsline{toc}{subsection}{
-                        \protect\numberline{\thetheorem}
-                        ##1
-                    }
+                    \addcontentsline{toc}{subsection}{\protect\numberline{\thetheorem}##1}
                     \label{thm:##1}
                     \edef\templateCurrentNumMode{\genTHMNumMode}
                     \edef\templateCurrentTocMode{\genTHMTocMode}
@@ -268,10 +264,7 @@
             \ifdefstring{\genDEFTocMode}{toc}{
                 \begin{definition}[##1]
                     \phantomsection
-                    \addcontentsline{toc}{subsection}{
-                        \protect\numberline{\thetheorem}
-                        ##1
-                    }
+                    \addcontentsline{toc}{subsection}{\protect\numberline{\thetheorem}##1}
                     \label{def:##1}
                     \edef\templateCurrentNumMode{\genDEFNumMode}
                     \edef\templateCurrentTocMode{\genDEFTocMode}
@@ -413,7 +406,6 @@
         \templateRenderTheoremProofs
         \clearpage
         \phantomsection
-        \addcontentsline{toc}{chapter}{References}
         \printbibliography[title={References}]
     }
     \newcommand{\genRef}[2]{
@@ -432,6 +424,41 @@
 
 % Define loader for packages shared by document template types.
 \newcommand{\loadPackagesSharedByDocs}{
+    \RequirePackage{etoc}
+    \etocchecksemptiness
+    \newcommand{\templateMainTOC}[1]{
+        \etocsetnexttocdepth{##1}
+        \tableofcontents
+    }
+    \newlength{\templateSubTOCIndent}
+    \newcommand{\templateSubTOC}[2]{
+        \begingroup
+            \etocsetstyle{##1}{}{}{}{}
+            \ifstrequal{##2}{section}{
+                \renewcommand*\l@section{
+                    \@dottedtocline{1}{\templateSubTOCIndent}{2.3em}
+                }
+            }{
+                \ifstrequal{##2}{subsection}{
+                    \renewcommand*\l@subsection{
+                        \@dottedtocline{2}{\templateSubTOCIndent}{3.2em}
+                    }
+                }{
+                    \renewcommand*\l@subsubsection{
+                        \@dottedtocline{3}{\templateSubTOCIndent}{4.1em}
+                    }
+                }
+            }
+            \etocsetstyle{##2}{}{}{
+                \@nameuse{l@##2}{
+                    \numberline{\etocnumber}\etocname
+                }{\etocpage}
+            }{}
+            \etocsettocstyle{}{}
+            \etocsetnexttocdepth{##2}
+            \localtableofcontents*
+        \endgroup
+    }
     \loadReferencesPackage
 }
 
@@ -440,8 +467,65 @@
     % Load the document class, load packages, and flag the template as loaded
     \LoadClass[11pt, oneside, openany]{book}
     \RequirePackage[margin=1in]{geometry}
+    \RequirePackage{titlesec}
+    \newlength{\templateChapterAfterSpace}
+    \newlength{\templateSectionBeforeSpace}
+    \newlength{\templateSectionAfterSpace}
+    \newlength{\templateFigureBeforeSpace}
+    \newlength{\templateCaptionSpace}
+    \setlength{\templateChapterAfterSpace}{\baselineskip}
+    \addtolength{\templateChapterAfterSpace}{-.6pt}
+    \setlength{\templateSectionBeforeSpace}{\baselineskip}
+    \addtolength{\templateSectionBeforeSpace}{-1.6pt}
+    \setlength{\templateSectionAfterSpace}{\baselineskip}
+    \addtolength{\templateSectionAfterSpace}{.7pt}
+    \titleformat{\chapter}[hang]
+        {\normalfont\huge\bfseries}{\thechapter}{1em}{}
+    \titleformat{\section}[hang]
+        {\normalfont\Large\bfseries}{\thesection}{1em}{}
+    \titlespacing*{\chapter}{0pt}{-19pt}{\templateChapterAfterSpace}
+    \titlespacing*{\section}{0pt}{\templateSectionBeforeSpace}{
+        \templateSectionAfterSpace}
+    \newcommand{\templateDissertationMainTOC}{
+        \begingroup
+            \etocsettocstyle{
+                \chapter*{\contentsname}
+                \vspace{-\baselineskip}
+            }{}
+            \templateMainTOC{section}
+        \endgroup
+    }
+    \renewcommand{\chaptermark}[1]{\markboth{\thechapter\ #1}{\thechapter\ #1}}
     \loadPackagesSharedByAll
     \loadPackagesSharedByDocs
+    \setlength{\templateSubTOCIndent}{-0.33em}
+    \patchcmd{\l@chapter}
+        {\vskip 1.0em \@plus\p@}
+        {\vskip\baselineskip}
+        {}
+        {\ClassError{template}{Could not set dissertation TOC spacing}{}}
+    \newtheoremstyle{templateDissertationDefinition}
+        {\baselineskip}{\baselineskip}
+        {\normalfont}{}{\bfseries}{.}{5pt plus 1pt minus 1pt}{}
+    \csletcs{th@definition}{th@templateDissertationDefinition}
+    \renewcommand{\templateProofsInitialSpacing}{\vspace{-2.2pt}}
+    \setlength{\intextsep}{.7\baselineskip}
+    \setlength{\templateFigureBeforeSpace}{-\intextsep}
+    \addtolength{\templateFigureBeforeSpace}{1pt}
+    \BeforeBeginEnvironment{figure}{
+        \vspace{\templateFigureBeforeSpace}}
+    \setlength{\templateCaptionSpace}{\baselineskip}
+    \addtolength{\templateCaptionSpace}{2pt}
+    \captionsetup[figure]{skip=\templateCaptionSpace}
+    \setlength{\bibitemsep}{\baselineskip}
+    \addtolength{\bibitemsep}{1.6pt}
+    \renewcommand{\genBack}{
+        \templateRenderTheoremProofs
+        \clearpage
+        \phantomsection
+        \addcontentsline{toc}{chapter}{References}
+        \printbibliography[title={References}]
+    }
     \let\c@figure\c@theorem
     \renewcommand{\thefigure}{\thetheorem}
     \renewcommand{\theHfigure}{\theHtheorem}
@@ -473,6 +557,9 @@
         \begingroup
             \edef\templateCurrentNumMode{\genPartNumMode}
             \edef\templateCurrentTocMode{\genPartTocMode}
+            \ifdefstring{\genPartTocMode}{toc}{
+                \templateSubTOC{subsection}{section}
+            }{}
             #4
         \endgroup
     }
@@ -503,6 +590,9 @@
         \begingroup
             \edef\templateCurrentNumMode{\genSubPartNumMode}
             \edef\templateCurrentTocMode{\genSubPartTocMode}
+            \ifdefstring{\genSubPartTocMode}{toc}{
+                \templateSubTOC{section}{subsection}
+            }{}
             #4
         \endgroup
     }
@@ -512,11 +602,11 @@
         \hypersetup{pageanchor=false}
         \begin{titlepage}
             \centering
-            {\LARGE\bfseries #1\par}
+            {\huge\bfseries \raisebox{-3pt}[\height][\depth]{#1}\par}
             \vfill
-            {\Large #2\par}
+            {#2\par}
             \vfill
-            {\large
+            {
             A Dissertation\\
             Presented to the Faculty of\\
             #3\\
@@ -524,19 +614,20 @@
             Doctor of Philosophy\par
             }
             \vfill
-            {\large
+            {
             Recommended for Acceptance\\
             by the Department of\\
             #4\\
             Adviser: #5\par
             }
             \vfill
-            {\large #6\par}
+            {#6\par}
+            \vspace*{2pt}
         \end{titlepage}
         \hypersetup{pageanchor=true}
         \genPart{Abstract}{nonum}{notoc}{#7}
         \genPart{Acknowledgments}{nonum}{notoc}{#8}
-        \tableofcontents
+        \templateDissertationMainTOC
         \mainmatter
     }
 }{
@@ -548,6 +639,9 @@
     % Load the document class, load packages, and flag the template as loaded
     \LoadClass[11pt]{article}
     \RequirePackage[margin=1in]{geometry}
+    \RequirePackage{titlesec}
+    \titlespacing*{\section}{0pt}{0pt}{0pt}
+    \titlespacing*{\subsection}{0pt}{0pt}{0pt}
     \RequirePackage{authblk}
     \loadPackagesSharedByAll
     \loadPackagesSharedByDocs
@@ -615,6 +709,9 @@
         \begingroup
             \edef\templateCurrentNumMode{\genPartNumMode}
             \edef\templateCurrentTocMode{\genPartTocMode}
+            \ifdefstring{\genPartTocMode}{toc}{
+                \templateSubTOC{subsection}{subsubsection}
+            }{}
             #4
         \endgroup
     }
@@ -658,7 +755,7 @@
         \begin{abstract}
             #6
         \end{abstract}
-        \tableofcontents
+        \templateMainTOC{section}
         \begingroup
             \renewcommand\thefootnote{}
             \renewcommand\theHfootnote{\arabic{footnote}}
@@ -667,13 +764,11 @@
             \endNoHyper
             \addtocounter{footnote}{-1}
         \endgroup
-        \newpage
     }
     \renewcommand{\genBack}{
         \templateRenderTheoremProofs
         \clearpage
         \phantomsection
-        \addcontentsline{toc}{section}{References}
         \printbibliography[title={References}]
     }
 }{
@@ -822,6 +917,9 @@
 \ifdefstring{\templateType}{note}{
     \LoadClass[11pt]{article}
     \RequirePackage[margin=1in]{geometry}
+    \RequirePackage{titlesec}
+    \titlespacing*{\section}{0pt}{0pt}{0pt}
+    \titlespacing*{\subsection}{0pt}{0pt}{0pt}
     \RequirePackage{authblk}
     \loadPackagesSharedByAll
     \loadPackagesSharedByDocs
@@ -888,6 +986,9 @@
         \begingroup
             \edef\templateCurrentNumMode{\genPartNumMode}
             \edef\templateCurrentTocMode{\genPartTocMode}
+            \ifdefstring{\genPartTocMode}{toc}{
+                \templateSubTOC{subsection}{subsubsection}
+            }{}
             #4
         \endgroup
     }
@@ -925,14 +1026,12 @@
         \author{#2\\#3}
         \date{#4}
         \maketitle
-        \tableofcontents
-        \newpage
+        \templateMainTOC{section}
     }
     \renewcommand{\genBack}{
         \templateRenderTheoremProofs
         \clearpage
         \phantomsection
-        \addcontentsline{toc}{section}{References}
         \printbibliography[title={References}]
     }
 }{

@@ -64,10 +64,9 @@ function Div(div)
             error("unsupported bibliography entry structure", 0)
         end
 
-        append(output, pandoc.RawBlock("html",
-            '<a id="' .. entry.identifier .. '"></a>'))
         local number = inlines_html(left.content):gsub("%s+$", "")
         local html = {
+            '<div id="' .. entry.identifier .. '" style="margin:0 0 1em 0">',
             '<table role="presentation" width="100%" border="3" rules="all" ' ..
                 'frame="box" cellpadding="6" cellspacing="0" ' ..
                 'style="border:3px solid currentColor;border-collapse:collapse">',
@@ -90,6 +89,7 @@ function Div(div)
         end
         append(html, "</tbody>")
         append(html, "</table>")
+        append(html, "</div>")
         append(output, pandoc.RawBlock("html", table.concat(html, "\n")))
     end
     return output

@@ -223,7 +223,7 @@ write_markdown_build_file() {
         back_command='\newcommand{\genBack}{\subsection{\textbf{LaTeXToAppendixTOC}}}'
         presentation_commands='\newcommand{\togglefalse}[1]{}\newcommand{\toggletrue}[1]{}\newcommand{\bo}[2]{\begin{#1}}\newcommand{\eo}[1]{\end{#1}}\newcommand{\bi}[2]{\begin{#1}}\newcommand{\ei}[1]{\end{#1}}\newcommand{\bitem}[1]{\item \textbf{#1}}\newcommand{\iitem}[1]{\item \textit{#1}}'
     else
-        front_command='\newcommand{\genFront}[8]{\subsection{\textbf{Title}: #1}\textbf{Author:} #2\par\textbf{University:} #3\par\textbf{Department:} #4\par\textbf{Advisor:} #5\par\textbf{Date:} #6\par\subsection{\textbf{Abstract}}#7\subsection{\textbf{Acknowledgments}}#8\subsection{\textbf{LaTeXToTOC}}}'
+        front_command='\newcommand{\genFront}[8]{\subsection{#1}\textbf{Author:} #2\par\textbf{University:} #3\par\textbf{Department:} #4\par\textbf{Advisor:} #5\par\textbf{Date:} #6\par\subsection{Abstract}#7\subsection{Acknowledgments}#8\subsection{\textbf{LaTeXToTOC}}}'
     fi
 
     {

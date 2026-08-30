@@ -31,22 +31,42 @@ function Image(image)
 end
 
 function Para(paragraph)
-    if #paragraph.content ~= 1 or paragraph.content[1].t ~= "Image" then
+    if #paragraph.content == 1 and paragraph.content[1].t == "Image" then
+        local image = paragraph.content[1]
+        local width = image.attributes and image.attributes.width
+        if not width or not width:match("^[%d.]+%%$") then
+            return nil
+        end
+
+        local source = html_escape(image.src)
+        local alt = html_escape(pandoc.utils.stringify(image.caption or {}))
+        local html = '<p align="center"><img src="' .. source .. '" alt="' ..
+            alt .. '" width="' .. width .. '" style="image-rendering: ' ..
+            'pixelated; image-rendering: crisp-edges;"></p>'
+        return pandoc.RawBlock("html", html)
+    end
+
+    local text = pandoc.utils.stringify(paragraph)
+    if not text:find("Test Hyper%-References:") or
+        not text:find("Test References:") or
+        not text:find("Test Code Output:") then
         return nil
     end
 
-    local image = paragraph.content[1]
-    local width = image.attributes and image.attributes.width
-    if not width or not width:match("^[%d.]+%%$") then
-        return nil
+    local blocks = {}
+    local content = {}
+    for _, inline in ipairs(paragraph.content) do
+        if inline.t == "LineBreak" then
+            append(blocks, pandoc.Para(content))
+            content = {}
+        else
+            append(content, inline)
+        end
     end
-
-    local source = html_escape(image.src)
-    local alt = html_escape(pandoc.utils.stringify(image.caption or {}))
-    local html = '<p align="center"><img src="' .. source .. '" alt="' ..
-        alt .. '" width="' .. width .. '" style="image-rendering: ' ..
-        'pixelated; image-rendering: crisp-edges;"></p>'
-    return pandoc.RawBlock("html", html)
+    if #content > 0 then
+        append(blocks, pandoc.Para(content))
+    end
+    return blocks
 end
 
 local function marker_content(block, marker)
@@ -228,6 +248,7 @@ local function add_toc(state, level, label, target)
         state.toc_part = entry
         state.toc_section = nil
     end
+    return entry
 end
 
 local function is_empty_item_marker(block)
@@ -267,40 +288,48 @@ local function flatten_presentation_lists(blocks)
     return output
 end
 
-local function toc_items(entries)
+local function toc_items(entries, depth)
     local items = {}
     for _, entry in ipairs(entries) do
         local blocks = {
             pandoc.Plain({pandoc.Link(entry.label, "#" .. entry.target)})
         }
-        if #entry.children > 0 then
-            append(blocks, pandoc.BulletList(toc_items(entry.children)))
+        if depth > 1 and #entry.children > 0 then
+            append(blocks, pandoc.BulletList(toc_items(
+                entry.children, depth - 1)))
         end
         append(items, blocks)
     end
     return items
 end
 
-local function toc_blocks(entries, identifier, title)
-    local blocks = {
-        anchor(identifier),
-        pandoc.Header(2, {pandoc.Strong(title)})
-    }
+local function toc_blocks(entries, identifier, title, level, depth, bold_title)
+    local blocks = {anchor(identifier)}
+    if title then
+        local content = title
+        if bold_title then
+            content = {pandoc.Strong(title)}
+        end
+        append(blocks, pandoc.Header(level or 2, content))
+    end
     if #entries > 0 then
-        append(blocks, pandoc.BulletList(toc_items(entries)))
+        append(blocks, pandoc.BulletList(toc_items(entries, depth)))
     end
     return blocks
 end
 
-local function emit_proofs(output, state, proofs)
+local function emit_proofs(output, state, proofs, bold_title)
     if #proofs == 0 then
         return
     end
 
     add_toc(state, 0, {pandoc.Str("Proofs")}, "proofs")
     append(output, anchor("proofs"))
-    append(output, pandoc.Header(2,
-        {pandoc.Strong({pandoc.Str("Proofs")})}))
+    local title = {pandoc.Str("Proofs")}
+    if bold_title then
+        title = {pandoc.Strong(title)}
+    end
+    append(output, pandoc.Header(2, title))
 
     for _, proof in ipairs(proofs) do
         append(output, anchor(proof.proof_id))
@@ -316,17 +345,23 @@ local function emit_proofs(output, state, proofs)
     end
 end
 
-local function emit_references(output, state)
-    add_toc(state, 0, {pandoc.Str("References")}, "references")
+local function emit_references(output, state, include_in_toc, bold_title)
+    if include_in_toc then
+        add_toc(state, 0, {pandoc.Str("References")}, "references")
+    end
     append(output, anchor("references"))
-    append(output, pandoc.Header(2,
-        {pandoc.Strong({pandoc.Str("References")})}))
+    local title = {pandoc.Str("References")}
+    if bold_title then
+        title = {pandoc.Strong(title)}
+    end
+    append(output, pandoc.Header(2, title))
 end
 
 function Pandoc(document)
     local template_type = pandoc.utils.stringify(
         document.meta["template-type"] or "dissertation")
     local presentation = template_type == "presentation"
+    local bold_titles = template_type ~= "dissertation"
     local part_label = "Chapter"
     local subpart_label = "Section"
     local subpart_level = 2
@@ -353,6 +388,8 @@ function Pandoc(document)
         subpart_num = nil,
         subpart_toc = nil,
         toc = {},
+        subtocs = {},
+        object_tocs = {},
         main_toc = nil,
         toc_part = nil,
         toc_section = nil
@@ -402,12 +439,20 @@ function Pandoc(document)
             append(output, anchor(identifier))
             if presentation then
                 append(output, pandoc.Header(2, part_title))
+            elseif template_type == "dissertation" then
+                append(output, pandoc.Header(2, toc_label(number, part_title)))
             else
                 append(output,
                     titled_header(2, part_label, number, part_title))
             end
             if state.part_toc == "toc" then
-                add_toc(state, 0, toc_label(number, part_title), identifier)
+                local entry = add_toc(
+                    state, 0, toc_label(number, part_title), identifier)
+                if not presentation then
+                    state.subtocs[identifier] = entry.children
+                    append(output, pandoc.RawBlock(
+                        "latex-to-placeholder", "subtoc:" .. identifier))
+                end
             else
                 state.toc_part = nil
             end
@@ -426,12 +471,22 @@ function Pandoc(document)
             append(output, anchor(identifier))
             if presentation then
                 append(output, pandoc.Header(subpart_level, subpart_title))
+            elseif template_type == "dissertation" then
+                append(output,
+                    pandoc.Header(subpart_level,
+                        toc_label(number, subpart_title)))
             else
                 append(output, titled_header(
                     subpart_level, subpart_label, number, subpart_title))
             end
             if state.subpart_toc == "toc" then
-                add_toc(state, 1, toc_label(number, subpart_title), identifier)
+                local entry = add_toc(
+                    state, 1, toc_label(number, subpart_title), identifier)
+                if not presentation then
+                    state.object_tocs[identifier] = entry.children
+                    append(output, pandoc.RawBlock(
+                        "latex-to-placeholder", "objecttoc:" .. identifier))
+                end
             else
                 state.toc_section = nil
             end
@@ -517,9 +572,10 @@ function Pandoc(document)
                 proof_id = "proof-of-" .. slug(proof_title)
             })
         elseif marker_content(block, "LaTeXToReferences") then
-            emit_proofs(output, state, proofs)
+            emit_proofs(output, state, proofs, bold_titles)
             proofs_emitted = true
-            emit_references(output, state)
+            emit_references(
+                output, state, template_type == "dissertation", bold_titles)
         else
             append(output, block)
         end
@@ -528,18 +584,29 @@ function Pandoc(document)
     end
 
     if not proofs_emitted then
-        emit_proofs(output, state, proofs)
+        emit_proofs(output, state, proofs, bold_titles)
     end
 
     local final_output = {}
     local main_toc = state.main_toc or state.toc
-    local generated_toc = toc_blocks(main_toc, "table-of-contents", {
-        pandoc.Str("Table"),
-        pandoc.Space(),
-        pandoc.Str("of"),
-        pandoc.Space(),
-        pandoc.Str("Contents")
-    })
+    local main_toc_depth = 1
+    if presentation then
+        main_toc_depth = 99
+    elseif template_type == "dissertation" then
+        main_toc_depth = 2
+    end
+    local main_toc_title = {pandoc.Str("Contents")}
+    if template_type ~= "dissertation" then
+        main_toc_title = {
+            pandoc.Str("Table"),
+            pandoc.Space(),
+            pandoc.Str("of"),
+            pandoc.Space(),
+            pandoc.Str("Contents")
+        }
+    end
+    local generated_toc = toc_blocks(main_toc, "table-of-contents",
+        main_toc_title, 2, main_toc_depth, bold_titles)
     local generated_appendix_toc = toc_blocks(
         state.toc, "appendix-table-of-contents", {
             pandoc.Str("Appendix"),
@@ -549,12 +616,28 @@ function Pandoc(document)
             pandoc.Str("of"),
             pandoc.Space(),
             pandoc.Str("Contents")
-        })
+        }, 2, 99, true)
     for _, block in ipairs(output) do
         if block.t == "RawBlock" and
             block.format == "latex-to-placeholder" then
             if block.text == "appendix-toc" then
                 extend(final_output, generated_appendix_toc)
+            elseif block.text:match("^objecttoc:") then
+                local identifier = block.text:sub(11)
+                local entries = state.object_tocs[identifier] or {}
+                if #entries > 0 then
+                    extend(final_output, toc_blocks(
+                        entries, "contents-" .. identifier,
+                        nil, 3, 1))
+                end
+            elseif block.text:match("^subtoc:") then
+                local identifier = block.text:sub(8)
+                local entries = state.subtocs[identifier] or {}
+                if #entries > 0 then
+                    extend(final_output, toc_blocks(
+                        entries, "contents-" .. identifier,
+                        nil, 3, 1))
+                end
             else
                 extend(final_output, generated_toc)
             end

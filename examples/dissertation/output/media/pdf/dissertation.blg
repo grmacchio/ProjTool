@@ -1,20 +1,20 @@
 [0] Config.pm:308> INFO - This is Biber 2.20
 [0] Config.pm:311> INFO - Logfile is 'output/media/pdf/dissertation.blg'
-[35] biber-darwin:340> INFO - === Thu Aug 20, 2026, 22:04:17
-[44] Biber.pm:420> INFO - Reading 'output/media/pdf/dissertation.bcf'
-[83] Biber.pm:994> INFO - Found 4 citekeys in bib section 0
-[90] Biber.pm:4463> INFO - Processing section 0
-[95] Biber.pm:4654> INFO - Looking for bibtex file './references.bib' for section 0
-[95] bibtex.pm:1713> INFO - LaTeX decoding ...
-[97] bibtex.pm:1519> INFO - Found BibTeX data source './references.bib'
-[118] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
-[118] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[118] Biber.pm:4283> INFO - Sorting list 'ynt/global//global/global/global' of type 'entry' with template 'ynt' and locale 'en-US'
-[118] Biber.pm:4289> INFO - No sort tailoring available for locale 'en-US'
-[123] bbl.pm:676> INFO - Writing 'output/media/pdf/dissertation.bbl' with encoding 'UTF-8'
-[123] bbl.pm:779> INFO - Output to output/media/pdf/dissertation.bbl
-[123] Biber.pm:131> WARN - legacy year field '<Date>' in entry '1970test' is not an integer - this will probably not sort properly.
-[123] Biber.pm:131> WARN - legacy year field '<Date>' in entry '2002test' is not an integer - this will probably not sort properly.
-[124] Biber.pm:131> WARN - legacy year field '<Date>' in entry '2013test' is not an integer - this will probably not sort properly.
-[124] Biber.pm:131> WARN - legacy year field '<Date>' in entry '2018test' is not an integer - this will probably not sort properly.
-[124] Biber.pm:133> INFO - WARNINGS: 4
+[38] biber-darwin:340> INFO - === Sun Aug 30, 2026, 10:40:55
+[47] Biber.pm:420> INFO - Reading 'output/media/pdf/dissertation.bcf'
+[88] Biber.pm:994> INFO - Found 4 citekeys in bib section 0
+[95] Biber.pm:4463> INFO - Processing section 0
+[101] Biber.pm:4654> INFO - Looking for bibtex file './references.bib' for section 0
+[101] bibtex.pm:1713> INFO - LaTeX decoding ...
+[103] bibtex.pm:1519> INFO - Found BibTeX data source './references.bib'
+[127] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[127] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[127] Biber.pm:4283> INFO - Sorting list 'ynt/global//global/global/global' of type 'entry' with template 'ynt' and locale 'en-US'
+[127] Biber.pm:4289> INFO - No sort tailoring available for locale 'en-US'
+[132] bbl.pm:676> INFO - Writing 'output/media/pdf/dissertation.bbl' with encoding 'UTF-8'
+[133] bbl.pm:779> INFO - Output to output/media/pdf/dissertation.bbl
+[133] Biber.pm:131> WARN - legacy year field '<Date>' in entry '1970test' is not an integer - this will probably not sort properly.
+[133] Biber.pm:131> WARN - legacy year field '<Date>' in entry '2002test' is not an integer - this will probably not sort properly.
+[133] Biber.pm:131> WARN - legacy year field '<Date>' in entry '2013test' is not an integer - this will probably not sort properly.
+[133] Biber.pm:131> WARN - legacy year field '<Date>' in entry '2018test' is not an integer - this will probably not sort properly.
+[133] Biber.pm:133> INFO - WARNINGS: 4

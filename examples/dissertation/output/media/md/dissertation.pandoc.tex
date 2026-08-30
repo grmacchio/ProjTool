@@ -1,9 +1,10 @@
-\newcommand{\genFront}[8]{\subsection{\textbf{Title}: #1}\textbf{Author:} #2\par\textbf{University:} #3\par\textbf{Department:} #4\par\textbf{Advisor:} #5\par\textbf{Date:} #6\par\subsection{\textbf{Abstract}}#7\subsection{\textbf{Acknowledgments}}#8\subsection{\textbf{LaTeXToTOC}}}
+\newcommand{\genFront}[8]{\subsection{#1}\textbf{Author:} #2\par\textbf{University:} #3\par\textbf{Department:} #4\par\textbf{Advisor:} #5\par\textbf{Date:} #6\par\subsection{Abstract}#7\subsection{Acknowledgments}#8\subsection{\textbf{LaTeXToTOC}}}
 \newcommand{\genPart}[4]{\subsection{\textbf{LaTeXToPart} \textbf{#2} \textbf{#3} #1}#4}
 \newcommand{\genSubPart}[4]{\subsubsection{\textbf{LaTeXToSubPart} \textbf{#2} \textbf{#3} #1}#4}
 \newcommand{\genTHM}[5]{\paragraph{\textbf{LaTeXToTheorem} \textbf{#2} \textbf{#3} #1}#4\paragraph{\textbf{LaTeXToProofInline}}\textbf{LaTeXToProofLink} #1\subparagraph{\textbf{LaTeXToProofStart} #1}#5\subparagraph{\textbf{LaTeXToProofEnd}}}
 \newcommand{\genDEF}[4]{\paragraph{\textbf{LaTeXToDefinition} \textbf{#2} \textbf{#3} #1}#4}
 \newcommand{\genFIG}[7]{\par\includegraphics[width=#5\textwidth]{#6}\par\paragraph{\textbf{LaTeXToFigure} \textbf{#2} \textbf{#3} #1}#7}
+
 \newcommand{\genRef}[2]{\href{latex-to-ref:#1}{#2}}
 \newcommand{\genBack}{\subsection{\textbf{LaTeXToReferences}}}
 \documentclass[dissertation]{template}
@@ -27,10 +28,8 @@
     }
 
     \genPart{<Chapter Title 1>}{num}{toc}{
-        <Chapter Content 1>
 
         \genSubPart{<Section Title 1>}{inh}{inh}{
-            <Section Content 1>
 
             \genTHM{<Theorem Title 1>}{inh}{inh}{
                 <Theorem Statement 1>
@@ -50,24 +49,29 @@
             \noindent Test Hyper-References:
             \genRef{thm}{<Theorem Title 1>}
             \genRef{def}{<Definition Title 1>}
-            \genRef{fig}{<Figure Title 1>}
+            \genRef{fig}{<Figure Title 1>} \\
+
+            \noindent Test References:
+            \cite{1970test, 2002test, 2013test, 2018test} \\
+
+            \noindent Test Code Output:
+            \input{./output/results/natural_numbers.tex}
 
         }
 
-        \genSubPart{<Section Title 2>}{nonum}{inh}{
-            <Section Content 2>
+        \genSubPart{<Section Title 2>}{inh}{inh}{
 
-            \genTHM{<Theorem Title 2>}{inh}{inh}{
+            \genTHM{<Theorem Title 2>}{nonum}{notoc}{
                 <Theorem Statement 2>
             }{
                 <Theorem Proof 2>
             }
 
-            \genDEF{<Definition Title 2>}{inh}{inh}{
+            \genDEF{<Definition Title 2>}{nonum}{notoc}{
                 <Definition Statement 2>
             }
 
-            \genFIG{<Figure Title 2>}{inh}{inh}{H}{0.40}
+            \genFIG{<Figure Title 2>}{nonum}{notoc}{H}{0.40}
             {./output/results/image.png}{
                 <Figure Caption 2>
             }
@@ -75,57 +79,7 @@
             \noindent Test Hyper-References:
             \genRef{thm}{<Theorem Title 2>}
             \genRef{def}{<Definition Title 2>}
-            \genRef{fig}{<Figure Title 2>}
-
-        }
-
-        \genSubPart{<Section Title 3>}{inh}{notoc}{
-            <Section Content 3>
-
-            \genTHM{<Theorem Title 3>}{inh}{inh}{
-                <Theorem Statement 3>
-            }{
-                <Theorem Proof 3>
-            }
-
-            \genDEF{<Definition Title 3>}{inh}{inh}{
-                <Definition Statement 3>
-            }
-
-            \genFIG{<Figure Title 3>}{inh}{inh}{H}{0.40}
-            {./output/results/image.png}{
-                <Figure Caption 3>
-            }
-
-            \noindent Test Hyper-References:
-            \genRef{thm}{<Theorem Title 3>}
-            \genRef{def}{<Definition Title 3>}
-            \genRef{fig}{<Figure Title 3>}
-
-        }
-
-        \genSubPart{<Section Title 4>}{nonum}{notoc}{
-            <Section Content 4>
-
-            \genTHM{<Theorem Title 4>}{inh}{inh}{
-                <Theorem Statement 4>
-            }{
-                <Theorem Proof 4>
-            }
-
-            \genDEF{<Definition Title 4>}{inh}{inh}{
-                <Definition Statement 4>
-            }
-
-            \genFIG{<Figure Title 4>}{inh}{inh}{H}{0.40}
-            {./output/results/image.png}{
-                <Figure Caption 4>
-            }
-
-            \noindent Test Hyper-References:
-            \genRef{thm}{<Theorem Title 4>}
-            \genRef{def}{<Definition Title 4>}
-            \genRef{fig}{<Figure Title 4>} \\
+            \genRef{fig}{<Figure Title 2>} \\
 
             \noindent Test References:
             \cite{1970test, 2002test, 2013test, 2018test} \\
