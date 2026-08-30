@@ -2,9 +2,9 @@
 
 **Intended Journal:** \<Intended Journal Content\>
 
-**Authors:** \<Author Content 1\>${}^{1}$ and \<Author Content 2\>${}^{1}$
+**Authors:** \<Author Content 1\> $^1$ and \<Author Content 2\> $^1$
 
-**Affiliations:** $^1$\<Affiliation Content\>
+**Affiliations:** $^1$ \<Affiliation Content\>
 
 **Date:** \<Date\>
 
