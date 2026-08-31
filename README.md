@@ -122,5 +122,5 @@ To remove project material, use the following commands.
 third-party content included in the project is not covered by the project's MIT
 or CC BY 4.0 licenses; thus, it is important not to include other peoples
 papers, even if it is convenient for the reader. It is recommended one uses a
-``_`` in front of any file they want to omit by ``.gitignore``, which is
+``_`` in front of any file you want to omit by ``.gitignore``, which is
 already set up upon initialization.
