@@ -14,11 +14,11 @@ Usage: projtool COMMAND ...
 
 Commands:
   init                Initialize the current directory from an example
+  cpush               Commit and push project changes
   gen                 Generate results, media, or a README
   rem                 Remove generated output or README files
 
-Run "projtool init --help", "projtool gen --help", or
-"projtool rem --help" for details.
+Run "projtool COMMAND --help" for command details.
 EOF
 }
 
@@ -32,10 +32,32 @@ Examples:
   projtool init preprint
   projtool init presentation
 
+Prompts for the creator name, GitHub URL, and initial version.
 Copies the selected example into the current directory.
 Renames the main TeX file to match the current directory.
 Excludes output, TYPE.md, TYPE.pdf, README.md, and .DS_Store.
+Creates LICENSE.txt, initializes Git, creates the initial commit and version
+tag, and pushes the main branch and tag to GitHub.
 Existing paths are never overwritten.
+EOF
+}
+
+usage_cpush() {
+    cat <<'EOF'
+Usage: projtool cpush -m MESSAGE [-v VERSION]
+
+Examples:
+  projtool cpush -m "Revise introduction"
+  projtool cpush -m "Release v0.2.0" -v v0.2.0
+
+Options:
+  -m MESSAGE           Commit message
+  -v VERSION           Create an annotated release tag
+
+Updates the ending copyright year in LICENSE.txt and stages the license.
+Commit other project changes with git add before running cpush. The commit is
+pushed to origin; with -v, the current branch and version tag are pushed
+together.
 EOF
 }
 
@@ -102,6 +124,111 @@ die() {
 
 require_command() {
     command -v "$1" >/dev/null 2>&1 || die "required command not found: $1"
+}
+
+prompt_required() {
+    local prompt="$1"
+    local value
+
+    printf '%s' "$prompt"
+    IFS= read -r value || die "input ended before all prompts were answered"
+    [[ -n "$value" ]] || die "a value is required for: ${prompt%: }"
+    PROMPT_VALUE="$value"
+}
+
+validate_version() {
+    local version="$1"
+
+    git check-ref-format "refs/tags/$version" >/dev/null 2>&1 ||
+        die "invalid version tag: $version"
+}
+
+write_project_license() {
+    local target_dir="$1"
+    local project_name="$2"
+    local creator_name="$3"
+    local github_url="$4"
+    local license_template="$SCRIPT_DIR/LICENSE.txt"
+    local license_file="$target_dir/LICENSE.txt"
+    local license_temp
+    local current_year
+    local line
+    local attribution=false
+    local attribution_url="$github_url"
+
+    [[ -f "$license_template" ]] || die "missing license template: $license_template"
+    current_year="$(date +%Y)"
+    [[ "$current_year" =~ ^[0-9]{4}$ ]] || die "could not determine the current year"
+
+    case "$attribution_url" in
+        git@github.com:*)
+            attribution_url="https://github.com/${attribution_url#git@github.com:}"
+            ;;
+        ssh://git@github.com/*)
+            attribution_url="https://github.com/${attribution_url#ssh://git@github.com/}"
+            ;;
+    esac
+    attribution_url="${attribution_url%.git}"
+
+    license_temp="$(mktemp "$target_dir/.projtool-license.XXXXXX")"
+    while IFS= read -r line || [[ -n "$line" ]]; do
+        if [[ "$line" == "Copyright (c) "* ]]; then
+            line="Copyright (c) $current_year-$current_year $creator_name and $project_name contributors"
+        else
+            line="${line//Gregory R. Macchio/$creator_name}"
+            line="${line//ProjTool/$project_name}"
+        fi
+
+        if [[ "$line" == "Suggested attribution:" ]]; then
+            attribution=true
+        elif [[ "$attribution" == true && ( "$line" == http://* || "$line" == https://* || "$line" == git@* ) ]]; then
+            if [[ "$line" == *\" ]]; then
+                line="$attribution_url\""
+            else
+                line="$attribution_url"
+            fi
+            attribution=false
+        fi
+        printf '%s\n' "$line"
+    done < "$license_template" > "$license_temp"
+    chmod 0644 "$license_temp"
+    mv -f -- "$license_temp" "$license_file"
+}
+
+update_license_years() {
+    local license_file="$1"
+    local current_year
+    local license_temp
+    local line
+    local first_year
+    local holder
+    local found=false
+
+    [[ -f "$license_file" ]] || die "missing license file: $license_file"
+    current_year="$(date +%Y)"
+    [[ "$current_year" =~ ^[0-9]{4}$ ]] || die "could not determine the current year"
+    license_temp="$(mktemp "${license_file}.XXXXXX")"
+
+    while IFS= read -r line || [[ -n "$line" ]]; do
+        if [[ "$line" =~ ^Copyright\ \(c\)\ ([0-9]{4})(-[0-9]{4})?\ (.*)$ ]]; then
+            first_year="${BASH_REMATCH[1]}"
+            holder="${BASH_REMATCH[3]}"
+            (( 10#$current_year >= 10#$first_year )) || {
+                rm -f -- "$license_temp"
+                die "license begins in a future year: $first_year"
+            }
+            line="Copyright (c) $first_year-$current_year $holder"
+            found=true
+        fi
+        printf '%s\n' "$line"
+    done < "$license_file" > "$license_temp"
+
+    if [[ "$found" != true ]]; then
+        rm -f -- "$license_temp"
+        die "no copyright notice found in $license_file"
+    fi
+    chmod 0644 "$license_temp"
+    mv -f -- "$license_temp" "$license_file"
 }
 
 resolve_target() {
@@ -336,20 +463,20 @@ write_readme() {
     local has_pdf=false
     local has_md=false
     local intro
-    local attribution="This project was generated using [ProjTool](https://github.com/grmacchio/LaTeXTo)."
+    local repeatability="To ensure repeatability, see [ProjTool](https://github.com/grmacchio/LaTeXTo) on how to regenerate this project from its source files."
 
     [[ -f "$pdf_file" ]] && has_pdf=true
     [[ -f "$md_file" ]] && has_md=true
 
     case "$has_pdf:$has_md" in
         true:false)
-            intro="The media developed in the project includes a [PDF file](./$DOCUMENT_STEM.pdf)."
+            intro="This project includes a [PDF file](./$DOCUMENT_STEM.pdf)."
             ;;
         false:true)
-            intro="The media developed in the project includes a [Markdown file](./$DOCUMENT_STEM.md). The Markdown file is also included below."
+            intro="This project includes a [Markdown file](./$DOCUMENT_STEM.md). The Markdown file is included below for convenience."
             ;;
         true:true)
-            intro="The media developed in the project includes a [PDF file](./$DOCUMENT_STEM.pdf) and [Markdown file](./$DOCUMENT_STEM.md). The Markdown file is also included below."
+            intro="This project includes a [PDF file](./$DOCUMENT_STEM.pdf) and [Markdown file](./$DOCUMENT_STEM.md). The Markdown file is included below for convenience."
             ;;
         false:false)
             die "no generated PDF or Markdown found in $MEDIA_OUTPUT_DIR"
@@ -362,7 +489,7 @@ write_readme() {
             -e 's#src="../../results/#src="./output/results/#g' \
             "$md_file" > "$target_md"
     fi
-    printf '%s\n\n%s\n' "$intro" "$attribution" > "$readme_file"
+    printf '%s %s\n' "$intro" "$repeatability" > "$readme_file"
 
     if [[ "$has_md" == true ]]; then
         printf '\n' >> "$readme_file"
@@ -394,6 +521,9 @@ main_init() {
     local settings_file
     local settings_temp
     local target_name
+    local creator_name
+    local github_url
+    local version
 
     [[ $# -eq 0 ]] && { usage_init; exit 2; }
     [[ "$1" == "-h" || "$1" == "--help" ]] && {
@@ -409,6 +539,21 @@ main_init() {
     [[ -d "$source_dir" ]] || die "example not found: $example_type"
     target_dir="$(pwd)"
     target_name="$(basename -- "$target_dir")"
+    require_command git
+    [[ ! -e "$target_dir/.git" ]] || die "working directory is already a Git repository"
+
+    prompt_required "Enter Name: "
+    creator_name="$PROMPT_VALUE"
+    prompt_required "Enter GitHub URL: "
+    github_url="$PROMPT_VALUE"
+    prompt_required "Enter Version: "
+    version="$PROMPT_VALUE"
+    validate_version "$version"
+
+    destination="$target_dir/LICENSE.txt"
+    if [[ -e "$destination" || -L "$destination" ]]; then
+        die "destination already exists: $destination"
+    fi
 
     while IFS= read -r -d '' entry; do
         name="$(basename -- "$entry")"
@@ -456,7 +601,85 @@ main_init() {
         mv -f -- "$settings_temp" "$settings_file"
     fi
 
+    write_project_license "$target_dir" "$target_name" "$creator_name" "$github_url"
+
+    (
+        cd -- "$target_dir"
+        git init
+        git add .
+        git commit -m "Initialize commit history"
+        git branch -M main
+        git tag -a "$version" -m "$target_name $version"
+        git remote add origin "$github_url"
+        git push -u origin main "$version"
+    )
+
     printf '✓ %s initialized in %s\n' "$example_type" "$target_dir"
+}
+
+main_cpush() {
+    local message=""
+    local version=""
+    local project_dir
+    local project_name
+    local current_branch
+    local license_file
+
+    [[ $# -eq 0 ]] && { usage_cpush; exit 2; }
+    [[ "$1" == "-h" || "$1" == "--help" ]] && {
+        usage_cpush
+        exit 0
+    }
+
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            -m|--message)
+                [[ $# -ge 2 ]] || die "missing message after $1"
+                message="$2"
+                shift 2
+                ;;
+            -v|--version)
+                [[ $# -ge 2 ]] || die "missing version after $1"
+                version="$2"
+                shift 2
+                ;;
+            *)
+                die "unexpected argument: $1"
+                ;;
+        esac
+    done
+
+    [[ -n "$message" ]] || die "cpush requires -m MESSAGE"
+    require_command git
+    project_dir="$(git rev-parse --show-toplevel 2>/dev/null)" ||
+        die "working directory is not a Git repository"
+    project_name="$(basename -- "$project_dir")"
+    current_branch="$(git -C "$project_dir" symbolic-ref --short HEAD 2>/dev/null)" ||
+        die "cannot cpush from a detached HEAD"
+    git -C "$project_dir" remote get-url origin >/dev/null 2>&1 ||
+        die "Git remote not found: origin"
+    license_file="$project_dir/LICENSE.txt"
+
+    if [[ -n "$version" ]]; then
+        validate_version "$version"
+        if git -C "$project_dir" rev-parse -q --verify "refs/tags/$version" >/dev/null; then
+            die "version tag already exists: $version"
+        fi
+    fi
+
+    update_license_years "$license_file"
+    git -C "$project_dir" add -- LICENSE.txt
+
+    git -C "$project_dir" commit -m "$message"
+
+    if [[ -n "$version" ]]; then
+        git -C "$project_dir" tag -a "$version" -m "$project_name $version"
+        git -C "$project_dir" push origin "$current_branch" "$version"
+    else
+        git -C "$project_dir" push origin "$current_branch"
+    fi
+
+    printf '✓ changes pushed for %s\n' "$project_name"
 }
 
 main_gen() {
@@ -577,6 +800,7 @@ shift
 
 case "$MODE" in
     init) main_init "$@" ;;
+    cpush) main_cpush "$@" ;;
     gen) main_gen "$@" ;;
     rem) main_rem "$@" ;;
     *)

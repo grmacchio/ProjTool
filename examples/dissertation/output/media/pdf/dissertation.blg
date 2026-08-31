@@ -1,26 +1,26 @@
 [0] Config.pm:308> INFO - This is Biber 2.20
 [0] Config.pm:311> INFO - Logfile is 'output/media/pdf/dissertation.blg'
-[34] biber-darwin:340> INFO - === Sun Aug 30, 2026, 14:45:55
+[34] biber-darwin:340> INFO - === Mon Aug 31, 2026, 14:43:03
 [43] Biber.pm:420> INFO - Reading 'output/media/pdf/dissertation.bcf'
 [82] Biber.pm:994> INFO - Found 4 citekeys in bib section 0
 [89] Biber.pm:4463> INFO - Processing section 0
 [89] Utils.pm:85> INFO - Globbing data source './references/*/*.bib'
 [90] Utils.pm:96> INFO - Globbed data source './references/*/*.bib' to './references/1970author/1970author.bib,./references/2002author/2002author.bib,./references/2013author/2013author.bib,./references/2018author/2018author.bib'
-[94] Biber.pm:4654> INFO - Looking for bibtex file './references/1970author/1970author.bib' for section 0
-[95] bibtex.pm:1713> INFO - LaTeX decoding ...
-[96] bibtex.pm:1519> INFO - Found BibTeX data source './references/1970author/1970author.bib'
-[109] Biber.pm:4654> INFO - Looking for bibtex file './references/2002author/2002author.bib' for section 0
-[110] bibtex.pm:1713> INFO - LaTeX decoding ...
-[110] bibtex.pm:1519> INFO - Found BibTeX data source './references/2002author/2002author.bib'
-[112] Biber.pm:4654> INFO - Looking for bibtex file './references/2013author/2013author.bib' for section 0
-[112] bibtex.pm:1713> INFO - LaTeX decoding ...
-[113] bibtex.pm:1519> INFO - Found BibTeX data source './references/2013author/2013author.bib'
-[114] Biber.pm:4654> INFO - Looking for bibtex file './references/2018author/2018author.bib' for section 0
+[95] Biber.pm:4654> INFO - Looking for bibtex file './references/1970author/1970author.bib' for section 0
+[96] bibtex.pm:1713> INFO - LaTeX decoding ...
+[97] bibtex.pm:1519> INFO - Found BibTeX data source './references/1970author/1970author.bib'
+[110] Biber.pm:4654> INFO - Looking for bibtex file './references/2002author/2002author.bib' for section 0
+[111] bibtex.pm:1713> INFO - LaTeX decoding ...
+[111] bibtex.pm:1519> INFO - Found BibTeX data source './references/2002author/2002author.bib'
+[113] Biber.pm:4654> INFO - Looking for bibtex file './references/2013author/2013author.bib' for section 0
+[113] bibtex.pm:1713> INFO - LaTeX decoding ...
+[114] bibtex.pm:1519> INFO - Found BibTeX data source './references/2013author/2013author.bib'
+[115] Biber.pm:4654> INFO - Looking for bibtex file './references/2018author/2018author.bib' for section 0
 [115] bibtex.pm:1713> INFO - LaTeX decoding ...
-[115] bibtex.pm:1519> INFO - Found BibTeX data source './references/2018author/2018author.bib'
-[121] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
-[121] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[121] Biber.pm:4283> INFO - Sorting list 'ynt/global//global/global/global' of type 'entry' with template 'ynt' and locale 'en-US'
-[121] Biber.pm:4289> INFO - No sort tailoring available for locale 'en-US'
-[126] bbl.pm:676> INFO - Writing 'output/media/pdf/dissertation.bbl' with encoding 'UTF-8'
-[127] bbl.pm:779> INFO - Output to output/media/pdf/dissertation.bbl
+[116] bibtex.pm:1519> INFO - Found BibTeX data source './references/2018author/2018author.bib'
+[122] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[122] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[122] Biber.pm:4283> INFO - Sorting list 'ynt/global//global/global/global' of type 'entry' with template 'ynt' and locale 'en-US'
+[122] Biber.pm:4289> INFO - No sort tailoring available for locale 'en-US'
+[127] bbl.pm:676> INFO - Writing 'output/media/pdf/dissertation.bbl' with encoding 'UTF-8'
+[128] bbl.pm:779> INFO - Output to output/media/pdf/dissertation.bbl

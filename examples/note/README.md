@@ -1,6 +1,4 @@
-The media developed in the project includes a [PDF file](./note.pdf) and [Markdown file](./note.md). The Markdown file is also included below.
-
-This project was generated using [ProjTool](https://github.com/grmacchio/LaTeXTo).
+This project includes a [PDF file](./note.pdf) and [Markdown file](./note.md). The Markdown file is included below for convenience. To ensure repeatability, see [ProjTool](https://github.com/grmacchio/LaTeXTo) on how to regenerate this project from its source files.
 
 ## \<Title Content\>
 

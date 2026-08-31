@@ -1,0 +1,78 @@
+dissertation Licensing
+
+Copyright (c) 2026-2026 Gregory R. Macchio and dissertation contributors
+
+This distribution contains material under two licenses. The scope of each
+license is defined below.
+
+1. CODE AND SOFTWARE — MIT LICENSE
+
+The MIT License applies to dissertation source code, scripts, LaTeX class code,
+configuration, and other software components, except where a file states
+otherwise.
+
+MIT License
+
+Copyright (c) 2026-2026 Gregory R. Macchio and dissertation contributors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+2. ORIGINAL MEDIA AND DOCUMENTATION — CC BY 4.0
+
+Original prose, documentation, illustrations, and other non-software media
+authored by Gregory R. Macchio, or contributed to dissertation under these
+terms, are licensed under the Creative Commons Attribution 4.0 International
+License (CC BY 4.0):
+
+https://creativecommons.org/licenses/by/4.0/legalcode
+
+You may share and adapt this material for any purpose, including commercially,
+provided that you give appropriate credit, provide a link to the license, and
+indicate whether changes were made. You may not apply legal terms or
+technological measures that restrict others from doing anything the license
+permits.
+
+Suggested attribution:
+
+"dissertation media by Gregory R. Macchio, licensed under CC BY 4.0.
+https://github.com/grmacchio/LaTeXTo"
+
+Credit other contributors as identified with their material or in the project
+records.
+
+3. CONTRIBUTIONS
+
+Each contributor retains copyright in their respective contributions. Unless
+a contribution expressly states otherwise, a contribution intentionally
+submitted for inclusion in dissertation is provided under the license
+applicable to the type of material contributed: MIT for code and software, or
+CC BY 4.0 for original non-software media and documentation.
+
+4. EXCLUSIONS
+
+The licenses in this file do not apply to third-party material included in,
+quoted in, referenced by, linked from, or used with dissertation, regardless of
+its file name or location, unless that material expressly states otherwise.
+Third-party works remain subject to their respective copyright and license
+terms.
+
+User-authored content and outputs generated from that content are not
+automatically licensed under CC BY 4.0 merely because dissertation was used to
+create them. Any original dissertation media reproduced in an output remains
+subject to CC BY 4.0.

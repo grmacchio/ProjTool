@@ -1,7 +1,7 @@
 # Fdb version 4
-["pdflatex"] 1787312497.58811 "/Users/gregorymacchio/Documents/Mirror/laptop/global/writing/software/ProjTool/examples/presentation/presentation.tex" "output/media/pdf/presentation.pdf" "presentation" 1787312499.56507 0
+["pdflatex"] 1788203025.29375 "/Users/gregorymacchio/Documents/Mirror/laptop/global/writing/software/ProjTool/examples/presentation/presentation.tex" "output/media/pdf/presentation.pdf" "presentation" 1788203027.35918 0
   "/Users/gregorymacchio/Documents/Mirror/laptop/global/writing/software/ProjTool/examples/presentation/presentation.tex" 1787312385.12287 3784 01e60d68cbe5ce305d5a93deafb16014 ""
-  "/Users/gregorymacchio/Documents/Mirror/laptop/global/writing/software/ProjTool/template.cls" 1787311572.123 32710 4e9ef0d9667152efa06ca09b7ec7f390 ""
+  "/Users/gregorymacchio/Documents/Mirror/laptop/global/writing/software/ProjTool/template.cls" 1788115772.65871 43025 f1dff255b207a553940cd5ebcfe83927 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1136849721 2971 def0b6c1f0b107b3b936def894055589 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/jknappen/ec/ecbx0800.tfm" 1136768653 3584 269b66e921ba58750c12f7f1c8ea3ebd ""
@@ -213,11 +213,11 @@
   "/usr/local/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1769657775 5467155 19efa205003f9ecad95fbbaa6ff24da1 ""
   "/usr/local/texlive/2025/texmf-var/web2c/pdftex/pdflatex.fmt" 1741450574 3345740 46b66fdb0378f7bf5921b5eabf1762b8 ""
   "/usr/local/texlive/2025/texmf.cnf" 1741450484 577 418a7058ec8e006d8704f60ecd22c938 ""
-  "output/media/pdf/presentation.aux" 1787312499.41384 6663 cd9c3732a9bfb18b676f4d3ae3c06b1e "pdflatex"
-  "output/media/pdf/presentation.nav" 1787312499.41489 3033 23eb6f7b33890768c3b3d89505e53d5b "pdflatex"
-  "output/media/pdf/presentation.out" 1787312499.41467 729 3d32b3d0feceedc875d218116f580d96 "pdflatex"
-  "output/media/pdf/presentation.toc" 1787312499.41492 233 5fe89d61e8e650082c8c9d05c0e87d88 "pdflatex"
-  "output/results/image.png" 1787312495.42486 15057 a100dcd019ce3a8cd83a854c6b405beb ""
+  "output/media/pdf/presentation.aux" 1788203027.21819 6663 cd9c3732a9bfb18b676f4d3ae3c06b1e "pdflatex"
+  "output/media/pdf/presentation.nav" 1788203027.21935 3033 23eb6f7b33890768c3b3d89505e53d5b "pdflatex"
+  "output/media/pdf/presentation.out" 1788203027.21917 729 3d32b3d0feceedc875d218116f580d96 "pdflatex"
+  "output/media/pdf/presentation.toc" 1788203027.21938 233 5fe89d61e8e650082c8c9d05c0e87d88 "pdflatex"
+  "output/results/image.png" 1788203022.98175 15057 a100dcd019ce3a8cd83a854c6b405beb ""
   "presentation.tex" 1787312385.12287 3784 01e60d68cbe5ce305d5a93deafb16014 ""
   (generated)
   "output/media/pdf/presentation.aux"

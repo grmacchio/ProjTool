@@ -3,5 +3,10 @@
 
     "editor.rulers": [
         79
+    ],
+    "cSpell.words": [
+        "cpush",
+        "Macchio",
+        "projtool"
     ]
 }

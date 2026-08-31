@@ -1,100 +1,100 @@
-## **Title**: &lt;Title Content&gt;
+## **Title**: \<Title Content\>
 
-**Authors:** &lt;Author Content&gt;
+**Authors:** \<Author Content\>
 
-**Affiliations:** &lt;Affiliations Content&gt;
+**Affiliations:** \<Affiliations Content\>
 
-**Acknowledgments:** &lt;Acknowledgments Content&gt;
+**Acknowledgments:** \<Acknowledgments Content\>
 
-**Date:** &lt;Date Content&gt;
+**Date:** \<Date Content\>
 
 <a id="table-of-contents"></a>
 
 ## **Table of Contents**
 
--   [&lt;Section Title 1&gt;](#chapter-section-title-1)
--   [&lt;Section Title 2&gt;](#chapter-section-title-2)
+- [\<Section Title 1\>](#chapter-section-title-1)
+- [\<Section Title 2\>](#chapter-section-title-2)
 
 <a id="chapter-section-title-1"></a>
 
-## &lt;Section Title 1&gt;
+## \<Section Title 1\>
 
 <a id="section-frame-title-1"></a>
 
-### &lt;Frame Title 1&gt;
+### \<Frame Title 1\>
 
--   **&lt;Frame Content 1&gt;**
+- **\<Frame Content 1\>**
 
-    -   &lt;Nested Frame Content 1&gt;
+  - \<Nested Frame Content 1\>
 
 <a id="definition-definition-title-1"></a>
 
-**Definition** (&lt;Definition Title 1&gt;)**.** &lt;Definition Statement 1&gt;
+**Definition** (\<Definition Title 1\>)**.** \<Definition Statement 1\>
 
 <a id="theorem-theorem-title-1"></a>
 
-**Theorem** (&lt;Theorem Title 1&gt;)**.** &lt;Theorem Statement 1&gt;
+**Theorem** (\<Theorem Title 1\>)**.** \<Theorem Statement 1\>
 
 <p align="center"><img src="../../results/image.png" alt="image" width="40%" style="image-rendering: pixelated; image-rendering: crisp-edges;"></p>
 <a id="figure-figure-title-1"></a>
 <p align="center"><strong>Figure 1</strong> (&lt;Figure Title 1&gt;)<strong>.</strong> &lt;Figure Caption 1&gt;</p>
 <a id="section-frame-title-2"></a>
 
-### &lt;Frame Title 2&gt;
+### \<Frame Title 2\>
 
--   *&lt;Frame Content 2&gt;*
+- *\<Frame Content 2\>*
 
-    -   &lt;Nested Frame Content 2&gt;
+  - \<Nested Frame Content 2\>
 
 <a id="definition-definition-title-2"></a>
 
-**Definition** (&lt;Definition Title 2&gt;)**.** &lt;Definition Statement 2&gt;
+**Definition** (\<Definition Title 2\>)**.** \<Definition Statement 2\>
 
 <a id="theorem-theorem-title-2"></a>
 
-**Theorem** (&lt;Theorem Title 2&gt;)**.** &lt;Theorem Statement 2&gt;
+**Theorem** (\<Theorem Title 2\>)**.** \<Theorem Statement 2\>
 
 <p align="center"><img src="../../results/image.png" alt="image" width="40%" style="image-rendering: pixelated; image-rendering: crisp-edges;"></p>
 <a id="figure-figure-title-2"></a>
 <p align="center"><strong>Figure 2</strong> (&lt;Figure Title 2&gt;)<strong>.</strong> &lt;Figure Caption 2&gt;</p>
 <a id="chapter-section-title-2"></a>
 
-## &lt;Section Title 2&gt;
+## \<Section Title 2\>
 
 <a id="section-frame-title-3"></a>
 
-### &lt;Frame Title 3&gt;
+### \<Frame Title 3\>
 
--   **&lt;Frame Content 3&gt;**
+- **\<Frame Content 3\>**
 
-    -   &lt;Nested Frame Content 3&gt;
+  - \<Nested Frame Content 3\>
 
 <a id="definition-definition-title-3"></a>
 
-**Definition** (&lt;Definition Title 3&gt;)**.** &lt;Definition Statement 3&gt;
+**Definition** (\<Definition Title 3\>)**.** \<Definition Statement 3\>
 
 <a id="theorem-theorem-title-3"></a>
 
-**Theorem** (&lt;Theorem Title 3&gt;)**.** &lt;Theorem Statement 3&gt;
+**Theorem** (\<Theorem Title 3\>)**.** \<Theorem Statement 3\>
 
 <p align="center"><img src="../../results/image.png" alt="image" width="40%" style="image-rendering: pixelated; image-rendering: crisp-edges;"></p>
 <a id="figure-figure-title-3"></a>
 <p align="center"><strong>Figure 3</strong> (&lt;Figure Title 3&gt;)<strong>.</strong> &lt;Figure Caption 3&gt;</p>
 <a id="section-frame-title-4"></a>
 
-### &lt;Frame Title 4&gt;
+### \<Frame Title 4\>
 
--   *&lt;Frame Content 4&gt;*
+- *\<Frame Content 4\>*
 
-    -   &lt;Nested Frame Content 4&gt;
+  - \<Nested Frame Content 4\>
 
 <a id="definition-definition-title-4"></a>
 
-**Definition** (&lt;Definition Title 4&gt;)**.** &lt;Definition Statement 4&gt;
+**Definition** (\<Definition Title 4\>)**.** \<Definition Statement 4\>
 
 <a id="theorem-theorem-title-4"></a>
 
-**Theorem** (&lt;Theorem Title 4&gt;)**.** &lt;Theorem Statement 4&gt;
+**Theorem** (\<Theorem Title 4\>)**.** \<Theorem Statement 4\>
 
 <p align="center"><img src="../../results/image.png" alt="image" width="40%" style="image-rendering: pixelated; image-rendering: crisp-edges;"></p>
 <a id="figure-figure-title-4"></a>
@@ -103,37 +103,37 @@
 
 ## **Appendix Table of Contents**
 
--   [&lt;Appendix Section Title 1&gt;](#chapter-appendix-section-title-1)
--   [&lt;Appendix Section Title 2&gt;](#chapter-appendix-section-title-2)
+- [\<Appendix Section Title 1\>](#chapter-appendix-section-title-1)
+- [\<Appendix Section Title 2\>](#chapter-appendix-section-title-2)
 
 <a id="chapter-appendix-section-title-1"></a>
 
-## &lt;Appendix Section Title 1&gt;
+## \<Appendix Section Title 1\>
 
 <a id="section-appendix-frame-title-1"></a>
 
-### &lt;Appendix Frame Title 1&gt;
+### \<Appendix Frame Title 1\>
 
--   &lt;Appendix Frame Content 1&gt;
+- \<Appendix Frame Content 1\>
 
--   [&lt;Theorem Title 1&gt;](#theorem-theorem-title-1)
+- [\<Theorem Title 1\>](#theorem-theorem-title-1)
 
--   [&lt;Definition Title 1&gt;](#definition-definition-title-1)
+- [\<Definition Title 1\>](#definition-definition-title-1)
 
--   [&lt;Figure Title 1&gt;](#figure-figure-title-1)
+- [\<Figure Title 1\>](#figure-figure-title-1)
 
 <a id="chapter-appendix-section-title-2"></a>
 
-## &lt;Appendix Section Title 2&gt;
+## \<Appendix Section Title 2\>
 
 <a id="section-appendix-frame-title-2"></a>
 
-### &lt;Appendix Frame Title 2&gt;
+### \<Appendix Frame Title 2\>
 
--   &lt;Appendix Frame Content 2&gt;
+- \<Appendix Frame Content 2\>
 
--   [&lt;Theorem Title 2&gt;](#theorem-theorem-title-2)
+- [\<Theorem Title 2\>](#theorem-theorem-title-2)
 
--   [&lt;Definition Title 2&gt;](#definition-definition-title-2)
+- [\<Definition Title 2\>](#definition-definition-title-2)
 
--   [&lt;Figure Title 2&gt;](#figure-figure-title-2)
+- [\<Figure Title 2\>](#figure-figure-title-2)
