@@ -51,7 +51,7 @@ permits.
 Suggested attribution:
 
 "dissertation media by Gregory R. Macchio, licensed under CC BY 4.0.
-https://github.com/grmacchio/LaTeXTo"
+https://github.com/grmacchio/dissertation"
 
 Credit other contributors as identified with their material or in the project
 records.
