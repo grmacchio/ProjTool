@@ -290,10 +290,14 @@ run_results_stage() {
     printf '%s\n' '-> running results.sh'
     (
         cd -- "$TARGET_DIR"
-        PROJTOOL_VERBOSE="$VERBOSE" \
-        JULIA_PROJECT="${JULIA_PROJECT:-$julia_project}" \
-        GKSwstype="${GKSwstype:-nul}" \
+        export PROJTOOL_VERBOSE="$VERBOSE"
+        export JULIA_PROJECT="${JULIA_PROJECT:-$julia_project}"
+        export GKSwstype="${GKSwstype:-nul}"
+        if [[ "$VERBOSE" == true ]]; then
             bash -e ./results.sh
+        else
+            bash -e ./results.sh 2>&1 | sed '/^\[NbClientApp\]/d'
+        fi
     )
 }
 

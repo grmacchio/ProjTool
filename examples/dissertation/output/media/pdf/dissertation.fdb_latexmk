@@ -1,15 +1,15 @@
 # Fdb version 4
-["biber output/media/pdf/dissertation"] 1788295104.18164 "output/media/pdf/dissertation.bcf" "output/media/pdf/dissertation.bbl" "output/media/pdf/dissertation" 1788295109.18558 0
+["biber output/media/pdf/dissertation"] 1788300087.66123 "output/media/pdf/dissertation.bcf" "output/media/pdf/dissertation.bbl" "output/media/pdf/dissertation" 1788300092.59568 0
   "./references/1970author/1970author.bib" 1788114017.19196 157 80ade23eaea446bb0bdf11b86d7b5224 ""
   "./references/2002author/2002author.bib" 1788114020.38004 156 23e175d00be542abb5a06619373a4bc8 ""
   "./references/2013author/2013author.bib" 1788114013.34049 127 91b6fd01a377bb0bfc525cccf84c282e ""
   "./references/2018author/2018author.bib" 1788114029.71939 156 3dc7314431018d7898166a2df1c65657 ""
-  "output/media/pdf/dissertation.bcf" 1788295109.08647 108913 f96c5835e8a8d228c6adb2cead355f9b "pdflatex"
+  "output/media/pdf/dissertation.bcf" 1788300092.49332 108913 f96c5835e8a8d228c6adb2cead355f9b "pdflatex"
   (generated)
   "output/media/pdf/dissertation.bbl"
   "output/media/pdf/dissertation.blg"
   (rewritten before read)
-["pdflatex"] 1788295108.00178 "/Users/gregorymacchio/Documents/Mirror/laptop/global/writing/software/ProjTool/examples/dissertation/dissertation.tex" "output/media/pdf/dissertation.pdf" "dissertation" 1788295109.18585 0
+["pdflatex"] 1788300091.43832 "/Users/gregorymacchio/Documents/Mirror/laptop/global/writing/software/ProjTool/examples/dissertation/dissertation.tex" "output/media/pdf/dissertation.pdf" "dissertation" 1788300092.59595 0
   "/Users/gregorymacchio/Documents/Mirror/laptop/global/writing/software/ProjTool/examples/dissertation/dissertation.tex" 1788294714.32726 2159 00db15176549041a8e180ae22cb97eef ""
   "/Users/gregorymacchio/Documents/Mirror/laptop/global/writing/software/ProjTool/template.cls" 1788288975.37339 43079 ab66a50fd4a039eff605ba037bca4b47 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1136849721 2971 def0b6c1f0b107b3b936def894055589 ""
@@ -193,14 +193,14 @@
   "/usr/local/texlive/2025/texmf-var/web2c/pdftex/pdflatex.fmt" 1741450574 3345740 46b66fdb0378f7bf5921b5eabf1762b8 ""
   "/usr/local/texlive/2025/texmf.cnf" 1741450484 577 418a7058ec8e006d8704f60ecd22c938 ""
   "dissertation.tex" 1788294714.32726 2159 00db15176549041a8e180ae22cb97eef ""
-  "output/media/pdf/dissertation.aux" 1788295109.08495 3513 37bee1733f5df1bc67e98866364aa8c1 "pdflatex"
-  "output/media/pdf/dissertation.bbl" 1788295105.59165 5139 19bcb626a1004e8427ba9721434cec8d "biber output/media/pdf/dissertation"
-  "output/media/pdf/dissertation.out" 1788295109.08571 1048 31a08d37a8da45fecd77a4383fdf23a9 "pdflatex"
-  "output/media/pdf/dissertation.run.xml" 1788295109.08703 2367 0458b1fbb1b9294a3bb5d274974ed1e3 "pdflatex"
-  "output/media/pdf/dissertation.toc" 1788295109.08709 836 a7b5523a1c7fba4342a5a0f6e3be3cc4 "pdflatex"
-  "output/results/julia/exp.png" 1788295101.22127 15057 a100dcd019ce3a8cd83a854c6b405beb ""
-  "output/results/julia/natural_numbers.tex" 1788295101.00288 29 7f7901fcc2406d5dfddf9e24d9b37fa7 ""
-  "output/results/python/quadratic.png" 1788295102.67223 21810 af9de2bdcfbde52fc01bc01e3bea903a ""
+  "output/media/pdf/dissertation.aux" 1788300092.49202 3513 37bee1733f5df1bc67e98866364aa8c1 "pdflatex"
+  "output/media/pdf/dissertation.bbl" 1788300089.08651 5139 19bcb626a1004e8427ba9721434cec8d "biber output/media/pdf/dissertation"
+  "output/media/pdf/dissertation.out" 1788300092.49259 1048 31a08d37a8da45fecd77a4383fdf23a9 "pdflatex"
+  "output/media/pdf/dissertation.run.xml" 1788300092.49556 2367 0458b1fbb1b9294a3bb5d274974ed1e3 "pdflatex"
+  "output/media/pdf/dissertation.toc" 1788300092.49562 836 a7b5523a1c7fba4342a5a0f6e3be3cc4 "pdflatex"
+  "output/results/julia/exp.png" 1788300084.79515 15057 a100dcd019ce3a8cd83a854c6b405beb ""
+  "output/results/julia/natural_numbers.tex" 1788300084.57857 29 7f7901fcc2406d5dfddf9e24d9b37fa7 ""
+  "output/results/python/quadratic.png" 1788300086.23552 21810 af9de2bdcfbde52fc01bc01e3bea903a ""
   (generated)
   "output/media/pdf/dissertation.aux"
   "output/media/pdf/dissertation.bcf"
