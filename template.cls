@@ -151,6 +151,7 @@
     \RequirePackage{amssymb}
     \RequirePackage{amsthm}
     \RequirePackage{cancel}
+    \RequirePackage{mathdots}
     \newcommand{\Arg}{\mathrm{Arg} \:}
     \newcommand{\ra}{\rightarrow}
     \newcommand{\la}{\leftarrow}
