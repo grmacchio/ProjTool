@@ -319,6 +319,8 @@ INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/float/float.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/float/float.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/cancel/cancel.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/cancel/cancel.sty
+INPUT /usr/local/texlive/2025/texmf-dist/tex/generic/mathdots/mathdots.sty
+INPUT /usr/local/texlive/2025/texmf-dist/tex/generic/mathdots/mathdots.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/beamer/beamerthemeMadrid.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/beamer/beamerthemeMadrid.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/beamer/beamercolorthemewhale.sty

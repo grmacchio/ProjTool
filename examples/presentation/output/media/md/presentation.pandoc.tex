@@ -5,7 +5,7 @@
 \newcommand{\genDEF}[2]{\paragraph{\textbf{LaTeXToDefinition} #1}#2}
 \newcommand{\genFIG}[5]{\par\includegraphics[width=#3\textwidth]{#4}\par\paragraph{\textbf{LaTeXToFigure} #1}#5}
 \newcommand{\togglefalse}[1]{}\newcommand{\toggletrue}[1]{}\newcommand{\bo}[2]{\begin{#1}}\newcommand{\eo}[1]{\end{#1}}\newcommand{\bi}[2]{\begin{#1}}\newcommand{\ei}[1]{\end{#1}}\newcommand{\bitem}[1]{\item \textbf{#1}}\newcommand{\iitem}[1]{\item \textit{#1}}
-\newcommand{\genRef}[2]{\href{latex-to-ref:#1}{#2}}
+\newcommand{\genREF}[2]{\href{latex-to-ref:#1}{#2}}
 \newcommand{\genBack}{\subsection{\textbf{LaTeXToAppendixTOC}}}
 \documentclass[presentation]{template}
 
@@ -119,9 +119,9 @@
         \genSubPart{<Appendix Frame Title 1>}{
             \bo{itemize}{0.25cm}
                 \item {<Appendix Frame Content 1>}
-                \item \genRef{thm}{<Theorem Title 1>}
-                \item \genRef{def}{<Definition Title 1>}
-                \item \genRef{fig}{<Figure Title 1>}
+                \item \genREF{thm}{<Theorem Title 1>}
+                \item \genREF{def}{<Definition Title 1>}
+                \item \genREF{fig}{<Figure Title 1>}
             \eo{itemize}
         }
     }
@@ -130,9 +130,9 @@
         \genSubPart{<Appendix Frame Title 2>}{
             \bo{itemize}{0.25cm}
                 \item {<Appendix Frame Content 2>}
-                \item \genRef{thm}{<Theorem Title 2>}
-                \item \genRef{def}{<Definition Title 2>}
-                \item \genRef{fig}{<Figure Title 2>}
+                \item \genREF{thm}{<Theorem Title 2>}
+                \item \genREF{def}{<Definition Title 2>}
+                \item \genREF{fig}{<Figure Title 2>}
             \eo{itemize}
         }
     }

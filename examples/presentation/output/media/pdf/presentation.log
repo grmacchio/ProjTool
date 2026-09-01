@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.8)  31 AUG 2026 15:03
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.8)  1 SEP 2026 14:28
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -709,7 +709,7 @@ y
 y)))
 (/usr/local/texlive/2025/texmf-dist/tex/latex/appendixnumberbeamer/appendixnumb
 erbeamer.sty)
-Package hyperref Info: Option `colorlinks' set `true' on input line 995.
+Package hyperref Info: Option `colorlinks' set `true' on input line 996.
  (/usr/local/texlive/2025/texmf-dist/tex/latex/base/fontenc.sty
 Package: fontenc 2021/04/29 v2.0v Standard LaTeX package
 )
@@ -820,6 +820,15 @@ Package: float 2001/11/08 v1.3d Float enhancements (AL)
 (/usr/local/texlive/2025/texmf-dist/tex/latex/cancel/cancel.sty
 Package: cancel 2013/04/12 v2.2 Cancel math terms
 )
+(/usr/local/texlive/2025/texmf-dist/tex/generic/mathdots/mathdots.sty
+Package: mathdots 2014/06/11 v0.9 Improve and add various macros for dots in ma
+th.
+\MDo@unit=\dimen316
+\MDo@dotsbox=\box84
+\MDoprekern=\muskip19
+\MDopostkern=\muskip20
+\MDodotkern=\muskip21
+)
 (/usr/local/texlive/2025/texmf-dist/tex/latex/beamer/beamerthemeMadrid.sty
 (/usr/local/texlive/2025/texmf-dist/tex/latex/beamer/beamercolorthemewhale.sty)
 
@@ -835,7 +844,7 @@ sty)
 (/usr/local/texlive/2025/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2024-05-08 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count357
-\l__pdf_internal_box=\box84
+\l__pdf_internal_box=\box85
 )
 (output/media/pdf/presentation.aux)
 \openout1 = `presentation.aux'.
@@ -896,13 +905,13 @@ LaTeX Font Info:    ... okay on input line 5.
 (/usr/local/texlive/2025/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count358
-\scratchdimen=\dimen316
-\scratchbox=\box85
+\scratchdimen=\dimen317
+\scratchbox=\box86
 \nofMPsegments=\count359
 \nofMParguments=\count360
 \everyMPshowfont=\toks50
 \MPscratchCnt=\count361
-\MPscratchDim=\dimen317
+\MPscratchDim=\dimen318
 \MPnumerator=\count362
 \makeMPintoPDFobject=\count363
 \everyMPtoPDFconversion=\toks51
@@ -1704,10 +1713,10 @@ Package rerunfilecheck Info: File `presentation.out' has not changed.
 (rerunfilecheck)             Checksum: 3D32B3D0FECEEDC875D218116F580D96;729.
  ) 
 Here is how much of TeX's memory you used:
- 26905 strings out of 473190
- 534919 string characters out of 5715801
- 890582 words of memory out of 5000000
- 49517 multiletter control sequences out of 15000+600000
+ 26967 strings out of 473190
+ 535922 string characters out of 5715801
+ 891246 words of memory out of 5000000
+ 49575 multiletter control sequences out of 15000+600000
  568599 words of font info for 50 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  144i,11n,139p,490b,744s stack positions out of 10000i,1000n,20000p,200000b,200000s

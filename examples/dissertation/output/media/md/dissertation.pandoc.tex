@@ -5,7 +5,7 @@
 \newcommand{\genDEF}[4]{\paragraph{\textbf{LaTeXToDefinition} \textbf{#2} \textbf{#3} #1}#4}
 \newcommand{\genFIG}[7]{\par\includegraphics[width=#5\textwidth]{#6}\par\paragraph{\textbf{LaTeXToFigure} \textbf{#2} \textbf{#3} #1}#7}
 
-\newcommand{\genRef}[2]{\href{latex-to-ref:#1}{#2}}
+\newcommand{\genREF}[2]{\href{latex-to-ref:#1}{#2}}
 \newcommand{\genBack}{\subsection{\textbf{LaTeXToReferences}}}
 \documentclass[dissertation]{template}
 
@@ -47,9 +47,9 @@
             }
 
             \noindent Test Hyper-References:
-            \genRef{thm}{<Theorem Title 1>}
-            \genRef{def}{<Definition Title 1>}
-            \genRef{fig}{<Figure Title 1>} \\
+            \genREF{thm}{<Theorem Title 1>}
+            \genREF{def}{<Definition Title 1>}
+            \genREF{fig}{<Figure Title 1>} \\
 
             \noindent Test References:
             \cite{1970test, 2002test, 2013test, 2018test} \\
@@ -77,9 +77,9 @@
             }
 
             \noindent Test Hyper-References:
-            \genRef{thm}{<Theorem Title 2>}
-            \genRef{def}{<Definition Title 2>}
-            \genRef{fig}{<Figure Title 2>} \\
+            \genREF{thm}{<Theorem Title 2>}
+            \genREF{def}{<Definition Title 2>}
+            \genREF{fig}{<Figure Title 2>} \\
 
             \noindent Test References:
             \cite{1970test, 2002test, 2013test, 2018test} \\

@@ -223,6 +223,8 @@ INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/amscls/amsthm.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/amscls/amsthm.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/cancel/cancel.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/cancel/cancel.sty
+INPUT /usr/local/texlive/2025/texmf-dist/tex/generic/mathdots/mathdots.sty
+INPUT /usr/local/texlive/2025/texmf-dist/tex/generic/mathdots/mathdots.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/etoc/etoc.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/etoc/etoc.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/tools/multicol.sty

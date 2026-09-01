@@ -192,7 +192,7 @@
     \newcommand{\templateProofsInitialSpacing}{}
     \newcommand{\templateQueueTheoremProof}[2]{
         \gappto\templateTheoremProofs{
-            \genSubPart{Proof of \genRef{thm}{##1}}{inh}{notoc}{
+            \genSubPart{Proof of \genREF{thm}{##1}}{inh}{notoc}{
                 \phantomsection
                 \label{proof:##1}
                 ##2
@@ -409,7 +409,7 @@
         \phantomsection
         \printbibliography[title={References}]
     }
-    \newcommand{\genRef}[2]{
+    \newcommand{\genREF}[2]{
         \hyperref[##1:##2]{##2}
     }
 }
@@ -961,7 +961,7 @@
             \label{fig:#1}
         \end{figure}
     }
-    \newcommand{\genRef}[2]{
+    \newcommand{\genREF}[2]{
         \hyperref[#1:#2]{#2}
     }
     \newcommand{\bo}[2]{

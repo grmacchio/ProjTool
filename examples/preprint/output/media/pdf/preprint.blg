@@ -1,26 +1,26 @@
 [0] Config.pm:308> INFO - This is Biber 2.20
 [0] Config.pm:311> INFO - Logfile is 'output/media/pdf/preprint.blg'
-[35] biber-darwin:340> INFO - === Mon Aug 31, 2026, 15:02:57
-[43] Biber.pm:420> INFO - Reading 'output/media/pdf/preprint.bcf'
-[82] Biber.pm:994> INFO - Found 4 citekeys in bib section 0
-[89] Biber.pm:4463> INFO - Processing section 0
-[90] Utils.pm:85> INFO - Globbing data source './references/*/*.bib'
-[90] Utils.pm:96> INFO - Globbed data source './references/*/*.bib' to './references/1970author/1970author.bib,./references/2002author/2002author.bib,./references/2013author/2013author.bib,./references/2018author/2018author.bib'
-[95] Biber.pm:4654> INFO - Looking for bibtex file './references/1970author/1970author.bib' for section 0
-[95] bibtex.pm:1713> INFO - LaTeX decoding ...
-[96] bibtex.pm:1519> INFO - Found BibTeX data source './references/1970author/1970author.bib'
-[109] Biber.pm:4654> INFO - Looking for bibtex file './references/2002author/2002author.bib' for section 0
-[109] bibtex.pm:1713> INFO - LaTeX decoding ...
-[110] bibtex.pm:1519> INFO - Found BibTeX data source './references/2002author/2002author.bib'
-[112] Biber.pm:4654> INFO - Looking for bibtex file './references/2013author/2013author.bib' for section 0
-[112] bibtex.pm:1713> INFO - LaTeX decoding ...
-[112] bibtex.pm:1519> INFO - Found BibTeX data source './references/2013author/2013author.bib'
-[114] Biber.pm:4654> INFO - Looking for bibtex file './references/2018author/2018author.bib' for section 0
+[36] biber-darwin:340> INFO - === Tue Sep  1, 2026, 14:28:52
+[44] Biber.pm:420> INFO - Reading 'output/media/pdf/preprint.bcf'
+[85] Biber.pm:994> INFO - Found 4 citekeys in bib section 0
+[92] Biber.pm:4463> INFO - Processing section 0
+[92] Utils.pm:85> INFO - Globbing data source './references/*/*.bib'
+[92] Utils.pm:96> INFO - Globbed data source './references/*/*.bib' to './references/1970author/1970author.bib,./references/2002author/2002author.bib,./references/2013author/2013author.bib,./references/2018author/2018author.bib'
+[99] Biber.pm:4654> INFO - Looking for bibtex file './references/1970author/1970author.bib' for section 0
+[99] bibtex.pm:1713> INFO - LaTeX decoding ...
+[101] bibtex.pm:1519> INFO - Found BibTeX data source './references/1970author/1970author.bib'
+[114] Biber.pm:4654> INFO - Looking for bibtex file './references/2002author/2002author.bib' for section 0
 [114] bibtex.pm:1713> INFO - LaTeX decoding ...
-[115] bibtex.pm:1519> INFO - Found BibTeX data source './references/2018author/2018author.bib'
-[121] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[121] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
-[121] Biber.pm:4283> INFO - Sorting list 'ynt/global//global/global/global' of type 'entry' with template 'ynt' and locale 'en-US'
-[121] Biber.pm:4289> INFO - No sort tailoring available for locale 'en-US'
-[125] bbl.pm:676> INFO - Writing 'output/media/pdf/preprint.bbl' with encoding 'UTF-8'
-[126] bbl.pm:779> INFO - Output to output/media/pdf/preprint.bbl
+[115] bibtex.pm:1519> INFO - Found BibTeX data source './references/2002author/2002author.bib'
+[117] Biber.pm:4654> INFO - Looking for bibtex file './references/2013author/2013author.bib' for section 0
+[117] bibtex.pm:1713> INFO - LaTeX decoding ...
+[117] bibtex.pm:1519> INFO - Found BibTeX data source './references/2013author/2013author.bib'
+[119] Biber.pm:4654> INFO - Looking for bibtex file './references/2018author/2018author.bib' for section 0
+[119] bibtex.pm:1713> INFO - LaTeX decoding ...
+[120] bibtex.pm:1519> INFO - Found BibTeX data source './references/2018author/2018author.bib'
+[126] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[126] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[126] Biber.pm:4283> INFO - Sorting list 'ynt/global//global/global/global' of type 'entry' with template 'ynt' and locale 'en-US'
+[126] Biber.pm:4289> INFO - No sort tailoring available for locale 'en-US'
+[130] bbl.pm:676> INFO - Writing 'output/media/pdf/preprint.bbl' with encoding 'UTF-8'
+[131] bbl.pm:779> INFO - Output to output/media/pdf/preprint.bbl

@@ -362,7 +362,7 @@ write_markdown_build_file() {
             "$definition_command" \
             "$figure_command" \
             "$presentation_commands" \
-            '\newcommand{\genRef}[2]{\href{latex-to-ref:#1}{#2}}' \
+            '\newcommand{\genREF}[2]{\href{latex-to-ref:#1}{#2}}' \
             "$back_command"
         if [[ "$TEMPLATE_TYPE" == "presentation" ]]; then
             sed 's/\\item\[\]/\\item \\textbf{ProjToolEmptyItem}/g' \

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.8)  31 AUG 2026 15:01
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.8)  1 SEP 2026 14:29
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -659,6 +659,15 @@ Package: amsthm 2020/05/29 v2.20.6
 (/usr/local/texlive/2025/texmf-dist/tex/latex/cancel/cancel.sty
 Package: cancel 2013/04/12 v2.2 Cancel math terms
 )
+(/usr/local/texlive/2025/texmf-dist/tex/generic/mathdots/mathdots.sty
+Package: mathdots 2014/06/11 v0.9 Improve and add various macros for dots in ma
+th.
+\MDo@unit=\dimen284
+\MDo@dotsbox=\box68
+\MDoprekern=\muskip19
+\MDopostkern=\muskip20
+\MDodotkern=\muskip21
+)
 \c@theorem=\count324
 
 (/usr/local/texlive/2025/texmf-dist/tex/latex/etoc/etoc.sty
@@ -667,28 +676,27 @@ Package: etoc 2023/10/29 v1.2d Completely customisable TOCs (JFB)
 (/usr/local/texlive/2025/texmf-dist/tex/latex/tools/multicol.sty
 Package: multicol 2024/09/14 v1.9i multicolumn formatting (FMi)
 \c@tracingmulticols=\count325
-\mult@box=\box68
-\multicol@leftmargin=\dimen284
+\mult@box=\box69
+\multicol@leftmargin=\dimen285
 \c@unbalance=\count326
 \c@collectmore=\count327
 \doublecol@number=\count328
 \multicoltolerance=\count329
 \multicolpretolerance=\count330
-\full@width=\dimen285
-\page@free=\dimen286
-\premulticols=\dimen287
-\postmulticols=\dimen288
+\full@width=\dimen286
+\page@free=\dimen287
+\premulticols=\dimen288
+\postmulticols=\dimen289
 \multicolsep=\skip68
 \multicolbaselineskip=\skip69
-\partial@page=\box69
-\last@line=\box70
-\mc@boxedresult=\box71
-\maxbalancingoverflow=\dimen289
-\mult@rightbox=\box72
-\mult@grightbox=\box73
-\mult@firstbox=\box74
-\mult@gfirstbox=\box75
-\@tempa=\box76
+\partial@page=\box70
+\last@line=\box71
+\mc@boxedresult=\box72
+\maxbalancingoverflow=\dimen290
+\mult@rightbox=\box73
+\mult@grightbox=\box74
+\mult@firstbox=\box75
+\mult@gfirstbox=\box76
 \@tempa=\box77
 \@tempa=\box78
 \@tempa=\box79
@@ -724,20 +732,21 @@ Package: multicol 2024/09/14 v1.9i multicolumn formatting (FMi)
 \@tempa=\box109
 \@tempa=\box110
 \@tempa=\box111
+\@tempa=\box112
 \c@minrows=\count331
 \c@columnbadness=\count332
 \c@finalcolumnbadness=\count333
-\last@try=\dimen290
-\multicolovershoot=\dimen291
-\multicolundershoot=\dimen292
-\mult@nat@firstbox=\box112
-\colbreak@box=\box113
+\last@try=\dimen291
+\multicolovershoot=\dimen292
+\multicolundershoot=\dimen293
+\mult@nat@firstbox=\box113
+\colbreak@box=\box114
 \mc@col@check@num=\count334
 )
 \Etoc@toctoks=\toks45
 \c@etoc@tocid=\count335
-\etoc@framed@titlebox=\box114
-\etoc@framed@contentsbox=\box115
+\etoc@framed@titlebox=\box115
+\etoc@framed@contentsbox=\box116
 )
 \templateSubTOCIndent=\skip70
 
@@ -922,10 +931,10 @@ File: biblatex.def 2024/03/21 v3.20 biblatex compatibility (PK/MW)
 \c@biburlnumpenalty=\count456
 \c@biburlucpenalty=\count457
 \c@biburllcpenalty=\count458
-\biburlbigskip=\muskip19
-\biburlnumskip=\muskip20
-\biburlucskip=\muskip21
-\biburllcskip=\muskip22
+\biburlbigskip=\muskip22
+\biburlnumskip=\muskip23
+\biburlucskip=\muskip24
+\biburllcskip=\muskip25
 \c@smartand=\count459
 )
 Package biblatex Info: Trying to load bibliography style 'numeric'...
@@ -973,7 +982,7 @@ Package: expl3 2025-01-18 L3 programming layer (loader)
 (/usr/local/texlive/2025/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2024-05-08 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count462
-\l__pdf_internal_box=\box116
+\l__pdf_internal_box=\box117
 ))
 Package biblatex Info: ... and expl3
 (biblatex)             2025-01-18 L3 programming layer (loader) 
@@ -991,19 +1000,19 @@ Package: tabularx 2023/12/11 v2.12a `tabularx' package (DPC)
 
 (/usr/local/texlive/2025/texmf-dist/tex/latex/tools/array.sty
 Package: array 2024/10/17 v2.6g Tabular extension package (FMi)
-\col@sep=\dimen293
-\ar@mcellbox=\box117
-\extrarowheight=\dimen294
+\col@sep=\dimen294
+\ar@mcellbox=\box118
+\extrarowheight=\dimen295
 \NC@list=\toks46
 \extratabsurround=\skip93
 \backup@length=\skip94
-\ar@cellbox=\box118
+\ar@cellbox=\box119
 )
-\TX@col@width=\dimen295
-\TX@old@table=\dimen296
-\TX@old@col=\dimen297
-\TX@target=\dimen298
-\TX@delta=\dimen299
+\TX@col@width=\dimen296
+\TX@old@table=\dimen297
+\TX@old@col=\dimen298
+\TX@target=\dimen299
+\TX@delta=\dimen300
 \TX@cols=\count463
 \TX@ftn=\toks47
 ))
@@ -1069,13 +1078,13 @@ LaTeX Font Info:    ... okay on input line 3.
 (/usr/local/texlive/2025/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count466
-\scratchdimen=\dimen300
-\scratchbox=\box119
+\scratchdimen=\dimen301
+\scratchbox=\box120
 \nofMPsegments=\count467
 \nofMParguments=\count468
 \everyMPshowfont=\toks48
 \MPscratchCnt=\count469
-\MPscratchDim=\dimen301
+\MPscratchDim=\dimen302
 \MPnumerator=\count470
 \makeMPintoPDFobject=\count471
 \everyMPtoPDFconversion=\toks49
@@ -1188,10 +1197,10 @@ Package logreq Info: Writing requests to 'note.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 31107 strings out of 473190
- 583499 string characters out of 5715801
- 1391480 words of memory out of 5000000
- 53893 multiletter control sequences out of 15000+600000
+ 31169 strings out of 473190
+ 584502 string characters out of 5715801
+ 1392131 words of memory out of 5000000
+ 53951 multiletter control sequences out of 15000+600000
  571886 words of font info for 69 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  121i,18n,123p,1274b,1529s stack positions out of 10000i,1000n,20000p,200000b,200000s
