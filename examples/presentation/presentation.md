@@ -35,7 +35,7 @@
 
 **Theorem** (\<Theorem Title 1\>)**.** \<Theorem Statement 1\>
 
-<p align="center"><img src="./output/results/image.png" alt="image" width="40%" style="image-rendering: pixelated; image-rendering: crisp-edges;"></p>
+<p align="center"><img src="./output/results/julia/exp.png" alt="image" width="40%" style="image-rendering: pixelated; image-rendering: crisp-edges;"></p>
 <a id="figure-figure-title-1"></a>
 <p align="center"><strong>Figure 1</strong> (&lt;Figure Title 1&gt;)<strong>.</strong> &lt;Figure Caption 1&gt;</p>
 <a id="section-frame-title-2"></a>
@@ -54,7 +54,7 @@
 
 **Theorem** (\<Theorem Title 2\>)**.** \<Theorem Statement 2\>
 
-<p align="center"><img src="./output/results/image.png" alt="image" width="40%" style="image-rendering: pixelated; image-rendering: crisp-edges;"></p>
+<p align="center"><img src="./output/results/python/quadratic.png" alt="image" width="40%" style="image-rendering: pixelated; image-rendering: crisp-edges;"></p>
 <a id="figure-figure-title-2"></a>
 <p align="center"><strong>Figure 2</strong> (&lt;Figure Title 2&gt;)<strong>.</strong> &lt;Figure Caption 2&gt;</p>
 <a id="chapter-section-title-2"></a>
@@ -77,7 +77,7 @@
 
 **Theorem** (\<Theorem Title 3\>)**.** \<Theorem Statement 3\>
 
-<p align="center"><img src="./output/results/image.png" alt="image" width="40%" style="image-rendering: pixelated; image-rendering: crisp-edges;"></p>
+<p align="center"><img src="./output/results/julia/exp.png" alt="image" width="40%" style="image-rendering: pixelated; image-rendering: crisp-edges;"></p>
 <a id="figure-figure-title-3"></a>
 <p align="center"><strong>Figure 3</strong> (&lt;Figure Title 3&gt;)<strong>.</strong> &lt;Figure Caption 3&gt;</p>
 <a id="section-frame-title-4"></a>
@@ -96,7 +96,7 @@
 
 **Theorem** (\<Theorem Title 4\>)**.** \<Theorem Statement 4\>
 
-<p align="center"><img src="./output/results/image.png" alt="image" width="40%" style="image-rendering: pixelated; image-rendering: crisp-edges;"></p>
+<p align="center"><img src="./output/results/python/quadratic.png" alt="image" width="40%" style="image-rendering: pixelated; image-rendering: crisp-edges;"></p>
 <a id="figure-figure-title-4"></a>
 <p align="center"><strong>Figure 4</strong> (&lt;Figure Title 4&gt;)<strong>.</strong> &lt;Figure Caption 4&gt;</p>
 <a id="appendix-table-of-contents"></a>

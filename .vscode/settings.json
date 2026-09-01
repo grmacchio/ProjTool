@@ -135,6 +135,7 @@
         "raisebox",
         "renewcommand",
         "rightarrow",
+        "savefig",
         "setbeamercolor",
         "setbeamertemplate",
         "setcounter",
@@ -168,6 +169,8 @@
         "usefonttheme",
         "usetheme",
         "varepsilon",
-        "xcolor"
+        "xcolor",
+        "xlabel",
+        "ylabel"
     ]
 }

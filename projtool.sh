@@ -4,7 +4,6 @@ set -Eeuo pipefail
 
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 COLLECTION_DIR="$(cd -- "$SCRIPT_DIR/.." && pwd)"
-RESULTS_WORK_DIR=""
 MODE=""
 TEMPLATE_TYPE=""
 
@@ -88,6 +87,7 @@ Options:
   -w verbose          Show tool output in the terminal
 
 Choose which code files run by listing them explicitly in TARGET/results.sh.
+The script runs from TARGET and writes generated files to TARGET/output/results.
 PDF and Markdown generation never run source code; run results separately when needed.
 EOF
 }
@@ -261,17 +261,10 @@ resolve_target() {
         TEMPLATE_TYPE="$(sed -nE 's/^[[:space:]]*\\documentclass\[([^]]+)\]\{template\}.*/\1/p' "$DOCUMENT_FILE")"
     fi
     OUTPUT_DIR="$TARGET_DIR/output"
-    RESULTS_OUTPUT_DIR="$OUTPUT_DIR/results"
     RESULTS_SCRIPT="$TARGET_DIR/results.sh"
     MEDIA_OUTPUT_DIR="$OUTPUT_DIR/media"
     PDF_OUTPUT_DIR="$MEDIA_OUTPUT_DIR/pdf"
     MD_OUTPUT_DIR="$MEDIA_OUTPUT_DIR/md"
-}
-
-cleanup_results_work() {
-    if [[ -n "$RESULTS_WORK_DIR" && -d "$RESULTS_WORK_DIR" ]]; then
-        rm -rf -- "$RESULTS_WORK_DIR"
-    fi
 }
 
 cleanup_source_build_files() {
@@ -287,26 +280,21 @@ cleanup_source_build_files() {
 }
 
 run_results_stage() {
-    local entry
-    local result
+    local julia_project="$TARGET_DIR/code"
 
     [[ -f "$RESULTS_SCRIPT" ]] || die "missing results runner: $RESULTS_SCRIPT"
-    mkdir -p -- "$RESULTS_OUTPUT_DIR"
-    RESULTS_WORK_DIR="$(mktemp -d "$OUTPUT_DIR/.results.XXXXXX")"
-
-    while IFS= read -r entry; do
-        ln -s -- "$entry" "$RESULTS_WORK_DIR/$(basename -- "$entry")"
-    done < <(find "$TARGET_DIR" -mindepth 1 -maxdepth 1 ! -name output -print | LC_ALL=C sort)
+    if [[ -f "$TARGET_DIR/code/julia/Project.toml" ]]; then
+        julia_project="$TARGET_DIR/code/julia"
+    fi
 
     printf '%s\n' '-> running results.sh'
-    (cd -- "$RESULTS_WORK_DIR" && PROJTOOL_VERBOSE="$VERBOSE" bash ./results.sh)
-
-    while IFS= read -r result; do
-        mv -f -- "$result" "$RESULTS_OUTPUT_DIR/"
-    done < <(find "$RESULTS_WORK_DIR" -mindepth 1 -maxdepth 1 ! -type l -print)
-
-    cleanup_results_work
-    RESULTS_WORK_DIR=""
+    (
+        cd -- "$TARGET_DIR"
+        PROJTOOL_VERBOSE="$VERBOSE" \
+        JULIA_PROJECT="${JULIA_PROJECT:-$julia_project}" \
+        GKSwstype="${GKSwstype:-nul}" \
+            bash -e ./results.sh
+    )
 }
 
 render_pdf() {
@@ -718,7 +706,7 @@ main_gen() {
 
     resolve_target "$TARGET"
     cleanup_source_build_files
-    trap 'cleanup_results_work; cleanup_source_build_files' EXIT
+    trap 'cleanup_source_build_files' EXIT
 
     case "$ACTION" in
         output)

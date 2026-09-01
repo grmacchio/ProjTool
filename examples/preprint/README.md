@@ -55,7 +55,7 @@ This project includes a [PDF file](./preprint.pdf) and [Markdown file](./preprin
 
 **Definition 1.1.2** (\<Definition Title 1\>)**.** \<Definition Statement 1\>
 
-<p align="center"><img src="./output/results/image.png" alt="image" width="40%" style="image-rendering: pixelated; image-rendering: crisp-edges;"></p>
+<p align="center"><img src="./output/results/julia/exp.png" alt="image" width="40%" style="image-rendering: pixelated; image-rendering: crisp-edges;"></p>
 <a id="figure-figure-title-1"></a>
 <p align="center"><strong>Figure 1.1.3</strong> (&lt;Figure Title 1&gt;)<strong>.</strong> &lt;Figure Caption 1&gt;</p>
 
@@ -79,7 +79,7 @@ Test Code Output: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
 
 **Definition** (\<Definition Title 2\>)**.** \<Definition Statement 2\>
 
-<p align="center"><img src="./output/results/image.png" alt="image" width="40%" style="image-rendering: pixelated; image-rendering: crisp-edges;"></p>
+<p align="center"><img src="./output/results/python/quadratic.png" alt="image" width="40%" style="image-rendering: pixelated; image-rendering: crisp-edges;"></p>
 <a id="figure-figure-title-2"></a>
 <p align="center"><strong>Figure</strong> (&lt;Figure Title 2&gt;)<strong>.</strong> &lt;Figure Caption 2&gt;</p>
 

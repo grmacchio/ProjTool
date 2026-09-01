@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.8)  1 SEP 2026 14:28
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.8)  1 SEP 2026 16:46
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -709,7 +709,7 @@ y
 y)))
 (/usr/local/texlive/2025/texmf-dist/tex/latex/appendixnumberbeamer/appendixnumb
 erbeamer.sty)
-Package hyperref Info: Option `colorlinks' set `true' on input line 996.
+Package hyperref Info: Option `colorlinks' set `true' on input line 997.
  (/usr/local/texlive/2025/texmf-dist/tex/latex/base/fontenc.sty
 Package: fontenc 2021/04/29 v2.0v Standard LaTeX package
 )
@@ -982,10 +982,11 @@ al/texlive/2025/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}]
 [4
 
 ]
-<./output/results/image.png, id=86, 602.25pt x 401.5pt>
-File: ./output/results/image.png Graphic file (type png)
-<use ./output/results/image.png>
-Package pdftex.def Info: ./output/results/image.png  used on input line 60.
+<./output/results/julia/exp.png, id=86, 602.25pt x 401.5pt>
+File: ./output/results/julia/exp.png Graphic file (type png)
+<use ./output/results/julia/exp.png>
+Package pdftex.def Info: ./output/results/julia/exp.png  used on input line 60.
+
 (pdftex.def)             Requested size: 152.45494pt x 101.63678pt.
 
 Overfull \hbox (21.90005pt too wide) in paragraph at lines 60--60
@@ -1005,10 +1006,11 @@ ead of 10 percent on input line 60.
 
 [5
 
- <./output/results/image.png>]
-File: ./output/results/image.png Graphic file (type png)
-<use ./output/results/image.png>
-Package pdftex.def Info: ./output/results/image.png  used on input line 60.
+ <./output/results/julia/exp.png>]
+File: ./output/results/julia/exp.png Graphic file (type png)
+<use ./output/results/julia/exp.png>
+Package pdftex.def Info: ./output/results/julia/exp.png  used on input line 60.
+
 (pdftex.def)             Requested size: 152.45494pt x 101.63678pt.
 
 Overfull \hbox (21.90005pt too wide) in paragraph at lines 60--60
@@ -1029,9 +1031,10 @@ ead of 10 percent on input line 60.
 [6
 
 ]
-File: ./output/results/image.png Graphic file (type png)
-<use ./output/results/image.png>
-Package pdftex.def Info: ./output/results/image.png  used on input line 60.
+File: ./output/results/julia/exp.png Graphic file (type png)
+<use ./output/results/julia/exp.png>
+Package pdftex.def Info: ./output/results/julia/exp.png  used on input line 60.
+
 (pdftex.def)             Requested size: 152.45494pt x 101.63678pt.
 
 Overfull \hbox (21.90005pt too wide) in paragraph at lines 60--60
@@ -1052,9 +1055,10 @@ ead of 10 percent on input line 60.
 [7
 
 ]
-File: ./output/results/image.png Graphic file (type png)
-<use ./output/results/image.png>
-Package pdftex.def Info: ./output/results/image.png  used on input line 60.
+File: ./output/results/julia/exp.png Graphic file (type png)
+<use ./output/results/julia/exp.png>
+Package pdftex.def Info: ./output/results/julia/exp.png  used on input line 60.
+
 (pdftex.def)             Requested size: 152.45494pt x 101.63678pt.
 
 Overfull \hbox (21.90005pt too wide) in paragraph at lines 60--60
@@ -1075,9 +1079,10 @@ ead of 10 percent on input line 60.
 [8
 
 ]
-File: ./output/results/image.png Graphic file (type png)
-<use ./output/results/image.png>
-Package pdftex.def Info: ./output/results/image.png  used on input line 60.
+File: ./output/results/julia/exp.png Graphic file (type png)
+<use ./output/results/julia/exp.png>
+Package pdftex.def Info: ./output/results/julia/exp.png  used on input line 60.
+
 (pdftex.def)             Requested size: 152.45494pt x 101.63678pt.
 
 Overfull \hbox (21.90005pt too wide) in paragraph at lines 60--60
@@ -1098,9 +1103,10 @@ ead of 10 percent on input line 60.
 [9
 
 ]
-File: ./output/results/image.png Graphic file (type png)
-<use ./output/results/image.png>
-Package pdftex.def Info: ./output/results/image.png  used on input line 60.
+File: ./output/results/julia/exp.png Graphic file (type png)
+<use ./output/results/julia/exp.png>
+Package pdftex.def Info: ./output/results/julia/exp.png  used on input line 60.
+
 (pdftex.def)             Requested size: 152.45494pt x 101.63678pt.
 
 Overfull \hbox (21.90005pt too wide) in paragraph at lines 60--60
@@ -1121,9 +1127,10 @@ ead of 10 percent on input line 60.
 [10
 
 ]
-File: ./output/results/image.png Graphic file (type png)
-<use ./output/results/image.png>
-Package pdftex.def Info: ./output/results/image.png  used on input line 60.
+File: ./output/results/julia/exp.png Graphic file (type png)
+<use ./output/results/julia/exp.png>
+Package pdftex.def Info: ./output/results/julia/exp.png  used on input line 60.
+
 (pdftex.def)             Requested size: 152.45494pt x 101.63678pt.
 
 Overfull \hbox (21.90005pt too wide) in paragraph at lines 60--60
@@ -1148,10 +1155,12 @@ ead of 10 percent on input line 60.
 [12
 
 ]
-File: ./output/results/image.png Graphic file (type png)
-<use ./output/results/image.png>
-Package pdftex.def Info: ./output/results/image.png  used on input line 60.
-(pdftex.def)             Requested size: 152.45494pt x 101.63678pt.
+<./output/results/python/quadratic.png, id=135, 409.7709pt x 312.2064pt>
+File: ./output/results/python/quadratic.png Graphic file (type png)
+<use ./output/results/python/quadratic.png>
+Package pdftex.def Info: ./output/results/python/quadratic.png  used on input l
+ine 60.
+(pdftex.def)             Requested size: 152.45494pt x 116.15291pt.
 
 Overfull \hbox (21.90005pt too wide) in paragraph at lines 60--60
 [][]
@@ -1163,18 +1172,19 @@ Underfull \hbox (badness 10000) in paragraph at lines 60--60
  []
 
 
-Class beamer Warning: Frame text is shrunk by a factor of 30.85785 percent inst
-ead of 10 percent on input line 60.
+Class beamer Warning: Frame text is shrunk by a factor of 33.9447 percent inste
+ad of 10 percent on input line 60.
 
 
 
 [13
 
-]
-File: ./output/results/image.png Graphic file (type png)
-<use ./output/results/image.png>
-Package pdftex.def Info: ./output/results/image.png  used on input line 60.
-(pdftex.def)             Requested size: 152.45494pt x 101.63678pt.
+ <./output/results/python/quadratic.png>]
+File: ./output/results/python/quadratic.png Graphic file (type png)
+<use ./output/results/python/quadratic.png>
+Package pdftex.def Info: ./output/results/python/quadratic.png  used on input l
+ine 60.
+(pdftex.def)             Requested size: 152.45494pt x 116.15291pt.
 
 Overfull \hbox (21.90005pt too wide) in paragraph at lines 60--60
 [][]
@@ -1186,18 +1196,19 @@ Underfull \hbox (badness 10000) in paragraph at lines 60--60
  []
 
 
-Class beamer Warning: Frame text is shrunk by a factor of 30.85785 percent inst
-ead of 10 percent on input line 60.
+Class beamer Warning: Frame text is shrunk by a factor of 33.9447 percent inste
+ad of 10 percent on input line 60.
 
 
 
 [14
 
 ]
-File: ./output/results/image.png Graphic file (type png)
-<use ./output/results/image.png>
-Package pdftex.def Info: ./output/results/image.png  used on input line 60.
-(pdftex.def)             Requested size: 152.45494pt x 101.63678pt.
+File: ./output/results/python/quadratic.png Graphic file (type png)
+<use ./output/results/python/quadratic.png>
+Package pdftex.def Info: ./output/results/python/quadratic.png  used on input l
+ine 60.
+(pdftex.def)             Requested size: 152.45494pt x 116.15291pt.
 
 Overfull \hbox (21.90005pt too wide) in paragraph at lines 60--60
 [][]
@@ -1209,18 +1220,19 @@ Underfull \hbox (badness 10000) in paragraph at lines 60--60
  []
 
 
-Class beamer Warning: Frame text is shrunk by a factor of 30.85785 percent inst
-ead of 10 percent on input line 60.
+Class beamer Warning: Frame text is shrunk by a factor of 33.9447 percent inste
+ad of 10 percent on input line 60.
 
 
 
 [15
 
 ]
-File: ./output/results/image.png Graphic file (type png)
-<use ./output/results/image.png>
-Package pdftex.def Info: ./output/results/image.png  used on input line 60.
-(pdftex.def)             Requested size: 152.45494pt x 101.63678pt.
+File: ./output/results/python/quadratic.png Graphic file (type png)
+<use ./output/results/python/quadratic.png>
+Package pdftex.def Info: ./output/results/python/quadratic.png  used on input l
+ine 60.
+(pdftex.def)             Requested size: 152.45494pt x 116.15291pt.
 
 Overfull \hbox (21.90005pt too wide) in paragraph at lines 60--60
 [][]
@@ -1232,18 +1244,19 @@ Underfull \hbox (badness 10000) in paragraph at lines 60--60
  []
 
 
-Class beamer Warning: Frame text is shrunk by a factor of 30.85785 percent inst
-ead of 10 percent on input line 60.
+Class beamer Warning: Frame text is shrunk by a factor of 33.9447 percent inste
+ad of 10 percent on input line 60.
 
 
 
 [16
 
 ]
-File: ./output/results/image.png Graphic file (type png)
-<use ./output/results/image.png>
-Package pdftex.def Info: ./output/results/image.png  used on input line 60.
-(pdftex.def)             Requested size: 152.45494pt x 101.63678pt.
+File: ./output/results/python/quadratic.png Graphic file (type png)
+<use ./output/results/python/quadratic.png>
+Package pdftex.def Info: ./output/results/python/quadratic.png  used on input l
+ine 60.
+(pdftex.def)             Requested size: 152.45494pt x 116.15291pt.
 
 Overfull \hbox (21.90005pt too wide) in paragraph at lines 60--60
 [][]
@@ -1255,18 +1268,19 @@ Underfull \hbox (badness 10000) in paragraph at lines 60--60
  []
 
 
-Class beamer Warning: Frame text is shrunk by a factor of 30.85785 percent inst
-ead of 10 percent on input line 60.
+Class beamer Warning: Frame text is shrunk by a factor of 33.9447 percent inste
+ad of 10 percent on input line 60.
 
 
 
 [17
 
 ]
-File: ./output/results/image.png Graphic file (type png)
-<use ./output/results/image.png>
-Package pdftex.def Info: ./output/results/image.png  used on input line 60.
-(pdftex.def)             Requested size: 152.45494pt x 101.63678pt.
+File: ./output/results/python/quadratic.png Graphic file (type png)
+<use ./output/results/python/quadratic.png>
+Package pdftex.def Info: ./output/results/python/quadratic.png  used on input l
+ine 60.
+(pdftex.def)             Requested size: 152.45494pt x 116.15291pt.
 
 Overfull \hbox (21.90005pt too wide) in paragraph at lines 60--60
 [][]
@@ -1278,18 +1292,19 @@ Underfull \hbox (badness 10000) in paragraph at lines 60--60
  []
 
 
-Class beamer Warning: Frame text is shrunk by a factor of 30.85785 percent inst
-ead of 10 percent on input line 60.
+Class beamer Warning: Frame text is shrunk by a factor of 33.9447 percent inste
+ad of 10 percent on input line 60.
 
 
 
 [18
 
 ]
-File: ./output/results/image.png Graphic file (type png)
-<use ./output/results/image.png>
-Package pdftex.def Info: ./output/results/image.png  used on input line 60.
-(pdftex.def)             Requested size: 152.45494pt x 101.63678pt.
+File: ./output/results/python/quadratic.png Graphic file (type png)
+<use ./output/results/python/quadratic.png>
+Package pdftex.def Info: ./output/results/python/quadratic.png  used on input l
+ine 60.
+(pdftex.def)             Requested size: 152.45494pt x 116.15291pt.
 
 Overfull \hbox (21.90005pt too wide) in paragraph at lines 60--60
 [][]
@@ -1301,8 +1316,8 @@ Underfull \hbox (badness 10000) in paragraph at lines 60--60
  []
 
 
-Class beamer Warning: Frame text is shrunk by a factor of 30.85785 percent inst
-ead of 10 percent on input line 60.
+Class beamer Warning: Frame text is shrunk by a factor of 33.9447 percent inste
+ad of 10 percent on input line 60.
 
 
 
@@ -1317,9 +1332,10 @@ ead of 10 percent on input line 60.
 [21
 
 ]
-File: ./output/results/image.png Graphic file (type png)
-<use ./output/results/image.png>
-Package pdftex.def Info: ./output/results/image.png  used on input line 105.
+File: ./output/results/julia/exp.png Graphic file (type png)
+<use ./output/results/julia/exp.png>
+Package pdftex.def Info: ./output/results/julia/exp.png  used on input line 105
+.
 (pdftex.def)             Requested size: 152.45494pt x 101.63678pt.
 
 Overfull \hbox (21.90005pt too wide) in paragraph at lines 105--105
@@ -1340,9 +1356,10 @@ ead of 10 percent on input line 105.
 [22
 
 ]
-File: ./output/results/image.png Graphic file (type png)
-<use ./output/results/image.png>
-Package pdftex.def Info: ./output/results/image.png  used on input line 105.
+File: ./output/results/julia/exp.png Graphic file (type png)
+<use ./output/results/julia/exp.png>
+Package pdftex.def Info: ./output/results/julia/exp.png  used on input line 105
+.
 (pdftex.def)             Requested size: 152.45494pt x 101.63678pt.
 
 Overfull \hbox (21.90005pt too wide) in paragraph at lines 105--105
@@ -1363,9 +1380,10 @@ ead of 10 percent on input line 105.
 [23
 
 ]
-File: ./output/results/image.png Graphic file (type png)
-<use ./output/results/image.png>
-Package pdftex.def Info: ./output/results/image.png  used on input line 105.
+File: ./output/results/julia/exp.png Graphic file (type png)
+<use ./output/results/julia/exp.png>
+Package pdftex.def Info: ./output/results/julia/exp.png  used on input line 105
+.
 (pdftex.def)             Requested size: 152.45494pt x 101.63678pt.
 
 Overfull \hbox (21.90005pt too wide) in paragraph at lines 105--105
@@ -1386,9 +1404,10 @@ ead of 10 percent on input line 105.
 [24
 
 ]
-File: ./output/results/image.png Graphic file (type png)
-<use ./output/results/image.png>
-Package pdftex.def Info: ./output/results/image.png  used on input line 105.
+File: ./output/results/julia/exp.png Graphic file (type png)
+<use ./output/results/julia/exp.png>
+Package pdftex.def Info: ./output/results/julia/exp.png  used on input line 105
+.
 (pdftex.def)             Requested size: 152.45494pt x 101.63678pt.
 
 Overfull \hbox (21.90005pt too wide) in paragraph at lines 105--105
@@ -1409,9 +1428,10 @@ ead of 10 percent on input line 105.
 [25
 
 ]
-File: ./output/results/image.png Graphic file (type png)
-<use ./output/results/image.png>
-Package pdftex.def Info: ./output/results/image.png  used on input line 105.
+File: ./output/results/julia/exp.png Graphic file (type png)
+<use ./output/results/julia/exp.png>
+Package pdftex.def Info: ./output/results/julia/exp.png  used on input line 105
+.
 (pdftex.def)             Requested size: 152.45494pt x 101.63678pt.
 
 Overfull \hbox (21.90005pt too wide) in paragraph at lines 105--105
@@ -1432,9 +1452,10 @@ ead of 10 percent on input line 105.
 [26
 
 ]
-File: ./output/results/image.png Graphic file (type png)
-<use ./output/results/image.png>
-Package pdftex.def Info: ./output/results/image.png  used on input line 105.
+File: ./output/results/julia/exp.png Graphic file (type png)
+<use ./output/results/julia/exp.png>
+Package pdftex.def Info: ./output/results/julia/exp.png  used on input line 105
+.
 (pdftex.def)             Requested size: 152.45494pt x 101.63678pt.
 
 Overfull \hbox (21.90005pt too wide) in paragraph at lines 105--105
@@ -1455,9 +1476,10 @@ ead of 10 percent on input line 105.
 [27
 
 ]
-File: ./output/results/image.png Graphic file (type png)
-<use ./output/results/image.png>
-Package pdftex.def Info: ./output/results/image.png  used on input line 105.
+File: ./output/results/julia/exp.png Graphic file (type png)
+<use ./output/results/julia/exp.png>
+Package pdftex.def Info: ./output/results/julia/exp.png  used on input line 105
+.
 (pdftex.def)             Requested size: 152.45494pt x 101.63678pt.
 
 Overfull \hbox (21.90005pt too wide) in paragraph at lines 105--105
@@ -1482,10 +1504,11 @@ ead of 10 percent on input line 105.
 [29
 
 ]
-File: ./output/results/image.png Graphic file (type png)
-<use ./output/results/image.png>
-Package pdftex.def Info: ./output/results/image.png  used on input line 105.
-(pdftex.def)             Requested size: 152.45494pt x 101.63678pt.
+File: ./output/results/python/quadratic.png Graphic file (type png)
+<use ./output/results/python/quadratic.png>
+Package pdftex.def Info: ./output/results/python/quadratic.png  used on input l
+ine 105.
+(pdftex.def)             Requested size: 152.45494pt x 116.15291pt.
 
 Overfull \hbox (21.90005pt too wide) in paragraph at lines 105--105
 [][]
@@ -1497,18 +1520,19 @@ Underfull \hbox (badness 10000) in paragraph at lines 105--105
  []
 
 
-Class beamer Warning: Frame text is shrunk by a factor of 30.85785 percent inst
-ead of 10 percent on input line 105.
+Class beamer Warning: Frame text is shrunk by a factor of 33.9447 percent inste
+ad of 10 percent on input line 105.
 
 
 
 [30
 
 ]
-File: ./output/results/image.png Graphic file (type png)
-<use ./output/results/image.png>
-Package pdftex.def Info: ./output/results/image.png  used on input line 105.
-(pdftex.def)             Requested size: 152.45494pt x 101.63678pt.
+File: ./output/results/python/quadratic.png Graphic file (type png)
+<use ./output/results/python/quadratic.png>
+Package pdftex.def Info: ./output/results/python/quadratic.png  used on input l
+ine 105.
+(pdftex.def)             Requested size: 152.45494pt x 116.15291pt.
 
 Overfull \hbox (21.90005pt too wide) in paragraph at lines 105--105
 [][]
@@ -1520,18 +1544,19 @@ Underfull \hbox (badness 10000) in paragraph at lines 105--105
  []
 
 
-Class beamer Warning: Frame text is shrunk by a factor of 30.85785 percent inst
-ead of 10 percent on input line 105.
+Class beamer Warning: Frame text is shrunk by a factor of 33.9447 percent inste
+ad of 10 percent on input line 105.
 
 
 
 [31
 
 ]
-File: ./output/results/image.png Graphic file (type png)
-<use ./output/results/image.png>
-Package pdftex.def Info: ./output/results/image.png  used on input line 105.
-(pdftex.def)             Requested size: 152.45494pt x 101.63678pt.
+File: ./output/results/python/quadratic.png Graphic file (type png)
+<use ./output/results/python/quadratic.png>
+Package pdftex.def Info: ./output/results/python/quadratic.png  used on input l
+ine 105.
+(pdftex.def)             Requested size: 152.45494pt x 116.15291pt.
 
 Overfull \hbox (21.90005pt too wide) in paragraph at lines 105--105
 [][]
@@ -1543,18 +1568,19 @@ Underfull \hbox (badness 10000) in paragraph at lines 105--105
  []
 
 
-Class beamer Warning: Frame text is shrunk by a factor of 30.85785 percent inst
-ead of 10 percent on input line 105.
+Class beamer Warning: Frame text is shrunk by a factor of 33.9447 percent inste
+ad of 10 percent on input line 105.
 
 
 
 [32
 
 ]
-File: ./output/results/image.png Graphic file (type png)
-<use ./output/results/image.png>
-Package pdftex.def Info: ./output/results/image.png  used on input line 105.
-(pdftex.def)             Requested size: 152.45494pt x 101.63678pt.
+File: ./output/results/python/quadratic.png Graphic file (type png)
+<use ./output/results/python/quadratic.png>
+Package pdftex.def Info: ./output/results/python/quadratic.png  used on input l
+ine 105.
+(pdftex.def)             Requested size: 152.45494pt x 116.15291pt.
 
 Overfull \hbox (21.90005pt too wide) in paragraph at lines 105--105
 [][]
@@ -1566,18 +1592,19 @@ Underfull \hbox (badness 10000) in paragraph at lines 105--105
  []
 
 
-Class beamer Warning: Frame text is shrunk by a factor of 30.85785 percent inst
-ead of 10 percent on input line 105.
+Class beamer Warning: Frame text is shrunk by a factor of 33.9447 percent inste
+ad of 10 percent on input line 105.
 
 
 
 [33
 
 ]
-File: ./output/results/image.png Graphic file (type png)
-<use ./output/results/image.png>
-Package pdftex.def Info: ./output/results/image.png  used on input line 105.
-(pdftex.def)             Requested size: 152.45494pt x 101.63678pt.
+File: ./output/results/python/quadratic.png Graphic file (type png)
+<use ./output/results/python/quadratic.png>
+Package pdftex.def Info: ./output/results/python/quadratic.png  used on input l
+ine 105.
+(pdftex.def)             Requested size: 152.45494pt x 116.15291pt.
 
 Overfull \hbox (21.90005pt too wide) in paragraph at lines 105--105
 [][]
@@ -1589,18 +1616,19 @@ Underfull \hbox (badness 10000) in paragraph at lines 105--105
  []
 
 
-Class beamer Warning: Frame text is shrunk by a factor of 30.85785 percent inst
-ead of 10 percent on input line 105.
+Class beamer Warning: Frame text is shrunk by a factor of 33.9447 percent inste
+ad of 10 percent on input line 105.
 
 
 
 [34
 
 ]
-File: ./output/results/image.png Graphic file (type png)
-<use ./output/results/image.png>
-Package pdftex.def Info: ./output/results/image.png  used on input line 105.
-(pdftex.def)             Requested size: 152.45494pt x 101.63678pt.
+File: ./output/results/python/quadratic.png Graphic file (type png)
+<use ./output/results/python/quadratic.png>
+Package pdftex.def Info: ./output/results/python/quadratic.png  used on input l
+ine 105.
+(pdftex.def)             Requested size: 152.45494pt x 116.15291pt.
 
 Overfull \hbox (21.90005pt too wide) in paragraph at lines 105--105
 [][]
@@ -1612,18 +1640,19 @@ Underfull \hbox (badness 10000) in paragraph at lines 105--105
  []
 
 
-Class beamer Warning: Frame text is shrunk by a factor of 30.85785 percent inst
-ead of 10 percent on input line 105.
+Class beamer Warning: Frame text is shrunk by a factor of 33.9447 percent inste
+ad of 10 percent on input line 105.
 
 
 
 [35
 
 ]
-File: ./output/results/image.png Graphic file (type png)
-<use ./output/results/image.png>
-Package pdftex.def Info: ./output/results/image.png  used on input line 105.
-(pdftex.def)             Requested size: 152.45494pt x 101.63678pt.
+File: ./output/results/python/quadratic.png Graphic file (type png)
+<use ./output/results/python/quadratic.png>
+Package pdftex.def Info: ./output/results/python/quadratic.png  used on input l
+ine 105.
+(pdftex.def)             Requested size: 152.45494pt x 116.15291pt.
 
 Overfull \hbox (21.90005pt too wide) in paragraph at lines 105--105
 [][]
@@ -1635,8 +1664,8 @@ Underfull \hbox (badness 10000) in paragraph at lines 105--105
  []
 
 
-Class beamer Warning: Frame text is shrunk by a factor of 30.85785 percent inst
-ead of 10 percent on input line 105.
+Class beamer Warning: Frame text is shrunk by a factor of 33.9447 percent inste
+ad of 10 percent on input line 105.
 
 
 
@@ -1713,10 +1742,10 @@ Package rerunfilecheck Info: File `presentation.out' has not changed.
 (rerunfilecheck)             Checksum: 3D32B3D0FECEEDC875D218116F580D96;729.
  ) 
 Here is how much of TeX's memory you used:
- 26967 strings out of 473190
- 535922 string characters out of 5715801
- 891246 words of memory out of 5000000
- 49575 multiletter control sequences out of 15000+600000
+ 26974 strings out of 473190
+ 536257 string characters out of 5715801
+ 891247 words of memory out of 5000000
+ 49582 multiletter control sequences out of 15000+600000
  568599 words of font info for 50 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  144i,11n,139p,490b,744s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -1730,10 +1759,10 @@ l/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb></usr/local/
 texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/te
 xlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1440.pfb></usr/local/texl
 ive/2025/texmf-dist/fonts/type1/public/cm-super/sfti1095.pfb>
-Output written on output/media/pdf/presentation.pdf (49 pages, 248811 bytes).
+Output written on output/media/pdf/presentation.pdf (49 pages, 265071 bytes).
 PDF statistics:
- 444 PDF objects out of 1000 (max. 8388607)
- 351 compressed objects within 4 object streams
+ 447 PDF objects out of 1000 (max. 8388607)
+ 352 compressed objects within 4 object streams
  116 named destinations out of 1000 (max. 500000)
- 154 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 159 words of extra memory for PDF output out of 10000 (max. 10000000)
 
