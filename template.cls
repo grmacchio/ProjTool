@@ -152,6 +152,7 @@
     \RequirePackage{amsthm}
     \RequirePackage{cancel}
     \RequirePackage{mathdots}
+    \allowdisplaybreaks
     \newcommand{\Arg}{\mathrm{Arg} \:}
     \newcommand{\ra}{\rightarrow}
     \newcommand{\la}{\leftarrow}
