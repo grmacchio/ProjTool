@@ -126,6 +126,43 @@ require_command() {
     command -v "$1" >/dev/null 2>&1 || die "required command not found: $1"
 }
 
+validate_reference_types() {
+    local bibliography_file
+    local entry_pattern='^[[:space:]]*@([[:alpha:]]+)[[:space:]]*[{(]'
+    local entry_type
+    local line
+    local line_number
+    local -a bibliography_files=()
+
+    if [[ -f "$TARGET_DIR/references.bib" ]]; then
+        bibliography_files+=("$TARGET_DIR/references.bib")
+    fi
+    if [[ -d "$TARGET_DIR/references" ]]; then
+        while IFS= read -r -d '' bibliography_file; do
+            bibliography_files+=("$bibliography_file")
+        done < <(find "$TARGET_DIR/references" -type f -name '*.bib' -print0)
+    fi
+    [[ -n "${bibliography_files[*]-}" ]] || return 0
+
+    for bibliography_file in "${bibliography_files[@]}"; do
+        line_number=0
+        while IFS= read -r line || [[ -n "$line" ]]; do
+            ((line_number += 1))
+            if [[ "$line" =~ $entry_pattern ]]; then
+                entry_type="$(printf '%s' "${BASH_REMATCH[1]}" |
+                    tr '[:upper:]' '[:lower:]')"
+                case "$entry_type" in
+                    article|book|misc|phdthesis|comment|preamble|string)
+                        ;;
+                    *)
+                        die "unsupported reference type @$entry_type in $bibliography_file:$line_number; use @article, @book, @misc, or @phdthesis"
+                        ;;
+                esac
+            fi
+        done < "$bibliography_file"
+    done
+}
+
 prompt_required() {
     local prompt="$1"
     local value
@@ -303,6 +340,7 @@ run_results_stage() {
 
 render_pdf() {
     require_command latexmk
+    validate_reference_types
     mkdir -p -- "$PDF_OUTPUT_DIR"
 
     if [[ "$VERBOSE" == true ]]; then
@@ -371,7 +409,6 @@ render_md() {
     local bibliography_file="$TARGET_DIR/references.bib"
     local bibliography_entry
     local citation_style_file="$SCRIPT_DIR/references.csl"
-    local reference_filter_file="$SCRIPT_DIR/format-references.lua"
     local -a bibliography_files=()
     local -a citation_options=()
     local -a template_options=(--metadata="template-type:${TEMPLATE_TYPE:-dissertation}")
@@ -394,13 +431,10 @@ render_md() {
     if [[ ${#bibliography_files[@]} -gt 0 ]]; then
         [[ -f "$citation_style_file" ]] ||
             die "missing citation style: $citation_style_file"
-        [[ -f "$reference_filter_file" ]] ||
-            die "missing reference filter: $reference_filter_file"
         citation_options=(
             --csl="$citation_style_file"
             --metadata=link-citations:true
             --citeproc
-            --lua-filter="$reference_filter_file"
         )
         for bibliography_entry in "${bibliography_files[@]}"; do
             citation_options+=(--bibliography="$bibliography_entry")
@@ -408,6 +442,7 @@ render_md() {
     fi
 
     require_command pandoc
+    validate_reference_types
     mkdir -p -- "$MD_OUTPUT_DIR"
     write_markdown_build_file
     rm -f -- "$md_temp_file"

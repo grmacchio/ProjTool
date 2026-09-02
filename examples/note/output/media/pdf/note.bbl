@@ -38,21 +38,21 @@
       \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{journaltitle}{<Publisher>}
+      \field{journaltitle}{<Journal Abbreviation>}
       \field{title}{<Title>}
+      \field{volume}{1}
       \field{year}{1970}
-      \verb{urlraw}
-      \verb https://www.google.com/search?q=test
-      \endverb
-      \verb{url}
-      \verb https://www.google.com/search?q=test
-      \endverb
+      \field{pages}{1\bibrangedash 10}
+      \range{pages}{10}
     \endentry
     \entry{2002test}{book}{}{}
       \name{author}{1}{}{%
         {{hash=5b329fc02fa556c521329adce42730f2}{%
            family={<Authors>},
            familyi={<\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {<Publisher Location>}%
       }
       \list{publisher}{1}{%
         {<Publisher>}%
@@ -72,12 +72,6 @@
       \field{labeltitlesource}{title}
       \field{title}{<Title>}
       \field{year}{2002}
-      \verb{urlraw}
-      \verb https://www.google.com/search?q=test
-      \endverb
-      \verb{url}
-      \verb https://www.google.com/search?q=test
-      \endverb
     \endentry
     \entry{2013test}{misc}{}{}
       \name{author}{1}{}{%
@@ -116,6 +110,9 @@
       \list{institution}{1}{%
         {<School>}%
       }
+      \list{location}{1}{%
+        {<School Location>}%
+      }
       \strng{namehash}{5b329fc02fa556c521329adce42730f2}
       \strng{fullhash}{5b329fc02fa556c521329adce42730f2}
       \strng{fullhashraw}{5b329fc02fa556c521329adce42730f2}
@@ -130,13 +127,8 @@
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{title}{<Title>}
+      \field{type}{phdthesis}
       \field{year}{2018}
-      \verb{urlraw}
-      \verb https://www.google.com/search?q=test
-      \endverb
-      \verb{url}
-      \verb https://www.google.com/search?q=test
-      \endverb
     \endentry
   \enddatalist
 \endrefsection

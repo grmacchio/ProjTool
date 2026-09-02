@@ -73,6 +73,19 @@ license for the media, and exclusions for any third-party content.
 The content copied from the desired template is self explanatory and serves as
 a starting point for the project.
 
+References use the SIAM Journal on Applied Dynamical Systems format and are
+listed chronologically. The supported BibTeX types are `@misc` for preprints,
+`@article` for papers, `@book` for books, and `@phdthesis` for theses. Keep each
+BibTeX file below `references/`; every rendered entry begins with `(Preprint)`,
+`(Paper)`, `(Book)`, or `(Thesis)`.
+
+Use these minimal fields:
+
+- `@article`: `author`, `title`, `journal`, `volume`, `year`, and `pages`
+- `@book`: `author`, `title`, `publisher`, `address`, and `year`
+- `@misc`: `author`, `title`, `year`, and `url`
+- `@phdthesis`: `author`, `title`, `school`, `address`, and `year`
+
 ## Generating Project Material
 
 To generate project material use the following commands.

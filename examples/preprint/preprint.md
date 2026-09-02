@@ -107,123 +107,30 @@ Test Code Output: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
 
 ## References
 
-<div id="ref-1970test" style="margin:0 0 1em 0">
-<table role="presentation" width="100%" border="3" rules="all" frame="box" cellpadding="6" cellspacing="0" style="border:3px solid currentColor;border-collapse:collapse">
-<tbody>
-<tr>
-<td width="48" align="center" valign="middle" style="border:1px solid currentColor" rowspan="6">[1]</td>
-<td width="96" align="left" valign="top" nowrap style="border:1px solid currentColor"><strong>Date:</strong></td>
-<td width="100%" align="left" valign="top" style="border:1px solid currentColor">1970</td>
-</tr>
-<tr>
-<td width="96" align="left" valign="top" nowrap style="border:1px solid currentColor"><strong>Authors:</strong></td>
-<td width="100%" align="left" valign="top" style="border:1px solid currentColor">&lt;Authors&gt;</td>
-</tr>
-<tr>
-<td width="96" align="left" valign="top" nowrap style="border:1px solid currentColor"><strong>Title:</strong></td>
-<td width="100%" align="left" valign="top" style="border:1px solid currentColor">&lt;Title&gt;</td>
-</tr>
-<tr>
-<td width="96" align="left" valign="top" nowrap style="border:1px solid currentColor"><strong>Type:</strong></td>
-<td width="100%" align="left" valign="top" style="border:1px solid currentColor">Paper</td>
-</tr>
-<tr>
-<td width="96" align="left" valign="top" nowrap style="border:1px solid currentColor"><strong>Publisher:</strong></td>
-<td width="100%" align="left" valign="top" style="border:1px solid currentColor">&lt;Publisher&gt;</td>
-</tr>
-<tr>
-<td width="96" align="left" valign="top" nowrap style="border:1px solid currentColor"><strong>Location:</strong></td>
-<td width="100%" align="left" valign="top" style="border:1px solid currentColor"><a href="https://www.google.com/search?q=test">https://www.google.com/search?q=test</a></td>
-</tr>
-</tbody>
-</table>
+<div id="refs" class="references csl-bib-body">
+
+<div id="ref-1970test" class="csl-entry">
+
+<span class="csl-left-margin">\[1\] </span><span class="csl-right-inline">(Paper) <span class="smallcaps">\<Authors\></span>, *\<Title\>*, \<Journal Abbreviation\>, 1 (1970), pp. 1–10.</span>
+
 </div>
-<div id="ref-2002test" style="margin:0 0 1em 0">
-<table role="presentation" width="100%" border="3" rules="all" frame="box" cellpadding="6" cellspacing="0" style="border:3px solid currentColor;border-collapse:collapse">
-<tbody>
-<tr>
-<td width="48" align="center" valign="middle" style="border:1px solid currentColor" rowspan="6">[2]</td>
-<td width="96" align="left" valign="top" nowrap style="border:1px solid currentColor"><strong>Date:</strong></td>
-<td width="100%" align="left" valign="top" style="border:1px solid currentColor">2002</td>
-</tr>
-<tr>
-<td width="96" align="left" valign="top" nowrap style="border:1px solid currentColor"><strong>Authors:</strong></td>
-<td width="100%" align="left" valign="top" style="border:1px solid currentColor">&lt;Authors&gt;</td>
-</tr>
-<tr>
-<td width="96" align="left" valign="top" nowrap style="border:1px solid currentColor"><strong>Title:</strong></td>
-<td width="100%" align="left" valign="top" style="border:1px solid currentColor">&lt;Title&gt;</td>
-</tr>
-<tr>
-<td width="96" align="left" valign="top" nowrap style="border:1px solid currentColor"><strong>Type:</strong></td>
-<td width="100%" align="left" valign="top" style="border:1px solid currentColor">Book</td>
-</tr>
-<tr>
-<td width="96" align="left" valign="top" nowrap style="border:1px solid currentColor"><strong>Publisher:</strong></td>
-<td width="100%" align="left" valign="top" style="border:1px solid currentColor">&lt;Publisher&gt;</td>
-</tr>
-<tr>
-<td width="96" align="left" valign="top" nowrap style="border:1px solid currentColor"><strong>Location:</strong></td>
-<td width="100%" align="left" valign="top" style="border:1px solid currentColor"><a href="https://www.google.com/search?q=test">https://www.google.com/search?q=test</a></td>
-</tr>
-</tbody>
-</table>
+
+<div id="ref-2002test" class="csl-entry">
+
+<span class="csl-left-margin">\[2\] </span><span class="csl-right-inline">(Book) <span class="smallcaps">\<Authors\></span>, *\<Title\>*, \<Publisher\>, \<Publisher Location\>, 2002.</span>
+
 </div>
-<div id="ref-2013test" style="margin:0 0 1em 0">
-<table role="presentation" width="100%" border="3" rules="all" frame="box" cellpadding="6" cellspacing="0" style="border:3px solid currentColor;border-collapse:collapse">
-<tbody>
-<tr>
-<td width="48" align="center" valign="middle" style="border:1px solid currentColor" rowspan="5">[3]</td>
-<td width="96" align="left" valign="top" nowrap style="border:1px solid currentColor"><strong>Date:</strong></td>
-<td width="100%" align="left" valign="top" style="border:1px solid currentColor">2013</td>
-</tr>
-<tr>
-<td width="96" align="left" valign="top" nowrap style="border:1px solid currentColor"><strong>Authors:</strong></td>
-<td width="100%" align="left" valign="top" style="border:1px solid currentColor">&lt;Authors&gt;</td>
-</tr>
-<tr>
-<td width="96" align="left" valign="top" nowrap style="border:1px solid currentColor"><strong>Title:</strong></td>
-<td width="100%" align="left" valign="top" style="border:1px solid currentColor">&lt;Title&gt;</td>
-</tr>
-<tr>
-<td width="96" align="left" valign="top" nowrap style="border:1px solid currentColor"><strong>Type:</strong></td>
-<td width="100%" align="left" valign="top" style="border:1px solid currentColor">Preprint</td>
-</tr>
-<tr>
-<td width="96" align="left" valign="top" nowrap style="border:1px solid currentColor"><strong>Location:</strong></td>
-<td width="100%" align="left" valign="top" style="border:1px solid currentColor"><a href="https://www.google.com/search?q=test">https://www.google.com/search?q=test</a></td>
-</tr>
-</tbody>
-</table>
+
+<div id="ref-2013test" class="csl-entry">
+
+<span class="csl-left-margin">\[3\] </span><span class="csl-right-inline">(Preprint) <span class="smallcaps">\<Authors\></span>, *\<Title\>*, 2013, <https://www.google.com/search?q=test>.</span>
+
 </div>
-<div id="ref-2018test" style="margin:0 0 1em 0">
-<table role="presentation" width="100%" border="3" rules="all" frame="box" cellpadding="6" cellspacing="0" style="border:3px solid currentColor;border-collapse:collapse">
-<tbody>
-<tr>
-<td width="48" align="center" valign="middle" style="border:1px solid currentColor" rowspan="6">[4]</td>
-<td width="96" align="left" valign="top" nowrap style="border:1px solid currentColor"><strong>Date:</strong></td>
-<td width="100%" align="left" valign="top" style="border:1px solid currentColor">2018</td>
-</tr>
-<tr>
-<td width="96" align="left" valign="top" nowrap style="border:1px solid currentColor"><strong>Authors:</strong></td>
-<td width="100%" align="left" valign="top" style="border:1px solid currentColor">&lt;Authors&gt;</td>
-</tr>
-<tr>
-<td width="96" align="left" valign="top" nowrap style="border:1px solid currentColor"><strong>Title:</strong></td>
-<td width="100%" align="left" valign="top" style="border:1px solid currentColor">&lt;Title&gt;</td>
-</tr>
-<tr>
-<td width="96" align="left" valign="top" nowrap style="border:1px solid currentColor"><strong>Type:</strong></td>
-<td width="100%" align="left" valign="top" style="border:1px solid currentColor">Ph.D. Thesis</td>
-</tr>
-<tr>
-<td width="96" align="left" valign="top" nowrap style="border:1px solid currentColor"><strong>School:</strong></td>
-<td width="100%" align="left" valign="top" style="border:1px solid currentColor">&lt;School&gt;</td>
-</tr>
-<tr>
-<td width="96" align="left" valign="top" nowrap style="border:1px solid currentColor"><strong>Location:</strong></td>
-<td width="100%" align="left" valign="top" style="border:1px solid currentColor"><a href="https://www.google.com/search?q=test">https://www.google.com/search?q=test</a></td>
-</tr>
-</tbody>
-</table>
+
+<div id="ref-2018test" class="csl-entry">
+
+<span class="csl-left-margin">\[4\] </span><span class="csl-right-inline">(Thesis) <span class="smallcaps">\<Authors\></span>, *\<Title\>*, PhD thesis, \<School\>, \<School Location\>, 2018.</span>
+
+</div>
+
 </div>

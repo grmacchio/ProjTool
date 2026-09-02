@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.8)  1 SEP 2026 18:02
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.8)  2 SEP 2026 18:20
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -709,7 +709,7 @@ y
 y)))
 (/usr/local/texlive/2025/texmf-dist/tex/latex/appendixnumberbeamer/appendixnumb
 erbeamer.sty)
-Package hyperref Info: Option `colorlinks' set `true' on input line 997.
+Package hyperref Info: Option `colorlinks' set `true' on input line 1005.
  (/usr/local/texlive/2025/texmf-dist/tex/latex/base/fontenc.sty
 Package: fontenc 2021/04/29 v2.0v Standard LaTeX package
 )
@@ -1742,10 +1742,10 @@ Package rerunfilecheck Info: File `presentation.out' has not changed.
 (rerunfilecheck)             Checksum: 3D32B3D0FECEEDC875D218116F580D96;729.
  ) 
 Here is how much of TeX's memory you used:
- 26974 strings out of 473190
- 536257 string characters out of 5715801
- 891247 words of memory out of 5000000
- 49582 multiletter control sequences out of 15000+600000
+ 26983 strings out of 473190
+ 536348 string characters out of 5715801
+ 891195 words of memory out of 5000000
+ 49592 multiletter control sequences out of 15000+600000
  568599 words of font info for 50 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  144i,11n,139p,490b,744s stack positions out of 10000i,1000n,20000p,200000b,200000s

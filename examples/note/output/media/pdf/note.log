@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.8)  1 SEP 2026 18:01
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.8)  2 SEP 2026 18:19
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -994,30 +994,9 @@ Package biblatex Info: ... and expl3
 Package: xparse 2024-08-16 L3 Experimental document command parser
 )
 Package: blx-case-expl3 2024/03/21 v3.20 expl3 case changing code for biblatex
-))
-(/usr/local/texlive/2025/texmf-dist/tex/latex/tools/tabularx.sty
-Package: tabularx 2023/12/11 v2.12a `tabularx' package (DPC)
-
-(/usr/local/texlive/2025/texmf-dist/tex/latex/tools/array.sty
-Package: array 2024/10/17 v2.6g Tabular extension package (FMi)
-\col@sep=\dimen294
-\ar@mcellbox=\box118
-\extrarowheight=\dimen295
-\NC@list=\toks46
-\extratabsurround=\skip93
-\backup@length=\skip94
-\ar@cellbox=\box119
-)
-\TX@col@width=\dimen296
-\TX@old@table=\dimen297
-\TX@old@col=\dimen298
-\TX@target=\dimen299
-\TX@delta=\dimen300
-\TX@cols=\count463
-\TX@ftn=\toks47
-))
-\@quotelevel=\count464
-\@quotereset=\count465
+)))
+\@quotelevel=\count463
+\@quotereset=\count464
 
 (output/media/pdf/note.aux)
 \openout1 = `note.aux'.
@@ -1077,17 +1056,17 @@ LaTeX Font Info:    ... okay on input line 3.
 
 (/usr/local/texlive/2025/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count466
-\scratchdimen=\dimen301
-\scratchbox=\box120
-\nofMPsegments=\count467
-\nofMParguments=\count468
-\everyMPshowfont=\toks48
-\MPscratchCnt=\count469
-\MPscratchDim=\dimen302
-\MPnumerator=\count470
-\makeMPintoPDFobject=\count471
-\everyMPtoPDFconversion=\toks49
+\scratchcounter=\count465
+\scratchdimen=\dimen294
+\scratchbox=\box118
+\nofMPsegments=\count466
+\nofMParguments=\count467
+\everyMPshowfont=\toks46
+\MPscratchCnt=\count468
+\MPscratchDim=\dimen295
+\MPnumerator=\count469
+\makeMPintoPDFobject=\count470
+\everyMPtoPDFconversion=\toks47
 ) (/usr/local/texlive/2025/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
@@ -1200,25 +1179,27 @@ Package logreq Info: Writing requests to 'note.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 31176 strings out of 473190
- 584885 string characters out of 5715801
- 1392132 words of memory out of 5000000
- 53958 multiletter control sequences out of 15000+600000
- 571886 words of font info for 69 fonts, out of 8000000 for 9000
+ 31055 strings out of 473190
+ 583071 string characters out of 5715801
+ 1386552 words of memory out of 5000000
+ 53841 multiletter control sequences out of 15000+600000
+ 572876 words of font info for 71 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 121i,18n,123p,1274b,1529s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 121i,6n,123p,786b,1351s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfbx1095.pfb>
 </usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></
 usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></us
-r/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm0800.pfb></usr/
-local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb></usr/lo
-cal/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/loca
-l/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1728.pfb></usr/local/
-texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfti1095.pfb>
-Output written on output/media/pdf/note.pdf (4 pages, 159121 bytes).
+r/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfcc1095.pfb></usr/
+local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm0800.pfb></usr/lo
+cal/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb></usr/loca
+l/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/
+texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1728.pfb></usr/local/te
+xlive/2025/texmf-dist/fonts/type1/public/cm-super/sfti1095.pfb></usr/local/texl
+ive/2025/texmf-dist/fonts/type1/public/cm-super/sftt1095.pfb>
+Output written on output/media/pdf/note.pdf (4 pages, 193294 bytes).
 PDF statistics:
- 172 PDF objects out of 1000 (max. 8388607)
- 137 compressed objects within 2 object streams
+ 171 PDF objects out of 1000 (max. 8388607)
+ 140 compressed objects within 2 object streams
  30 named destinations out of 1000 (max. 500000)
  87 words of extra memory for PDF output out of 10000 (max. 10000000)
 

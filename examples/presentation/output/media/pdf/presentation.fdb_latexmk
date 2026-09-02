@@ -1,7 +1,7 @@
 # Fdb version 4
-["pdflatex"] 1788300151.2473 "/Users/gregorymacchio/Documents/Mirror/laptop/global/writing/software/ProjTool/examples/presentation/presentation.tex" "output/media/pdf/presentation.pdf" "presentation" 1788300153.40441 0
+["pdflatex"] 1788387629.57545 "/Users/gregorymacchio/Documents/Mirror/laptop/global/writing/software/ProjTool/examples/presentation/presentation.tex" "output/media/pdf/presentation.pdf" "presentation" 1788387631.73818 0
   "/Users/gregorymacchio/Documents/Mirror/laptop/global/writing/software/ProjTool/examples/presentation/presentation.tex" 1788295451.01728 3814 8cfd342fa8337e84be007e7e893f7f4d ""
-  "/Users/gregorymacchio/Documents/Mirror/laptop/global/writing/software/ProjTool/template.cls" 1788288975.37339 43079 ab66a50fd4a039eff605ba037bca4b47 ""
+  "/Users/gregorymacchio/Documents/Mirror/laptop/global/writing/software/ProjTool/template.cls" 1788387317.44527 42686 318b415741c1788f750442a080f0a3f6 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1136849721 2971 def0b6c1f0b107b3b936def894055589 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/jknappen/ec/ecbx0800.tfm" 1136768653 3584 269b66e921ba58750c12f7f1c8ea3ebd ""
@@ -214,12 +214,12 @@
   "/usr/local/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1769657775 5467155 19efa205003f9ecad95fbbaa6ff24da1 ""
   "/usr/local/texlive/2025/texmf-var/web2c/pdftex/pdflatex.fmt" 1741450574 3345740 46b66fdb0378f7bf5921b5eabf1762b8 ""
   "/usr/local/texlive/2025/texmf.cnf" 1741450484 577 418a7058ec8e006d8704f60ecd22c938 ""
-  "output/media/pdf/presentation.aux" 1788300153.26116 6663 cd9c3732a9bfb18b676f4d3ae3c06b1e "pdflatex"
-  "output/media/pdf/presentation.nav" 1788300153.26225 3033 23eb6f7b33890768c3b3d89505e53d5b "pdflatex"
-  "output/media/pdf/presentation.out" 1788300153.26201 729 3d32b3d0feceedc875d218116f580d96 "pdflatex"
-  "output/media/pdf/presentation.toc" 1788300153.26228 233 5fe89d61e8e650082c8c9d05c0e87d88 "pdflatex"
-  "output/results/julia/exp.png" 1788300147.32528 15057 a100dcd019ce3a8cd83a854c6b405beb ""
-  "output/results/python/quadratic.png" 1788300148.77749 21810 af9de2bdcfbde52fc01bc01e3bea903a ""
+  "output/media/pdf/presentation.aux" 1788387631.59274 6663 cd9c3732a9bfb18b676f4d3ae3c06b1e "pdflatex"
+  "output/media/pdf/presentation.nav" 1788387631.59398 3033 23eb6f7b33890768c3b3d89505e53d5b "pdflatex"
+  "output/media/pdf/presentation.out" 1788387631.59376 729 3d32b3d0feceedc875d218116f580d96 "pdflatex"
+  "output/media/pdf/presentation.toc" 1788387631.59402 233 5fe89d61e8e650082c8c9d05c0e87d88 "pdflatex"
+  "output/results/julia/exp.png" 1788387627.91602 15057 a100dcd019ce3a8cd83a854c6b405beb ""
+  "output/results/python/quadratic.png" 1788387629.34867 21810 af9de2bdcfbde52fc01bc01e3bea903a ""
   "presentation.tex" 1788295451.01728 3814 8cfd342fa8337e84be007e7e893f7f4d ""
   (generated)
   "output/media/pdf/presentation.aux"

@@ -309,101 +309,109 @@
         backend=biber,
         style=numeric,
         sorting=ynt,
+        sortcites=true,
+        giveninits=true,
+        isbn=false,
         maxbibnames=99
     ]{biblatex}
-    \RequirePackage{tabularx}
     \addbibresource[glob]{./references/*/*.bib}
-    \DeclareFieldFormat[article]{title}{##1}
+    \DeclareNameAlias{default}{given-family}
+    \renewcommand*{\mkbibnamegiven}[1]{\textsc{##1}}
+    \renewcommand*{\mkbibnamefamily}[1]{\textsc{##1}}
+    \renewcommand*{\mkbibnameprefix}[1]{\textsc{##1}}
+    \renewcommand*{\mkbibnamesuffix}[1]{\textsc{##1}}
+    \DeclareFieldFormat[article,book,misc,thesis]{title}{\mkbibemph{##1}}
     \DeclareFieldFormat[article]{journaltitle}{##1}
-    \DeclareFieldFormat{url}{%
-        \href{##1}{\begingroup\urlstyle{same}\nolinkurl{##1}\endgroup}}
-    \newcolumntype{Z}{%
-        !{\vrule width 1.2pt}
-        @{\hspace{0.5em}}>{\centering\arraybackslash}m{2em}@{\hspace{0.5em}}|
-        @{}X@{}
-        !{\vrule width 1.2pt}}
-    \newcolumntype{Y}{%
-        @{\hspace{0.5em}}>{\bfseries\raggedright\arraybackslash}p{5.2em}@{\hspace{0.5em}}|
-        @{\hspace{0.5em}}>{\raggedright\arraybackslash}%
-        p{\dimexpr\linewidth-7.2em-\arrayrulewidth\relax}@{\hspace{0.5em}}}
-    \newcommand{\templateReferenceOuterRule}{%
-        \noalign{\hrule height 1.2pt}}
-    \defbibenvironment{bibliography}
-        {\list{}
-            {\setlength{\leftmargin}{0pt}
-             \setlength{\itemindent}{0pt}
-             \setlength{\labelwidth}{0pt}
-             \setlength{\labelsep}{0pt}
-             \setlength{\itemsep}{\bibitemsep}
-             \setlength{\parsep}{\bibparsep}}}
-        {\endlist}
-        {\item}
+    \DeclareFieldFormat{doi}{\url{https://doi.org/##1}}
+    \DeclareFieldFormat{eprint}{\url{https://arxiv.org/abs/##1}}
+    \DeclareFieldFormat{url}{\url{##1}}
+    \DeclareFieldFormat{pages}{\mkpageprefix[pagination]{##1}}
+    \newbibmacro*{template:reference-type}{%
+        \ifentrytype{article}
+            {(Paper)}
+            {\ifentrytype{book}
+                {(Book)}
+                {\ifentrytype{thesis}
+                    {(Thesis)}
+                    {(Preprint)}}}}
+    \newbibmacro*{template:reference-links}{%
+        \iffieldundef{doi}{}{%
+            \setunit{\addcomma\space}%
+            \printfield{doi}}%
+        \iffieldundef{url}{}{%
+            \setunit{\addcomma\space}%
+            \printfield{url}%
+            \iffieldundef{urlyear}{}{%
+                \setunit{\addspace}%
+                \printurldate}}%
+        \iffieldundef{eprint}{}{%
+            \iffieldundef{url}{%
+                \setunit{\addcomma\space}%
+                \printfield{eprint}}{}}}
     \DeclareBibliographyDriver{article}{%
-        \begin{tabularx}{\linewidth}{Z}
-            \templateReferenceOuterRule
-            \mkbibbrackets{\printfield{labelprefix}\printfield{labelnumber}} &
-            \begin{tabular}{Y}
-                Date: & \printfield{year}\tabularnewline\hline
-                Authors: & \printnames{author}\tabularnewline\hline
-                Title: & \printfield{title}\tabularnewline\hline
-                Type: & Paper\tabularnewline\hline
-                Publisher: & \printfield{journaltitle}\tabularnewline\hline
-                Location: & \printfield{url}
-            \end{tabular}\tabularnewline
-            \templateReferenceOuterRule
-        \end{tabularx}\nopunct
-        \finentry
-    }
-    \DeclareFieldFormat[thesis]{title}{##1}
-    \DeclareBibliographyDriver{thesis}{%
-        \begin{tabularx}{\linewidth}{Z}
-            \templateReferenceOuterRule
-            \mkbibbrackets{\printfield{labelprefix}\printfield{labelnumber}} &
-            \begin{tabular}{Y}
-                Date: & \printfield{year}\tabularnewline\hline
-                Authors: & \printnames{author}\tabularnewline\hline
-                Title: & \printfield{title}\tabularnewline\hline
-                Type: & Ph.D. Thesis\tabularnewline\hline
-                School: & \printlist{institution}\tabularnewline\hline
-                Location: & \printfield{url}
-            \end{tabular}\tabularnewline
-            \templateReferenceOuterRule
-        \end{tabularx}\nopunct
-        \finentry
-    }
-    \DeclareFieldFormat[book]{title}{##1}
+        \usebibmacro{bibindex}%
+        \usebibmacro{begentry}%
+        \usebibmacro{template:reference-type}\addspace
+        \printnames{author}%
+        \setunit{\addcomma\space}%
+        \printfield{title}%
+        \setunit{\addcomma\space}%
+        \printfield{journaltitle}%
+        \setunit{\addcomma\space}%
+        \printfield{volume}%
+        \setunit{\addspace}%
+        \printtext[parens]{\printfield{year}}%
+        \setunit{\addcomma\space}%
+        \printfield{pages}%
+        \usebibmacro{template:reference-links}%
+        \usebibmacro{finentry}}
     \DeclareBibliographyDriver{book}{%
-        \begin{tabularx}{\linewidth}{Z}
-            \templateReferenceOuterRule
-            \mkbibbrackets{\printfield{labelprefix}\printfield{labelnumber}} &
-            \begin{tabular}{Y}
-                Date: & \printfield{year}\tabularnewline\hline
-                Authors: & \printnames{author}\tabularnewline\hline
-                Title: & \printfield{title}\tabularnewline\hline
-                Type: & Book\tabularnewline\hline
-                Publisher: & \printlist{publisher}\tabularnewline\hline
-                Location: & \printfield{url}
-            \end{tabular}\tabularnewline
-            \templateReferenceOuterRule
-        \end{tabularx}\nopunct
-        \finentry
-    }
-    \DeclareFieldFormat[misc]{title}{##1}
+        \usebibmacro{bibindex}%
+        \usebibmacro{begentry}%
+        \usebibmacro{template:reference-type}\addspace
+        \printnames{author}%
+        \setunit{\addcomma\space}%
+        \printfield{title}%
+        \setunit{\addcomma\space}%
+        \printlist{publisher}%
+        \setunit{\addcomma\space}%
+        \printlist{location}%
+        \setunit{\addcomma\space}%
+        \printfield{edition}%
+        \setunit{\addcomma\space}%
+        \printfield{year}%
+        \usebibmacro{template:reference-links}%
+        \usebibmacro{finentry}}
+    \DeclareBibliographyDriver{thesis}{%
+        \usebibmacro{bibindex}%
+        \usebibmacro{begentry}%
+        \usebibmacro{template:reference-type}\addspace
+        \printnames{author}%
+        \setunit{\addcomma\space}%
+        \printfield{title}%
+        \setunit{\addcomma\space}%
+        \printtext{PhD thesis}%
+        \setunit{\addcomma\space}%
+        \printlist{institution}%
+        \setunit{\addcomma\space}%
+        \printlist{location}%
+        \setunit{\addcomma\space}%
+        \printfield{year}%
+        \usebibmacro{template:reference-links}%
+        \usebibmacro{finentry}}
     \DeclareBibliographyDriver{misc}{%
-        \begin{tabularx}{\linewidth}{Z}
-            \templateReferenceOuterRule
-            \mkbibbrackets{\printfield{labelprefix}\printfield{labelnumber}} &
-            \begin{tabular}{Y}
-                Date: & \printfield{year}\tabularnewline\hline
-                Authors: & \printnames{author}\tabularnewline\hline
-                Title: & \printfield{title}\tabularnewline\hline
-                Type: & Preprint\tabularnewline\hline
-                Location: & \printfield{url}
-            \end{tabular}\tabularnewline
-            \templateReferenceOuterRule
-        \end{tabularx}\nopunct
-        \finentry
-    }
+        \usebibmacro{bibindex}%
+        \usebibmacro{begentry}%
+        \usebibmacro{template:reference-type}\addspace
+        \printnames{author}%
+        \setunit{\addcomma\space}%
+        \printfield{title}%
+        \setunit{\addcomma\space}%
+        \printfield{howpublished}%
+        \setunit{\addcomma\space}%
+        \printdate%
+        \usebibmacro{template:reference-links}%
+        \usebibmacro{finentry}}
     \newcommand{\genBack}{
         \templateRenderTheoremProofs
         \clearpage
