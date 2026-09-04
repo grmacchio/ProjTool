@@ -1,17 +1,17 @@
 # Fdb version 4
-["biber output/media/pdf/dissertation"] 1788387490.92987 "output/media/pdf/dissertation.bcf" "output/media/pdf/dissertation.bbl" "output/media/pdf/dissertation" 1788387494.82043 0
+["biber output/media/pdf/dissertation"] 1788473239.42095 "output/media/pdf/dissertation.bcf" "output/media/pdf/dissertation.bbl" "output/media/pdf/dissertation" 1788480123.8784 0
   "./references/1970author/1970author.bib" 1788387484.33931 167 ee0896e044a1b5bc8bc4bf903f7d77b7 ""
   "./references/2002author/2002author.bib" 1788387484.34081 154 59107feb2ac608cc83d164c95100f122 ""
   "./references/2013author/2013author.bib" 1788387484.3421 135 02ad97b9af3ee38b39582c7b98d992d1 ""
   "./references/2018author/2018author.bib" 1788387484.34317 150 20908708d50347d05a6d52cd6151e803 ""
-  "output/media/pdf/dissertation.bcf" 1788387494.71548 108913 f96c5835e8a8d228c6adb2cead355f9b "pdflatex"
+  "output/media/pdf/dissertation.bcf" 1788480123.76327 108913 f96c5835e8a8d228c6adb2cead355f9b "pdflatex"
   (generated)
   "output/media/pdf/dissertation.bbl"
   "output/media/pdf/dissertation.blg"
   (rewritten before read)
-["pdflatex"] 1788387493.60374 "/Users/gregorymacchio/Documents/Mirror/laptop/global/writing/software/ProjTool/examples/dissertation/dissertation.tex" "output/media/pdf/dissertation.pdf" "dissertation" 1788387494.8207 0
-  "/Users/gregorymacchio/Documents/Mirror/laptop/global/writing/software/ProjTool/examples/dissertation/dissertation.tex" 1788294714.32726 2159 00db15176549041a8e180ae22cb97eef ""
-  "/Users/gregorymacchio/Documents/Mirror/laptop/global/writing/software/ProjTool/template.cls" 1788387317.44527 42686 318b415741c1788f750442a080f0a3f6 ""
+["pdflatex"] 1788480122.30089 "/Users/gregorymacchio/Documents/Mirror/laptop/global/writing/software/ProjTool/examples/dissertation/dissertation.tex" "output/media/pdf/dissertation.pdf" "dissertation" 1788480123.87873 0
+  "/Users/gregorymacchio/Documents/Mirror/laptop/global/writing/software/ProjTool/examples/dissertation/dissertation.tex" 1788480062.16044 2963 9eb10167ec391bf94331b4fde8c838df ""
+  "/Users/gregorymacchio/Documents/Mirror/laptop/global/writing/software/ProjTool/template.cls" 1788480114.62073 45062 c903858b2a110f810af4b50a105460fc ""
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1136849721 2971 def0b6c1f0b107b3b936def894055589 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/jknappen/ec/ecbx1095.tfm" 1136768653 3584 21b378cca2e40816b0e6d74a4dc98f04 ""
@@ -194,15 +194,15 @@
   "/usr/local/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1769657775 5467155 19efa205003f9ecad95fbbaa6ff24da1 ""
   "/usr/local/texlive/2025/texmf-var/web2c/pdftex/pdflatex.fmt" 1741450574 3345740 46b66fdb0378f7bf5921b5eabf1762b8 ""
   "/usr/local/texlive/2025/texmf.cnf" 1741450484 577 418a7058ec8e006d8704f60ecd22c938 ""
-  "dissertation.tex" 1788294714.32726 2159 00db15176549041a8e180ae22cb97eef ""
-  "output/media/pdf/dissertation.aux" 1788387494.71395 3513 3cc88271ab5b31985b9f26c9dacb15e9 "pdflatex"
-  "output/media/pdf/dissertation.bbl" 1788387492.32308 4903 d1e85c84ea1914d5c655983fca66976d "biber output/media/pdf/dissertation"
-  "output/media/pdf/dissertation.out" 1788387494.71471 1048 31a08d37a8da45fecd77a4383fdf23a9 "pdflatex"
-  "output/media/pdf/dissertation.run.xml" 1788387494.71602 2367 0458b1fbb1b9294a3bb5d274974ed1e3 "pdflatex"
-  "output/media/pdf/dissertation.toc" 1788387494.71609 836 a7b5523a1c7fba4342a5a0f6e3be3cc4 "pdflatex"
-  "output/results/julia/exp.png" 1788387489.2371 15057 a100dcd019ce3a8cd83a854c6b405beb ""
-  "output/results/julia/natural_numbers.tex" 1788387489.02464 29 7f7901fcc2406d5dfddf9e24d9b37fa7 ""
-  "output/results/python/quadratic.png" 1788387490.69447 21810 af9de2bdcfbde52fc01bc01e3bea903a ""
+  "dissertation.tex" 1788480062.16044 2963 9eb10167ec391bf94331b4fde8c838df ""
+  "output/media/pdf/dissertation.aux" 1788480123.76138 5531 b40f78ffbf8c8b92d03d22ced8b826e9 "pdflatex"
+  "output/media/pdf/dissertation.bbl" 1788473240.89647 4903 d1e85c84ea1914d5c655983fca66976d "biber output/media/pdf/dissertation"
+  "output/media/pdf/dissertation.out" 1788480123.76244 2371 c573dffd970ce9f5601a7009f23df0dc "pdflatex"
+  "output/media/pdf/dissertation.run.xml" 1788480123.76391 2367 0458b1fbb1b9294a3bb5d274974ed1e3 "pdflatex"
+  "output/media/pdf/dissertation.toc" 1788480123.76397 1529 1c5d455a62cc26db1bdd826e702b4943 "pdflatex"
+  "output/results/julia/exp.png" 1788478423.39925 15057 a100dcd019ce3a8cd83a854c6b405beb ""
+  "output/results/julia/natural_numbers.tex" 1788478423.17663 29 7f7901fcc2406d5dfddf9e24d9b37fa7 ""
+  "output/results/python/quadratic.png" 1788478424.80374 21810 af9de2bdcfbde52fc01bc01e3bea903a ""
   (generated)
   "output/media/pdf/dissertation.aux"
   "output/media/pdf/dissertation.bcf"

@@ -23,7 +23,11 @@
 
     \genPart{<Section Title 1>}{num}{toc}{
 
+        <Section Content 1>
+
         \genSubPart{<Subsection Title 1>}{inh}{inh}{
+
+            <Subsection Content 1>
 
             \genTHM{<Theorem Title 1>}{inh}{inh}{
                 <Theorem Statement 1>
@@ -55,6 +59,8 @@
 
         \genSubPart{<Subsection Title 2>}{inh}{inh}{
 
+            <Subsection Content 2>
+
             \genTHM{<Theorem Title 2>}{nonum}{notoc}{
                 <Theorem Statement 2>
             }{
@@ -82,6 +88,41 @@
             \input{./output/results/julia/natural_numbers.tex}
 
         }
+
+    }
+
+    \genPart{<Section Title 2>}{num}{toc}{
+
+        \genSubPart{<Subsection Title 3>}{inh}{inh}{
+
+            <Subsection Content 3>
+
+        }
+
+        \genSubPart{<Subsection Title 4>}{inh}{inh}{
+
+            <Subsection Content 4>
+
+        }
+
+    }
+
+    \genPart{<Section Title 3>}{num}{toc}{
+
+        \genTHM{<Theorem Title 3>}{num}{toc}{
+                <Theorem Statement 3>
+            }{
+                <Theorem Proof 3>
+            }
+
+            \genDEF{<Definition Title 3>}{num}{toc}{
+                <Definition Statement 3>
+            }
+
+            \genFIG{<Figure Title 3>}{num}{toc}{H}{0.40}
+            {./output/results/python/quadratic.png}{
+                <Figure Caption 3>
+            }
 
     }
 

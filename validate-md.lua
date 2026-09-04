@@ -142,6 +142,12 @@ local reference_prefixes = {
     proof = "proof-of"
 }
 
+local object_toc_prefixes = {
+    Theorem = "Theorem:",
+    Definition = "Definition:",
+    Figure = "Figure:"
+}
+
 function Link(link)
     local kind = link.target:match("^latex%-to%-ref:([%a]+)$")
     if not kind then
@@ -221,10 +227,14 @@ local function centered_figure(number, title, caption)
     return pandoc.RawBlock("html", html)
 end
 
-local function toc_label(number, title)
+local function toc_label(number, title, prefix)
     local content = {}
     if number then
         append(content, pandoc.Str(number))
+        append(content, pandoc.Space())
+    end
+    if prefix then
+        append(content, pandoc.Str(prefix))
         append(content, pandoc.Space())
     end
     extend(content, title)
@@ -431,6 +441,8 @@ function Pandoc(document)
                 part_fields[2], "toc", "notoc", "genPart")
             state.section = 0
             state.object = 0
+            state.subpart_num = nil
+            state.subpart_toc = nil
             state.toc_section = nil
             local number = nil
             if not presentation and state.part_num == "num" then
@@ -506,14 +518,20 @@ function Pandoc(document)
                     number = tostring(state.figure)
                 end
             else
-                local num_mode = resolved_mode(fields[1], state.subpart_num,
+                local parent_num = state.subpart_num or state.part_num
+                local parent_toc = state.subpart_toc or state.part_toc
+                local num_mode = resolved_mode(fields[1], parent_num,
                     "num", "nonum", "gen" .. name)
-                toc_mode = resolved_mode(fields[2], state.subpart_toc,
+                toc_mode = resolved_mode(fields[2], parent_toc,
                     "toc", "notoc", "gen" .. name)
                 if num_mode == "num" then
                     state.object = state.object + 1
-                    number = state.chapter .. "." .. state.section .. "." ..
-                        state.object
+                    if state.subpart_num then
+                        number = state.chapter .. "." .. state.section ..
+                            "." .. state.object
+                    else
+                        number = state.chapter .. "." .. state.object
+                    end
                 end
             end
             local identifier = prefix .. "-" .. slug(title)
@@ -534,7 +552,9 @@ function Pandoc(document)
                 append(output, pandoc.Para(object_content))
             end
             if toc_mode == "toc" then
-                add_toc(state, 2, toc_label(number, title), identifier)
+                add_toc(state, 2,
+                    toc_label(number, title,
+                        object_toc_prefixes[name]), identifier)
             end
         elseif proof_inline then
         elseif proof_link then

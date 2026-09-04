@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.8)  2 SEP 2026 18:20
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.8)  3 SEP 2026 20:10
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -709,7 +709,8 @@ y
 y)))
 (/usr/local/texlive/2025/texmf-dist/tex/latex/appendixnumberbeamer/appendixnumb
 erbeamer.sty)
-Package hyperref Info: Option `colorlinks' set `true' on input line 1005.
+\c@templatePartObject=\count345
+Package hyperref Info: Option `colorlinks' set `true' on input line 1039.
  (/usr/local/texlive/2025/texmf-dist/tex/latex/base/fontenc.sty
 Package: fontenc 2021/04/29 v2.0v Standard LaTeX package
 )
@@ -751,7 +752,7 @@ Package: tikz 2023-01-15 v3.1.10 (3.1.10)
 (/usr/local/texlive/2025/texmf-dist/tex/generic/pgf/libraries/pgflibraryplothan
 dlers.code.tex
 File: pgflibraryplothandlers.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgf@plot@mark@count=\count345
+\pgf@plot@mark@count=\count346
 \pgfplotmarksize=\dimen299
 )
 \tikz@lastx=\dimen300
@@ -766,19 +767,19 @@ File: pgflibraryplothandlers.code.tex 2023-01-15 v3.1.10 (3.1.10)
 \tikz@figbox@bg=\box79
 \tikz@tempbox=\box80
 \tikz@tempbox@bg=\box81
-\tikztreelevel=\count346
-\tikznumberofchildren=\count347
-\tikznumberofcurrentchild=\count348
-\tikz@fig@count=\count349
+\tikztreelevel=\count347
+\tikznumberofchildren=\count348
+\tikznumberofcurrentchild=\count349
+\tikz@fig@count=\count350
 
 (/usr/local/texlive/2025/texmf-dist/tex/generic/pgf/modules/pgfmodulematrix.cod
 e.tex
 File: pgfmodulematrix.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgfmatrixcurrentrow=\count350
-\pgfmatrixcurrentcolumn=\count351
-\pgf@matrix@numberofcolumns=\count352
+\pgfmatrixcurrentrow=\count351
+\pgfmatrixcurrentcolumn=\count352
+\pgf@matrix@numberofcolumns=\count353
 )
-\tikz@expandcount=\count353
+\tikz@expandcount=\count354
 
 (/usr/local/texlive/2025/texmf-dist/tex/generic/pgf/frontendlayer/tikz/librarie
 s/tikzlibrarytopaths.code.tex
@@ -803,15 +804,15 @@ Package caption Info: beamer document class detected.
 File: caption-beamer.sto 2022/01/06 v2.0c Adaption of the caption package to th
 e beamer document classes (AR)
 ))
-\c@caption@flags=\count354
-\c@continuedfloat=\count355
+\c@caption@flags=\count355
+\c@continuedfloat=\count356
 Package caption Info: hyperref package is loaded.
 Package caption Info: Hyperref support is turned off
 (caption)             because hyperref has stopped early.
 )
 (/usr/local/texlive/2025/texmf-dist/tex/latex/float/float.sty
 Package: float 2001/11/08 v1.3d Float enhancements (AL)
-\c@float@type=\count356
+\c@float@type=\count357
 \float@exts=\toks48
 \float@box=\box82
 \@float@everytoks=\toks49
@@ -843,7 +844,7 @@ sty)
 (/usr/local/texlive/2025/texmf-dist/tex/latex/beamer/beamerfontthemeserif.sty))
 (/usr/local/texlive/2025/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2024-05-08 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count357
+\l__color_backend_stack_int=\count358
 \l__pdf_internal_box=\box85
 )
 (output/media/pdf/presentation.aux)
@@ -904,16 +905,16 @@ LaTeX Font Info:    ... okay on input line 5.
 
 (/usr/local/texlive/2025/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count358
+\scratchcounter=\count359
 \scratchdimen=\dimen317
 \scratchbox=\box86
-\nofMPsegments=\count359
-\nofMParguments=\count360
+\nofMPsegments=\count360
+\nofMParguments=\count361
 \everyMPshowfont=\toks50
-\MPscratchCnt=\count361
+\MPscratchCnt=\count362
 \MPscratchDim=\dimen318
-\MPnumerator=\count362
-\makeMPintoPDFobject=\count363
+\MPnumerator=\count363
+\makeMPintoPDFobject=\count364
 \everyMPtoPDFconversion=\toks51
 ) (/usr/local/texlive/2025/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
@@ -1742,10 +1743,10 @@ Package rerunfilecheck Info: File `presentation.out' has not changed.
 (rerunfilecheck)             Checksum: 3D32B3D0FECEEDC875D218116F580D96;729.
  ) 
 Here is how much of TeX's memory you used:
- 26983 strings out of 473190
- 536348 string characters out of 5715801
- 891195 words of memory out of 5000000
- 49592 multiletter control sequences out of 15000+600000
+ 26995 strings out of 473190
+ 536698 string characters out of 5715801
+ 891430 words of memory out of 5000000
+ 49604 multiletter control sequences out of 15000+600000
  568599 words of font info for 50 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  144i,11n,139p,490b,744s stack positions out of 10000i,1000n,20000p,200000b,200000s

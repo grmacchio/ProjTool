@@ -3,11 +3,22 @@
 \etoc@startlocaltoc {2}
 \contentsline {subsection}{\numberline {1.1}<Subsection Title 1>}{1}{subsection.1.1}%
 \etoc@startlocaltoc {3}
-\contentsline {subsubsection}{\numberline {1.1.1}<Theorem Title 1>}{1}{section*.1}%
-\contentsline {subsubsection}{\numberline {1.1.2}<Definition Title 1>}{1}{section*.2}%
-\contentsline {subsubsection}{\numberline {1.1.3}<Figure Title 1>}{2}{figure.caption.3}%
+\contentsline {subsubsection}{\numberline {1.1.1}Theorem: <Theorem Title 1>}{1}{section*.1}%
+\contentsline {subsubsection}{\numberline {1.1.2}Definition: <Definition Title 1>}{1}{section*.2}%
+\contentsline {subsubsection}{\numberline {1.1.3}Figure: <Figure Title 1>}{2}{figure.caption.3}%
 \contentsline {subsection}{\numberline {1.2}<Subsection Title 2>}{2}{subsection.1.2}%
 \etoc@startlocaltoc {4}
-\contentsline {section}{Proofs}{3}{section*.8}%
+\contentsline {section}{\numberline {2}<Section Title 2>}{3}{section.2}%
 \etoc@startlocaltoc {5}
-\contentsline {section}{References}{4}{section*.11}%
+\contentsline {subsection}{\numberline {2.1}<Subsection Title 3>}{3}{subsection.2.1}%
+\etoc@startlocaltoc {6}
+\contentsline {subsection}{\numberline {2.2}<Subsection Title 4>}{3}{subsection.2.2}%
+\etoc@startlocaltoc {7}
+\contentsline {section}{\numberline {3}<Section Title 3>}{3}{section.3}%
+\etoc@startlocaltoc {8}
+\contentsline {subsection}{\numberline {3.1}Theorem: <Theorem Title 3>}{3}{section*.8}%
+\contentsline {subsection}{\numberline {3.2}Definition: <Definition Title 3>}{3}{section*.9}%
+\contentsline {subsection}{\numberline {3.3}Figure: <Figure Title 3>}{3}{figure.caption.10}%
+\contentsline {section}{Proofs}{4}{section*.11}%
+\etoc@startlocaltoc {9}
+\contentsline {section}{References}{5}{section*.15}%

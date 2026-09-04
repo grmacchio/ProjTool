@@ -17,6 +17,13 @@
 \newcommand{\loadNumberingAndTOCPackage}{
     \newcommand{\templateCurrentNumMode}{}
     \newcommand{\templateCurrentTocMode}{}
+    \newcommand{\templateTHMTOCPrefix}{Theorem: }
+    \newcommand{\templateDEFTOCPrefix}{Definition: }
+    \newcommand{\templateFIGTOCPrefix}{Figure: }
+    \newcommand{\templateObjectTOCLevel}{subsection}
+    \newcounter{templatePartObject}
+    \newcommand{\templatePrepareNumberedObject}{}
+    \newcommand{\templateStoreNumberedObject}{}
     \newcommand{\templateResolveRootNumMode}[3]{
         \ifstrequal{##1}{num}{
             \def##2{num}
@@ -106,13 +113,14 @@
         \templateResolveNumMode{##2}{\genFIGNumMode}{\genFIG}
         \templateResolveTocMode{##3}{\genFIGTocMode}{\genFIG}
         \ifdefstring{\genFIGNumMode}{num}{
+            \templatePrepareNumberedObject
             \ifdefstring{\genFIGTocMode}{toc}{
                 \begin{figure}[##4]
                     \centering
                     \includegraphics[width=##5\textwidth]{##6}
                     \caption{(##1)\textbf{.} ##7}
                     \label{fig:##1}
-                    \addcontentsline{toc}{subsection}{\protect\numberline{\thefigure}##1}
+                    \addcontentsline{toc}{\templateObjectTOCLevel}{\protect\numberline{\thefigure}\templateFIGTOCPrefix##1}
                 \end{figure}
             }{
                 \begin{figure}[##4]
@@ -122,6 +130,7 @@
                     \label{fig:##1}
                 \end{figure}
             }
+            \templateStoreNumberedObject
         }{
             \ifdefstring{\genFIGTocMode}{toc}{
                 \begin{figure}[##4]
@@ -130,7 +139,7 @@
                     \caption*{\textbf{Figure} (##1)\textbf{.} ##7}
                     \phantomsection
                     \label{fig:##1}
-                    \addcontentsline{toc}{subsection}{##1}
+                    \addcontentsline{toc}{\templateObjectTOCLevel}{\templateFIGTOCPrefix##1}
                 \end{figure}
             }{
                 \begin{figure}[##4]
@@ -212,10 +221,11 @@
         \templateResolveNumMode{##2}{\genTHMNumMode}{\genTHM}
         \templateResolveTocMode{##3}{\genTHMTocMode}{\genTHM}
         \ifdefstring{\genTHMNumMode}{num}{
+            \templatePrepareNumberedObject
             \ifdefstring{\genTHMTocMode}{toc}{
                 \begin{theorem}[##1]
                     \phantomsection
-                    \addcontentsline{toc}{subsection}{\protect\numberline{\thetheorem}##1}
+                    \addcontentsline{toc}{\templateObjectTOCLevel}{\protect\numberline{\thetheorem}\templateTHMTOCPrefix##1}
                     \label{thm:##1}
                     \edef\templateCurrentNumMode{\genTHMNumMode}
                     \edef\templateCurrentTocMode{\genTHMTocMode}
@@ -229,12 +239,13 @@
                     ##4
                 \end{theorem}
             }
+            \templateStoreNumberedObject
         }{
             \ifdefstring{\genTHMTocMode}{toc}{
                 \begin{theoremstar}[##1]
                     \phantomsection
                     \label{thm:##1}
-                    \addcontentsline{toc}{subsection}{##1}
+                    \addcontentsline{toc}{\templateObjectTOCLevel}{\templateTHMTOCPrefix##1}
                     \edef\templateCurrentNumMode{\genTHMNumMode}
                     \edef\templateCurrentTocMode{\genTHMTocMode}
                     ##4
@@ -263,10 +274,11 @@
         \templateResolveNumMode{##2}{\genDEFNumMode}{\genDEF}
         \templateResolveTocMode{##3}{\genDEFTocMode}{\genDEF}
         \ifdefstring{\genDEFNumMode}{num}{
+            \templatePrepareNumberedObject
             \ifdefstring{\genDEFTocMode}{toc}{
                 \begin{definition}[##1]
                     \phantomsection
-                    \addcontentsline{toc}{subsection}{\protect\numberline{\thetheorem}##1}
+                    \addcontentsline{toc}{\templateObjectTOCLevel}{\protect\numberline{\thetheorem}\templateDEFTOCPrefix##1}
                     \label{def:##1}
                     \edef\templateCurrentNumMode{\genDEFNumMode}
                     \edef\templateCurrentTocMode{\genDEFTocMode}
@@ -280,12 +292,13 @@
                     ##4
                 \end{definition}
             }
+            \templateStoreNumberedObject
         }{
             \ifdefstring{\genDEFTocMode}{toc}{
                 \begin{definitionstar}[##1]
                     \phantomsection
                     \label{def:##1}
-                    \addcontentsline{toc}{subsection}{##1}
+                    \addcontentsline{toc}{\templateObjectTOCLevel}{\templateDEFTOCPrefix##1}
                     \edef\templateCurrentNumMode{\genDEFNumMode}
                     \edef\templateCurrentTocMode{\genDEFTocMode}
                     ##4
@@ -441,21 +454,32 @@
         \tableofcontents
     }
     \newlength{\templateSubTOCIndent}
+    \newlength{\templateSubTOCAfterSpace}
+    \newlength{\templateSubTOCSectionNumberWidth}
+    \newlength{\templateSubTOCSubsectionNumberWidth}
+    \newlength{\templateSubTOCSubsubsectionNumberWidth}
+    \setlength{\templateSubTOCAfterSpace}{0pt}
+    \setlength{\templateSubTOCSectionNumberWidth}{2.3em}
+    \setlength{\templateSubTOCSubsectionNumberWidth}{3.2em}
+    \setlength{\templateSubTOCSubsubsectionNumberWidth}{4.1em}
     \newcommand{\templateSubTOC}[2]{
         \begingroup
             \etocsetstyle{##1}{}{}{}{}
             \ifstrequal{##2}{section}{
                 \renewcommand*\l@section{
-                    \@dottedtocline{1}{\templateSubTOCIndent}{2.3em}
+                    \@dottedtocline{1}{\templateSubTOCIndent}{
+                        \templateSubTOCSectionNumberWidth}
                 }
             }{
                 \ifstrequal{##2}{subsection}{
                     \renewcommand*\l@subsection{
-                        \@dottedtocline{2}{\templateSubTOCIndent}{3.2em}
+                        \@dottedtocline{2}{\templateSubTOCIndent}{
+                            \templateSubTOCSubsectionNumberWidth}
                     }
                 }{
                     \renewcommand*\l@subsubsection{
-                        \@dottedtocline{3}{\templateSubTOCIndent}{4.1em}
+                        \@dottedtocline{3}{\templateSubTOCIndent}{
+                            \templateSubTOCSubsubsectionNumberWidth}
                     }
                 }
             }
@@ -467,6 +491,12 @@
             \etocsettocstyle{}{}
             \etocsetnexttocdepth{##2}
             \localtableofcontents*
+            \etocifwasempty{}{
+                \par
+                \addvspace{\templateSubTOCAfterSpace}
+                \aftergroup\@afterindentfalse
+                \aftergroup\@afterheading
+            }
         \endgroup
     }
     \loadReferencesPackage
@@ -509,6 +539,7 @@
     \loadPackagesSharedByAll
     \loadPackagesSharedByDocs
     \setlength{\templateSubTOCIndent}{-0.33em}
+    \setlength{\templateSubTOCAfterSpace}{\baselineskip}
     \patchcmd{\l@chapter}
         {\vskip 1.0em \@plus\p@}
         {\vskip\baselineskip}
@@ -539,6 +570,8 @@
     \let\c@figure\c@theorem
     \renewcommand{\thefigure}{\thetheorem}
     \renewcommand{\theHfigure}{\theHtheorem}
+    \let\templateDissertationNestedTheoremNumber\thetheorem
+    \let\templateDissertationNestedTheoremHNumber\theHtheorem
     \toggletrue{TemplateTypeLoaded}
     % Define command that generates a chapter.
     \NewDocumentCommand{\genPart}{m m m +m}{
@@ -567,6 +600,16 @@
         \begingroup
             \edef\templateCurrentNumMode{\genPartNumMode}
             \edef\templateCurrentTocMode{\genPartTocMode}
+            \def\templateObjectTOCLevel{section}
+            \setcounter{templatePartObject}{0}
+            \renewcommand{\templatePrepareNumberedObject}{
+                \setcounter{theorem}{\value{templatePartObject}}
+                \renewcommand{\thetheorem}{\thechapter.\arabic{theorem}}
+                \renewcommand{\theHtheorem}{part.\thechapter.\arabic{theorem}}
+            }
+            \renewcommand{\templateStoreNumberedObject}{
+                \setcounter{templatePartObject}{\value{theorem}}
+            }
             \ifdefstring{\genPartTocMode}{toc}{
                 \templateSubTOC{subsection}{section}
             }{}
@@ -600,6 +643,11 @@
         \begingroup
             \edef\templateCurrentNumMode{\genSubPartNumMode}
             \edef\templateCurrentTocMode{\genSubPartTocMode}
+            \def\templateObjectTOCLevel{subsection}
+            \renewcommand{\templatePrepareNumberedObject}{}
+            \renewcommand{\templateStoreNumberedObject}{}
+            \let\thetheorem\templateDissertationNestedTheoremNumber
+            \let\theHtheorem\templateDissertationNestedTheoremHNumber
             \ifdefstring{\genSubPartTocMode}{toc}{
                 \templateSubTOC{section}{subsection}
             }{}
@@ -692,6 +740,7 @@
     \loadPackagesSharedByAll
     \loadPackagesSharedByDocs
     \setlength{\templateSubTOCIndent}{-0.33em}
+    \setlength{\templateSubTOCAfterSpace}{\baselineskip}
     \patchcmd{\l@section}
         {\addvspace{1.0em \@plus\p@}}
         {\addvspace{\baselineskip}}
@@ -729,38 +778,8 @@
     \let\c@figure\c@theorem
     \renewcommand{\thefigure}{\thetheorem}
     \renewcommand{\theHfigure}{\theHtheorem}
-    \csletcs{templatePreprintGenTHMCode}{genTHM code}
-    \csletcs{templatePreprintGenDEFCode}{genDEF code}
-    \csletcs{templatePreprintGenFIGCode}{genFIG code}
-    \newcommand{\templatePreprintObjectToc}[1]{
-        \begingroup
-            \let\templatePreprintAddContentsLine\addcontentsline
-            \renewcommand{\addcontentsline}[3]{
-                \ifstrequal{##2}{subsection}{
-                    \templatePreprintAddContentsLine
-                        {##1}{subsubsection}{##3}
-                }{
-                    \templatePreprintAddContentsLine{##1}{##2}{##3}
-                }
-            }
-            #1
-        \endgroup
-    }
-    \RenewDocumentCommand{\genTHM}{m m m +m +m}{
-        \templatePreprintObjectToc{
-            \templatePreprintGenTHMCode{#1}{#2}{#3}{#4}{#5}
-        }
-    }
-    \RenewDocumentCommand{\genDEF}{m m m +m}{
-        \templatePreprintObjectToc{
-            \templatePreprintGenDEFCode{#1}{#2}{#3}{#4}
-        }
-    }
-    \RenewDocumentCommand{\genFIG}{m m m m m m +m}{
-        \templatePreprintObjectToc{
-            \templatePreprintGenFIGCode{#1}{#2}{#3}{#4}{#5}{#6}{#7}
-        }
-    }
+    \let\templatePreprintNestedTheoremNumber\thetheorem
+    \let\templatePreprintNestedTheoremHNumber\theHtheorem
     \toggletrue{TemplateTypeLoaded}
     % Define command that generates a section.
     \NewDocumentCommand{\genPart}{m m m +m}{
@@ -789,6 +808,16 @@
         \begingroup
             \edef\templateCurrentNumMode{\genPartNumMode}
             \edef\templateCurrentTocMode{\genPartTocMode}
+            \def\templateObjectTOCLevel{subsection}
+            \setcounter{templatePartObject}{0}
+            \renewcommand{\templatePrepareNumberedObject}{
+                \setcounter{theorem}{\value{templatePartObject}}
+                \renewcommand{\thetheorem}{\thesection.\arabic{theorem}}
+                \renewcommand{\theHtheorem}{part.\thesection.\arabic{theorem}}
+            }
+            \renewcommand{\templateStoreNumberedObject}{
+                \setcounter{templatePartObject}{\value{theorem}}
+            }
             \ifdefstring{\genPartTocMode}{toc}{
                 \templateSubTOC{subsubsection}{subsection}
             }{}
@@ -822,6 +851,11 @@
         \begingroup
             \edef\templateCurrentNumMode{\genSubPartNumMode}
             \edef\templateCurrentTocMode{\genSubPartTocMode}
+            \def\templateObjectTOCLevel{subsubsection}
+            \renewcommand{\templatePrepareNumberedObject}{}
+            \renewcommand{\templateStoreNumberedObject}{}
+            \let\thetheorem\templatePreprintNestedTheoremNumber
+            \let\theHtheorem\templatePreprintNestedTheoremHNumber
             \ifdefstring{\genSubPartTocMode}{toc}{
                 \templateSubTOC{subsection}{subsubsection}
             }{}
@@ -1047,6 +1081,7 @@
     \loadPackagesSharedByAll
     \loadPackagesSharedByDocs
     \setlength{\templateSubTOCIndent}{-0.33em}
+    \setlength{\templateSubTOCAfterSpace}{\baselineskip}
     \patchcmd{\l@section}
         {\addvspace{1.0em \@plus\p@}}
         {\addvspace{\baselineskip}}
@@ -1074,38 +1109,8 @@
     \let\c@figure\c@theorem
     \renewcommand{\thefigure}{\thetheorem}
     \renewcommand{\theHfigure}{\theHtheorem}
-    \csletcs{templateNoteGenTHMCode}{genTHM code}
-    \csletcs{templateNoteGenDEFCode}{genDEF code}
-    \csletcs{templateNoteGenFIGCode}{genFIG code}
-    \newcommand{\templateNoteObjectToc}[1]{
-        \begingroup
-            \let\templateNoteAddContentsLine\addcontentsline
-            \renewcommand{\addcontentsline}[3]{
-                \ifstrequal{##2}{subsection}{
-                    \templateNoteAddContentsLine
-                        {##1}{subsubsection}{##3}
-                }{
-                    \templateNoteAddContentsLine{##1}{##2}{##3}
-                }
-            }
-            #1
-        \endgroup
-    }
-    \RenewDocumentCommand{\genTHM}{m m m +m +m}{
-        \templateNoteObjectToc{
-            \templateNoteGenTHMCode{#1}{#2}{#3}{#4}{#5}
-        }
-    }
-    \RenewDocumentCommand{\genDEF}{m m m +m}{
-        \templateNoteObjectToc{
-            \templateNoteGenDEFCode{#1}{#2}{#3}{#4}
-        }
-    }
-    \RenewDocumentCommand{\genFIG}{m m m m m m +m}{
-        \templateNoteObjectToc{
-            \templateNoteGenFIGCode{#1}{#2}{#3}{#4}{#5}{#6}{#7}
-        }
-    }
+    \let\templateNoteNestedTheoremNumber\thetheorem
+    \let\templateNoteNestedTheoremHNumber\theHtheorem
     \toggletrue{TemplateTypeLoaded}
     \NewDocumentCommand{\genPart}{m m m +m}{
         \templateResolveRootNumMode{#2}{\genPartNumMode}{\genPart}
@@ -1133,6 +1138,16 @@
         \begingroup
             \edef\templateCurrentNumMode{\genPartNumMode}
             \edef\templateCurrentTocMode{\genPartTocMode}
+            \def\templateObjectTOCLevel{subsection}
+            \setcounter{templatePartObject}{0}
+            \renewcommand{\templatePrepareNumberedObject}{
+                \setcounter{theorem}{\value{templatePartObject}}
+                \renewcommand{\thetheorem}{\thesection.\arabic{theorem}}
+                \renewcommand{\theHtheorem}{part.\thesection.\arabic{theorem}}
+            }
+            \renewcommand{\templateStoreNumberedObject}{
+                \setcounter{templatePartObject}{\value{theorem}}
+            }
             \ifdefstring{\genPartTocMode}{toc}{
                 \templateSubTOC{subsubsection}{subsection}
             }{}
@@ -1165,6 +1180,11 @@
         \begingroup
             \edef\templateCurrentNumMode{\genSubPartNumMode}
             \edef\templateCurrentTocMode{\genSubPartTocMode}
+            \def\templateObjectTOCLevel{subsubsection}
+            \renewcommand{\templatePrepareNumberedObject}{}
+            \renewcommand{\templateStoreNumberedObject}{}
+            \let\thetheorem\templateNoteNestedTheoremNumber
+            \let\theHtheorem\templateNoteNestedTheoremHNumber
             \ifdefstring{\genSubPartTocMode}{toc}{
                 \templateSubTOC{subsection}{subsubsection}
             }{}
