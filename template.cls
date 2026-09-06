@@ -1191,7 +1191,7 @@
             #4
         \endgroup
     }
-    \newcommand{\genFront}[4]{
+    \newcommand{\genFront}[5]{
         \title{\vspace{-1.5cm}#1}
         \author{#2\\#3}
         \date{#4}
@@ -1202,6 +1202,14 @@
                 \vspace{-\baselineskip}
             }{}
             \templateMainTOC{section}
+        \endgroup
+        \begingroup
+            \renewcommand\thefootnote{}
+            \renewcommand\theHfootnote{\arabic{footnote}}
+            \NoHyper
+                \footnotetext{\textbf{Acknowledgments:} #5}
+            \endNoHyper
+            \addtocounter{footnote}{-1}
         \endgroup
     }
     \renewcommand{\genBack}{

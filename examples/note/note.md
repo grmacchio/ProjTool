@@ -6,6 +6,10 @@
 
 **Date:** \<Date\>
 
+## Acknowledgments
+
+\<Acknowledgments Content\>
+
 <a id="table-of-contents"></a>
 
 ## Contents
@@ -50,9 +54,7 @@
 **Definition 1.1.2** (\<Definition Title 1\>)**.** \<Definition Statement 1\>
 
 <p align="center"><img src="./output/results/julia/exp.png" alt="image" width="40%" style="image-rendering: pixelated; image-rendering: crisp-edges;"></p>
-
 <a id="figure-figure-title-1"></a>
-
 <p align="center"><strong>Figure 1.1.3</strong> (&lt;Figure Title 1&gt;)<strong>.</strong> &lt;Figure Caption 1&gt;</p>
 
 Test Hyper-References: [\<Theorem Title 1\>](#theorem-theorem-title-1) [\<Definition Title 1\>](#definition-definition-title-1) [\<Figure Title 1\>](#figure-figure-title-1)
@@ -78,9 +80,7 @@ Test Code Output: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
 **Definition** (\<Definition Title 2\>)**.** \<Definition Statement 2\>
 
 <p align="center"><img src="./output/results/python/quadratic.png" alt="image" width="40%" style="image-rendering: pixelated; image-rendering: crisp-edges;"></p>
-
 <a id="figure-figure-title-2"></a>
-
 <p align="center"><strong>Figure</strong> (&lt;Figure Title 2&gt;)<strong>.</strong> &lt;Figure Caption 2&gt;</p>
 
 Test Hyper-References: [\<Theorem Title 2\>](#theorem-theorem-title-2) [\<Definition Title 2\>](#definition-definition-title-2) [\<Figure Title 2\>](#figure-figure-title-2)
@@ -131,11 +131,8 @@ Test Code Output: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
 **Definition 3.2** (\<Definition Title 3\>)**.** \<Definition Statement 3\>
 
 <p align="center"><img src="./output/results/python/quadratic.png" alt="image" width="40%" style="image-rendering: pixelated; image-rendering: crisp-edges;"></p>
-
 <a id="figure-figure-title-3"></a>
-
 <p align="center"><strong>Figure 3.3</strong> (&lt;Figure Title 3&gt;)<strong>.</strong> &lt;Figure Caption 3&gt;</p>
-
 <a id="proofs"></a>
 
 ## Proofs
@@ -162,7 +159,7 @@ Test Code Output: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
 
 ## References
 
-<div id="refs" class="references csl-bib-body" entry-spacing="0">
+<div id="refs" class="references csl-bib-body">
 
 <div id="ref-1970test" class="csl-entry">
 

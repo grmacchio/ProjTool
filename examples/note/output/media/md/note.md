@@ -6,6 +6,10 @@
 
 **Date:** \<Date\>
 
+## Acknowledgments
+
+\<Acknowledgments Content\>
+
 <a id="table-of-contents"></a>
 
 ## Contents
