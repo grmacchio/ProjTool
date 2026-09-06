@@ -44,19 +44,10 @@
 
 - *\<Frame Content 2\>*
 
-  - \<Nested Frame Content 2\>
+- Test Citations: \<Text\>\[1\]
 
-<a id="definition-definition-title-2"></a>
+- Test Citations: \<Text\>\[1, 2, 3, 4\]
 
-**Definition** (\<Definition Title 2\>)**.** \<Definition Statement 2\>
-
-<a id="theorem-theorem-title-2"></a>
-
-**Theorem** (\<Theorem Title 2\>)**.** \<Theorem Statement 2\>
-
-<p align="center"><img src="../../results/python/quadratic.png" alt="image" width="40%" style="image-rendering: pixelated; image-rendering: crisp-edges;"></p>
-<a id="figure-figure-title-2"></a>
-<p align="center"><strong>Figure 2</strong> (&lt;Figure Title 2&gt;)<strong>.</strong> &lt;Figure Caption 2&gt;</p>
 <a id="chapter-section-title-2"></a>
 
 ## \<Section Title 2\>
@@ -79,32 +70,22 @@
 
 <p align="center"><img src="../../results/julia/exp.png" alt="image" width="40%" style="image-rendering: pixelated; image-rendering: crisp-edges;"></p>
 <a id="figure-figure-title-3"></a>
-<p align="center"><strong>Figure 3</strong> (&lt;Figure Title 3&gt;)<strong>.</strong> &lt;Figure Caption 3&gt;</p>
+<p align="center"><strong>Figure 2</strong> (&lt;Figure Title 3&gt;)<strong>.</strong> &lt;Figure Caption 3&gt;</p>
 <a id="section-frame-title-4"></a>
 
 ### \<Frame Title 4\>
 
 - *\<Frame Content 4\>*
 
-  - \<Nested Frame Content 4\>
+- Test Citations: \<Text\>\[1\]
 
-<a id="definition-definition-title-4"></a>
+- Test Citations: \<Text\>\[1, 2, 3, 4\]
 
-**Definition** (\<Definition Title 4\>)**.** \<Definition Statement 4\>
-
-<a id="theorem-theorem-title-4"></a>
-
-**Theorem** (\<Theorem Title 4\>)**.** \<Theorem Statement 4\>
-
-<p align="center"><img src="../../results/python/quadratic.png" alt="image" width="40%" style="image-rendering: pixelated; image-rendering: crisp-edges;"></p>
-<a id="figure-figure-title-4"></a>
-<p align="center"><strong>Figure 4</strong> (&lt;Figure Title 4&gt;)<strong>.</strong> &lt;Figure Caption 4&gt;</p>
 <a id="appendix-table-of-contents"></a>
 
 ## **Appendix Table of Contents**
 
 - [\<Appendix Section Title 1\>](#chapter-appendix-section-title-1)
-- [\<Appendix Section Title 2\>](#chapter-appendix-section-title-2)
 
 <a id="chapter-appendix-section-title-1"></a>
 
@@ -122,18 +103,30 @@
 
 - [\<Figure Title 1\>](#figure-figure-title-1)
 
-<a id="chapter-appendix-section-title-2"></a>
+<div id="refs" class="references csl-bib-body">
 
-## \<Appendix Section Title 2\>
+<div id="ref-1970author" class="csl-entry">
 
-<a id="section-appendix-frame-title-2"></a>
+<span class="csl-left-margin">\[1\] </span><span class="csl-right-inline">(Paper) <span class="smallcaps">\<Authors\></span>, *\<Title\>*, \<Journal Abbreviation\>, 1 (1970), pp. 1–10.</span>
 
-### \<Appendix Frame Title 2\>
+</div>
 
-- \<Appendix Frame Content 2\>
+<div id="ref-2002author" class="csl-entry">
 
-- [\<Theorem Title 2\>](#theorem-theorem-title-2)
+<span class="csl-left-margin">\[2\] </span><span class="csl-right-inline">(Book) <span class="smallcaps">\<Authors\></span>, *\<Title\>*, \<Publisher\>, \<Publisher Location\>, 2002.</span>
 
-- [\<Definition Title 2\>](#definition-definition-title-2)
+</div>
 
-- [\<Figure Title 2\>](#figure-figure-title-2)
+<div id="ref-2013author" class="csl-entry">
+
+<span class="csl-left-margin">\[3\] </span><span class="csl-right-inline">(Preprint) <span class="smallcaps">\<Authors\></span>, *\<Title\>*, 2013, <https://www.google.com/search?q=test>.</span>
+
+</div>
+
+<div id="ref-2018author" class="csl-entry">
+
+<span class="csl-left-margin">\[4\] </span><span class="csl-right-inline">(Thesis) <span class="smallcaps">\<Authors\></span>, *\<Title\>*, PhD thesis, \<School\>, \<School Location\>, 2018.</span>
+
+</div>
+
+</div>

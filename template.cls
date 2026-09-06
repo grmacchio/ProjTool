@@ -327,13 +327,24 @@
         isbn=false,
         maxbibnames=99
     ]{biblatex}
-    \addbibresource[glob]{./references/*/*.bib}
+    \InputIfFileExists{\jobname.projtool.cfg}{}{
+        \ClassError{template}
+            {Missing explicit references configuration}
+            {Build with ProjTool and provide \string\genBack{REFERENCES_FOLDER}.}
+    }
+    \newcommand{\templateUseReferences}[1]{
+        \ifdefstring{\templateReferencesPath}{##1}{}{
+            \ClassError{template}
+                {References folder changed during the document}
+                {Use the same folder supplied to \string\genBack.}
+        }
+    }
     \DeclareNameAlias{default}{given-family}
     \renewcommand*{\mkbibnamegiven}[1]{\textsc{##1}}
     \renewcommand*{\mkbibnamefamily}[1]{\textsc{##1}}
     \renewcommand*{\mkbibnameprefix}[1]{\textsc{##1}}
     \renewcommand*{\mkbibnamesuffix}[1]{\textsc{##1}}
-    \DeclareFieldFormat[article,book,misc,thesis]{title}{\mkbibemph{##1}}
+    \DeclareFieldFormat[article,book,misc,thesis]{title}{\mkbibitalic{##1}}
     \DeclareFieldFormat[article]{journaltitle}{##1}
     \DeclareFieldFormat{doi}{\url{https://doi.org/##1}}
     \DeclareFieldFormat{eprint}{\url{https://arxiv.org/abs/##1}}
@@ -361,78 +372,78 @@
             \iffieldundef{url}{%
                 \setunit{\addcomma\space}%
                 \printfield{eprint}}{}}}
+    \newbibmacro*{template:reference-entry}{%
+        \usebibmacro{template:reference-type}\addspace
+        \printnames{author}%
+        \setunit{\addcomma\space}%
+        \printfield{title}%
+        \ifentrytype{article}{%
+            \setunit{\addcomma\space}%
+            \printfield{journaltitle}%
+            \setunit{\addcomma\space}%
+            \printfield{volume}%
+            \setunit{\addspace}%
+            \printtext[parens]{\printfield{year}}%
+            \setunit{\addcomma\space}%
+            \printfield{pages}}{%
+            \ifentrytype{book}{%
+                \setunit{\addcomma\space}%
+                \printlist{publisher}%
+                \setunit{\addcomma\space}%
+                \printlist{location}%
+                \setunit{\addcomma\space}%
+                \printfield{edition}%
+                \setunit{\addcomma\space}%
+                \printfield{year}}{%
+                \ifentrytype{thesis}{%
+                    \setunit{\addcomma\space}%
+                    \printtext{PhD thesis}%
+                    \setunit{\addcomma\space}%
+                    \printlist{institution}%
+                    \setunit{\addcomma\space}%
+                    \printlist{location}%
+                    \setunit{\addcomma\space}%
+                    \printfield{year}}{%
+                    \setunit{\addcomma\space}%
+                    \printfield{howpublished}%
+                    \setunit{\addcomma\space}%
+                    \printdate}}}%
+        \usebibmacro{template:reference-links}%
+        \usebibmacro{finentry}}
     \DeclareBibliographyDriver{article}{%
         \usebibmacro{bibindex}%
         \usebibmacro{begentry}%
-        \usebibmacro{template:reference-type}\addspace
-        \printnames{author}%
-        \setunit{\addcomma\space}%
-        \printfield{title}%
-        \setunit{\addcomma\space}%
-        \printfield{journaltitle}%
-        \setunit{\addcomma\space}%
-        \printfield{volume}%
-        \setunit{\addspace}%
-        \printtext[parens]{\printfield{year}}%
-        \setunit{\addcomma\space}%
-        \printfield{pages}%
-        \usebibmacro{template:reference-links}%
-        \usebibmacro{finentry}}
+        \usebibmacro{template:reference-entry}}
     \DeclareBibliographyDriver{book}{%
         \usebibmacro{bibindex}%
         \usebibmacro{begentry}%
-        \usebibmacro{template:reference-type}\addspace
-        \printnames{author}%
-        \setunit{\addcomma\space}%
-        \printfield{title}%
-        \setunit{\addcomma\space}%
-        \printlist{publisher}%
-        \setunit{\addcomma\space}%
-        \printlist{location}%
-        \setunit{\addcomma\space}%
-        \printfield{edition}%
-        \setunit{\addcomma\space}%
-        \printfield{year}%
-        \usebibmacro{template:reference-links}%
-        \usebibmacro{finentry}}
+        \usebibmacro{template:reference-entry}}
     \DeclareBibliographyDriver{thesis}{%
         \usebibmacro{bibindex}%
         \usebibmacro{begentry}%
-        \usebibmacro{template:reference-type}\addspace
-        \printnames{author}%
-        \setunit{\addcomma\space}%
-        \printfield{title}%
-        \setunit{\addcomma\space}%
-        \printtext{PhD thesis}%
-        \setunit{\addcomma\space}%
-        \printlist{institution}%
-        \setunit{\addcomma\space}%
-        \printlist{location}%
-        \setunit{\addcomma\space}%
-        \printfield{year}%
-        \usebibmacro{template:reference-links}%
-        \usebibmacro{finentry}}
+        \usebibmacro{template:reference-entry}}
     \DeclareBibliographyDriver{misc}{%
         \usebibmacro{bibindex}%
         \usebibmacro{begentry}%
-        \usebibmacro{template:reference-type}\addspace
-        \printnames{author}%
-        \setunit{\addcomma\space}%
-        \printfield{title}%
-        \setunit{\addcomma\space}%
-        \printfield{howpublished}%
-        \setunit{\addcomma\space}%
-        \printdate%
-        \usebibmacro{template:reference-links}%
-        \usebibmacro{finentry}}
-    \newcommand{\genBack}{
+        \usebibmacro{template:reference-entry}}
+    \DeclareCiteCommand{\templateFullReference}
+        {}
+        {\usebibmacro{template:reference-entry}}
+        {\multicitedelim}
+        {}
+    \newcommand{\genBack}[1]{
+        \templateUseReferences{##1}
         \templateRenderTheoremProofs
         \clearpage
         \phantomsection
         \printbibliography[title={References}]
     }
     \newcommand{\genREF}[2]{
-        \hyperref[##1:##2]{##2}
+        \ifstrequal{##1}{cite}{
+            \cite{##2}
+        }{
+            \hyperref[##1:##2]{##2}
+        }
     }
 }
 
@@ -560,7 +571,8 @@
     \captionsetup[figure]{skip=\templateCaptionSpace}
     \setlength{\bibitemsep}{\baselineskip}
     \addtolength{\bibitemsep}{1.6pt}
-    \renewcommand{\genBack}{
+    \renewcommand{\genBack}[1]{
+        \templateUseReferences{#1}
         \templateRenderTheoremProofs
         \clearpage
         \phantomsection
@@ -888,7 +900,8 @@
             \addtocounter{footnote}{-1}
         \endgroup
     }
-    \renewcommand{\genBack}{
+    \renewcommand{\genBack}[1]{
+        \templateUseReferences{#1}
         \clearpage
         \templateRenderTheoremProofs
         \clearpage
@@ -905,6 +918,7 @@
     \LoadClass{beamer}
     \RequirePackage{appendixnumberbeamer}
     \loadPackagesSharedByAll
+    \loadReferencesPackage
     \toggletrue{TemplateTypeLoaded}
     \usetheme{Madrid}
     \usecolortheme[named=crimson]{structure}
@@ -914,7 +928,58 @@
     \setbeamertemplate{navigation symbols}{}
     \setbeamertemplate{footline}[frame number]
     \setbeamertemplate{caption}[default]
+    \setbeamercolor{footnote}{fg=black}
+    \setbeamercolor{footnote mark}{fg=black}
     \renewcommand{\footnotesize}{\tiny}
+    \newcounter{templatePresentationFrame}
+    \BeforeBeginEnvironment{frame}{
+        \stepcounter{templatePresentationFrame}
+        \setcounter{footnote}{0}
+    }
+    \newcommand{\templatePresentationReferenceName}{}
+    \newcommand{\templatePresentationCiteDelimiter}{}
+    \newcommand{\templatePresentationNewReferences}{}
+    \newcommand{\templatePresentationSetReferenceName}[1]{%
+        \edef\templatePresentationReferenceName{templatePresentationReference@\arabic{templatePresentationFrame}@\number\beamer@slideinframe @#1}%
+    }
+    \newcommand{\templatePresentationCiteOne}[1]{%
+        \templatePresentationCiteDelimiter%
+        \def\templatePresentationCiteDelimiter{,}%
+        \templatePresentationSetReferenceName{#1}%
+        \ifcsdef{\templatePresentationReferenceName}{%
+            \csuse{\templatePresentationReferenceName}%
+        }{%
+            \stepcounter{footnote}%
+            \csxdef{\templatePresentationReferenceName}{\thefootnote}%
+            \thefootnote%
+            \listgadd\templatePresentationNewReferences{#1}%
+        }%
+    }
+    \newcommand{\templatePresentationFootnoteOne}[1]{%
+        \templatePresentationSetReferenceName{#1}%
+        \footnotetext[\csuse{\templatePresentationReferenceName}]{\templateFullReference{#1}}%
+    }
+    \newcommand{\templatePresentationCite}[1]{%
+        \begingroup%
+        \def\templatePresentationCiteDelimiter{}%
+        \gdef\templatePresentationNewReferences{}%
+        \mkbibsuperscript{\forcsvlist{\templatePresentationCiteOne}{#1}}%
+        \forlistloop{\templatePresentationFootnoteOne}{\templatePresentationNewReferences}%
+        \endgroup%
+    }
+    \newdimen\templatePresentationFootnoteHeight
+    \let\templateBeamerShrinkFrameBox\beamer@shrinkframebox
+    \def\beamer@shrinkframebox{
+        \ifvoid\beamer@footins
+            \templateBeamerShrinkFrameBox
+        \else
+            \templatePresentationFootnoteHeight=\ht\beamer@footins
+            \advance\templatePresentationFootnoteHeight by\dp\beamer@footins
+            \advance\beamer@frametextheight by-\templatePresentationFootnoteHeight
+            \templateBeamerShrinkFrameBox
+            \advance\beamer@frametextheight by\templatePresentationFootnoteHeight
+        \fi
+    }
     \newtoggle{allowAnimations}
     \toggletrue{allowAnimations}
     \newtoggle{presentationAppendix}
@@ -1004,8 +1069,11 @@
             \label{fig:#1}
         \end{figure}
     }
-    \newcommand{\genREF}[2]{
-        \hyperref[#1:#2]{#2}
+    \renewcommand{\genREF}[2]{
+        \ifstrequal{#1}{cite}{\unskip\templatePresentationCite{#2}
+        }{
+            \hyperref[#1:#2]{#2}
+        }
     }
     \newcommand{\bo}[2]{
         \iftoggle{allowAnimations}{
@@ -1024,7 +1092,8 @@
     \newcommand{\ei}[1]{
         \end{#1}
     }
-    \newcommand{\genBack}{
+    \renewcommand{\genBack}[1]{
+        \templateUseReferences{#1}
         \appendix
         \setcounter{section}{0}
         \global\beamer@tocsectionnumber=0\relax
@@ -1212,7 +1281,8 @@
             \addtocounter{footnote}{-1}
         \endgroup
     }
-    \renewcommand{\genBack}{
+    \renewcommand{\genBack}[1]{
+        \templateUseReferences{#1}
         \clearpage
         \templateRenderTheoremProofs
         \clearpage

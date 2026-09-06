@@ -269,6 +269,9 @@ INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/biblatex/blx-case-expl3.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/biblatex/blx-case-expl3.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/l3packages/xparse/xparse.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/l3packages/xparse/xparse.sty
+INPUT output/media/pdf/preprint.projtool.cfg
+INPUT output/media/pdf/preprint.projtool.cfg
+INPUT output/media/pdf/preprint.projtool.cfg
 INPUT output/media/pdf/preprint.aux
 INPUT output/media/pdf/preprint.aux
 INPUT output/media/pdf/preprint.aux

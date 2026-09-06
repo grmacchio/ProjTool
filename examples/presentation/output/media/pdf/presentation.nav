@@ -13,51 +13,42 @@
 \headcommand {\beamer@framepages {5}{11}}
 \headcommand {\slideentry {1}{0}{4}{12/12}{}{0}}
 \headcommand {\beamer@framepages {12}{12}}
-\headcommand {\slideentry {1}{0}{5}{13/19}{}{0}}
-\headcommand {\beamer@framepages {13}{19}}
-\headcommand {\beamer@sectionpages {3}{19}}
-\headcommand {\beamer@subsectionpages {3}{19}}
-\headcommand {\sectionentry {2}{<Section Title 2>}{20}{<Section Title 2>}{0}}
-\headcommand {\slideentry {2}{0}{1}{20/20}{}{0}}
-\headcommand {\beamer@framepages {20}{20}}
-\headcommand {\slideentry {2}{0}{2}{21/21}{}{0}}
-\headcommand {\beamer@framepages {21}{21}}
-\headcommand {\slideentry {2}{0}{3}{22/28}{}{0}}
-\headcommand {\beamer@framepages {22}{28}}
-\headcommand {\slideentry {2}{0}{4}{29/29}{}{0}}
-\headcommand {\beamer@framepages {29}{29}}
-\headcommand {\slideentry {2}{0}{5}{30/36}{}{0}}
-\headcommand {\beamer@framepages {30}{36}}
+\headcommand {\slideentry {1}{0}{5}{13/15}{}{0}}
+\headcommand {\beamer@framepages {13}{15}}
+\headcommand {\beamer@sectionpages {3}{15}}
+\headcommand {\beamer@subsectionpages {3}{15}}
+\headcommand {\sectionentry {2}{<Section Title 2>}{16}{<Section Title 2>}{0}}
+\headcommand {\slideentry {2}{0}{1}{16/16}{}{0}}
+\headcommand {\beamer@framepages {16}{16}}
+\headcommand {\slideentry {2}{0}{2}{17/17}{}{0}}
+\headcommand {\beamer@framepages {17}{17}}
+\headcommand {\slideentry {2}{0}{3}{18/24}{}{0}}
+\headcommand {\beamer@framepages {18}{24}}
+\headcommand {\slideentry {2}{0}{4}{25/25}{}{0}}
+\headcommand {\beamer@framepages {25}{25}}
+\headcommand {\slideentry {2}{0}{5}{26/28}{}{0}}
+\headcommand {\beamer@framepages {26}{28}}
 \headcommand {\gdef \insertmainframenumber {7}}
 \headcommand {\partentry {Appendix}{1}}
-\headcommand {\beamer@partpages {1}{36}}
-\headcommand {\beamer@sectionpages {20}{36}}
-\headcommand {\beamer@subsectionpages {20}{36}}
-\headcommand {\beamer@appendixpages {37}}
-\headcommand {\slideentry {0}{0}{6}{37/37}{}{1}}
-\headcommand {\beamer@framepages {37}{37}}
-\headcommand {\beamer@sectionpages {37}{37}}
-\headcommand {\beamer@subsectionpages {37}{37}}
-\headcommand {\sectionentry {1}{<Appendix Section Title 1>}{38}{<Appendix Section Title 1>}{1}}
-\headcommand {\slideentry {1}{0}{1}{38/38}{}{1}}
-\headcommand {\beamer@framepages {38}{38}}
-\headcommand {\slideentry {1}{0}{2}{39/39}{}{1}}
-\headcommand {\beamer@framepages {39}{39}}
-\headcommand {\slideentry {1}{0}{3}{40/43}{}{1}}
-\headcommand {\beamer@framepages {40}{43}}
-\headcommand {\beamer@sectionpages {38}{43}}
-\headcommand {\beamer@subsectionpages {38}{43}}
-\headcommand {\sectionentry {2}{<Appendix Section Title 2>}{44}{<Appendix Section Title 2>}{1}}
-\headcommand {\slideentry {2}{0}{1}{44/44}{}{1}}
-\headcommand {\beamer@framepages {44}{44}}
-\headcommand {\slideentry {2}{0}{2}{45/45}{}{1}}
-\headcommand {\beamer@framepages {45}{45}}
-\headcommand {\slideentry {2}{0}{3}{46/49}{}{1}}
-\headcommand {\beamer@framepages {46}{49}}
-\headcommand {\beamer@partpages {37}{49}}
-\headcommand {\beamer@subsectionpages {44}{49}}
-\headcommand {\beamer@sectionpages {44}{49}}
-\headcommand {\beamer@documentpages {49}}
-\headcommand {\gdef \inserttotalframenumber {3}}
+\headcommand {\beamer@partpages {1}{28}}
+\headcommand {\beamer@sectionpages {16}{28}}
+\headcommand {\beamer@subsectionpages {16}{28}}
+\headcommand {\beamer@appendixpages {29}}
+\headcommand {\slideentry {0}{0}{6}{29/29}{}{1}}
+\headcommand {\beamer@framepages {29}{29}}
+\headcommand {\beamer@sectionpages {29}{29}}
+\headcommand {\beamer@subsectionpages {29}{29}}
+\headcommand {\sectionentry {1}{<Appendix Section Title 1>}{30}{<Appendix Section Title 1>}{1}}
+\headcommand {\slideentry {1}{0}{1}{30/30}{}{1}}
+\headcommand {\beamer@framepages {30}{30}}
+\headcommand {\slideentry {1}{0}{2}{31/31}{}{1}}
+\headcommand {\beamer@framepages {31}{31}}
+\headcommand {\slideentry {1}{0}{3}{32/35}{}{1}}
+\headcommand {\beamer@framepages {32}{35}}
+\headcommand {\beamer@partpages {29}{35}}
+\headcommand {\beamer@subsectionpages {30}{35}}
+\headcommand {\beamer@sectionpages {30}{35}}
+\headcommand {\beamer@documentpages {35}}
+\headcommand {\gdef \inserttotalframenumber {2}}
 \headcommand {\gdef \inserttotalframenumber {7}}
-\headcommand {\gdef \appendixtotalframenumber {3}}
+\headcommand {\gdef \appendixtotalframenumber {2}}

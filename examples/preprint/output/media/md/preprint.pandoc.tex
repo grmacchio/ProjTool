@@ -6,7 +6,7 @@
 \newcommand{\genFIG}[7]{\par\includegraphics[width=#5\textwidth]{#6}\par\paragraph{\textbf{LaTeXToFigure} \textbf{#2} \textbf{#3} #1}#7}
 
 \newcommand{\genREF}[2]{\href{latex-to-ref:#1}{#2}}
-\newcommand{\genBack}{\subsection{\textbf{LaTeXToReferences}}}
+\newcommand{\genBack}[1]{\subsection{\textbf{LaTeXToReferences}}}
 \documentclass[preprint]{template}
 
 \begin{document}
@@ -55,8 +55,8 @@
             \genREF{def}{<Definition Title 1>}
             \genREF{fig}{<Figure Title 1>} \\
 
-            \noindent Test References:
-            \cite{1970test, 2002test, 2013test, 2018test} \\
+            \noindent Test Citations:
+            \genREF{cite}{1970author, 2002author, 2013author, 2018author} \\
 
             \noindent Test Code Output:
             \input{./output/results/julia/natural_numbers.tex}
@@ -87,8 +87,8 @@
             \genREF{def}{<Definition Title 2>}
             \genREF{fig}{<Figure Title 2>} \\
 
-            \noindent Test References:
-            \cite{1970test, 2002test, 2013test, 2018test} \\
+            \noindent Test Citations:
+            \genREF{cite}{1970author, 2002author, 2013author, 2018author} \\
 
             \noindent Test Code Output:
             \input{./output/results/julia/natural_numbers.tex}
@@ -132,6 +132,6 @@
 
     }
 
-    \genBack
+    \genBack{./references}
 
 \end{document}

@@ -154,6 +154,21 @@ function Link(link)
         return nil
     end
 
+    if kind == "cite" then
+        local citations = {}
+        local keys = pandoc.utils.stringify(link.content)
+        for key in keys:gmatch("[^,]+") do
+            key = key:match("^%s*(.-)%s*$")
+            if key ~= "" then
+                append(citations, pandoc.Citation(key, "NormalCitation"))
+            end
+        end
+        if #citations == 0 then
+            error("citation requires at least one key", 0)
+        end
+        return pandoc.Cite(link.content, citations)
+    end
+
     local prefix = reference_prefixes[kind]
     if not prefix then
         error("unsupported reference type: " .. kind, 0)

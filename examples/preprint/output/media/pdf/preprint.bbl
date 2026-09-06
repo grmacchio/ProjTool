@@ -19,7 +19,7 @@
 
 \refsection{0}
   \datalist[entry]{ynt/global//global/global/global}
-    \entry{1970test}{article}{}{}
+    \entry{1970author}{article}{}{}
       \name{author}{1}{}{%
         {{hash=5b329fc02fa556c521329adce42730f2}{%
            family={<Authors>},
@@ -45,7 +45,7 @@
       \field{pages}{1\bibrangedash 10}
       \range{pages}{10}
     \endentry
-    \entry{2002test}{book}{}{}
+    \entry{2002author}{book}{}{}
       \name{author}{1}{}{%
         {{hash=5b329fc02fa556c521329adce42730f2}{%
            family={<Authors>},
@@ -73,7 +73,7 @@
       \field{title}{<Title>}
       \field{year}{2002}
     \endentry
-    \entry{2013test}{misc}{}{}
+    \entry{2013author}{misc}{}{}
       \name{author}{1}{}{%
         {{hash=5b329fc02fa556c521329adce42730f2}{%
            family={<Authors>},
@@ -101,7 +101,7 @@
       \verb https://www.google.com/search?q=test
       \endverb
     \endentry
-    \entry{2018test}{thesis}{}{}
+    \entry{2018author}{thesis}{}{}
       \name{author}{1}{}{%
         {{hash=5b329fc02fa556c521329adce42730f2}{%
            family={<Authors>},

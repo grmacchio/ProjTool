@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.8)  3 SEP 2026 20:02
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.8)  6 SEP 2026 13:33
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1014,11 +1014,11 @@ Package biblatex Info: ... and expl3
 Package: xparse 2024-08-16 L3 Experimental document command parser
 )
 Package: blx-case-expl3 2024/03/21 v3.20 expl3 case changing code for biblatex
-)))
+))
+(output/media/pdf/preprint.projtool.cfg))
 \@quotelevel=\count464
 \@quotereset=\count465
-
-(output/media/pdf/preprint.aux)
+ (output/media/pdf/preprint.aux)
 \openout1 = `preprint.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 3.
@@ -1206,10 +1206,10 @@ Package logreq Info: Writing requests to 'preprint.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 31258 strings out of 473190
- 586791 string characters out of 5715801
- 1391674 words of memory out of 5000000
- 54013 multiletter control sequences out of 15000+600000
+ 31286 strings out of 473190
+ 587622 string characters out of 5715801
+ 1392255 words of memory out of 5000000
+ 54038 multiletter control sequences out of 15000+600000
  579596 words of font info for 86 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  121i,7n,123p,794b,1383s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -1228,7 +1228,7 @@ e/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/
 25/texmf-dist/fonts/type1/public/cm-super/sfti1095.pfb></usr/local/texlive/2025
 /texmf-dist/fonts/type1/public/cm-super/sfti1200.pfb></usr/local/texlive/2025/t
 exmf-dist/fonts/type1/public/cm-super/sftt1095.pfb>
-Output written on output/media/pdf/preprint.pdf (5 pages, 280368 bytes).
+Output written on output/media/pdf/preprint.pdf (5 pages, 280384 bytes).
 PDF statistics:
  255 PDF objects out of 1000 (max. 8388607)
  212 compressed objects within 3 object streams

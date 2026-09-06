@@ -128,31 +128,37 @@ require_command() {
 
 validate_reference_types() {
     local bibliography_file
-    local entry_pattern='^[[:space:]]*@([[:alpha:]]+)[[:space:]]*[{(]'
+    local entry_pattern='^[[:space:]]*@([[:alpha:]]+)[[:space:]]*[{(][[:space:]]*([^,[:space:]}]+)'
+    local entry_key
     local entry_type
+    local found_reference
     local line
     local line_number
+    local reference_id
     local -a bibliography_files=()
 
-    if [[ -f "$TARGET_DIR/references.bib" ]]; then
-        bibliography_files+=("$TARGET_DIR/references.bib")
-    fi
-    if [[ -d "$TARGET_DIR/references" ]]; then
-        while IFS= read -r -d '' bibliography_file; do
-            bibliography_files+=("$bibliography_file")
-        done < <(find "$TARGET_DIR/references" -type f -name '*.bib' -print0)
-    fi
+    while IFS= read -r -d '' bibliography_file; do
+        bibliography_files+=("$bibliography_file")
+    done < <(find "$REFERENCE_DIR" -type f -name '*.bib' -print0)
     [[ -n "${bibliography_files[*]-}" ]] || return 0
 
     for bibliography_file in "${bibliography_files[@]}"; do
+        found_reference=false
         line_number=0
+        reference_id="$(basename -- "$(dirname -- "$bibliography_file")")"
         while IFS= read -r line || [[ -n "$line" ]]; do
             ((line_number += 1))
             if [[ "$line" =~ $entry_pattern ]]; then
                 entry_type="$(printf '%s' "${BASH_REMATCH[1]}" |
                     tr '[:upper:]' '[:lower:]')"
                 case "$entry_type" in
-                    article|book|misc|phdthesis|comment|preamble|string)
+                    article|book|misc|phdthesis)
+                        entry_key="${BASH_REMATCH[2]}"
+                        [[ "$entry_key" == "$reference_id" ]] ||
+                            die "reference key $entry_key in $bibliography_file:$line_number must match directory $reference_id"
+                        found_reference=true
+                        ;;
+                    comment|preamble|string)
                         ;;
                     *)
                         die "unsupported reference type @$entry_type in $bibliography_file:$line_number; use @article, @book, @misc, or @phdthesis"
@@ -160,7 +166,71 @@ validate_reference_types() {
                 esac
             fi
         done < "$bibliography_file"
+        [[ "$found_reference" == true ]] ||
+            die "no citeable reference found in $bibliography_file"
     done
+}
+
+validate_citation_directories() {
+    local citation
+    local citation_list
+    local document
+    local pattern='\\genREF[[:space:]]*\{cite\}[[:space:]]*\{([^}]*)\}'
+    local -a citations=()
+
+    document="$(<"$DOCUMENT_FILE")"
+    while [[ "$document" =~ $pattern ]]; do
+        citation_list="${BASH_REMATCH[1]}"
+        citation_list="${citation_list//$'\n'/ }"
+        citation_list="${citation_list//$'\r'/ }"
+        IFS=',' read -r -a citations <<< "$citation_list"
+        for citation in "${citations[@]}"; do
+            citation="${citation#"${citation%%[![:space:]]*}"}"
+            citation="${citation%"${citation##*[![:space:]]}"}"
+            [[ -n "$citation" && "$citation" != */* ]] ||
+                die "invalid reference directory name in \\genREF{cite}{$citation_list}"
+            [[ -d "$REFERENCE_DIR/$citation" ]] ||
+                die "reference directory not found for citation: $citation"
+        done
+        document="${document#*"${BASH_REMATCH[0]}"}"
+    done
+}
+
+resolve_reference_directory() {
+    local line
+    local location=""
+    local match_count=0
+    local pattern='^[[:space:]]*\\genBack[[:space:]]*\{([^}]*)\}'
+
+    while IFS= read -r line || [[ -n "$line" ]]; do
+        if [[ "$line" =~ $pattern ]]; then
+            location="${BASH_REMATCH[1]}"
+            ((match_count += 1))
+        fi
+    done < "$DOCUMENT_FILE"
+
+    [[ $match_count -eq 1 ]] ||
+        die "expected exactly one \\genBack{REFERENCES_FOLDER} in $DOCUMENT_FILE"
+    [[ -n "$location" ]] || die "references folder cannot be empty"
+    REFERENCE_LOCATION="$location"
+
+    if [[ "$location" == /* ]]; then
+        REFERENCE_DIR="$location"
+    else
+        REFERENCE_DIR="$TARGET_DIR/$location"
+    fi
+    [[ -d "$REFERENCE_DIR" ]] ||
+        die "references folder not found: $location"
+    REFERENCE_DIR="$(cd -- "$REFERENCE_DIR" && pwd)"
+}
+
+write_pdf_build_config() {
+    local config_file="$PDF_OUTPUT_DIR/$DOCUMENT_STEM.projtool.cfg"
+
+    printf '\\def\\templateReferencesPath{%s}\n' "$REFERENCE_LOCATION" \
+        > "$config_file"
+    printf '\\addbibresource[glob]{%s/*/*.bib}\n' "$REFERENCE_LOCATION" \
+        >> "$config_file"
 }
 
 prompt_required() {
@@ -314,6 +384,7 @@ cleanup_source_build_files() {
     for suffix in "${suffixes[@]}"; do
         rm -f -- "$TARGET_DIR/$DOCUMENT_STEM.$suffix"
     done
+    rm -f -- "$PDF_OUTPUT_DIR/$DOCUMENT_STEM.projtool.cfg"
 }
 
 run_results_stage() {
@@ -340,14 +411,17 @@ run_results_stage() {
 
 render_pdf() {
     require_command latexmk
+    resolve_reference_directory
     validate_reference_types
+    validate_citation_directories
     mkdir -p -- "$PDF_OUTPUT_DIR"
+    write_pdf_build_config
 
     if [[ "$VERBOSE" == true ]]; then
-        TEXINPUTS="$SCRIPT_DIR//:${TEXINPUTS:-}" \
+        TEXINPUTS="$PDF_OUTPUT_DIR//:$SCRIPT_DIR//:${TEXINPUTS:-}" \
             latexmk -pdf -interaction=nonstopmode -halt-on-error \
             -outdir="$PDF_OUTPUT_DIR" "$DOCUMENT_FILE"
-    elif ! TEXINPUTS="$SCRIPT_DIR//:${TEXINPUTS:-}" \
+    elif ! TEXINPUTS="$PDF_OUTPUT_DIR//:$SCRIPT_DIR//:${TEXINPUTS:-}" \
         latexmk -pdf -interaction=nonstopmode -halt-on-error \
         -outdir="$PDF_OUTPUT_DIR" "$DOCUMENT_FILE" >/dev/null 2>&1; then
         die "PDF build failed; rerun with pdf -f TARGET -w verbose for details"
@@ -361,7 +435,7 @@ write_markdown_build_file() {
     local theorem_command='\newcommand{\genTHM}[5]{\paragraph{\textbf{LaTeXToTheorem} \textbf{#2} \textbf{#3} #1}#4\paragraph{\textbf{LaTeXToProofInline}}\textbf{LaTeXToProofLink} #1\subparagraph{\textbf{LaTeXToProofStart} #1}#5\subparagraph{\textbf{LaTeXToProofEnd}}}'
     local definition_command='\newcommand{\genDEF}[4]{\paragraph{\textbf{LaTeXToDefinition} \textbf{#2} \textbf{#3} #1}#4}'
     local figure_command='\newcommand{\genFIG}[7]{\par\includegraphics[width=#5\textwidth]{#6}\par\paragraph{\textbf{LaTeXToFigure} \textbf{#2} \textbf{#3} #1}#7}'
-    local back_command='\newcommand{\genBack}{\subsection{\textbf{LaTeXToReferences}}}'
+    local back_command='\newcommand{\genBack}[1]{\subsection{\textbf{LaTeXToReferences}}}'
     local presentation_commands=''
 
     MARKDOWN_BUILD_FILE="$MD_OUTPUT_DIR/$DOCUMENT_STEM.pandoc.tex"
@@ -377,7 +451,7 @@ write_markdown_build_file() {
         theorem_command='\newcommand{\genTHM}[2]{\paragraph{\textbf{LaTeXToTheorem} #1}#2}'
         definition_command='\newcommand{\genDEF}[2]{\paragraph{\textbf{LaTeXToDefinition} #1}#2}'
         figure_command='\newcommand{\genFIG}[5]{\par\includegraphics[width=#3\textwidth]{#4}\par\paragraph{\textbf{LaTeXToFigure} #1}#5}'
-        back_command='\newcommand{\genBack}{\subsection{\textbf{LaTeXToAppendixTOC}}}'
+        back_command='\newcommand{\genBack}[1]{\subsection{\textbf{LaTeXToAppendixTOC}}}'
         presentation_commands='\newcommand{\togglefalse}[1]{}\newcommand{\toggletrue}[1]{}\newcommand{\bo}[2]{\begin{#1}}\newcommand{\eo}[1]{\end{#1}}\newcommand{\bi}[2]{\begin{#1}}\newcommand{\ei}[1]{\end{#1}}\newcommand{\bitem}[1]{\item \textbf{#1}}\newcommand{\iitem}[1]{\item \textit{#1}}'
     else
         front_command='\newcommand{\genFront}[8]{\subsection{#1}\textbf{Author:} #2\par\textbf{University:} #3\par\textbf{Department:} #4\par\textbf{Advisor:} #5\par\textbf{Date:} #6\par\subsection{Abstract}#7\subsection{Acknowledgments}#8\subsection{\textbf{LaTeXToTOC}}}'
@@ -406,34 +480,29 @@ write_markdown_build_file() {
 render_md() {
     local md_file="$MD_OUTPUT_DIR/$DOCUMENT_STEM.md"
     local md_temp_file="$MD_OUTPUT_DIR/.$DOCUMENT_STEM.md.tmp"
-    local bibliography_file="$TARGET_DIR/references.bib"
     local bibliography_entry
     local citation_style_file="$SCRIPT_DIR/references.csl"
     local -a bibliography_files=()
     local -a citation_options=()
     local -a template_options=(--metadata="template-type:${TEMPLATE_TYPE:-dissertation}")
+    local link_citations=true
 
-    if [[ "$TEMPLATE_TYPE" == "presentation" ]]; then
-        citation_options=(--metadata=link-citations:false)
-    fi
+    [[ "$TEMPLATE_TYPE" == "presentation" ]] && link_citations=false
 
-    if [[ -f "$bibliography_file" ]]; then
-        bibliography_files+=("$bibliography_file")
-    elif [[ -d "$TARGET_DIR/references" ]]; then
-        while IFS= read -r -d '' bibliography_entry; do
-            bibliography_files+=("$bibliography_entry")
-        done < <(
-            find "$TARGET_DIR/references" -type f -name '*.bib' -print0 |
-                LC_ALL=C sort -z
-        )
-    fi
+    resolve_reference_directory
+    while IFS= read -r -d '' bibliography_entry; do
+        bibliography_files+=("$bibliography_entry")
+    done < <(
+        find "$REFERENCE_DIR" -type f -name '*.bib' -print0 |
+            LC_ALL=C sort -z
+    )
 
     if [[ ${#bibliography_files[@]} -gt 0 ]]; then
         [[ -f "$citation_style_file" ]] ||
             die "missing citation style: $citation_style_file"
         citation_options=(
             --csl="$citation_style_file"
-            --metadata=link-citations:true
+            --metadata="link-citations:$link_citations"
             --citeproc
         )
         for bibliography_entry in "${bibliography_files[@]}"; do
@@ -443,6 +512,7 @@ render_md() {
 
     require_command pandoc
     validate_reference_types
+    validate_citation_directories
     mkdir -p -- "$MD_OUTPUT_DIR"
     write_markdown_build_file
     rm -f -- "$md_temp_file"

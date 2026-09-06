@@ -6,7 +6,7 @@
 \newcommand{\genFIG}[5]{\par\includegraphics[width=#3\textwidth]{#4}\par\paragraph{\textbf{LaTeXToFigure} #1}#5}
 \newcommand{\togglefalse}[1]{}\newcommand{\toggletrue}[1]{}\newcommand{\bo}[2]{\begin{#1}}\newcommand{\eo}[1]{\end{#1}}\newcommand{\bi}[2]{\begin{#1}}\newcommand{\ei}[1]{\end{#1}}\newcommand{\bitem}[1]{\item \textbf{#1}}\newcommand{\iitem}[1]{\item \textit{#1}}
 \newcommand{\genREF}[2]{\href{latex-to-ref:#1}{#2}}
-\newcommand{\genBack}{\subsection{\textbf{LaTeXToAppendixTOC}}}
+\newcommand{\genBack}[1]{\subsection{\textbf{LaTeXToAppendixTOC}}}
 \documentclass[presentation]{template}
 
 \toggletrue{allowAnimations}
@@ -50,19 +50,9 @@
 
             \bo{itemize}{0.25cm}
                 \iitem{<Frame Content 2>}
-                \bi{itemize}{0.15cm}
-                    \item{<Nested Frame Content 2>}
-                \ei{itemize}
-                \item \textbf{ProjToolEmptyItem} \genDEF{<Definition Title 2>}{
-                    <Definition Statement 2>
-                }
-                \item \textbf{ProjToolEmptyItem} \genTHM{<Theorem Title 2>}{
-                    <Theorem Statement 2>
-                }
-                \item \textbf{ProjToolEmptyItem} \genFIG{<Figure Title 2>}{H}{0.40}
-                {./output/results/python/quadratic.png}{
-                    <Figure Caption 2>
-                }
+                \item Test Citations: <Text>\genREF{cite}{1970author}
+                \item Test Citations: <Text>\genREF{cite}{1970author,
+                2002author, 2013author, 2018author}
             \eo{itemize}
 
         }
@@ -95,25 +85,15 @@
 
             \bo{itemize}{0.25cm}
                 \iitem{<Frame Content 4>}
-                \bi{itemize}{0.15cm}
-                    \item{<Nested Frame Content 4>}
-                \ei{itemize}
-                \item \textbf{ProjToolEmptyItem} \genDEF{<Definition Title 4>}{
-                    <Definition Statement 4>
-                }
-                \item \textbf{ProjToolEmptyItem} \genTHM{<Theorem Title 4>}{
-                    <Theorem Statement 4>
-                }
-                \item \textbf{ProjToolEmptyItem} \genFIG{<Figure Title 4>}{H}{0.40}
-                {./output/results/python/quadratic.png}{
-                    <Figure Caption 4>
-                }
+                \item Test Citations: <Text>\genREF{cite}{1970author}
+                \item Test Citations: <Text>\genREF{cite}{1970author,
+                2002author, 2013author, 2018author}
             \eo{itemize}
 
         }
     }
 
-    \genBack
+    \genBack{./references}
 
     \genPart{<Appendix Section Title 1>}{
         \genSubPart{<Appendix Frame Title 1>}{
@@ -122,17 +102,6 @@
                 \item \genREF{thm}{<Theorem Title 1>}
                 \item \genREF{def}{<Definition Title 1>}
                 \item \genREF{fig}{<Figure Title 1>}
-            \eo{itemize}
-        }
-    }
-
-    \genPart{<Appendix Section Title 2>}{
-        \genSubPart{<Appendix Frame Title 2>}{
-            \bo{itemize}{0.25cm}
-                \item {<Appendix Frame Content 2>}
-                \item \genREF{thm}{<Theorem Title 2>}
-                \item \genREF{def}{<Definition Title 2>}
-                \item \genREF{fig}{<Figure Title 2>}
             \eo{itemize}
         }
     }
