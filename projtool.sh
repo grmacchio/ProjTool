@@ -6,6 +6,8 @@ SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 COLLECTION_DIR="$(cd -- "$SCRIPT_DIR/.." && pwd)"
 MODE=""
 TEMPLATE_TYPE=""
+CITATION_IDS=()
+BIBLIOGRAPHY_FILES=()
 
 usage() {
     cat <<'EOF'
@@ -126,6 +128,58 @@ require_command() {
     command -v "$1" >/dev/null 2>&1 || die "required command not found: $1"
 }
 
+collect_cited_bibliographies() {
+    local bibliography_file
+    local citation
+    local citation_list
+    local document
+    local existing_citation
+    local found_bibliography
+    local pattern='\\genREF[[:space:]]*\{cite\}[[:space:]]*\{([^}]*)\}'
+    local seen
+    local -a citations=()
+
+    CITATION_IDS=()
+    BIBLIOGRAPHY_FILES=()
+    document="$(<"$DOCUMENT_FILE")"
+    while [[ "$document" =~ $pattern ]]; do
+        citation_list="${BASH_REMATCH[1]}"
+        citation_list="${citation_list//$'\n'/ }"
+        citation_list="${citation_list//$'\r'/ }"
+        IFS=',' read -r -a citations <<< "$citation_list"
+        for citation in "${citations[@]}"; do
+            citation="${citation#"${citation%%[![:space:]]*}"}"
+            citation="${citation%"${citation##*[![:space:]]}"}"
+            [[ -n "$citation" && "$citation" != */* ]] ||
+                die "invalid reference directory name in \\genREF{cite}{$citation_list}"
+            seen=false
+            if [[ -n "${CITATION_IDS[*]-}" ]]; then
+                for existing_citation in "${CITATION_IDS[@]}"; do
+                    if [[ "$citation" == "$existing_citation" ]]; then
+                        seen=true
+                        break
+                    fi
+                done
+            fi
+            [[ "$seen" == true ]] && continue
+            [[ -d "$REFERENCE_DIR/$citation" ]] ||
+                die "reference directory not found for citation: $citation"
+            CITATION_IDS+=("$citation")
+            found_bibliography=false
+            while IFS= read -r -d '' bibliography_file; do
+                BIBLIOGRAPHY_FILES+=("$bibliography_file")
+                found_bibliography=true
+            done < <(
+                find "$REFERENCE_DIR/$citation" -type f -name '*.bib' -print0 |
+                    LC_ALL=C sort -z
+            )
+            [[ "$found_bibliography" == true ]] ||
+                die "reference file not found for citation: $citation"
+        done
+        document="${document#*"${BASH_REMATCH[0]}"}"
+    done
+}
+
 validate_reference_types() {
     local bibliography_file
     local entry_pattern='^[[:space:]]*@([[:alpha:]]+)[[:space:]]*[{(][[:space:]]*([^,[:space:]}]+)'
@@ -135,14 +189,9 @@ validate_reference_types() {
     local line
     local line_number
     local reference_id
-    local -a bibliography_files=()
 
-    while IFS= read -r -d '' bibliography_file; do
-        bibliography_files+=("$bibliography_file")
-    done < <(find "$REFERENCE_DIR" -type f -name '*.bib' -print0)
-    [[ -n "${bibliography_files[*]-}" ]] || return 0
-
-    for bibliography_file in "${bibliography_files[@]}"; do
+    [[ -n "${BIBLIOGRAPHY_FILES[*]-}" ]] || return 0
+    for bibliography_file in "${BIBLIOGRAPHY_FILES[@]}"; do
         found_reference=false
         line_number=0
         reference_id="$(basename -- "$(dirname -- "$bibliography_file")")"
@@ -168,31 +217,6 @@ validate_reference_types() {
         done < "$bibliography_file"
         [[ "$found_reference" == true ]] ||
             die "no citeable reference found in $bibliography_file"
-    done
-}
-
-validate_citation_directories() {
-    local citation
-    local citation_list
-    local document
-    local pattern='\\genREF[[:space:]]*\{cite\}[[:space:]]*\{([^}]*)\}'
-    local -a citations=()
-
-    document="$(<"$DOCUMENT_FILE")"
-    while [[ "$document" =~ $pattern ]]; do
-        citation_list="${BASH_REMATCH[1]}"
-        citation_list="${citation_list//$'\n'/ }"
-        citation_list="${citation_list//$'\r'/ }"
-        IFS=',' read -r -a citations <<< "$citation_list"
-        for citation in "${citations[@]}"; do
-            citation="${citation#"${citation%%[![:space:]]*}"}"
-            citation="${citation%"${citation##*[![:space:]]}"}"
-            [[ -n "$citation" && "$citation" != */* ]] ||
-                die "invalid reference directory name in \\genREF{cite}{$citation_list}"
-            [[ -d "$REFERENCE_DIR/$citation" ]] ||
-                die "reference directory not found for citation: $citation"
-        done
-        document="${document#*"${BASH_REMATCH[0]}"}"
     done
 }
 
@@ -225,12 +249,20 @@ resolve_reference_directory() {
 }
 
 write_pdf_build_config() {
+    local bibliography_file
     local config_file="$PDF_OUTPUT_DIR/$DOCUMENT_STEM.projtool.cfg"
+    local relative_bibliography_file
 
     printf '\\def\\templateReferencesPath{%s}\n' "$REFERENCE_LOCATION" \
         > "$config_file"
-    printf '\\addbibresource[glob]{%s/*/*.bib}\n' "$REFERENCE_LOCATION" \
-        >> "$config_file"
+    if [[ -n "${BIBLIOGRAPHY_FILES[*]-}" ]]; then
+        for bibliography_file in "${BIBLIOGRAPHY_FILES[@]}"; do
+            relative_bibliography_file="${bibliography_file#"$REFERENCE_DIR"/}"
+            printf '\\addbibresource{%s/%s}\n' \
+                "$REFERENCE_LOCATION" "$relative_bibliography_file" \
+                >> "$config_file"
+        done
+    fi
 }
 
 prompt_required() {
@@ -412,8 +444,8 @@ run_results_stage() {
 render_pdf() {
     require_command latexmk
     resolve_reference_directory
+    collect_cited_bibliographies
     validate_reference_types
-    validate_citation_directories
     mkdir -p -- "$PDF_OUTPUT_DIR"
     write_pdf_build_config
 
@@ -482,37 +514,30 @@ render_md() {
     local md_temp_file="$MD_OUTPUT_DIR/.$DOCUMENT_STEM.md.tmp"
     local bibliography_entry
     local citation_style_file="$SCRIPT_DIR/references.csl"
-    local -a bibliography_files=()
     local -a citation_options=()
     local -a template_options=(--metadata="template-type:${TEMPLATE_TYPE:-dissertation}")
     local link_citations=true
 
     [[ "$TEMPLATE_TYPE" == "presentation" ]] && link_citations=false
+    citation_options=(--metadata="link-citations:$link_citations")
 
     resolve_reference_directory
-    while IFS= read -r -d '' bibliography_entry; do
-        bibliography_files+=("$bibliography_entry")
-    done < <(
-        find "$REFERENCE_DIR" -type f -name '*.bib' -print0 |
-            LC_ALL=C sort -z
-    )
+    collect_cited_bibliographies
 
-    if [[ ${#bibliography_files[@]} -gt 0 ]]; then
+    if [[ -n "${BIBLIOGRAPHY_FILES[*]-}" ]]; then
         [[ -f "$citation_style_file" ]] ||
             die "missing citation style: $citation_style_file"
-        citation_options=(
+        citation_options+=(
             --csl="$citation_style_file"
-            --metadata="link-citations:$link_citations"
             --citeproc
         )
-        for bibliography_entry in "${bibliography_files[@]}"; do
+        for bibliography_entry in "${BIBLIOGRAPHY_FILES[@]}"; do
             citation_options+=(--bibliography="$bibliography_entry")
         done
     fi
 
     require_command pandoc
     validate_reference_types
-    validate_citation_directories
     mkdir -p -- "$MD_OUTPUT_DIR"
     write_markdown_build_file
     rm -f -- "$md_temp_file"

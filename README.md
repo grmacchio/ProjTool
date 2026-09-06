@@ -79,6 +79,9 @@ listed chronologically. The supported BibTeX types are `@misc` for preprints,
 BibTeX file below `references/`; every rendered entry begins with `(Preprint)`,
 `(Paper)`, `(Book)`, or `(Thesis)`.
 
+Media generation loads and validates only the `.bib` files in directories named
+by `\genREF{cite}{...}` citations.
+
 Use these minimal fields:
 
 - `@article`: `author`, `title`, `journal`, `volume`, `year`, and `pages`
