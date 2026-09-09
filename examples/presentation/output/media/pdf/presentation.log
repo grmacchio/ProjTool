@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.8)  6 SEP 2026 13:32
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.8)  9 SEP 2026 10:53
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -710,7 +710,7 @@ y)))
 (/usr/local/texlive/2025/texmf-dist/tex/latex/appendixnumberbeamer/appendixnumb
 erbeamer.sty)
 \c@templatePartObject=\count345
-Package hyperref Info: Option `colorlinks' set `true' on input line 1108.
+Package hyperref Info: Option `colorlinks' set `true' on input line 1113.
  (/usr/local/texlive/2025/texmf-dist/tex/latex/base/fontenc.sty
 Package: fontenc 2021/04/29 v2.0v Standard LaTeX package
 )
@@ -1683,10 +1683,10 @@ Package logreq Info: Writing requests to 'presentation.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 34389 strings out of 473190
- 687661 string characters out of 5715801
- 1456390 words of memory out of 5000000
- 56954 multiletter control sequences out of 15000+600000
+ 34404 strings out of 473190
+ 688537 string characters out of 5715801
+ 1457868 words of memory out of 5000000
+ 56969 multiletter control sequences out of 15000+600000
  576034 words of font info for 74 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  144i,11n,139p,802b,1337s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -1704,7 +1704,7 @@ e/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1440.pfb></usr/local/texlive/
 2025/texmf-dist/fonts/type1/public/cm-super/sfti0600.pfb></usr/local/texlive/20
 25/texmf-dist/fonts/type1/public/cm-super/sfti1095.pfb></usr/local/texlive/2025
 /texmf-dist/fonts/type1/public/cm-super/sftt0800.pfb>
-Output written on output/media/pdf/presentation.pdf (35 pages, 307754 bytes).
+Output written on output/media/pdf/presentation.pdf (35 pages, 307741 bytes).
 PDF statistics:
  361 PDF objects out of 1000 (max. 8388607)
  275 compressed objects within 3 object streams

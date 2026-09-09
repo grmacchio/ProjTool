@@ -438,12 +438,12 @@
         \phantomsection
         \printbibliography[title={References}]
     }
-    \newcommand{\genREF}[2]{
-        \ifstrequal{##1}{cite}{
-            \cite{##2}
-        }{
-            \hyperref[##1:##2]{##2}
-        }
+    \newcommand{\genREF}[2]{%
+        \ifstrequal{##1}{cite}{%
+            \cite{##2}%
+        }{%
+            \hyperref[##1:##2]{##2}%
+        }%
     }
 }
 
@@ -565,6 +565,8 @@
     \setlength{\templateFigureBeforeSpace}{-\intextsep}
     \addtolength{\templateFigureBeforeSpace}{1pt}
     \BeforeBeginEnvironment{figure}{
+        \par
+        \addvspace{\templateSectionBeforeSpace}
         \vspace{\templateFigureBeforeSpace}}
     \setlength{\templateCaptionSpace}{\baselineskip}
     \addtolength{\templateCaptionSpace}{2pt}
@@ -776,6 +778,8 @@
     \setlength{\templatePreprintFigureBeforeSpace}{-\intextsep}
     \addtolength{\templatePreprintFigureBeforeSpace}{1pt}
     \BeforeBeginEnvironment{figure}{
+        \par
+        \addvspace{\templatePreprintSectionBeforeSpace}
         \vspace{\templatePreprintFigureBeforeSpace}}
     \setlength{\templatePreprintCaptionSpace}{\baselineskip}
     \addtolength{\templatePreprintCaptionSpace}{2pt}
@@ -1069,11 +1073,12 @@
             \label{fig:#1}
         \end{figure}
     }
-    \renewcommand{\genREF}[2]{
-        \ifstrequal{#1}{cite}{\unskip\templatePresentationCite{#2}
-        }{
-            \hyperref[#1:#2]{#2}
-        }
+    \renewcommand{\genREF}[2]{%
+        \ifstrequal{#1}{cite}{%
+            \unskip\templatePresentationCite{#2}%
+        }{%
+            \hyperref[#1:#2]{#2}%
+        }%
     }
     \newcommand{\bo}[2]{
         \iftoggle{allowAnimations}{
@@ -1164,6 +1169,8 @@
     \setlength{\templateNoteFigureBeforeSpace}{-\intextsep}
     \addtolength{\templateNoteFigureBeforeSpace}{1pt}
     \BeforeBeginEnvironment{figure}{
+        \par
+        \addvspace{\templateNoteSectionBeforeSpace}
         \vspace{\templateNoteFigureBeforeSpace}}
     \setlength{\templateNoteCaptionSpace}{\baselineskip}
     \addtolength{\templateNoteCaptionSpace}{2pt}

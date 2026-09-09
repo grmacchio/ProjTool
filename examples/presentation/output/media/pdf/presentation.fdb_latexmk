@@ -1,17 +1,17 @@
 # Fdb version 4
-["biber output/media/pdf/presentation"] 1788715932.17614 "output/media/pdf/presentation.bcf" "output/media/pdf/presentation.bbl" "output/media/pdf/presentation" 1788715938.11876 0
+["biber output/media/pdf/presentation"] 1788965620.8246 "output/media/pdf/presentation.bcf" "output/media/pdf/presentation.bbl" "output/media/pdf/presentation" 1788965626.97649 0
   "./references/1970author/1970author.bib" 1788710447.59581 169 1b275581133b34f564c0d5ffdfe94855 ""
   "./references/2002author/2002author.bib" 1788710447.59719 156 26852dca8f2f6f8f2f34e5620535ce5f ""
   "./references/2013author/2013author.bib" 1788710447.59849 137 74c8d25c2dd2838b6973c6e27a810adf ""
   "./references/2018author/2018author.bib" 1788710447.59957 152 d25e39a8f089804f7ae98cef6def0b8e ""
-  "output/media/pdf/presentation.bcf" 1788715937.95031 109581 dd784c53efdaa107711959dd725af3d1 "pdflatex"
+  "output/media/pdf/presentation.bcf" 1788965626.80724 109957 20307c030a15c77392fc276922cce8f8 "pdflatex"
   (generated)
   "output/media/pdf/presentation.bbl"
   "output/media/pdf/presentation.blg"
   (rewritten before read)
-["pdflatex"] 1788715935.75321 "/Users/gregorymacchio/Documents/Mirror/laptop/global/writing/software/ProjTool/examples/presentation/presentation.tex" "output/media/pdf/presentation.pdf" "presentation" 1788715938.11904 0
+["pdflatex"] 1788965624.64066 "/Users/gregorymacchio/Documents/Mirror/laptop/global/writing/software/ProjTool/examples/presentation/presentation.tex" "output/media/pdf/presentation.pdf" "presentation" 1788965626.97677 0
   "/Users/gregorymacchio/Documents/Mirror/laptop/global/writing/software/ProjTool/examples/presentation/presentation.tex" 1788714198.65319 2791 45cac28d22fb0d1f65bae80320d696a8 ""
-  "/Users/gregorymacchio/Documents/Mirror/laptop/global/writing/software/ProjTool/template.cls" 1788715921.76783 48570 6f7f4a5b9677efb31ef9e81ed6f043d9 ""
+  "/Users/gregorymacchio/Documents/Mirror/laptop/global/writing/software/ProjTool/template.cls" 1788964936.4856 48790 cc13ddab629bad10d9605bcae134e912 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1136849721 2971 def0b6c1f0b107b3b936def894055589 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/jknappen/ec/ecbx0800.tfm" 1136768653 3584 269b66e921ba58750c12f7f1c8ea3ebd ""
@@ -265,14 +265,14 @@
   "/usr/local/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1769657775 5467155 19efa205003f9ecad95fbbaa6ff24da1 ""
   "/usr/local/texlive/2025/texmf-var/web2c/pdftex/pdflatex.fmt" 1741450574 3345740 46b66fdb0378f7bf5921b5eabf1762b8 ""
   "/usr/local/texlive/2025/texmf.cnf" 1741450484 577 418a7058ec8e006d8704f60ecd22c938 ""
-  "output/media/pdf/presentation.aux" 1788715937.94827 6583 87e2a4edd845ce51fcff7a8ad5d3041c "pdflatex"
-  "output/media/pdf/presentation.bbl" 1788715933.4242 4911 fcd8f4323394128a8bf7503f75f26015 "biber output/media/pdf/presentation"
-  "output/media/pdf/presentation.nav" 1788715937.95108 2568 dfdd84a1d7646bdeae529e4c73f7cdcf "pdflatex"
-  "output/media/pdf/presentation.out" 1788715937.94947 539 a159bdead422ccec8c0e6c535421291d "pdflatex"
-  "output/media/pdf/presentation.projtool.cfg" 1788715929.8192 86 4a47181a0175f493ce68b06ba1c0c637 ""
-  "output/media/pdf/presentation.run.xml" 1788715937.95099 2367 23d506ff02d2b6624c31d197a5f63c3b "pdflatex"
-  "output/media/pdf/presentation.toc" 1788715937.95116 170 a3c141528a3d08e5b869b0b70d90cbbc "pdflatex"
-  "output/results/julia/exp.png" 1788714207.19496 15057 a100dcd019ce3a8cd83a854c6b405beb ""
+  "output/media/pdf/presentation.aux" 1788965626.80522 6583 87e2a4edd845ce51fcff7a8ad5d3041c "pdflatex"
+  "output/media/pdf/presentation.bbl" 1788965622.28589 4911 fcd8f4323394128a8bf7503f75f26015 "biber output/media/pdf/presentation"
+  "output/media/pdf/presentation.nav" 1788965626.80792 2568 dfdd84a1d7646bdeae529e4c73f7cdcf "pdflatex"
+  "output/media/pdf/presentation.out" 1788965626.80637 539 a159bdead422ccec8c0e6c535421291d "pdflatex"
+  "output/media/pdf/presentation.projtool.cfg" 1788965618.28415 266 36ee3cd8447eb545b131128a6744d4dc ""
+  "output/media/pdf/presentation.run.xml" 1788965626.80785 2559 ba48ba0c156d1ea7ec9263c52af8d958 "pdflatex"
+  "output/media/pdf/presentation.toc" 1788965626.80794 170 a3c141528a3d08e5b869b0b70d90cbbc "pdflatex"
+  "output/results/julia/exp.png" 1788965616.8893 15057 a100dcd019ce3a8cd83a854c6b405beb ""
   "presentation.tex" 1788714198.65319 2791 45cac28d22fb0d1f65bae80320d696a8 ""
   (generated)
   "output/media/pdf/presentation.aux"

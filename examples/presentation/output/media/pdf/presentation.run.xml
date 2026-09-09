@@ -79,7 +79,10 @@
       <file>presentation.bcf</file>
     </requires>
     <requires type="editable">
-      <file>./references/*/*.bib</file>
+      <file>./references/1970author/1970author.bib</file>
+      <file>./references/2002author/2002author.bib</file>
+      <file>./references/2013author/2013author.bib</file>
+      <file>./references/2018author/2018author.bib</file>
     </requires>
   </external>
 </requests>
