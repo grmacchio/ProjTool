@@ -181,6 +181,7 @@
     \newcommand{\R}{\mathbb{R}}
     \newcommand{\C}{\mathbb{C}}
     \newcommand{\Q}{\mathbb{Q}}
+    \newcommand{\N}{\mathbb{N}}
     \newcommand{\norm}[1]{\left\| ##1 \right\|}
     \renewcommand{\exp}[1]{\mathrm{exp}\left( ##1 \right)}
     \newcommand{\Log}{\mathrm{Log} \:}
