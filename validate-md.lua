@@ -134,6 +134,7 @@ local function slug(content)
 end
 
 local reference_prefixes = {
+    eq = "equation",
     thm = "theorem",
     def = "definition",
     fig = "figure",
@@ -196,6 +197,87 @@ end
 
 local function anchor(identifier)
     return pandoc.RawBlock("html", '<a id="' .. identifier .. '"></a>')
+end
+
+local function generated_math_blocks(math)
+    local blocks = {}
+    math = math:gsub("\\label%s*(%b{})", function(argument)
+        local title = argument:sub(2, -2):match("^projtool%-eq:(.*)$")
+        if not title then
+            return "\\label" .. argument
+        end
+        append(blocks, anchor("equation-" .. slug({pandoc.Str(title)})))
+        return ""
+    end)
+    local lines = {}
+    for line in math:gmatch("[^\r\n]+") do
+        if line:match("%S") then
+            append(lines, line)
+        end
+    end
+    math = table.concat(lines, "\n")
+    if #blocks > 0 or math:find("\\tag[%s*{]") then
+        local body = math:match("^\\begin{aligned}%s*(.-)%s*\\end{aligned}$")
+        if body then
+            math = "\\begin{align*}\n" .. body .. "\n\\end{align*}"
+        end
+    end
+    append(blocks, pandoc.RawBlock("markdown", "$$\n" .. math .. "\n$$"))
+    return blocks
+end
+
+local function render_labeled_math(block)
+    local blocks = {}
+    local content = {}
+    local found_label = false
+
+    local function is_whitespace(inline)
+        return inline.t == "Space" or inline.t == "SoftBreak" or
+            inline.t == "LineBreak"
+    end
+
+    local function flush_content()
+        while #content > 0 and is_whitespace(content[#content]) do
+            table.remove(content)
+        end
+        if #content > 0 then
+            append(blocks, pandoc.Para(content))
+        end
+        content = {}
+    end
+
+    for _, inline in ipairs(block.content) do
+        if inline.t == "Math" and inline.mathtype == "DisplayMath" and
+            inline.text:find("\\label%s*{projtool%-eq:") then
+            found_label = true
+            flush_content()
+            extend(blocks, generated_math_blocks(inline.text))
+        elseif #content > 0 or not is_whitespace(inline) then
+            append(content, inline)
+        end
+    end
+    if not found_label then
+        return nil
+    end
+    flush_content()
+    return blocks
+end
+
+local function render_generated_math(document)
+    document = document:walk({
+        Div = function(div)
+            if not div.classes:includes("projtoolmath") then
+                return nil
+            end
+            local math
+            div:walk({Math = function(value) math = value.text end})
+            if not math then
+                error("invalid generated math block", 0)
+            end
+            return generated_math_blocks(math)
+        end
+    })
+    return document:walk({Para = render_labeled_math, Plain = render_labeled_math})
 end
 
 local function strong_label(name, number)
@@ -683,5 +765,5 @@ function Pandoc(document)
         end
     end
 
-    return pandoc.Pandoc(final_output, document.meta)
+    return render_generated_math(pandoc.Pandoc(final_output, document.meta))
 end

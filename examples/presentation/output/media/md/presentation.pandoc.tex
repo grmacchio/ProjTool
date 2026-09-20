@@ -5,6 +5,8 @@
 \newcommand{\genDEF}[2]{\paragraph{\textbf{LaTeXToDefinition} #1}#2}
 \newcommand{\genFIG}[5]{\par\includegraphics[width=#3\textwidth]{#4}\par\paragraph{\textbf{LaTeXToFigure} #1}#5}
 \newcommand{\togglefalse}[1]{}\newcommand{\toggletrue}[1]{}\newcommand{\bo}[2]{\begin{#1}}\newcommand{\eo}[1]{\end{#1}}\newcommand{\bi}[2]{\begin{#1}}\newcommand{\ei}[1]{\end{#1}}\newcommand{\bitem}[1]{\item \textbf{#1}}\newcommand{\iitem}[1]{\item \textit{#1}}
+\newcommand{\genMath}[1]{\begin{projtoolmath}\begin{align*}#1\end{align*}\end{projtoolmath}}
+\newcommand{\genLabel}[1]{\tag{#1}\label{projtool-eq:#1}}
 \newcommand{\genREF}[2]{\href{latex-to-ref:#1}{#2}}
 \newcommand{\genBack}[1]{\subsection{\textbf{LaTeXToAppendixTOC}}}
 \documentclass[presentation]{template}
@@ -39,9 +41,9 @@
                     <Theorem Statement 1>
                 }
                 \item \textbf{ProjToolEmptyItem} \genFIG{<Figure Title 1>}{H}{0.40}
-                    {./output/results/julia/exp.png}{
-                        <Figure Caption 1>
-                    }
+                {./output/results/julia/exp.png}{
+                    <Figure Caption 1>
+                }
             \eo{itemize}
 
         }
@@ -49,34 +51,67 @@
         \genSubPart{<Frame Title 2>}{
 
             \bo{itemize}{0.25cm}
-                \iitem{<Frame Content 2>}
+                \iitem{<Frame Content 2a>}
+                \genMath{
+                    f(x) = x^2
+                }
+                <Frame Content 2b>
+                \genMath{
+                    f(x) = x^3 \genLabel{<Equation Title 2>}
+                }
+                <Frame Content 2c>
+            \eo{itemize}
+
+        }
+
+        \genSubPart{<Frame Title 3>}{
+
+            \bo{itemize}{0.25cm}
+                \iitem{<Frame Content 3>}
                 \item Test Citations: <Text>\genREF{cite}{1970author}
                 \item Test Citations: <Text>\genREF{cite}{1970author,
                 2002author, 2013author, 2018author}
             \eo{itemize}
 
         }
+
     }
 
     \genPart{<Section Title 2>}{
 
-        \genSubPart{<Frame Title 3>}{
+        \genSubPart{<Frame Title 4>}{
 
             \bo{itemize}{0.25cm}
-                \bitem{<Frame Content 3>}
+                \bitem{<Frame Content 4>}
                 \bi{itemize}{0.15cm}
-                    \item{<Nested Frame Content 3>}
+                    \item{<Nested Frame Content 4>}
                 \ei{itemize}
-                \item \textbf{ProjToolEmptyItem} \genDEF{<Definition Title 3>}{
-                    <Definition Statement 3>
+                \item \textbf{ProjToolEmptyItem} \genDEF{<Definition Title 4>}{
+                    <Definition Statement 4>
                 }
-                \item \textbf{ProjToolEmptyItem} \genTHM{<Theorem Title 3>}{
-                    <Theorem Statement 3>
+                \item \textbf{ProjToolEmptyItem} \genTHM{<Theorem Title 4>}{
+                    <Theorem Statement 4>
                 }
-                \item \textbf{ProjToolEmptyItem} \genFIG{<Figure Title 3>}{H}{0.40}
+                \item \textbf{ProjToolEmptyItem} \genFIG{<Figure Title 4>}{H}{0.40}
                 {./output/results/julia/exp.png}{
-                    <Figure Caption 3>
+                    <Figure Caption 4>
                 }
+            \eo{itemize}
+
+        }
+
+        \genSubPart{<Frame Title 5>}{
+
+            \bo{itemize}{0.25cm}
+                \iitem{<Frame Content 5a>}
+                \genMath{
+                    f(x) = x^2
+                }
+                <Frame Content 5b>
+                \genMath{
+                    f(x) = x^3 \genLabel{<Equation Title 5>}
+                }
+                <Frame Content 5c>
             \eo{itemize}
 
         }
@@ -96,14 +131,27 @@
     \genBack{./references}
 
     \genPart{<Appendix Section Title 1>}{
+
         \genSubPart{<Appendix Frame Title 1>}{
             \bo{itemize}{0.25cm}
                 \item {<Appendix Frame Content 1>}
                 \item \genREF{thm}{<Theorem Title 1>}
                 \item \genREF{def}{<Definition Title 1>}
                 \item \genREF{fig}{<Figure Title 1>}
+                \item \genREF{eq}{<Equation Title 2>}
             \eo{itemize}
         }
+
+        \genSubPart{<Appendix Frame Title 1>}{
+            \bo{itemize}{0.25cm}
+                \item {<Appendix Frame Content 2>}
+                \item \genREF{thm}{<Theorem Title 4>}
+                \item \genREF{def}{<Definition Title 4>}
+                \item \genREF{fig}{<Figure Title 4>}
+                \item \genREF{eq}{<Equation Title 5>}
+            \eo{itemize}
+        }
+
     }
 
 \end{document}

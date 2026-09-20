@@ -5,6 +5,8 @@
 \newcommand{\genDEF}[4]{\paragraph{\textbf{LaTeXToDefinition} \textbf{#2} \textbf{#3} #1}#4}
 \newcommand{\genFIG}[7]{\par\includegraphics[width=#5\textwidth]{#6}\par\paragraph{\textbf{LaTeXToFigure} \textbf{#2} \textbf{#3} #1}#7}
 
+\newcommand{\genMath}[1]{\begin{projtoolmath}\begin{align*}#1\end{align*}\end{projtoolmath}}
+\newcommand{\genLabel}[1]{\tag{#1}\label{projtool-eq:#1}}
 \newcommand{\genREF}[2]{\href{latex-to-ref:#1}{#2}}
 \newcommand{\genBack}[1]{\subsection{\textbf{LaTeXToReferences}}}
 \documentclass[dissertation]{template}
@@ -33,7 +35,15 @@
 
         \genSubPart{<Section Title 1>}{inh}{inh}{
 
-            <Section Content 1>
+            <Section Content 1a>
+            \genMath{
+                f(x) = x^2
+            }
+            <Section Content 1b>
+            \genMath{
+                f(x) = x^3 \genLabel{<Equation Title 1>}
+            }
+            <Section Content 1c>
 
             \genTHM{<Theorem Title 1>}{inh}{inh}{
                 <Theorem Statement 1>
@@ -53,6 +63,7 @@
             \noindent Test Hyper-References:
             \genREF{thm}{<Theorem Title 1>}
             \genREF{def}{<Definition Title 1>}
+            \genREF{eq}{<Equation Title 1>}
             \genREF{fig}{<Figure Title 1>} \\
 
             \noindent Test Citations:
@@ -65,7 +76,15 @@
 
         \genSubPart{<Section Title 2>}{inh}{inh}{
 
-            <Chapter Content 1>
+            <Section Content 2a>
+            \genMath{
+                f(x) = x^2
+            }
+            <Section Content 2b>
+            \genMath{
+                f(x) = x^3 \genLabel{<Equation Title 2>}
+            }
+            <Section Content 2c>
 
             \genTHM{<Theorem Title 2>}{nonum}{notoc}{
                 <Theorem Statement 2>
@@ -85,6 +104,7 @@
             \noindent Test Hyper-References:
             \genREF{thm}{<Theorem Title 2>}
             \genREF{def}{<Definition Title 2>}
+            \genREF{eq}{<Equation Title 2>}
             \genREF{fig}{<Figure Title 2>} \\
 
             \noindent Test Citations:

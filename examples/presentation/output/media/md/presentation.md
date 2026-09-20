@@ -42,7 +42,30 @@
 
 ### \<Frame Title 2\>
 
-- *\<Frame Content 2\>*
+- *\<Frame Content 2a\>*
+
+  $$
+  \begin{aligned}
+                      f(x) = x^2
+  \end{aligned}
+  $$
+
+  \<Frame Content 2b\>
+
+  <a id="equation-equation-title-2"></a>
+  $$
+  \begin{align*}
+  f(x) = x^3 \tag{<Equation Title 2>}
+  \end{align*}
+  $$
+
+  \<Frame Content 2c\>
+
+<a id="section-frame-title-3"></a>
+
+### \<Frame Title 3\>
+
+- *\<Frame Content 3\>*
 
 - Test Citations: \<Text\>\[1\]
 
@@ -52,25 +75,48 @@
 
 ## \<Section Title 2\>
 
-<a id="section-frame-title-3"></a>
+<a id="section-frame-title-4"></a>
 
-### \<Frame Title 3\>
+### \<Frame Title 4\>
 
-- **\<Frame Content 3\>**
+- **\<Frame Content 4\>**
 
-  - \<Nested Frame Content 3\>
+  - \<Nested Frame Content 4\>
 
-<a id="definition-definition-title-3"></a>
+<a id="definition-definition-title-4"></a>
 
-**Definition** (\<Definition Title 3\>)**.** \<Definition Statement 3\>
+**Definition** (\<Definition Title 4\>)**.** \<Definition Statement 4\>
 
-<a id="theorem-theorem-title-3"></a>
+<a id="theorem-theorem-title-4"></a>
 
-**Theorem** (\<Theorem Title 3\>)**.** \<Theorem Statement 3\>
+**Theorem** (\<Theorem Title 4\>)**.** \<Theorem Statement 4\>
 
 <p align="center"><img src="../../results/julia/exp.png" alt="image" width="40%" style="image-rendering: pixelated; image-rendering: crisp-edges;"></p>
-<a id="figure-figure-title-3"></a>
-<p align="center"><strong>Figure 2</strong> (&lt;Figure Title 3&gt;)<strong>.</strong> &lt;Figure Caption 3&gt;</p>
+<a id="figure-figure-title-4"></a>
+<p align="center"><strong>Figure 2</strong> (&lt;Figure Title 4&gt;)<strong>.</strong> &lt;Figure Caption 4&gt;</p>
+<a id="section-frame-title-5"></a>
+
+### \<Frame Title 5\>
+
+- *\<Frame Content 5a\>*
+
+  $$
+  \begin{aligned}
+                      f(x) = x^2
+  \end{aligned}
+  $$
+
+  \<Frame Content 5b\>
+
+  <a id="equation-equation-title-5"></a>
+  $$
+  \begin{align*}
+  f(x) = x^3 \tag{<Equation Title 5>}
+  \end{align*}
+  $$
+
+  \<Frame Content 5c\>
+
 <a id="section-frame-title-4"></a>
 
 ### \<Frame Title 4\>
@@ -102,6 +148,22 @@
 - [\<Definition Title 1\>](#definition-definition-title-1)
 
 - [\<Figure Title 1\>](#figure-figure-title-1)
+
+- [\<Equation Title 2\>](#equation-equation-title-2)
+
+<a id="section-appendix-frame-title-1"></a>
+
+### \<Appendix Frame Title 1\>
+
+- \<Appendix Frame Content 2\>
+
+- [\<Theorem Title 4\>](#theorem-theorem-title-4)
+
+- [\<Definition Title 4\>](#definition-definition-title-4)
+
+- [\<Figure Title 4\>](#figure-figure-title-4)
+
+- [\<Equation Title 5\>](#equation-equation-title-5)
 
 <div id="refs" class="references csl-bib-body">
 

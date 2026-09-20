@@ -156,12 +156,26 @@
 
 % Define math-related package.
 \newcommand{\loadMathPackage}{
-    \RequirePackage{amsmath}
+    \RequirePackage{mathtools}
     \RequirePackage{amssymb}
     \RequirePackage{amsthm}
     \RequirePackage{cancel}
     \RequirePackage{mathdots}
     \allowdisplaybreaks
+    \NewDocumentCommand{\genMath}{+m}{
+        \begin{align*}
+            ##1
+        \end{align*}
+    }
+    \NewDocumentCommand{\genLabel}{m}{
+        \tag{##1}
+        \label{eq:##1}
+        \ifdefstring{\templateType}{presentation}{}{
+            \ifmeasuring@\else
+                \hypertarget{eq:##1}{}
+            \fi
+        }
+    }
     \newcommand{\Arg}{\mathrm{Arg} \:}
     \newcommand{\ra}{\rightarrow}
     \newcommand{\la}{\leftarrow}
@@ -443,7 +457,11 @@
         \ifstrequal{##1}{cite}{%
             \cite{##2}%
         }{%
-            \hyperref[##1:##2]{##2}%
+            \ifstrequal{##1}{eq}{%
+                \hyperlink{eq:##2}{##2}%
+            }{%
+                \hyperref[##1:##2]{##2}%
+            }%
         }%
     }
 }
@@ -923,6 +941,19 @@
     \LoadClass{beamer}
     \RequirePackage{appendixnumberbeamer}
     \loadPackagesSharedByAll
+    \RenewDocumentCommand{\genMath}{+m}{
+        \begingroup
+            \patchcmd{\x@calc@shift@rc}
+                {\advance\dimen@\tagwidth@}
+                {\advance\dimen@\mintagsep\relax}
+                {}
+                {\ClassError{template}
+                    {Could not center presentation equations}{}}
+            \begin{align*}
+                #1
+            \end{align*}
+        \endgroup
+    }
     \loadReferencesPackage
     \toggletrue{TemplateTypeLoaded}
     \usetheme{Madrid}
@@ -1078,7 +1109,11 @@
         \ifstrequal{#1}{cite}{%
             \unskip\templatePresentationCite{#2}%
         }{%
-            \hyperref[#1:#2]{#2}%
+            \ifstrequal{#1}{eq}{%
+                \hyperlink{eq:#2}{#2}%
+            }{%
+                \hyperref[#1:#2]{#2}%
+            }%
         }%
     }
     \newcommand{\bo}[2]{

@@ -56,7 +56,24 @@
 - [1.1.2 Definition: \<Definition Title 1\>](#definition-definition-title-1)
 - [1.1.3 Figure: \<Figure Title 1\>](#figure-figure-title-1)
 
-\<Section Content 1\>
+\<Section Content 1a\>
+
+$$
+\begin{aligned}
+                f(x) = x^2
+\end{aligned}
+$$
+
+\<Section Content 1b\>
+
+<a id="equation-equation-title-1"></a>
+$$
+\begin{align*}
+f(x) = x^3 \tag{<Equation Title 1>}
+\end{align*}
+$$
+
+\<Section Content 1c\>
 
 <a id="theorem-theorem-title-1"></a>
 
@@ -72,7 +89,7 @@
 <a id="figure-figure-title-1"></a>
 <p align="center"><strong>Figure 1.1.3</strong> (&lt;Figure Title 1&gt;)<strong>.</strong> &lt;Figure Caption 1&gt;</p>
 
-Test Hyper-References: [\<Theorem Title 1\>](#theorem-theorem-title-1) [\<Definition Title 1\>](#definition-definition-title-1) [\<Figure Title 1\>](#figure-figure-title-1)  
+Test Hyper-References: [\<Theorem Title 1\>](#theorem-theorem-title-1) [\<Definition Title 1\>](#definition-definition-title-1) [\<Equation Title 1\>](#equation-equation-title-1) [\<Figure Title 1\>](#figure-figure-title-1)  
 Test Citations: \[[1](#ref-1970author), [2](#ref-2002author), [3](#ref-2013author), [4](#ref-2018author)\]  
 Test Code Output: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
 
@@ -80,7 +97,24 @@ Test Code Output: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
 
 ## 1.2 \<Section Title 2\>
 
-\<Chapter Content 1\>
+\<Section Content 2a\>
+
+$$
+\begin{aligned}
+                f(x) = x^2
+\end{aligned}
+$$
+
+\<Section Content 2b\>
+
+<a id="equation-equation-title-2"></a>
+$$
+\begin{align*}
+f(x) = x^3 \tag{<Equation Title 2>}
+\end{align*}
+$$
+
+\<Section Content 2c\>
 
 <a id="theorem-theorem-title-2"></a>
 
@@ -96,7 +130,7 @@ Test Code Output: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
 <a id="figure-figure-title-2"></a>
 <p align="center"><strong>Figure</strong> (&lt;Figure Title 2&gt;)<strong>.</strong> &lt;Figure Caption 2&gt;</p>
 
-Test Hyper-References: [\<Theorem Title 2\>](#theorem-theorem-title-2) [\<Definition Title 2\>](#definition-definition-title-2) [\<Figure Title 2\>](#figure-figure-title-2)  
+Test Hyper-References: [\<Theorem Title 2\>](#theorem-theorem-title-2) [\<Definition Title 2\>](#definition-definition-title-2) [\<Equation Title 2\>](#equation-equation-title-2) [\<Figure Title 2\>](#figure-figure-title-2)  
 Test Citations: \[[1](#ref-1970author), [2](#ref-2002author), [3](#ref-2013author), [4](#ref-2018author)\]  
 Test Code Output: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
 

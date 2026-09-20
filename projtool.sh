@@ -498,6 +498,8 @@ write_markdown_build_file() {
             "$definition_command" \
             "$figure_command" \
             "$presentation_commands" \
+            '\newcommand{\genMath}[1]{\begin{projtoolmath}\begin{align*}#1\end{align*}\end{projtoolmath}}' \
+            '\newcommand{\genLabel}[1]{\tag{#1}\label{projtool-eq:#1}}' \
             '\newcommand{\genREF}[2]{\href{latex-to-ref:#1}{#2}}' \
             "$back_command"
         if [[ "$TEMPLATE_TYPE" == "presentation" ]]; then
