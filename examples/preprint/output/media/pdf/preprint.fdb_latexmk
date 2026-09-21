@@ -1,17 +1,17 @@
 # Fdb version 4
-["biber output/media/pdf/preprint"] 1788965589.83425 "output/media/pdf/preprint.bcf" "output/media/pdf/preprint.bbl" "output/media/pdf/preprint" 1789925736.39435 0
+["biber output/media/pdf/preprint"] 1788965589.83425 "output/media/pdf/preprint.bcf" "output/media/pdf/preprint.bbl" "output/media/pdf/preprint" 1790014400.05615 0
   "./references/1970author/1970author.bib" 1788710439.33594 169 1b275581133b34f564c0d5ffdfe94855 ""
   "./references/2002author/2002author.bib" 1788710439.33756 156 26852dca8f2f6f8f2f34e5620535ce5f ""
   "./references/2013author/2013author.bib" 1788710439.33902 137 74c8d25c2dd2838b6973c6e27a810adf ""
   "./references/2018author/2018author.bib" 1788710439.34 152 d25e39a8f089804f7ae98cef6def0b8e ""
-  "output/media/pdf/preprint.bcf" 1789925736.23622 109305 0dfab3b614400a52e019aea66a65ac5c "pdflatex"
+  "output/media/pdf/preprint.bcf" 1790014399.89581 109305 0dfab3b614400a52e019aea66a65ac5c "pdflatex"
   (generated)
   "output/media/pdf/preprint.bbl"
   "output/media/pdf/preprint.blg"
   (rewritten before read)
-["pdflatex"] 1789925734.96705 "/Users/gregorymacchio/Documents/Mirror/laptop/global/writing/software/ProjTool/examples/preprint/preprint.tex" "output/media/pdf/preprint.pdf" "preprint" 1789925736.39466 0
-  "/Users/gregorymacchio/Documents/Mirror/laptop/global/writing/software/ProjTool/examples/preprint/preprint.tex" 1789759573.9097 3637 8c15f76ef4c08bd9ad552efe1467c136 ""
-  "/Users/gregorymacchio/Documents/Mirror/laptop/global/writing/software/ProjTool/template.cls" 1789925442.39208 49796 a0133e33438d9b5ecf5921edb4774674 ""
+["pdflatex"] 1790014398.56878 "/Users/gregorymacchio/Documents/Mirror/laptop/global/writing/software/ProjTool/examples/preprint/preprint.tex" "output/media/pdf/preprint.pdf" "preprint" 1790014400.05642 0
+  "/Users/gregorymacchio/Documents/Mirror/laptop/global/writing/software/ProjTool/examples/preprint/preprint.tex" 1790014360.53881 3646 9ab7c301cafdb723ad41a26476ced985 ""
+  "/Users/gregorymacchio/Documents/Mirror/laptop/global/writing/software/ProjTool/template.cls" 1790014229.45554 50176 c0c5e55157f750c7baa146aa70f17143 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1136849721 2971 def0b6c1f0b107b3b936def894055589 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/jknappen/ec/ecbx0900.tfm" 1136768653 3584 1a7de6c99457381c64abc1a7c545505f ""
@@ -31,6 +31,7 @@
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/jknappen/ec/ecti1095.tfm" 1136768653 3072 b73d2778cc3af44970de4de5e032d7f6 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/jknappen/ec/ecti1200.tfm" 1136768653 3072 8b5a64dc91775463bc95e2d818524028 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/jknappen/ec/ectt1095.tfm" 1136768653 1536 a988bfe554c1f79514bd46d13c3c64ce ""
+  "/usr/local/texlive/2025/texmf-dist/fonts/tfm/jknappen/ec/ectt1440.tfm" 1136768653 1536 c11bc34b66290f7f0e17b810bad04543 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1246382020 1004 54797486969f23fa377b128694d548df ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1246382020 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex9.tfm" 1246382020 996 a18840b13b499c08ac2de96a99eda4bc ""
@@ -73,6 +74,7 @@
   "/usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfti1095.pfb" 1215737283 196446 8fbbe4b97b83e5182def6d29a44e57fb ""
   "/usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfti1200.pfb" 1215737283 198221 ca5aa71411090ef358a6cc78b7458365 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sftt1095.pfb" 1215737283 169670 48d12e69c9a3b23c81f6d703ccbd4554 ""
+  "/usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sftt1440.pfb" 1215737283 166192 d74933432e33dffe92198fe51b7b0dcb ""
   "/usr/local/texlive/2025/texmf-dist/tex/context/base/mkii/supp-pdf.mkii" 1461363279 71627 94eb9990bed73c364d7f53f960cc8c5b ""
   "/usr/local/texlive/2025/texmf-dist/tex/generic/atbegshi/atbegshi.sty" 1575674566 24708 5584a51a7101caf7e6bbf1fc27d8f7b1 ""
   "/usr/local/texlive/2025/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty" 1576625341 40635 c40361e206be584d448876bba8a64a3b ""
@@ -224,16 +226,16 @@
   "/usr/local/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1769657775 5467155 19efa205003f9ecad95fbbaa6ff24da1 ""
   "/usr/local/texlive/2025/texmf-var/web2c/pdftex/pdflatex.fmt" 1741450574 3345740 46b66fdb0378f7bf5921b5eabf1762b8 ""
   "/usr/local/texlive/2025/texmf.cnf" 1741450484 577 418a7058ec8e006d8704f60ecd22c938 ""
-  "output/media/pdf/preprint.aux" 1789925736.23468 5618 79c8281cc68abd344fbc57a6f3b31cb3 "pdflatex"
-  "output/media/pdf/preprint.bbl" 1788965591.10555 4911 fcd8f4323394128a8bf7503f75f26015 "biber output/media/pdf/preprint"
-  "output/media/pdf/preprint.out" 1789925736.2354 2452 110865a548f4b17e00e150d440dbe76e "pdflatex"
-  "output/media/pdf/preprint.projtool.cfg" 1789925734.87391 266 36ee3cd8447eb545b131128a6744d4dc ""
-  "output/media/pdf/preprint.run.xml" 1789925736.23677 2531 0baab1fe33f9ecc72e484e9a5df0c6ae "pdflatex"
-  "output/media/pdf/preprint.toc" 1789925736.23683 1583 9420a0393a9816a78d552e51b454b907 "pdflatex"
+  "output/media/pdf/preprint.aux" 1790014399.89397 5639 5a92fc690c1c4436070210a6d46b8050 "pdflatex"
+  "output/media/pdf/preprint.bbl" 1790014278.34617 4911 fcd8f4323394128a8bf7503f75f26015 "biber output/media/pdf/preprint"
+  "output/media/pdf/preprint.out" 1790014399.89492 2452 110865a548f4b17e00e150d440dbe76e "pdflatex"
+  "output/media/pdf/preprint.projtool.cfg" 1790014396.93659 266 36ee3cd8447eb545b131128a6744d4dc ""
+  "output/media/pdf/preprint.run.xml" 1790014399.89644 2531 0baab1fe33f9ecc72e484e9a5df0c6ae "pdflatex"
+  "output/media/pdf/preprint.toc" 1790014399.89649 1593 8304efbd5455b0653773ef1ebe4664ad "pdflatex"
   "output/results/julia/exp.png" 1789925733.32508 15057 a100dcd019ce3a8cd83a854c6b405beb ""
   "output/results/julia/natural_numbers.tex" 1789925733.10562 29 7f7901fcc2406d5dfddf9e24d9b37fa7 ""
   "output/results/python/quadratic.png" 1789925734.68132 21810 af9de2bdcfbde52fc01bc01e3bea903a ""
-  "preprint.tex" 1789759573.9097 3637 8c15f76ef4c08bd9ad552efe1467c136 ""
+  "preprint.tex" 1790014360.53881 3646 9ab7c301cafdb723ad41a26476ced985 ""
   (generated)
   "output/media/pdf/preprint.aux"
   "output/media/pdf/preprint.bcf"

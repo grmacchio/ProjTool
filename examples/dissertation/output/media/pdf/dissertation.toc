@@ -14,7 +14,7 @@
 \etoc@startlocaltoc {6}
 \contentsline {section}{\numberline {2.2}<Section Title 4>}{3}{section.2.2}%
 \etoc@startlocaltoc {7}
-\contentsline {chapter}{\numberline {3}<Chapter Title 3>}{4}{chapter.3}%
+\contentsline {chapter}{\numberline {3}\texttt {<Chapter Title 3>}}{4}{chapter.3}%
 \etoc@startlocaltoc {8}
 \contentsline {section}{\numberline {3.1}Theorem: <Theorem Title 3>}{4}{section*.15}%
 \contentsline {section}{\numberline {3.2}Definition: <Definition Title 3>}{4}{section*.16}%

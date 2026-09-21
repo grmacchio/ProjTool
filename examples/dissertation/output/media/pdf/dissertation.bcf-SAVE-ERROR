@@ -2375,3 +2375,11 @@
     <bcf:datasource type="file" datatype="bibtex" glob="false">./references/2018author/2018author.bib</bcf:datasource>
   </bcf:bibdata>
   <bcf:section number="0">
+    <bcf:citekey order="1" intorder="1">1970author</bcf:citekey>
+    <bcf:citekey order="1" intorder="2">2002author</bcf:citekey>
+    <bcf:citekey order="1" intorder="3">2013author</bcf:citekey>
+    <bcf:citekey order="1" intorder="4">2018author</bcf:citekey>
+    <bcf:citekey order="2" intorder="1">1970author</bcf:citekey>
+    <bcf:citekey order="2" intorder="2">2002author</bcf:citekey>
+    <bcf:citekey order="2" intorder="3">2013author</bcf:citekey>
+    <bcf:citekey order="2" intorder="4">2018author</bcf:citekey>

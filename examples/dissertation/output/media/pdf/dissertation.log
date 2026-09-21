@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.8)  18 SEP 2026 15:20
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.8)  21 SEP 2026 14:13
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1166,12 +1166,15 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 19.
 (/usr/local/texlive/2025/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
+LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <10.95> not available
+(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 19.
+
 
 [3
 
 ]
 Chapter 1.
-<./output/results/julia/exp.png, id=113, 602.25pt x 401.5pt>
+<./output/results/julia/exp.png, id=114, 602.25pt x 401.5pt>
 File: ./output/results/julia/exp.png Graphic file (type png)
 <use ./output/results/julia/exp.png>
 Package pdftex.def Info: ./output/results/julia/exp.png  used on input line 107
@@ -1193,7 +1196,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 107--107
 
 
  <./output/results/julia/exp.png>]
-<./output/results/python/quadratic.png, id=144, 409.7709pt x 312.2064pt>
+<./output/results/python/quadratic.png, id=145, 409.7709pt x 312.2064pt>
 File: ./output/results/python/quadratic.png Graphic file (type png)
 <use ./output/results/python/quadratic.png>
 Package pdftex.def Info: ./output/results/python/quadratic.png  used on input l
@@ -1219,6 +1222,8 @@ Chapter 2.
 
 ]
 Chapter 3.
+LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <20.74> not available
+(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 142.
 File: ./output/results/python/quadratic.png Graphic file (type png)
 <use ./output/results/python/quadratic.png>
 Package pdftex.def Info: ./output/results/python/quadratic.png  used on input l
@@ -1249,11 +1254,11 @@ Package logreq Info: Writing requests to 'dissertation.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 31700 strings out of 473190
- 596419 string characters out of 5715801
- 1401087 words of memory out of 5000000
- 54452 multiletter control sequences out of 15000+600000
- 570635 words of font info for 64 fonts, out of 8000000 for 9000
+ 31705 strings out of 473190
+ 596497 string characters out of 5715801
+ 1401177 words of memory out of 5000000
+ 54456 multiletter control sequences out of 15000+600000
+ 570950 words of font info for 65 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  121i,8n,123p,802b,1390s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb
@@ -1266,11 +1271,12 @@ l/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfcc1095.pfb></usr/local/
 texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb></usr/local/te
 xlive/2025/texmf-dist/fonts/type1/public/cm-super/sfsl1095.pfb></usr/local/texl
 ive/2025/texmf-dist/fonts/type1/public/cm-super/sfti1095.pfb></usr/local/texliv
-e/2025/texmf-dist/fonts/type1/public/cm-super/sftt1095.pfb>
-Output written on output/media/pdf/dissertation.pdf (10 pages, 217232 bytes).
+e/2025/texmf-dist/fonts/type1/public/cm-super/sftt1095.pfb></usr/local/texlive/
+2025/texmf-dist/fonts/type1/public/cm-super/sftt2074.pfb>
+Output written on output/media/pdf/dissertation.pdf (10 pages, 241072 bytes).
 PDF statistics:
- 278 PDF objects out of 1000 (max. 8388607)
- 238 compressed objects within 3 object streams
+ 283 PDF objects out of 1000 (max. 8388607)
+ 241 compressed objects within 3 object streams
  58 named destinations out of 1000 (max. 500000)
  143 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -18,7 +18,7 @@ This project includes a [PDF file](./note.pdf) and [Markdown file](./note.md). T
 
 - [1 \<Section Title 1\>](#chapter-section-title-1)
 - [2 \<Section Title 2\>](#chapter-section-title-2)
-- [3 \<Section Title 3\>](#chapter-section-title-3)
+- [3 `<Section Title 3>`](#chapter-section-title-3)
 - [Proofs](#proofs)
 - [References](#references)
 
@@ -144,7 +144,7 @@ Test Code Output: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
 
 <a id="chapter-section-title-3"></a>
 
-## 3 \<Section Title 3\>
+## 3 `<Section Title 3>`
 
 <a id="contents-chapter-section-title-3"></a>
 

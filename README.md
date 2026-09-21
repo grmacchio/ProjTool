@@ -73,6 +73,11 @@ license for the media, and exclusions for any third-party content.
 The content copied from the desired template is self explanatory and serves as
 a starting point for the project.
 
+In dissertation, note, and preprint documents, `\genPart` titles may include
+formatting such as `\texttt{<Chapter Title 3>}`. Its body may contain `\genTHM`,
+`\genDEF`, and `\genFIG` directly. Use `\genREF{part}{<Chapter Title 3>}` to link
+to that part; the reference title may also include the formatting.
+
 References use the SIAM Journal on Applied Dynamical Systems format and are
 listed chronologically. The supported BibTeX types are `@misc` for preprints,
 `@article` for papers, `@book` for books, and `@phdthesis` for theses. Keep each

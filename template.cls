@@ -5,6 +5,10 @@
 % Define logic-related package.
 \RequirePackage{etoolbox}
 
+\ExplSyntaxOn
+\cs_new_eq:NN \templateTitleText \text_purify:n
+\ExplSyntaxOff
+
 % Read the template class type.
 \ProvidesClass{template}
 \def\templateType{}
@@ -461,7 +465,11 @@
             \ifstrequal{##1}{eq}{%
                 \hyperlink{eq:##2}{##2}%
             }{%
-                \hyperref[##1:##2]{##2}%
+                \ifstrequal{##1}{part}{%
+                    \hyperref[part:\templateTitleText{##2}]{##2}%
+                }{%
+                    \hyperref[##1:##2]{##2}%
+                }%
             }%
         }%
     }
@@ -614,13 +622,13 @@
         \ifdefstring{\genPartNumMode}{num}{
             \ifdefstring{\genPartTocMode}{toc}{
                 \chapter{#1}
-                \label{part:#1}
+                \label{part:\templateTitleText{#1}}
             }{
                 \let\templateAddContentsLine\addcontentsline
                 \let\addcontentsline\@gobblethree
                 \chapter{#1}
                 \let\addcontentsline\templateAddContentsLine
-                \label{part:#1}
+                \label{part:\templateTitleText{#1}}
             }
         }{
             \ifdefstring{\genPartTocMode}{toc}{
@@ -824,13 +832,13 @@
         \ifdefstring{\genPartNumMode}{num}{
             \ifdefstring{\genPartTocMode}{toc}{
                 \section{#1}
-                \label{part:#1}
+                \label{part:\templateTitleText{#1}}
             }{
                 \let\templateAddContentsLine\addcontentsline
                 \let\addcontentsline\@gobblethree
                 \section{#1}
                 \let\addcontentsline\templateAddContentsLine
-                \label{part:#1}
+                \label{part:\templateTitleText{#1}}
             }
         }{
             \ifdefstring{\genPartTocMode}{toc}{
@@ -1231,13 +1239,13 @@
         \ifdefstring{\genPartNumMode}{num}{
             \ifdefstring{\genPartTocMode}{toc}{
                 \section{#1}
-                \label{part:#1}
+                \label{part:\templateTitleText{#1}}
             }{
                 \let\templateAddContentsLine\addcontentsline
                 \let\addcontentsline\@gobblethree
                 \section{#1}
                 \let\addcontentsline\templateAddContentsLine
-                \label{part:#1}
+                \label{part:\templateTitleText{#1}}
             }
         }{
             \ifdefstring{\genPartTocMode}{toc}{

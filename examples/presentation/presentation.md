@@ -13,7 +13,7 @@
 ## **Table of Contents**
 
 - [\<Section Title 1\>](#chapter-section-title-1)
-- [\<Section Title 2\>](#chapter-section-title-2)
+- [`<Section Title 2>`](#chapter-section-title-2)
 
 <a id="chapter-section-title-1"></a>
 
@@ -73,7 +73,7 @@
 
 <a id="chapter-section-title-2"></a>
 
-## \<Section Title 2\>
+## `<Section Title 2>`
 
 <a id="section-frame-title-4"></a>
 

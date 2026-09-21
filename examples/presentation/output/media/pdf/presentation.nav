@@ -21,7 +21,7 @@
 \headcommand {\beamer@framepages {15}{17}}
 \headcommand {\beamer@sectionpages {3}{17}}
 \headcommand {\beamer@subsectionpages {3}{17}}
-\headcommand {\sectionentry {2}{<Section Title 2>}{18}{<Section Title 2>}{0}}
+\headcommand {\sectionentry {2}{\texttt {<Section Title 2>}}{18}{\texttt {<Section Title 2>}}{0}}
 \headcommand {\slideentry {2}{0}{1}{18/18}{}{0}}
 \headcommand {\beamer@framepages {18}{18}}
 \headcommand {\slideentry {2}{0}{2}{19/19}{}{0}}

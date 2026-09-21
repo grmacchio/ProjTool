@@ -28,7 +28,7 @@
 - [2 \<Chapter Title 2\>](#chapter-chapter-title-2)
   - [2.1 \<Section Title 3\>](#section-section-title-3)
   - [2.2 \<Section Title 4\>](#section-section-title-4)
-- [3 \<Chapter Title 3\>](#chapter-chapter-title-3)
+- [3 `<Chapter Title 3>`](#chapter-chapter-title-3)
   - [3.1 Theorem: \<Theorem Title 3\>](#theorem-theorem-title-3)
   - [3.2 Definition: \<Definition Title 3\>](#definition-definition-title-3)
   - [3.3 Figure: \<Figure Title 3\>](#figure-figure-title-3)
@@ -157,7 +157,7 @@ Test Code Output: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
 
 <a id="chapter-chapter-title-3"></a>
 
-## 3 \<Chapter Title 3\>
+## 3 `<Chapter Title 3>`
 
 <a id="contents-chapter-chapter-title-3"></a>
 
