@@ -171,7 +171,6 @@
         "usetheme",
         "varepsilon",
         "xcolor",
-        "xlabel",
-        "ylabel"
+        "xlabel"
     ]
 }
