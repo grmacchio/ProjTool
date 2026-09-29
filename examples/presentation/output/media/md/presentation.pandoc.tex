@@ -5,7 +5,7 @@
 \newcommand{\genDEF}[2]{\paragraph{\textbf{LaTeXToDefinition} #1}#2}
 \newcommand{\genFIG}[5]{\par\includegraphics[width=#3\textwidth]{#4}\par\paragraph{\textbf{LaTeXToFigure} #1}#5}
 \newcommand{\togglefalse}[1]{}\newcommand{\toggletrue}[1]{}\newcommand{\bo}[2]{\begin{#1}}\newcommand{\eo}[1]{\end{#1}}\newcommand{\bi}[2]{\begin{#1}}\newcommand{\ei}[1]{\end{#1}}\newcommand{\bitem}[1]{\item \textbf{#1}}\newcommand{\iitem}[1]{\item \textit{#1}}
-\newcommand{\genMath}[1]{\begin{projtoolmath}\begin{align*}#1\end{align*}\end{projtoolmath}}
+\newcommand{\genMATH}[1]{\begin{projtoolmath}\begin{align*}#1\end{align*}\end{projtoolmath}}
 \newcommand{\genLabel}[1]{\tag{#1}\label{projtool-eq:#1}}
 \newcommand{\genREF}[2]{\href{latex-to-ref:#1}{#2}}
 \newcommand{\genBack}[1]{\subsection{\textbf{LaTeXToAppendixTOC}}}
@@ -52,11 +52,11 @@
 
             \bo{itemize}{0.25cm}
                 \iitem{<Frame Content 2a>}
-                \genMath{
+                \genMATH{
                     f(x) = x^2
                 }
                 <Frame Content 2b>
-                \genMath{
+                \genMATH{
                     f(x) = x^3 \genLabel{<Equation Title 2>}
                 }
                 <Frame Content 2c>
@@ -104,11 +104,11 @@
 
             \bo{itemize}{0.25cm}
                 \iitem{<Frame Content 5a>}
-                \genMath{
+                \genMATH{
                     f(x) = x^2
                 }
                 <Frame Content 5b>
-                \genMath{
+                \genMATH{
                     f(x) = x^3 \genLabel{<Equation Title 5>}
                 }
                 <Frame Content 5c>

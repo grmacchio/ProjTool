@@ -5,7 +5,7 @@
 \newcommand{\genDEF}[4]{\paragraph{\textbf{LaTeXToDefinition} \textbf{#2} \textbf{#3} #1}#4}
 \newcommand{\genFIG}[7]{\par\includegraphics[width=#5\textwidth]{#6}\par\paragraph{\textbf{LaTeXToFigure} \textbf{#2} \textbf{#3} #1}#7}
 
-\newcommand{\genMath}[1]{\begin{projtoolmath}\begin{align*}#1\end{align*}\end{projtoolmath}}
+\newcommand{\genMATH}[1]{\begin{projtoolmath}\begin{align*}#1\end{align*}\end{projtoolmath}}
 \newcommand{\genLabel}[1]{\tag{#1}\label{projtool-eq:#1}}
 \newcommand{\genREF}[2]{\href{latex-to-ref:#1}{#2}}
 \newcommand{\genBack}[1]{\subsection{\textbf{LaTeXToReferences}}}
@@ -36,11 +36,11 @@
         \genSubPart{<Subsection Title 1>}{inh}{inh}{
 
             <Subsection Content 1a>
-            \genMath{
+            \genMATH{
                 f(x) = x^2
             }
             <Subsection Content 1b>
-            \genMath{
+            \genMATH{
                 f(x) = x^3 \genLabel{<Equation Title 1>}
             }
             <Subsection Content 1c>
@@ -77,11 +77,11 @@
         \genSubPart{<Subsection Title 2>}{inh}{inh}{
 
             <Subsection Content 2a>
-            \genMath{
+            \genMATH{
                 f(x) = x^2
             }
             <Subsection Content 2b>
-            \genMath{
+            \genMATH{
                 f(x) = x^3 \genLabel{<Equation Title 2>}
             }
             <Subsection Content 2c>

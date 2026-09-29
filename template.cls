@@ -166,7 +166,7 @@
     \RequirePackage{cancel}
     \RequirePackage{mathdots}
     \allowdisplaybreaks
-    \NewDocumentCommand{\genMath}{+m}{
+    \NewDocumentCommand{\genMATH}{+m}{
         \begin{align*}
             ##1
         \end{align*}
@@ -950,7 +950,7 @@
     \LoadClass{beamer}
     \RequirePackage{appendixnumberbeamer}
     \loadPackagesSharedByAll
-    \RenewDocumentCommand{\genMath}{+m}{
+    \RenewDocumentCommand{\genMATH}{+m}{
         \begingroup
             \patchcmd{\x@calc@shift@rc}
                 {\advance\dimen@\tagwidth@}
