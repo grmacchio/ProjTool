@@ -34,9 +34,9 @@ Examples:
   projtool init presentation
 
 Prompts for the creator name, GitHub URL, and initial version.
-Copies the selected example into the current directory.
+Copies the selected example, including all output contents, into the current directory.
 Renames the main TeX file to match the current directory.
-Excludes output, TYPE.md, TYPE.pdf, README.md, and .DS_Store.
+Excludes TYPE.md, TYPE.pdf, README.md, and .DS_Store.
 Creates LICENSE.txt, initializes Git, creates the initial commit and version
 tag, and pushes the main branch and tag to GitHub.
 Existing paths are never overwritten.
@@ -682,7 +682,7 @@ main_init() {
     while IFS= read -r -d '' entry; do
         name="$(basename -- "$entry")"
         case "$name" in
-            .DS_Store|output|README.md|"$example_type.md"|"$example_type.pdf")
+            .DS_Store|README.md|"$example_type.md"|"$example_type.pdf")
                 continue
                 ;;
         esac
