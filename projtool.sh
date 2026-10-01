@@ -35,7 +35,7 @@ Examples:
 
 Prompts for the creator name, GitHub URL, and initial version.
 Copies the selected example, including all output contents, into the current directory.
-Renames the main TeX file to match the current directory.
+Renames the main TeX file and example-named media files to the project name.
 Excludes TYPE.md, TYPE.pdf, README.md, and .DS_Store.
 Creates LICENSE.txt, initializes Git, creates the initial commit and version
 tag, and pushes the main branch and tag to GitHub.
@@ -640,11 +640,13 @@ main_init() {
     local name
     local destination
     local line
+    local media_file
     local -a entries=()
     local projtool_command
     local settings_file
     local settings_temp
     local target_name
+    local project_stem
     local creator_name
     local github_url
     local version
@@ -663,6 +665,7 @@ main_init() {
     [[ -d "$source_dir" ]] || die "example not found: $example_type"
     target_dir="$(pwd)"
     target_name="$(basename -- "$target_dir")"
+    project_stem="${target_name%_template}"
     require_command git
     [[ ! -e "$target_dir/.git" ]] || die "working directory is already a Git repository"
 
@@ -692,7 +695,7 @@ main_init() {
     for entry in "${entries[@]}"; do
         name="$(basename -- "$entry")"
         if [[ "$name" == "$example_type.tex" ]]; then
-            name="${target_name%_template}.tex"
+            name="$project_stem.tex"
         fi
         destination="$target_dir/$name"
         if [[ -e "$destination" || -L "$destination" ]]; then
@@ -703,11 +706,24 @@ main_init() {
     for entry in "${entries[@]}"; do
         name="$(basename -- "$entry")"
         if [[ "$name" == "$example_type.tex" ]]; then
-            name="${target_name%_template}.tex"
+            name="$project_stem.tex"
         fi
         destination="$target_dir/$name"
         cp -R -p -- "$entry" "$destination"
     done
+
+    if [[ "$project_stem" != "$example_type" && -d "$source_dir/output/media" ]]; then
+        while IFS= read -r -d '' media_file; do
+            name="$(basename -- "$media_file")"
+            entry="$target_dir/${media_file#"$source_dir"/}"
+            destination="${entry%/*}/$project_stem${name#"$example_type"}"
+            if [[ -e "$destination" || -L "$destination" ]]; then
+                die "destination already exists: $destination"
+            fi
+            mv -- "$entry" "$destination"
+        done < <(find "$source_dir/output/media" \( -type f -o -type l \) \
+            -name "$example_type.*" -print0)
+    fi
 
     settings_file="$target_dir/.vscode/settings.json"
     if [[ -f "$settings_file" ]]; then

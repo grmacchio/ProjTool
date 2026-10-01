@@ -65,7 +65,7 @@ prompted to provide the creator name, GitHub URL, and initial version, e.g.
 ``v0.0.0``, for the project. Once the information is provided, the project will
 do the following.
 
--  Copy the desired template, in this case ``note``.
+- Copy the desired template, in this case ``note``.
 - Initialize a ``git`` project with the entered version and GitHub repository.
 - Generate a ``LICENSE.txt`` file with an MIT license for the code, a CC BY 4.0
 license for the media, and exclusions for any third-party content.
