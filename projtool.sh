@@ -71,6 +71,8 @@ Examples:
   projtool gen media
   projtool gen output
   projtool gen readme
+  projtool gen all
+  projtool gen all -f ./examples/dissertation -w verbose
   projtool gen pdf -f ./examples/dissertation
   projtool gen pdf -f ./examples/dissertation -w verbose
   projtool gen md -f ./examples/dissertation
@@ -81,6 +83,7 @@ Actions:
   media               Generate both PDF and Markdown
   output              Generate results, PDF, and Markdown
   readme              Copy generated media and write TARGET/README.md
+  all                 Generate output, copy media, and write TARGET/README.md
   pdf                 Generate PDF in TARGET/output/media/pdf
   md                  Generate Markdown in TARGET/output/media/md
 
@@ -853,7 +856,7 @@ main_gen() {
     done
 
     case "$ACTION" in
-        output|results|media|readme|pdf|md) ;;
+        all|output|results|media|readme|pdf|md) ;;
         *) die "unsupported action: $ACTION" ;;
     esac
 
@@ -862,9 +865,12 @@ main_gen() {
     trap 'cleanup_source_build_files' EXIT
 
     case "$ACTION" in
-        output)
+        all|output)
             run_results_stage
             render_media pdf md
+            if [[ "$ACTION" == all ]]; then
+                write_readme
+            fi
             ;;
         results)
             run_results_stage

@@ -105,7 +105,8 @@ To generate project material use the following commands.
 | `projtool gen md` | Generate only the Markdown |
 | `projtool gen media` | Generate the PDF and Markdown without running code |
 | `projtool gen output` | Generate results, PDF, and Markdown |
-| `projtool gen readme` | Publish media and create the project README |
+| `projtool gen readme` | Copy media to project directory and create README |
+| `projtool gen all` | Generate output, copy media to project directory, and create README |
 
 To collect all build files, run ``-w verbose`` at the end of any generation
 command.
