@@ -2,15 +2,15 @@
 \newcommand{\genFront}[5]{\subsection{#1}\textbf{Authors:} #2\par\textbf{Affiliations:} #3\par\textbf{Date:} #4\par\subsection{Acknowledgments}#5\subsection{\textbf{LaTeXToTOC}}}
 \newcommand{\genPart}[4]{\subsection{\textbf{LaTeXToPart} \textbf{#2} \textbf{#3} #1}#4}
 \newcommand{\genSubPart}[4]{\subsubsection{\textbf{LaTeXToSubPart} \textbf{#2} \textbf{#3} #1}#4}
-\newcommand{\genTHM}[5]{\paragraph{\textbf{LaTeXToTheorem} \textbf{#2} \textbf{#3} #1}#4\paragraph{\textbf{LaTeXToProofInline}}\textbf{LaTeXToProofLink} #1\subparagraph{\textbf{LaTeXToProofStart} #1}#5\subparagraph{\textbf{LaTeXToProofEnd}}}
+\newcommand{\genTHM}[6]{\paragraph{\textbf{LaTeXToTheorem} \textbf{#2} \textbf{#3} #1}#4\subparagraph{\textbf{LaTeXToProofStart} \textbf{#5} #1}#6\subparagraph{\textbf{LaTeXToProofEnd}}}
 \newcommand{\genDEF}[4]{\paragraph{\textbf{LaTeXToDefinition} \textbf{#2} \textbf{#3} #1}#4}
 \newcommand{\genFIG}[7]{\par\includegraphics[width=#5\textwidth]{#6}\par\paragraph{\textbf{LaTeXToFigure} \textbf{#2} \textbf{#3} #1}#7}
 
 \newcommand{\genMATH}[1]{\begin{projtoolmath}\begin{align*}#1\end{align*}\end{projtoolmath}}
 \newcommand{\genLabel}[1]{\tag{#1}\label{projtool-eq:#1}}
 \newcommand{\genREF}[2]{\href{latex-to-ref:#1}{#2}}
-\newcommand{\genBack}[1]{\subsection{\textbf{LaTeXToReferences}}}
-\documentclass[note]{template}
+\newcommand{\genProofs}{\subsection{\textbf{LaTeXToProofs}}}
+\documentclass[note,references={./references}]{template}
 
 \begin{document}
 
@@ -42,9 +42,9 @@
             }
             <Subsection Content 1c>
 
-            \genTHM{<Theorem Title 1>}{inh}{inh}{
+            \genTHM{<Theorem Title 1>}{num}{toc}{
                 <Theorem Statement 1>
-            }{
+            }{here}{
                 <Theorem Proof 1>
             }
 
@@ -62,9 +62,11 @@
             \genREF{def}{<Definition Title 1>}
             \genREF{eq}{<Equation Title 1>}
             \genREF{fig}{<Figure Title 1>} \\
+\par
 
             \noindent Test Citations:
             \genREF{cite}{1970author, 2002author, 2013author, 2018author} \\
+\par
 
             \noindent Test Code Output:
             \input{./output/results/julia/natural_numbers.tex}
@@ -85,7 +87,7 @@
 
             \genTHM{<Theorem Title 2>}{nonum}{notoc}{
                 <Theorem Statement 2>
-            }{
+            }{back}{
                 <Theorem Proof 2>
             }
 
@@ -103,9 +105,11 @@
             \genREF{def}{<Definition Title 2>}
             \genREF{eq}{<Equation Title 2>}
             \genREF{fig}{<Figure Title 2>} \\
+\par
 
             \noindent Test Citations:
             \genREF{cite}{1970author, 2002author, 2013author, 2018author} \\
+\par
 
             \noindent Test Code Output:
             \input{./output/results/julia/natural_numbers.tex}
@@ -134,7 +138,7 @@
 
         \genTHM{<Theorem Title 3>}{num}{toc}{
                 <Theorem Statement 3>
-            }{
+            }{back}{
                 <Theorem Proof 3>
             }
 
@@ -149,6 +153,6 @@
 
     }
 
-    \genBack{./references}
+    \genProofs
 
 \end{document}

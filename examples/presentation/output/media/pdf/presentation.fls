@@ -8,6 +8,14 @@ INPUT /Users/gregorymacchio/Documents/Mirror/laptop/global/writing/software/Proj
 INPUT /Users/gregorymacchio/Documents/Mirror/laptop/global/writing/software/ProjTool/template.cls
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/etoolbox/etoolbox.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/etoolbox/etoolbox.sty
+INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/kvoptions/kvoptions.sty
+INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/kvoptions/kvoptions.sty
+INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/graphics/keyval.sty
+INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/graphics/keyval.sty
+INPUT /usr/local/texlive/2025/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
+INPUT /usr/local/texlive/2025/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
+INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/kvsetkeys/kvsetkeys.sty
+INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/kvsetkeys/kvsetkeys.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/beamer/beamer.cls
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/beamer/beamer.cls
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/beamer/beamerbasemodes.sty
@@ -18,8 +26,6 @@ INPUT /usr/local/texlive/2025/texmf-dist/tex/generic/iftex/iftex.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/generic/iftex/iftex.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/beamer/beamerbaseoptions.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/beamer/beamerbaseoptions.sty
-INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/graphics/keyval.sty
-INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/graphics/keyval.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/hyperref/hyperref.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/geometry/geometry.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/geometry/geometry.sty
@@ -127,14 +133,10 @@ INPUT /usr/local/texlive/2025/texmf-dist/tex/generic/atbegshi/atbegshi.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/base/atbegshi-ltx.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/base/atbegshi-ltx.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/hyperref/hyperref.sty
-INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/kvsetkeys/kvsetkeys.sty
-INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/kvsetkeys/kvsetkeys.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/generic/pdfescape/pdfescape.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/generic/pdfescape/pdfescape.sty
-INPUT /usr/local/texlive/2025/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
-INPUT /usr/local/texlive/2025/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/generic/infwarerr/infwarerr.sty
@@ -147,8 +149,6 @@ INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/refcount/refcount.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/refcount/refcount.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty
-INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/kvoptions/kvoptions.sty
-INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/kvoptions/kvoptions.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/generic/stringenc/stringenc.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/generic/stringenc/stringenc.sty
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/hyperref/pd1enc.def

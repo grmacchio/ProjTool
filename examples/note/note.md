@@ -64,7 +64,9 @@ $$
 
 **Theorem 1.1.1** (\<Theorem Title 1\>)**.** \<Theorem Statement 1\>
 
-**Proof**. See [Proof of \<Theorem Title 1\>](#proof-of-theorem-title-1).
+<a id="proof-of-theorem-title-1"></a>
+
+**Proof**. \<Theorem Proof 1\>
 
 <a id="definition-definition-title-1"></a>
 
@@ -75,7 +77,9 @@ $$
 <p align="center"><strong>Figure 1.1.3</strong> (&lt;Figure Title 1&gt;)<strong>.</strong> &lt;Figure Caption 1&gt;</p>
 
 Test Hyper-References: [\<Theorem Title 1\>](#theorem-theorem-title-1) [\<Definition Title 1\>](#definition-definition-title-1) [\<Equation Title 1\>](#equation-equation-title-1) [\<Figure Title 1\>](#figure-figure-title-1)  
+
 Test Citations: \[[1](#ref-1970author), [2](#ref-2002author), [3](#ref-2013author), [4](#ref-2018author)\]  
+
 Test Code Output: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
 
 <a id="section-subsection-title-2"></a>
@@ -116,7 +120,9 @@ $$
 <p align="center"><strong>Figure</strong> (&lt;Figure Title 2&gt;)<strong>.</strong> &lt;Figure Caption 2&gt;</p>
 
 Test Hyper-References: [\<Theorem Title 2\>](#theorem-theorem-title-2) [\<Definition Title 2\>](#definition-definition-title-2) [\<Equation Title 2\>](#equation-equation-title-2) [\<Figure Title 2\>](#figure-figure-title-2)  
+
 Test Citations: \[[1](#ref-1970author), [2](#ref-2002author), [3](#ref-2013author), [4](#ref-2018author)\]  
+
 Test Code Output: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
 
 <a id="chapter-section-title-2"></a>
@@ -166,12 +172,6 @@ Test Code Output: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
 <a id="proofs"></a>
 
 ## Proofs
-
-<a id="proof-of-theorem-title-1"></a>
-
-### Proof of [\<Theorem Title 1\>](#theorem-theorem-title-1)
-
-\<Theorem Proof 1\>
 
 <a id="proof-of-theorem-title-2"></a>
 

@@ -9,8 +9,8 @@
 \newcommand{\genMATH}[1]{\begin{projtoolmath}\begin{align*}#1\end{align*}\end{projtoolmath}}
 \newcommand{\genLabel}[1]{\tag{#1}\label{projtool-eq:#1}}
 \newcommand{\genREF}[2]{\href{latex-to-ref:#1}{#2}}
-\newcommand{\genBack}[1]{\subsection{\textbf{LaTeXToAppendixTOC}}}
-\documentclass[presentation]{template}
+\newcommand{\startAppendix}{\subsection{\textbf{LaTeXToAppendixTOC}}}
+\documentclass[presentation,references={./references}]{template}
 
 \toggletrue{allowAnimations}
 
@@ -129,7 +129,7 @@
         }
     }
 
-    \genBack{./references}
+    \startAppendix
 
     \genPart{<Appendix Section Title 1>}{
 

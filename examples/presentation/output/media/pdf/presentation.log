@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.8)  7 OCT 2026 11:09
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.8)  7 OCT 2026 18:57
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -17,6 +17,19 @@ Package: etoolbox 2025/02/11 v2.5l e-TeX tools for LaTeX (JAW)
 \etb@tempcnta=\count196
 )
 Document Class: template 
+(/usr/local/texlive/2025/texmf-dist/tex/latex/kvoptions/kvoptions.sty
+Package: kvoptions 2022-06-15 v3.15 Key value format for package options (HO)
+
+(/usr/local/texlive/2025/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2022/05/29 v1.15 key=value parser (DPC)
+\KV@toks@=\toks17
+)
+(/usr/local/texlive/2025/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
+Package: ltxcmds 2023-12-04 v1.26 LaTeX kernel commands for general use (HO)
+)
+(/usr/local/texlive/2025/texmf-dist/tex/latex/kvsetkeys/kvsetkeys.sty
+Package: kvsetkeys 2022-10-05 v1.19 Key value parser (HO)
+))
 (/usr/local/texlive/2025/texmf-dist/tex/latex/beamer/beamer.cls
 Document Class: beamer 2025/02/04 v3.72 A class for typesetting presentations
 (/usr/local/texlive/2025/texmf-dist/tex/latex/beamer/beamerbasemodes.sty
@@ -79,11 +92,7 @@ Package: iftex 2024/12/12 v1.0g TeX engine tests
 \beamer@toclastsection=\count286
 \beamer@tocsectionnumber=\count287
 
-(/usr/local/texlive/2025/texmf-dist/tex/latex/beamer/beamerbaseoptions.sty
-(/usr/local/texlive/2025/texmf-dist/tex/latex/graphics/keyval.sty
-Package: keyval 2022/05/29 v1.15 key=value parser (DPC)
-\KV@toks@=\toks17
-))
+(/usr/local/texlive/2025/texmf-dist/tex/latex/beamer/beamerbaseoptions.sty)
 \beamer@paperwidth=\skip50
 \beamer@paperheight=\skip51
 
@@ -373,18 +382,12 @@ package with kernel methods
 (/usr/local/texlive/2025/texmf-dist/tex/latex/hyperref/hyperref.sty
 Package: hyperref 2024-11-05 v7.01l Hypertext links for LaTeX
 
-(/usr/local/texlive/2025/texmf-dist/tex/latex/kvsetkeys/kvsetkeys.sty
-Package: kvsetkeys 2022-10-05 v1.19 Key value parser (HO)
-)
 (/usr/local/texlive/2025/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.sty
 Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
 )
 (/usr/local/texlive/2025/texmf-dist/tex/generic/pdfescape/pdfescape.sty
 Package: pdfescape 2019/12/09 v1.15 Implements pdfTeX's escape features (HO)
 
-(/usr/local/texlive/2025/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
-Package: ltxcmds 2023-12-04 v1.26 LaTeX kernel commands for general use (HO)
-)
 (/usr/local/texlive/2025/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty
 Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO
 )
@@ -408,12 +411,9 @@ Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 (/usr/local/texlive/2025/texmf-dist/tex/generic/gettitlestring/gettitlestring.s
 ty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
- (/usr/local/texlive/2025/texmf-dist/tex/latex/kvoptions/kvoptions.sty
-Package: kvoptions 2022-06-15 v3.15 Key value format for package options (HO)
-))
-\c@section@level=\count309
 )
-(/usr/local/texlive/2025/texmf-dist/tex/generic/stringenc/stringenc.sty
+\c@section@level=\count309
+) (/usr/local/texlive/2025/texmf-dist/tex/generic/stringenc/stringenc.sty
 Package: stringenc 2019/11/29 v1.12 Convert strings between diff. encodings (HO
 )
 )
@@ -710,7 +710,7 @@ y)))
 (/usr/local/texlive/2025/texmf-dist/tex/latex/appendixnumberbeamer/appendixnumb
 erbeamer.sty)
 \c@templatePartObject=\count345
-Package hyperref Info: Option `colorlinks' set `true' on input line 1159.
+Package hyperref Info: Option `colorlinks' set `true' on input line 1192.
  (/usr/local/texlive/2025/texmf-dist/tex/latex/base/fontenc.sty
 Package: fontenc 2021/04/29 v2.0v Standard LaTeX package
 )
@@ -1758,10 +1758,10 @@ Package logreq Info: Writing requests to 'presentation.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 35084 strings out of 473190
- 700783 string characters out of 5715801
- 1472402 words of memory out of 5000000
- 57614 multiletter control sequences out of 15000+600000
+ 35102 strings out of 473190
+ 701192 string characters out of 5715801
+ 1473272 words of memory out of 5000000
+ 57632 multiletter control sequences out of 15000+600000
  576348 words of font info for 75 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  144i,11n,139p,1503b,1347s stack positions out of 10000i,1000n,20000p,200000b,200000s

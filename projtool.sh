@@ -147,8 +147,10 @@ collect_cited_bibliographies() {
 
     CITATION_IDS=()
     BIBLIOGRAPHY_FILES=()
-    document="$(<"$DOCUMENT_FILE")"
+    document="$(read_document_source)"
     while [[ "$document" =~ $pattern ]]; do
+        [[ -n "$REFERENCE_LOCATION" ]] ||
+            die "citations require references={REFERENCES_FOLDER} in the documentclass options"
         citation_list="${BASH_REMATCH[1]}"
         citation_list="${citation_list//$'\n'/ }"
         citation_list="${citation_list//$'\r'/ }"
@@ -226,23 +228,85 @@ validate_reference_types() {
     done
 }
 
-resolve_reference_directory() {
-    local line
-    local location=""
-    local match_count=0
-    local pattern='^[[:space:]]*\\genBack[[:space:]]*\{([^}]*)\}'
+read_document_source() {
+    awk '
+        {
+            slashes = 0
+            for (i = 1; i <= length($0); i++) {
+                character = substr($0, i, 1)
+                if (character == "%" && slashes % 2 == 0) {
+                    print substr($0, 1, i - 1)
+                    next
+                }
+                slashes = character == "\\" ? slashes + 1 : 0
+            }
+            print
+        }
+    ' "$DOCUMENT_FILE"
+}
 
-    while IFS= read -r line || [[ -n "$line" ]]; do
-        if [[ "$line" =~ $pattern ]]; then
-            location="${BASH_REMATCH[1]}"
-            ((match_count += 1))
+read_document_options() {
+    local document
+    local pattern='\\documentclass[[:space:]]*\[([^]]*)\][[:space:]]*\{template\}'
+    local reference_pattern='^references[[:space:]]*=[[:space:]]*(.*)$'
+    local options
+    local option=""
+    local character
+    local depth=0
+    local index
+    local references_seen=false
+    local -a fields=()
+
+    TEMPLATE_TYPE=""
+    REFERENCE_LOCATION=""
+    document="$(read_document_source)"
+    [[ "$document" =~ $pattern ]] ||
+        die "expected a template documentclass with a project type"
+    options="${BASH_REMATCH[1]},"
+    for ((index = 0; index < ${#options}; index++)); do
+        character="${options:index:1}"
+        case "$character" in
+            '{') depth=$((depth + 1)) ;;
+            '}') depth=$((depth - 1)) ;;
+        esac
+        (( depth >= 0 )) || die "unbalanced documentclass options"
+        if [[ "$character" == , && $depth -eq 0 ]]; then
+            fields+=("$option")
+            option=""
+        else
+            option+="$character"
         fi
-    done < "$DOCUMENT_FILE"
+    done
+    [[ $depth -eq 0 ]] || die "unbalanced documentclass options"
+    for option in "${fields[@]}"; do
+        option="${option#"${option%%[![:space:]]*}"}"
+        option="${option%"${option##*[![:space:]]}"}"
+        case "$option" in
+            dissertation|note|preprint|presentation)
+                [[ -z "$TEMPLATE_TYPE" ]] || die "multiple project types in documentclass options"
+                TEMPLATE_TYPE="$option"
+                ;;
+            *)
+                [[ "$option" =~ $reference_pattern ]] || die "unsupported documentclass option: $option"
+                [[ "$references_seen" == false ]] || die "duplicate references class option"
+                REFERENCE_LOCATION="${BASH_REMATCH[1]}"
+                REFERENCE_LOCATION="${REFERENCE_LOCATION%"${REFERENCE_LOCATION##*[![:space:]]}"}"
+                if [[ "$REFERENCE_LOCATION" == \{*\} ]]; then
+                    REFERENCE_LOCATION="${REFERENCE_LOCATION:1:${#REFERENCE_LOCATION}-2}"
+                fi
+                [[ -n "$REFERENCE_LOCATION" ]] || die "references folder cannot be empty"
+                references_seen=true
+                ;;
+        esac
+    done
+    [[ -n "$TEMPLATE_TYPE" ]] || die "missing project type in documentclass options"
+}
 
-    [[ $match_count -eq 1 ]] ||
-        die "expected exactly one \\genBack{REFERENCES_FOLDER} in $DOCUMENT_FILE"
-    [[ -n "$location" ]] || die "references folder cannot be empty"
-    REFERENCE_LOCATION="$location"
+resolve_reference_directory() {
+    local location="$REFERENCE_LOCATION"
+
+    REFERENCE_DIR=""
+    [[ -n "$location" ]] || return 0
 
     if [[ "$location" == /* ]]; then
         REFERENCE_DIR="$location"
@@ -402,9 +466,6 @@ resolve_target() {
             DOCUMENT_STEM="$(basename -- "${DOCUMENT_FILE%.tex}")"
         fi
     fi
-    if [[ -f "$DOCUMENT_FILE" ]]; then
-        TEMPLATE_TYPE="$(sed -nE 's/^[[:space:]]*\\documentclass\[([^]]+)\]\{template\}.*/\1/p' "$DOCUMENT_FILE")"
-    fi
     OUTPUT_DIR="$TARGET_DIR/output"
     RESULTS_SCRIPT="$TARGET_DIR/results.sh"
     MEDIA_OUTPUT_DIR="$OUTPUT_DIR/media"
@@ -488,10 +549,10 @@ write_markdown_build_file() {
     local front_command
     local part_command='\newcommand{\genPart}[4]{\subsection{\textbf{LaTeXToPart} \textbf{#2} \textbf{#3} #1}#4}'
     local subpart_command='\newcommand{\genSubPart}[4]{\subsubsection{\textbf{LaTeXToSubPart} \textbf{#2} \textbf{#3} #1}#4}'
-    local theorem_command='\newcommand{\genTHM}[5]{\paragraph{\textbf{LaTeXToTheorem} \textbf{#2} \textbf{#3} #1}#4\paragraph{\textbf{LaTeXToProofInline}}\textbf{LaTeXToProofLink} #1\subparagraph{\textbf{LaTeXToProofStart} #1}#5\subparagraph{\textbf{LaTeXToProofEnd}}}'
+    local theorem_command='\newcommand{\genTHM}[6]{\paragraph{\textbf{LaTeXToTheorem} \textbf{#2} \textbf{#3} #1}#4\subparagraph{\textbf{LaTeXToProofStart} \textbf{#5} #1}#6\subparagraph{\textbf{LaTeXToProofEnd}}}'
     local definition_command='\newcommand{\genDEF}[4]{\paragraph{\textbf{LaTeXToDefinition} \textbf{#2} \textbf{#3} #1}#4}'
     local figure_command='\newcommand{\genFIG}[7]{\par\includegraphics[width=#5\textwidth]{#6}\par\paragraph{\textbf{LaTeXToFigure} \textbf{#2} \textbf{#3} #1}#7}'
-    local back_command='\newcommand{\genBack}[1]{\subsection{\textbf{LaTeXToReferences}}}'
+    local closing_command='\newcommand{\genProofs}{\subsection{\textbf{LaTeXToProofs}}}'
     local presentation_commands=''
 
     MARKDOWN_BUILD_FILE="$MD_OUTPUT_DIR/$DOCUMENT_STEM.pandoc.tex"
@@ -507,7 +568,7 @@ write_markdown_build_file() {
         theorem_command='\newcommand{\genTHM}[2]{\paragraph{\textbf{LaTeXToTheorem} #1}#2}'
         definition_command='\newcommand{\genDEF}[2]{\paragraph{\textbf{LaTeXToDefinition} #1}#2}'
         figure_command='\newcommand{\genFIG}[5]{\par\includegraphics[width=#3\textwidth]{#4}\par\paragraph{\textbf{LaTeXToFigure} #1}#5}'
-        back_command='\newcommand{\genBack}[1]{\subsection{\textbf{LaTeXToAppendixTOC}}}'
+        closing_command='\newcommand{\startAppendix}{\subsection{\textbf{LaTeXToAppendixTOC}}}'
         presentation_commands='\newcommand{\togglefalse}[1]{}\newcommand{\toggletrue}[1]{}\newcommand{\bo}[2]{\begin{#1}}\newcommand{\eo}[1]{\end{#1}}\newcommand{\bi}[2]{\begin{#1}}\newcommand{\ei}[1]{\end{#1}}\newcommand{\bitem}[1]{\item \textbf{#1}}\newcommand{\iitem}[1]{\item \textit{#1}}'
     else
         front_command='\newcommand{\genFront}[8]{\subsection{#1}\textbf{Author:} #2\par\textbf{University:} #3\par\textbf{Department:} #4\par\textbf{Advisor:} #5\par\textbf{Date:} #6\par\subsection{Abstract}#7\subsection{Acknowledgments}#8\subsection{\textbf{LaTeXToTOC}}}'
@@ -526,7 +587,7 @@ write_markdown_build_file() {
             '\newcommand{\genMATH}[1]{\begin{projtoolmath}\begin{align*}#1\end{align*}\end{projtoolmath}}' \
             '\newcommand{\genLabel}[1]{\tag{#1}\label{projtool-eq:#1}}' \
             '\newcommand{\genREF}[2]{\href{latex-to-ref:#1}{#2}}' \
-            "$back_command"
+            "$closing_command"
         if [[ "$TEMPLATE_TYPE" == "presentation" ]]; then
             write_markdown_source |
                 sed 's/\\item\[\]/\\item \\textbf{ProjToolEmptyItem}/g'
@@ -597,6 +658,7 @@ render_media() {
     local format
 
     [[ -f "$DOCUMENT_FILE" ]] || die "missing document source: $DOCUMENT_FILE"
+    read_document_options
     for format in "$@"; do
         printf '%s\n' "-> generating $DOCUMENT_STEM as $format"
         (cd -- "$TARGET_DIR" && "render_$format")

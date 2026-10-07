@@ -510,7 +510,6 @@ function Pandoc(document)
     end
     local output = {}
     local proofs = {}
-    local proofs_emitted = false
     local state = {
         chapter = 0,
         section = 0,
@@ -541,9 +540,8 @@ function Pandoc(document)
             block, "LaTeXToDefinition", presentation and 0 or 2)
         local figure_fields, figure_title = structured_marker(
             block, "LaTeXToFigure", presentation and 0 or 2)
-        local proof_link = marker_content(block, "LaTeXToProofLink")
-        local proof_inline = marker_content(block, "LaTeXToProofInline")
-        local proof_title = marker_content(block, "LaTeXToProofStart")
+        local proof_fields, proof_title = structured_marker(
+            block, "LaTeXToProofStart", 1)
 
         if marker_content(block, "LaTeXToTOC") then
             append(output, pandoc.RawBlock("latex-to-placeholder", "toc"))
@@ -641,10 +639,16 @@ function Pandoc(document)
             else
                 local parent_num = state.subpart_num or state.part_num
                 local parent_toc = state.subpart_toc or state.part_toc
-                local num_mode = resolved_mode(fields[1], parent_num,
-                    "num", "nonum", "gen" .. name)
-                toc_mode = resolved_mode(fields[2], parent_toc,
-                    "toc", "notoc", "gen" .. name)
+                local num_mode
+                if theorem_fields then
+                    num_mode = root_mode(fields[1], "num", "nonum", "genTHM")
+                    toc_mode = root_mode(fields[2], "toc", "notoc", "genTHM")
+                else
+                    num_mode = resolved_mode(fields[1], parent_num,
+                        "num", "nonum", "gen" .. name)
+                    toc_mode = resolved_mode(fields[2], parent_toc,
+                        "toc", "notoc", "gen" .. name)
+                end
                 if num_mode == "num" then
                     state.object = state.object + 1
                     if state.subpart_num then
@@ -677,27 +681,12 @@ function Pandoc(document)
                     toc_label(number, title,
                         object_toc_prefixes[name]), identifier)
             end
-        elseif proof_inline then
-        elseif proof_link then
-            local proof_id = "proof-of-" .. slug(proof_link)
-            local link_content = {
-                pandoc.Str("Proof"),
-                pandoc.Space(),
-                pandoc.Str("of"),
-                pandoc.Space()
-            }
-            extend(link_content, proof_link)
-            block.content = {
-                pandoc.Strong({pandoc.Str("Proof")}),
-                pandoc.Str("."),
-                pandoc.Space(),
-                pandoc.Str("See"),
-                pandoc.Space(),
-                pandoc.Link(link_content, "#" .. proof_id),
-                pandoc.Str(".")
-            }
-            append(output, block)
-        elseif proof_title then
+        elseif proof_fields then
+            local placement = proof_fields[1]
+            if placement ~= "here" and placement ~= "back" then
+                error("invalid theorem proof placement: " .. placement ..
+                    "; use here or back", 0)
+            end
             local proof_blocks = {}
             index = index + 1
             while index <= #document.blocks and not marker_content(
@@ -708,17 +697,43 @@ function Pandoc(document)
             if index > #document.blocks then
                 error("theorem proof is missing its end marker", 0)
             end
-            append(proofs, {
+            local proof = {
                 title = proof_title,
                 blocks = proof_blocks,
                 theorem_id = "theorem-" .. slug(proof_title),
                 proof_id = "proof-of-" .. slug(proof_title)
-            })
-        elseif marker_content(block, "LaTeXToReferences") then
+            }
+            local label = {
+                pandoc.Strong({pandoc.Str("Proof")}),
+                pandoc.Str("."),
+                pandoc.Space()
+            }
+            if placement == "here" then
+                append(output, anchor(proof.proof_id))
+                if proof_blocks[1] and proof_blocks[1].t == "Para" then
+                    extend(label, proof_blocks[1].content)
+                    proof_blocks[1] = pandoc.Para(label)
+                else
+                    table.insert(proof_blocks, 1, pandoc.Para(label))
+                end
+                extend(output, proof_blocks)
+            else
+                local link_content = {
+                    pandoc.Str("Proof"), pandoc.Space(),
+                    pandoc.Str("of"), pandoc.Space()
+                }
+                extend(link_content, proof_title)
+                extend(label, {
+                    pandoc.Str("See"), pandoc.Space(),
+                    pandoc.Link(link_content, "#" .. proof.proof_id),
+                    pandoc.Str(".")
+                })
+                append(output, pandoc.Para(label))
+                append(proofs, proof)
+            end
+        elseif marker_content(block, "LaTeXToProofs") then
             emit_proofs(output, state, proofs, bold_titles)
-            proofs_emitted = true
-            emit_references(
-                output, state, plain_titles, bold_titles)
+            proofs = {}
         else
             append(output, block)
         end
@@ -726,8 +741,11 @@ function Pandoc(document)
         index = index + 1
     end
 
-    if not proofs_emitted then
-        emit_proofs(output, state, proofs, bold_titles)
+    if #proofs > 0 then
+        error("unprinted back proofs; place \\genProofs after the theorems that use back", 0)
+    end
+    if not presentation and document.meta.bibliography then
+        emit_references(output, state, plain_titles, bold_titles)
     end
 
     local final_output = {}

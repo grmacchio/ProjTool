@@ -1,4 +1,4 @@
-\documentclass[preprint]{template}
+\documentclass[preprint, references={./references}]{template}
 
 \begin{document}
 
@@ -34,9 +34,9 @@
             }
             <Subsection Content 1c>
 
-            \genTHM{<Theorem Title 1>}{inh}{inh}{
+            \genTHM{<Theorem Title 1>}{num}{toc}{
                 <Theorem Statement 1>
-            }{
+            }{here}{
                 <Theorem Proof 1>
             }
 
@@ -77,7 +77,7 @@
 
             \genTHM{<Theorem Title 2>}{nonum}{notoc}{
                 <Theorem Statement 2>
-            }{
+            }{back}{
                 <Theorem Proof 2>
             }
 
@@ -126,7 +126,7 @@
 
         \genTHM{<Theorem Title 3>}{num}{toc}{
                 <Theorem Statement 3>
-            }{
+            }{back}{
                 <Theorem Proof 3>
             }
 
@@ -141,6 +141,6 @@
 
     }
 
-    \genBack{./references}
+    \genProofs
 
 \end{document}

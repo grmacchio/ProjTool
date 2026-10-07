@@ -11,9 +11,15 @@
 
 % Read the template class type.
 \ProvidesClass{template}
+\RequirePackage{kvoptions}
 \def\templateType{}
-\DeclareOption*{\edef\templateType{\CurrentOption}}
-\ProcessOptions\relax
+\SetupKeyvalOptions{family=template,prefix=template}
+\DeclareVoidOption{dissertation}{\def\templateType{dissertation}}
+\DeclareVoidOption{note}{\def\templateType{note}}
+\DeclareVoidOption{preprint}{\def\templateType{preprint}}
+\DeclareVoidOption{presentation}{\def\templateType{presentation}}
+\DeclareStringOption[]{references}
+\ProcessKeyvalOptions*
 \newtoggle{TemplateTypeLoaded}
 \togglefalse{TemplateTypeLoaded}
 
@@ -238,9 +244,9 @@
             }
         }
     }
-    \NewDocumentCommand{\genTHM}{m m m +m +m}{
-        \templateResolveNumMode{##2}{\genTHMNumMode}{\genTHM}
-        \templateResolveTocMode{##3}{\genTHMTocMode}{\genTHM}
+    \NewDocumentCommand{\genTHM}{m m m +m m +m}{
+        \templateResolveRootNumMode{##2}{\genTHMNumMode}{\genTHM}
+        \templateResolveRootTocMode{##3}{\genTHMTocMode}{\genTHM}
         \ifdefstring{\genTHMNumMode}{num}{
             \templatePrepareNumberedObject
             \ifdefstring{\genTHMTocMode}{toc}{
@@ -281,10 +287,24 @@
                 \end{theoremstar}
             }
         }
-        \begin{proof}
-            See \hyperref[proof:##1]{Proof of ##1}.
-        \end{proof}
-        \templateQueueTheoremProof{##1}{##5}
+        \ifstrequal{##5}{here}{
+            \begin{proof}
+                \phantomsection
+                \label{proof:##1}
+                ##6
+            \end{proof}
+        }{
+            \ifstrequal{##5}{back}{
+                \begin{proof}
+                    See \hyperref[proof:##1]{Proof of ##1}.
+                \end{proof}
+                \templateQueueTheoremProof{##1}{##6}
+            }{
+                \ClassError{template}
+                    {Invalid theorem proof placement '##5'}
+                    {Use here or back.}
+            }
+        }
     }
     \theoremstyle{definition}
     \@ifundefined{definition}{\newtheorem{definition}[theorem]{Definition}}{}
@@ -351,14 +371,21 @@
     \InputIfFileExists{\jobname.projtool.cfg}{}{
         \ClassError{template}
             {Missing explicit references configuration}
-            {Build with ProjTool and provide \string\genBack{REFERENCES_FOLDER}.}
+            {Build with ProjTool to load the references configuration.}
     }
-    \newcommand{\templateUseReferences}[1]{
-        \ifdefstring{\templateReferencesPath}{##1}{}{
+    \ifdefstrequal{\templatereferences}{\templateReferencesPath}{}{
+        \ClassError{template}
+            {References configuration does not match the class option}
+            {Rebuild with ProjTool.}
+    }
+    \newtoggle{templateHasCitations}
+    \newcommand{\templateRequireReferences}{
+        \ifdefempty{\templatereferences}{
             \ClassError{template}
-                {References folder changed during the document}
-                {Use the same folder supplied to \string\genBack.}
-        }
+                {Citations require the references class option}
+                {Add references={REFERENCES_FOLDER} to the documentclass options.}
+        }{}
+        \global\toggletrue{templateHasCitations}
     }
     \DeclareNameAlias{default}{given-family}
     \renewcommand*{\mkbibnamegiven}[1]{\textsc{##1}}
@@ -452,15 +479,14 @@
         {\usebibmacro{template:reference-entry}}
         {\multicitedelim}
         {}
-    \newcommand{\genBack}[1]{
-        \templateUseReferences{##1}
-        \templateRenderTheoremProofs
+    \newcommand{\templatePrintReferences}{
         \clearpage
         \phantomsection
         \printbibliography[title={References}]
     }
     \newcommand{\genREF}[2]{%
         \ifstrequal{##1}{cite}{%
+            \templateRequireReferences%
             \cite{##2}%
         }{%
             \ifstrequal{##1}{eq}{%
@@ -540,6 +566,18 @@
         \endgroup
     }
     \loadReferencesPackage
+    \newcommand{\genProofs}{
+        \templateRenderTheoremProofs
+        \global\let\templateTheoremProofs\@empty
+    }
+    \AtEndDocument{
+        \ifdefempty{\templateTheoremProofs}{}{
+            \ClassError{template}
+                {Unprinted back proofs}
+                {Place \string\genProofs after the theorems that use back.}
+        }
+        \iftoggle{templateHasCitations}{\templatePrintReferences}{}
+    }
 }
 
 % DISSERTATION:
@@ -602,9 +640,7 @@
     \captionsetup[figure]{skip=\templateCaptionSpace}
     \setlength{\bibitemsep}{\baselineskip}
     \addtolength{\bibitemsep}{1.6pt}
-    \renewcommand{\genBack}[1]{
-        \templateUseReferences{#1}
-        \templateRenderTheoremProofs
+    \renewcommand{\templatePrintReferences}{
         \clearpage
         \phantomsection
         \addcontentsline{toc}{chapter}{References}
@@ -933,10 +969,7 @@
             \addtocounter{footnote}{-1}
         \endgroup
     }
-    \renewcommand{\genBack}[1]{
-        \templateUseReferences{#1}
-        \clearpage
-        \templateRenderTheoremProofs
+    \renewcommand{\templatePrintReferences}{
         \clearpage
         \phantomsection
         \addcontentsline{toc}{section}{References}
@@ -1117,6 +1150,7 @@
     }
     \renewcommand{\genREF}[2]{%
         \ifstrequal{#1}{cite}{%
+            \templateRequireReferences%
             \unskip\templatePresentationCite{#2}%
         }{%
             \ifstrequal{#1}{eq}{%
@@ -1143,8 +1177,7 @@
     \newcommand{\ei}[1]{
         \end{#1}
     }
-    \renewcommand{\genBack}[1]{
-        \templateUseReferences{#1}
+    \newcommand{\startAppendix}{
         \appendix
         \setcounter{section}{0}
         \global\beamer@tocsectionnumber=0\relax
@@ -1334,10 +1367,7 @@
             \addtocounter{footnote}{-1}
         \endgroup
     }
-    \renewcommand{\genBack}[1]{
-        \templateUseReferences{#1}
-        \clearpage
-        \templateRenderTheoremProofs
+    \renewcommand{\templatePrintReferences}{
         \clearpage
         \phantomsection
         \addcontentsline{toc}{section}{References}
