@@ -104,6 +104,8 @@ Usage: projtool rem SCOPE [-f TARGET]
 Examples:
   projtool rem output
   projtool rem readme
+  projtool rem all
+  projtool rem all -f ./examples/dissertation
   projtool rem results
   projtool rem media -f ./examples/dissertation
   projtool rem pdf -f ./examples/dissertation
@@ -112,6 +114,7 @@ Examples:
 Scopes:
   output              Remove TARGET/output
   readme              Remove TARGET/README.md, NAME.pdf, and NAME.md
+  all                 Remove output, README.md, NAME.pdf, and NAME.md
   results             Remove TARGET/output/results
   media               Remove TARGET/output/media
   pdf                 Remove TARGET/output/media/pdf
@@ -463,6 +466,24 @@ render_pdf() {
     fi
 }
 
+write_markdown_source() {
+    awk '
+        /\\begin\{(verbatim\*?|Verbatim|lstlisting|minted)\}/ {
+            literal = 1
+        }
+        !literal && /^[[:space:]]*$/ && previous ~ /\\\\[[:blank:]\r]*(%.*)?$/ {
+            print "\\par"
+        }
+        {
+            print
+            previous = $0
+        }
+        /\\end\{(verbatim\*?|Verbatim|lstlisting|minted)\}/ {
+            literal = 0
+        }
+    ' "$DOCUMENT_FILE"
+}
+
 write_markdown_build_file() {
     local front_command
     local part_command='\newcommand{\genPart}[4]{\subsection{\textbf{LaTeXToPart} \textbf{#2} \textbf{#3} #1}#4}'
@@ -507,10 +528,10 @@ write_markdown_build_file() {
             '\newcommand{\genREF}[2]{\href{latex-to-ref:#1}{#2}}' \
             "$back_command"
         if [[ "$TEMPLATE_TYPE" == "presentation" ]]; then
-            sed 's/\\item\[\]/\\item \\textbf{ProjToolEmptyItem}/g' \
-                "$DOCUMENT_FILE"
+            write_markdown_source |
+                sed 's/\\item\[\]/\\item \\textbf{ProjToolEmptyItem}/g'
         else
-            cat -- "$DOCUMENT_FILE"
+            write_markdown_source
         fi
     } > "$MARKDOWN_BUILD_FILE"
 }
@@ -913,7 +934,7 @@ main_rem() {
     done
 
     case "$SCOPE" in
-        output) OUTPUT_PATH="output" ;;
+        all|output) OUTPUT_PATH="output" ;;
         readme) ;;
         results) OUTPUT_PATH="output/results" ;;
         media) OUTPUT_PATH="output/media" ;;
@@ -928,12 +949,13 @@ main_rem() {
         die "working directory is not a ProjTool project"
     fi
 
-    if [[ "$SCOPE" == readme ]]; then
+    if [[ "$SCOPE" != readme ]]; then
+        remove_path "$TARGET_DIR/$OUTPUT_PATH"
+    fi
+    if [[ "$SCOPE" == all || "$SCOPE" == readme ]]; then
         remove_path "$TARGET_DIR/$DOCUMENT_STEM.pdf"
         remove_path "$TARGET_DIR/$DOCUMENT_STEM.md"
         remove_path "$TARGET_DIR/README.md"
-    else
-        remove_path "$TARGET_DIR/$OUTPUT_PATH"
     fi
 
     printf '✓ %s removed from %s\n' "$SCOPE" "$TARGET_NAME"

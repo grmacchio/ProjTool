@@ -13,6 +13,30 @@ local function html_escape(value)
         :gsub("<", "&lt;"):gsub(">", "&gt;")
 end
 
+function Inlines(inlines)
+    local output = {}
+    for index, inline in ipairs(inlines) do
+        if inline.t == "Math" and inline.mathtype == "InlineMath" then
+            local previous = inlines[index - 1]
+            local following = inlines[index + 1]
+            if previous and (
+                (previous.t == "Str" and previous.text:match("[%w_]$")) or
+                (previous.t == "Math" and previous.mathtype == "InlineMath")
+            ) then
+                append(output, pandoc.RawInline("html", "<span></span>"))
+            end
+            append(output, inline)
+            if following and following.t == "Str" and
+                following.text:match("^[%w_]") then
+                append(output, pandoc.RawInline("html", "<span></span>"))
+            end
+        else
+            append(output, inline)
+        end
+    end
+    return output
+end
+
 function Image(image)
     local source = image.src
 

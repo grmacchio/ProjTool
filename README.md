@@ -134,8 +134,9 @@ To remove project material, use the following commands.
 | `projtool rem pdf` | `output/media/pdf/` |
 | `projtool rem md` | `output/media/md/` |
 | `projtool rem media` | `output/media/` |
-| `projtool rem output` | The entire `output/` directory |
+| `projtool rem output` | `output/` |
 | `projtool rem readme` | Root `README.md`, PDF, and Markdown files |
+| `projtool rem all` | `output/` and root `README.md`, PDF, and Markdown files |
 
 
 ## Important Notes
