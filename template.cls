@@ -97,6 +97,7 @@
 
 % Define formatting-related package.
 \newcommand{\loadFormatPackage}{
+    \newcommand{\genDATE}{\number\year/\ifnum\month<10 0\fi\number\month/\ifnum\day<10 0\fi\number\day}
     \@ifpackageloaded{hyperref}{
         \hypersetup{colorlinks=true, linkcolor=crimson, citecolor=crimson,
                     urlcolor=crimson}

@@ -490,6 +490,7 @@ write_markdown_build_file() {
     fi
 
     {
+        printf '\\newcommand{\\genDATE}{%s}\n' "$(date '+%Y/%m/%d')"
         printf '%s\n' \
             "$front_command" \
             "$part_command" \

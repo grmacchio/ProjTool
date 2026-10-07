@@ -8,7 +8,7 @@ This project includes a [PDF file](./presentation.pdf) and [Markdown file](./pre
 
 **Acknowledgments:** \<Acknowledgments Content\>
 
-**Date:** \<Date Content\>
+**Date:** 2026/10/07
 
 <a id="table-of-contents"></a>
 

@@ -8,7 +8,7 @@
 
 **Advisor:** \<Advisor Content\>
 
-**Date:** \<Date Content\>
+**Date:** 2026/10/07
 
 ## Abstract
 

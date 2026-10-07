@@ -6,7 +6,7 @@
 
 **Affiliations:** <sup>1</sup>\<Affiliation Content\>
 
-**Date:** \<Date\>
+**Date:** 2026/10/07
 
 ## Abstract
 

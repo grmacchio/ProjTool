@@ -8,7 +8,7 @@ This project includes a [PDF file](./preprint.pdf) and [Markdown file](./preprin
 
 **Affiliations:** <sup>1</sup>\<Affiliation Content\>
 
-**Date:** \<Date\>
+**Date:** 2026/10/07
 
 ## Abstract
 

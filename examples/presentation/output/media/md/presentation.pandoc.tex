@@ -1,3 +1,4 @@
+\newcommand{\genDATE}{2026/10/07}
 \newcommand{\genFront}[5]{\subsection{\textbf{Title}: #1}\textbf{Authors:} #2\par\textbf{Affiliations:} #3\par\textbf{Acknowledgments:} #4\par\textbf{Date:} #5\par\subsection{\textbf{LaTeXToTOC}}}
 \newcommand{\genPart}[2]{\subsection{\textbf{LaTeXToPart} \textbf{nonum} \textbf{toc} #1}#2}
 \newcommand{\genSubPart}[2]{\subsubsection{\textbf{LaTeXToSubPart} \textbf{inh} \textbf{notoc} #1}#2}
@@ -22,7 +23,7 @@
     }{
         <Acknowledgments Content>
     }{
-        <Date Content>
+        \genDATE
     }
 
     \genPart{<Section Title 1>}{
