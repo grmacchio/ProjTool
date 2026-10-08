@@ -10,7 +10,7 @@ This project includes a [PDF file](./dissertation.pdf) and [Markdown file](./dis
 
 **Advisor:** \<Advisor Content\>
 
-**Date:** 2026/10/07
+**Date:** 2026/10/08
 
 ## Abstract
 

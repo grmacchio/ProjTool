@@ -1,4 +1,4 @@
-\newcommand{\genDATE}{2026/10/07}
+\newcommand{\genDATE}{2026/10/08}
 \newcommand{\genFront}[5]{\subsection{#1}\textbf{Authors:} #2\par\textbf{Affiliations:} #3\par\textbf{Date:} #4\par\subsection{Acknowledgments}#5\subsection{\textbf{LaTeXToTOC}}}
 \newcommand{\genPart}[4]{\subsection{\textbf{LaTeXToPart} \textbf{#2} \textbf{#3} #1}#4}
 \newcommand{\genSubPart}[4]{\subsubsection{\textbf{LaTeXToSubPart} \textbf{#2} \textbf{#3} #1}#4}
@@ -10,7 +10,7 @@
 \newcommand{\genLabel}[1]{\tag{#1}\label{projtool-eq:#1}}
 \newcommand{\genREF}[2]{\href{latex-to-ref:#1}{#2}}
 \newcommand{\genProofs}{\subsection{\textbf{LaTeXToProofs}}}
-\documentclass[note,references={./references}]{template}
+\documentclass[note, references={./references}]{template}
 
 \begin{document}
 
@@ -42,7 +42,7 @@
             }
             <Subsection Content 1c>
 
-            \genTHM{<Theorem Title 1>}{num}{toc}{
+            \genTHM{<Theorem Title 1>}{inh}{inh}{
                 <Theorem Statement 1>
             }{here}{
                 <Theorem Proof 1>

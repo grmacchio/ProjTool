@@ -1,17 +1,17 @@
 # Fdb version 4
-["biber output/media/pdf/note"] 1791413891.44688 "output/media/pdf/note.bcf" "output/media/pdf/note.bbl" "output/media/pdf/note" 1791413896.80941 0
+["biber output/media/pdf/note"] 1791472712.70502 "output/media/pdf/note.bcf" "output/media/pdf/note.bbl" "output/media/pdf/note" 1791472718.25079 0
   "./references/1970author/1970author.bib" 1788710432.98263 169 1b275581133b34f564c0d5ffdfe94855 ""
   "./references/2002author/2002author.bib" 1788710432.98424 156 26852dca8f2f6f8f2f34e5620535ce5f ""
   "./references/2013author/2013author.bib" 1788710432.98541 137 74c8d25c2dd2838b6973c6e27a810adf ""
   "./references/2018author/2018author.bib" 1788710432.98643 152 d25e39a8f089804f7ae98cef6def0b8e ""
-  "output/media/pdf/note.bcf" 1791413896.65966 109305 0dfab3b614400a52e019aea66a65ac5c "pdflatex"
+  "output/media/pdf/note.bcf" 1791472718.11407 109305 0dfab3b614400a52e019aea66a65ac5c "pdflatex"
   (generated)
   "output/media/pdf/note.bbl"
   "output/media/pdf/note.blg"
   (rewritten before read)
-["pdflatex"] 1791413895.41728 "/Users/gregorymacchio/Documents/Mirror/laptop/global/writing/software/ProjTool/examples/note/note.tex" "output/media/pdf/note.pdf" "note" 1791413896.80979 0
-  "/Users/gregorymacchio/Documents/Mirror/laptop/global/writing/software/ProjTool/examples/note/note.tex" 1791413389.19079 3600 409d6d0514bae215da5ca73220d1759b ""
-  "/Users/gregorymacchio/Documents/Mirror/laptop/global/writing/software/ProjTool/template.cls" 1791413316.21193 51506 8d3834070f04c9c0db296dd88de63fcc ""
+["pdflatex"] 1791472716.87573 "/Users/gregorymacchio/Documents/Mirror/laptop/global/writing/software/ProjTool/examples/note/note.tex" "output/media/pdf/note.pdf" "note" 1791472718.25106 0
+  "/Users/gregorymacchio/Documents/Mirror/laptop/global/writing/software/ProjTool/examples/note/note.tex" 1791472699.4296 3601 88f0c6ffa26dfe0413ca812dfa0721c7 ""
+  "/Users/gregorymacchio/Documents/Mirror/laptop/global/writing/software/ProjTool/template.cls" 1791471906.20472 51498 08b18d7c03d6f353d03f2c253f24977a ""
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1136849721 2971 def0b6c1f0b107b3b936def894055589 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/jknappen/ec/ecbx0900.tfm" 1136768653 3584 1a7de6c99457381c64abc1a7c545505f ""
@@ -219,16 +219,16 @@
   "/usr/local/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1769657775 5467155 19efa205003f9ecad95fbbaa6ff24da1 ""
   "/usr/local/texlive/2025/texmf-var/web2c/pdftex/pdflatex.fmt" 1741450574 3345740 46b66fdb0378f7bf5921b5eabf1762b8 ""
   "/usr/local/texlive/2025/texmf.cnf" 1741450484 577 418a7058ec8e006d8704f60ecd22c938 ""
-  "note.tex" 1791413389.19079 3600 409d6d0514bae215da5ca73220d1759b ""
-  "output/media/pdf/note.aux" 1791413896.65791 5661 14e14975be9ca1c181407df27bb34b0b "pdflatex"
-  "output/media/pdf/note.bbl" 1791413892.83578 4911 fcd8f4323394128a8bf7503f75f26015 "biber output/media/pdf/note"
-  "output/media/pdf/note.out" 1791413896.65872 2452 95c8048a665ca9ef53128c8e8d620eef "pdflatex"
-  "output/media/pdf/note.projtool.cfg" 1791413890.03246 266 36ee3cd8447eb545b131128a6744d4dc ""
-  "output/media/pdf/note.run.xml" 1791413896.6603 2503 c9ebed3305bf3a959535f9bc618bc7de "pdflatex"
-  "output/media/pdf/note.toc" 1791413896.66036 1593 a2311c2f3dccb21a31d3307c00829011 "pdflatex"
-  "output/results/julia/exp.png" 1791413888.47702 15057 a100dcd019ce3a8cd83a854c6b405beb ""
-  "output/results/julia/natural_numbers.tex" 1791413888.25438 29 7f7901fcc2406d5dfddf9e24d9b37fa7 ""
-  "output/results/python/quadratic.png" 1791413889.83288 21810 af9de2bdcfbde52fc01bc01e3bea903a ""
+  "note.tex" 1791472699.4296 3601 88f0c6ffa26dfe0413ca812dfa0721c7 ""
+  "output/media/pdf/note.aux" 1791472718.11235 5661 14e14975be9ca1c181407df27bb34b0b "pdflatex"
+  "output/media/pdf/note.bbl" 1791472714.21416 4911 fcd8f4323394128a8bf7503f75f26015 "biber output/media/pdf/note"
+  "output/media/pdf/note.out" 1791472718.11326 2452 95c8048a665ca9ef53128c8e8d620eef "pdflatex"
+  "output/media/pdf/note.projtool.cfg" 1791472711.22095 266 36ee3cd8447eb545b131128a6744d4dc ""
+  "output/media/pdf/note.run.xml" 1791472718.11462 2503 c9ebed3305bf3a959535f9bc618bc7de "pdflatex"
+  "output/media/pdf/note.toc" 1791472718.11468 1593 a2311c2f3dccb21a31d3307c00829011 "pdflatex"
+  "output/results/julia/exp.png" 1791472709.48647 15057 a100dcd019ce3a8cd83a854c6b405beb ""
+  "output/results/julia/natural_numbers.tex" 1791472709.26308 29 7f7901fcc2406d5dfddf9e24d9b37fa7 ""
+  "output/results/python/quadratic.png" 1791472711.0244 21810 af9de2bdcfbde52fc01bc01e3bea903a ""
   (generated)
   "output/media/pdf/note.aux"
   "output/media/pdf/note.bcf"

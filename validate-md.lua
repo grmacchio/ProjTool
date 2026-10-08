@@ -639,16 +639,11 @@ function Pandoc(document)
             else
                 local parent_num = state.subpart_num or state.part_num
                 local parent_toc = state.subpart_toc or state.part_toc
-                local num_mode
-                if theorem_fields then
-                    num_mode = root_mode(fields[1], "num", "nonum", "genTHM")
-                    toc_mode = root_mode(fields[2], "toc", "notoc", "genTHM")
-                else
-                    num_mode = resolved_mode(fields[1], parent_num,
-                        "num", "nonum", "gen" .. name)
-                    toc_mode = resolved_mode(fields[2], parent_toc,
-                        "toc", "notoc", "gen" .. name)
-                end
+                local command = theorem_fields and "genTHM" or "gen" .. name
+                local num_mode = resolved_mode(fields[1], parent_num,
+                    "num", "nonum", command)
+                toc_mode = resolved_mode(fields[2], parent_toc,
+                    "toc", "notoc", command)
                 if num_mode == "num" then
                     state.object = state.object + 1
                     if state.subpart_num then

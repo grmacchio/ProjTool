@@ -245,8 +245,8 @@
         }
     }
     \NewDocumentCommand{\genTHM}{m m m +m m +m}{
-        \templateResolveRootNumMode{##2}{\genTHMNumMode}{\genTHM}
-        \templateResolveRootTocMode{##3}{\genTHMTocMode}{\genTHM}
+        \templateResolveNumMode{##2}{\genTHMNumMode}{\genTHM}
+        \templateResolveTocMode{##3}{\genTHMTocMode}{\genTHM}
         \ifdefstring{\genTHMNumMode}{num}{
             \templatePrepareNumberedObject
             \ifdefstring{\genTHMTocMode}{toc}{
