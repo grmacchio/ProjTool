@@ -379,13 +379,13 @@
             {Rebuild with ProjTool.}
     }
     \newtoggle{templateHasCitations}
-    \newcommand{\templateRequireReferences}{
-        \ifdefempty{\templatereferences}{
+    \newcommand{\templateRequireReferences}{%
+        \ifdefempty{\templatereferences}{%
             \ClassError{template}
                 {Citations require the references class option}
-                {Add references={REFERENCES_FOLDER} to the documentclass options.}
-        }{}
-        \global\toggletrue{templateHasCitations}
+                {Add references={REFERENCES_FOLDER} to the documentclass options.}%
+        }{}%
+        \global\toggletrue{templateHasCitations}%
     }
     \DeclareNameAlias{default}{given-family}
     \renewcommand*{\mkbibnamegiven}[1]{\textsc{##1}}
