@@ -3,6 +3,7 @@
 set -Eeuo pipefail
 
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+SOURCE_DIR="$SCRIPT_DIR/source"
 COLLECTION_DIR="$(cd -- "$SCRIPT_DIR/.." && pwd)"
 MODE=""
 TEMPLATE_TYPE=""
@@ -238,7 +239,7 @@ validate_reference_fields() {
         bibliography_options+=(--bibliography="$bibliography_file")
     done
     pandoc --from=markdown --to=plain --fail-if-warnings \
-        --lua-filter="$SCRIPT_DIR/references.lua" \
+        --lua-filter="$SOURCE_DIR/references.lua" \
         "${bibliography_options[@]}" /dev/null >/dev/null
 }
 
@@ -532,10 +533,10 @@ render_pdf() {
     write_pdf_build_config
 
     if [[ "$VERBOSE" == true ]]; then
-        TEXINPUTS="$PDF_OUTPUT_DIR//:$SCRIPT_DIR//:${TEXINPUTS:-}" \
+        TEXINPUTS="$PDF_OUTPUT_DIR//:$SOURCE_DIR//:${TEXINPUTS:-}" \
             latexmk -pdf -interaction=nonstopmode -halt-on-error \
             -outdir="$PDF_OUTPUT_DIR" "$DOCUMENT_FILE"
-    elif ! TEXINPUTS="$PDF_OUTPUT_DIR//:$SCRIPT_DIR//:${TEXINPUTS:-}" \
+    elif ! TEXINPUTS="$PDF_OUTPUT_DIR//:$SOURCE_DIR//:${TEXINPUTS:-}" \
         latexmk -pdf -interaction=nonstopmode -halt-on-error \
         -outdir="$PDF_OUTPUT_DIR" "$DOCUMENT_FILE" >/dev/null 2>&1; then
         die "PDF build failed; rerun with pdf -f TARGET -w verbose for details"
@@ -616,7 +617,7 @@ render_md() {
     local md_file="$MD_OUTPUT_DIR/$DOCUMENT_STEM.md"
     local md_temp_file="$MD_OUTPUT_DIR/.$DOCUMENT_STEM.md.tmp"
     local bibliography_entry
-    local citation_style_file="$SCRIPT_DIR/references.csl"
+    local citation_style_file="$SOURCE_DIR/references.csl"
     local -a citation_options=()
     local -a template_options=(--metadata="template-type:${TEMPLATE_TYPE:-dissertation}")
     local link_citations=true
@@ -645,8 +646,8 @@ render_md() {
 
     if [[ "$VERBOSE" == true ]]; then
         if ! pandoc --from=latex --to=gfm --wrap=none --fail-if-warnings \
-            --lua-filter="$SCRIPT_DIR/markdown.lua" \
-            --lua-filter="$SCRIPT_DIR/references.lua" \
+            --lua-filter="$SOURCE_DIR/markdown.lua" \
+            --lua-filter="$SOURCE_DIR/references.lua" \
             "${template_options[@]}" \
             "${citation_options[@]}" \
             "$MARKDOWN_BUILD_FILE" -o "$md_temp_file"; then
@@ -654,8 +655,8 @@ render_md() {
             die "Markdown build failed"
         fi
     elif ! pandoc --from=latex --to=gfm --wrap=none \
-        --fail-if-warnings --lua-filter="$SCRIPT_DIR/markdown.lua" \
-        --lua-filter="$SCRIPT_DIR/references.lua" \
+        --fail-if-warnings --lua-filter="$SOURCE_DIR/markdown.lua" \
+        --lua-filter="$SOURCE_DIR/references.lua" \
         "${template_options[@]}" \
         "${citation_options[@]}" \
         "$MARKDOWN_BUILD_FILE" -o "$md_temp_file" >/dev/null; then
