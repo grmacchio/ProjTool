@@ -126,3 +126,55 @@ or CC BY 4.0 licenses; thus, it is important not to include other peoples
 papers, even if it is convenient for the reader. It is recommended one uses a
 ``_`` in front of any file you want to omit by ``.gitignore``, which is
 already set up upon initialization.
+
+## Reference Fields and Formatting
+
+The five supported entry types use the reference conventions in the
+[SIADS author instructions](https://epubs.siam.org/siads/instructions-for-authors)
+and [SIAM style manual, chapter 15](https://www.siam.org/media/hmbhpgm1/stylemanual-1.pdf).
+ProjTool deliberately retains chronological ordering and its parenthesized type
+labels; those are customizations, not SIADS requirements.
+
+Every entry needs a title and author, except that an edited book may use an
+editor instead of an author. ProjTool checks the following minimum metadata
+before generating either PDF or Markdown:
+
+| Type | Label | Additional fields |
+| --- | --- | --- |
+| @article | (Journal Paper) | journal, year, volume, and pages or eid |
+| @book | (Book) | year, publisher, address |
+| @misc | (Preprint) | Online: url, doi, or eprint, plus year when available. Institutional: year, institution, address. |
+| @phdthesis | (Thesis) | year, school, address |
+| @inproceedings | (Conference Paper) | year, booktitle, and publisher or organization |
+
+The example .bib files store full names; their known journal, series, publisher,
+and repository abbreviations are applied by the PDF and Markdown formatters.
+
+Use abbreviated journal names in journal or shortjournal. An article number
+belongs in eid, without a page prefix. For articles still under review or in
+press, pubstate={submitted} or pubstate={inpress} replaces volume, year, and
+pages in the displayed reference.
+
+Book and thesis addresses are the publisher and university locations,
+respectively. Online preprints do not require institutional details.
+An unpublished manuscript may use howpublished={manuscript} with its year;
+institutional preprints may include a report number in number.
+Keep standalone titles in headline case and protect proper names and acronyms
+with braces in article titles. Available DOI links are retained.
+
+For ordinary conference proceedings, address is the conference location;
+address and pages are optional. For a paper published in a proceedings book,
+use entrysubtype={book}, publisher, address (publisher location), and pages.
+Include editor and series details when applicable. For a conference paper
+published in a journal, supply journal, volume, and pages or eid; it uses the
+journal format while retaining (Conference Paper).
+
+The PDF and Markdown styles retain supplied editions, editors, series, and
+links. The aliases date for year, location for address, journaltitle for
+journal, and institution for school are also accepted. An institutional
+preprint can use organization instead of institution. Missing fields are
+reported with the reference key and source file. These checks establish that
+metadata is present; authors must still verify its accuracy and journal
+abbreviations against the publication.
+
+Pandoc 2.17 or later is required for reference checks in both output formats.

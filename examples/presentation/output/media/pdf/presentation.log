@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.8)  8 OCT 2026 11:42
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.8)  18 OCT 2026 17:35
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -710,7 +710,7 @@ y)))
 (/usr/local/texlive/2025/texmf-dist/tex/latex/appendixnumberbeamer/appendixnumb
 erbeamer.sty)
 \c@templatePartObject=\count345
-Package hyperref Info: Option `colorlinks' set `true' on input line 1192.
+Package hyperref Info: Option `colorlinks' set `true' on input line 1345.
  (/usr/local/texlive/2025/texmf-dist/tex/latex/base/fontenc.sty
 Package: fontenc 2021/04/29 v2.0v Standard LaTeX package
 )
@@ -1273,53 +1273,73 @@ al/texlive/2025/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}]
 [3
 
 ]
-
-[4
-
-]
-<./output/results/julia/exp.png, id=83, 602.25pt x 401.5pt>
+<./output/results/julia/exp.png, id=78, 602.25pt x 401.5pt>
 File: ./output/results/julia/exp.png Graphic file (type png)
 <use ./output/results/julia/exp.png>
-Package pdftex.def Info: ./output/results/julia/exp.png  used on input line 67.
+Package pdftex.def Info: ./output/results/julia/exp.png  used on input line 78.
 
 (pdftex.def)             Requested size: 152.45494pt x 101.63678pt.
 
-Overfull \hbox (21.90005pt too wide) in paragraph at lines 67--67
+Overfull \hbox (21.90005pt too wide) in paragraph at lines 78--78
 [][]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 67--67
+Underfull \hbox (badness 10000) in paragraph at lines 78--78
 
  []
 
 
 Class beamer Warning: Frame text is shrunk by a factor of 30.85785 percent inst
-ead of 10 percent on input line 67.
+ead of 10 percent on input line 78.
+
+
+
+[4
+
+ <./output/results/julia/exp.png>]
+File: ./output/results/julia/exp.png Graphic file (type png)
+<use ./output/results/julia/exp.png>
+Package pdftex.def Info: ./output/results/julia/exp.png  used on input line 78.
+
+(pdftex.def)             Requested size: 152.45494pt x 101.63678pt.
+
+Overfull \hbox (21.90005pt too wide) in paragraph at lines 78--78
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 78--78
+
+ []
+
+
+Class beamer Warning: Frame text is shrunk by a factor of 30.85785 percent inst
+ead of 10 percent on input line 78.
 
 
 
 [5
 
- <./output/results/julia/exp.png>]
+]
 File: ./output/results/julia/exp.png Graphic file (type png)
 <use ./output/results/julia/exp.png>
-Package pdftex.def Info: ./output/results/julia/exp.png  used on input line 67.
+Package pdftex.def Info: ./output/results/julia/exp.png  used on input line 78.
 
 (pdftex.def)             Requested size: 152.45494pt x 101.63678pt.
 
-Overfull \hbox (21.90005pt too wide) in paragraph at lines 67--67
+Overfull \hbox (21.90005pt too wide) in paragraph at lines 78--78
 [][]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 67--67
+Underfull \hbox (badness 10000) in paragraph at lines 78--78
 
  []
 
 
 Class beamer Warning: Frame text is shrunk by a factor of 30.85785 percent inst
-ead of 10 percent on input line 67.
+ead of 10 percent on input line 78.
 
 
 
@@ -1328,22 +1348,22 @@ ead of 10 percent on input line 67.
 ]
 File: ./output/results/julia/exp.png Graphic file (type png)
 <use ./output/results/julia/exp.png>
-Package pdftex.def Info: ./output/results/julia/exp.png  used on input line 67.
+Package pdftex.def Info: ./output/results/julia/exp.png  used on input line 78.
 
 (pdftex.def)             Requested size: 152.45494pt x 101.63678pt.
 
-Overfull \hbox (21.90005pt too wide) in paragraph at lines 67--67
+Overfull \hbox (21.90005pt too wide) in paragraph at lines 78--78
 [][]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 67--67
+Underfull \hbox (badness 10000) in paragraph at lines 78--78
 
  []
 
 
 Class beamer Warning: Frame text is shrunk by a factor of 30.85785 percent inst
-ead of 10 percent on input line 67.
+ead of 10 percent on input line 78.
 
 
 
@@ -1352,22 +1372,22 @@ ead of 10 percent on input line 67.
 ]
 File: ./output/results/julia/exp.png Graphic file (type png)
 <use ./output/results/julia/exp.png>
-Package pdftex.def Info: ./output/results/julia/exp.png  used on input line 67.
+Package pdftex.def Info: ./output/results/julia/exp.png  used on input line 78.
 
 (pdftex.def)             Requested size: 152.45494pt x 101.63678pt.
 
-Overfull \hbox (21.90005pt too wide) in paragraph at lines 67--67
+Overfull \hbox (21.90005pt too wide) in paragraph at lines 78--78
 [][]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 67--67
+Underfull \hbox (badness 10000) in paragraph at lines 78--78
 
  []
 
 
 Class beamer Warning: Frame text is shrunk by a factor of 30.85785 percent inst
-ead of 10 percent on input line 67.
+ead of 10 percent on input line 78.
 
 
 
@@ -1376,72 +1396,43 @@ ead of 10 percent on input line 67.
 ]
 File: ./output/results/julia/exp.png Graphic file (type png)
 <use ./output/results/julia/exp.png>
-Package pdftex.def Info: ./output/results/julia/exp.png  used on input line 67.
+Package pdftex.def Info: ./output/results/julia/exp.png  used on input line 78.
 
 (pdftex.def)             Requested size: 152.45494pt x 101.63678pt.
 
-Overfull \hbox (21.90005pt too wide) in paragraph at lines 67--67
+Overfull \hbox (21.90005pt too wide) in paragraph at lines 78--78
 [][]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 67--67
+Underfull \hbox (badness 10000) in paragraph at lines 78--78
 
  []
 
 
 Class beamer Warning: Frame text is shrunk by a factor of 30.85785 percent inst
-ead of 10 percent on input line 67.
+ead of 10 percent on input line 78.
 
 
 
 [9
 
 ]
-File: ./output/results/julia/exp.png Graphic file (type png)
-<use ./output/results/julia/exp.png>
-Package pdftex.def Info: ./output/results/julia/exp.png  used on input line 67.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 78.
 
-(pdftex.def)             Requested size: 152.45494pt x 101.63678pt.
-
-Overfull \hbox (21.90005pt too wide) in paragraph at lines 67--67
-[][]
- []
+ (/usr/local/texlive/2025/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 78.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 67--67
-
- []
-
-
-Class beamer Warning: Frame text is shrunk by a factor of 30.85785 percent inst
-ead of 10 percent on input line 67.
-
-
+(/usr/local/texlive/2025/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
 
 [10
 
 ]
-File: ./output/results/julia/exp.png Graphic file (type png)
-<use ./output/results/julia/exp.png>
-Package pdftex.def Info: ./output/results/julia/exp.png  used on input line 67.
-
-(pdftex.def)             Requested size: 152.45494pt x 101.63678pt.
-
-Overfull \hbox (21.90005pt too wide) in paragraph at lines 67--67
-[][]
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 67--67
-
- []
-
-
-Class beamer Warning: Frame text is shrunk by a factor of 30.85785 percent inst
-ead of 10 percent on input line 67.
-
-
 
 [11
 
@@ -1450,17 +1441,6 @@ ead of 10 percent on input line 67.
 [12
 
 ]
-LaTeX Font Info:    Trying to load font information for U+msa on input line 67.
-
- (/usr/local/texlive/2025/texmf-dist/tex/latex/amsfonts/umsa.fd
-File: umsa.fd 2013/01/14 v3.01 AMS symbols A
-)
-LaTeX Font Info:    Trying to load font information for U+msb on input line 67.
-
-
-(/usr/local/texlive/2025/texmf-dist/tex/latex/amsfonts/umsb.fd
-File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-)
 
 [13
 
@@ -1476,37 +1456,77 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
 [16
 
-]
+] (output/media/pdf/presentation.toc)
 
 [17
 
-] (output/media/pdf/presentation.toc)
+]
+File: ./output/results/julia/exp.png Graphic file (type png)
+<use ./output/results/julia/exp.png>
+Package pdftex.def Info: ./output/results/julia/exp.png  used on input line 141
+.
+(pdftex.def)             Requested size: 152.45494pt x 101.63678pt.
+
+Overfull \hbox (21.90005pt too wide) in paragraph at lines 141--141
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 141--141
+
+ []
+
+
+Class beamer Warning: Frame text is shrunk by a factor of 30.85785 percent inst
+ead of 10 percent on input line 141.
+
+
 
 [18
 
 ]
+File: ./output/results/julia/exp.png Graphic file (type png)
+<use ./output/results/julia/exp.png>
+Package pdftex.def Info: ./output/results/julia/exp.png  used on input line 141
+.
+(pdftex.def)             Requested size: 152.45494pt x 101.63678pt.
+
+Overfull \hbox (21.90005pt too wide) in paragraph at lines 141--141
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 141--141
+
+ []
+
+
+Class beamer Warning: Frame text is shrunk by a factor of 30.85785 percent inst
+ead of 10 percent on input line 141.
+
+
 
 [19
 
 ]
 File: ./output/results/julia/exp.png Graphic file (type png)
 <use ./output/results/julia/exp.png>
-Package pdftex.def Info: ./output/results/julia/exp.png  used on input line 118
+Package pdftex.def Info: ./output/results/julia/exp.png  used on input line 141
 .
 (pdftex.def)             Requested size: 152.45494pt x 101.63678pt.
 
-Overfull \hbox (21.90005pt too wide) in paragraph at lines 118--118
+Overfull \hbox (21.90005pt too wide) in paragraph at lines 141--141
 [][]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 118--118
+Underfull \hbox (badness 10000) in paragraph at lines 141--141
 
  []
 
 
 Class beamer Warning: Frame text is shrunk by a factor of 30.85785 percent inst
-ead of 10 percent on input line 118.
+ead of 10 percent on input line 141.
 
 
 
@@ -1515,22 +1535,22 @@ ead of 10 percent on input line 118.
 ]
 File: ./output/results/julia/exp.png Graphic file (type png)
 <use ./output/results/julia/exp.png>
-Package pdftex.def Info: ./output/results/julia/exp.png  used on input line 118
+Package pdftex.def Info: ./output/results/julia/exp.png  used on input line 141
 .
 (pdftex.def)             Requested size: 152.45494pt x 101.63678pt.
 
-Overfull \hbox (21.90005pt too wide) in paragraph at lines 118--118
+Overfull \hbox (21.90005pt too wide) in paragraph at lines 141--141
 [][]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 118--118
+Underfull \hbox (badness 10000) in paragraph at lines 141--141
 
  []
 
 
 Class beamer Warning: Frame text is shrunk by a factor of 30.85785 percent inst
-ead of 10 percent on input line 118.
+ead of 10 percent on input line 141.
 
 
 
@@ -1539,22 +1559,22 @@ ead of 10 percent on input line 118.
 ]
 File: ./output/results/julia/exp.png Graphic file (type png)
 <use ./output/results/julia/exp.png>
-Package pdftex.def Info: ./output/results/julia/exp.png  used on input line 118
+Package pdftex.def Info: ./output/results/julia/exp.png  used on input line 141
 .
 (pdftex.def)             Requested size: 152.45494pt x 101.63678pt.
 
-Overfull \hbox (21.90005pt too wide) in paragraph at lines 118--118
+Overfull \hbox (21.90005pt too wide) in paragraph at lines 141--141
 [][]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 118--118
+Underfull \hbox (badness 10000) in paragraph at lines 141--141
 
  []
 
 
 Class beamer Warning: Frame text is shrunk by a factor of 30.85785 percent inst
-ead of 10 percent on input line 118.
+ead of 10 percent on input line 141.
 
 
 
@@ -1563,96 +1583,36 @@ ead of 10 percent on input line 118.
 ]
 File: ./output/results/julia/exp.png Graphic file (type png)
 <use ./output/results/julia/exp.png>
-Package pdftex.def Info: ./output/results/julia/exp.png  used on input line 118
+Package pdftex.def Info: ./output/results/julia/exp.png  used on input line 141
 .
 (pdftex.def)             Requested size: 152.45494pt x 101.63678pt.
 
-Overfull \hbox (21.90005pt too wide) in paragraph at lines 118--118
+Overfull \hbox (21.90005pt too wide) in paragraph at lines 141--141
 [][]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 118--118
+Underfull \hbox (badness 10000) in paragraph at lines 141--141
 
  []
 
 
 Class beamer Warning: Frame text is shrunk by a factor of 30.85785 percent inst
-ead of 10 percent on input line 118.
+ead of 10 percent on input line 141.
 
 
 
 [23
 
 ]
-File: ./output/results/julia/exp.png Graphic file (type png)
-<use ./output/results/julia/exp.png>
-Package pdftex.def Info: ./output/results/julia/exp.png  used on input line 118
-.
-(pdftex.def)             Requested size: 152.45494pt x 101.63678pt.
-
-Overfull \hbox (21.90005pt too wide) in paragraph at lines 118--118
-[][]
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 118--118
-
- []
-
-
-Class beamer Warning: Frame text is shrunk by a factor of 30.85785 percent inst
-ead of 10 percent on input line 118.
-
-
 
 [24
 
 ]
-File: ./output/results/julia/exp.png Graphic file (type png)
-<use ./output/results/julia/exp.png>
-Package pdftex.def Info: ./output/results/julia/exp.png  used on input line 118
-.
-(pdftex.def)             Requested size: 152.45494pt x 101.63678pt.
-
-Overfull \hbox (21.90005pt too wide) in paragraph at lines 118--118
-[][]
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 118--118
-
- []
-
-
-Class beamer Warning: Frame text is shrunk by a factor of 30.85785 percent inst
-ead of 10 percent on input line 118.
-
-
 
 [25
 
 ]
-File: ./output/results/julia/exp.png Graphic file (type png)
-<use ./output/results/julia/exp.png>
-Package pdftex.def Info: ./output/results/julia/exp.png  used on input line 118
-.
-(pdftex.def)             Requested size: 152.45494pt x 101.63678pt.
-
-Overfull \hbox (21.90005pt too wide) in paragraph at lines 118--118
-[][]
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 118--118
-
- []
-
-
-Class beamer Warning: Frame text is shrunk by a factor of 30.85785 percent inst
-ead of 10 percent on input line 118.
-
-
 
 [26
 
@@ -1672,19 +1632,19 @@ ead of 10 percent on input line 118.
 
 [30
 
-]
+] (output/media/pdf/presentation.toc)
 
 [31
 
-]
+] (output/media/pdf/presentation.toc)
 
 [32
 
-] (output/media/pdf/presentation.toc)
+]
 
 [33
 
-] (output/media/pdf/presentation.toc)
+]
 
 [34
 
@@ -1729,14 +1689,6 @@ ead of 10 percent on input line 118.
 [44
 
 ]
-
-[45
-
-]
-
-[46
-
-]
 \tf@nav=\write7
 \openout7 = `presentation.nav'.
 
@@ -1758,13 +1710,13 @@ Package logreq Info: Writing requests to 'presentation.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 35102 strings out of 473190
- 701192 string characters out of 5715801
- 1473264 words of memory out of 5000000
- 57632 multiletter control sequences out of 15000+600000
+ 35303 strings out of 473190
+ 710848 string characters out of 5715801
+ 1496422 words of memory out of 5000000
+ 57837 multiletter control sequences out of 15000+600000
  576348 words of font info for 75 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 144i,11n,139p,1503b,1347s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 144i,11n,139p,1503b,1372s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb
 ></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><
 /usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></us
@@ -1783,10 +1735,10 @@ exmf-dist/fonts/type1/public/cm-super/sfti0600.pfb></usr/local/texlive/2025/tex
 mf-dist/fonts/type1/public/cm-super/sfti1095.pfb></usr/local/texlive/2025/texmf
 -dist/fonts/type1/public/cm-super/sftt0800.pfb></usr/local/texlive/2025/texmf-d
 ist/fonts/type1/public/cm-super/sftt1095.pfb>
-Output written on output/media/pdf/presentation.pdf (46 pages, 364844 bytes).
+Output written on output/media/pdf/presentation.pdf (44 pages, 416321 bytes).
 PDF statistics:
- 475 PDF objects out of 1000 (max. 8388607)
- 369 compressed objects within 4 object streams
- 105 named destinations out of 1000 (max. 500000)
+ 478 PDF objects out of 1000 (max. 8388607)
+ 374 compressed objects within 4 object streams
+ 101 named destinations out of 1000 (max. 500000)
  146 words of extra memory for PDF output out of 10000 (max. 10000000)
 

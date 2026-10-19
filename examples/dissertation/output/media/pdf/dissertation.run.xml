@@ -79,10 +79,27 @@
       <file>dissertation.bcf</file>
     </requires>
     <requires type="editable">
-      <file>./references/1970author/1970author.bib</file>
+      <file>./references/2001author/2001author.bib</file>
       <file>./references/2002author/2002author.bib</file>
+      <file>./references/2003author/2003author.bib</file>
+      <file>./references/2004author/2004author.bib</file>
+      <file>./references/2005author/2005author.bib</file>
+      <file>./references/2006author/2006author.bib</file>
+      <file>./references/2007author/2007author.bib</file>
+      <file>./references/2008author/2008author.bib</file>
+      <file>./references/2009author/2009author.bib</file>
+      <file>./references/2010author/2010author.bib</file>
+      <file>./references/2011author/2011author.bib</file>
+      <file>./references/2012author/2012author.bib</file>
       <file>./references/2013author/2013author.bib</file>
+      <file>./references/2014author/2014author.bib</file>
+      <file>./references/2015author/2015author.bib</file>
+      <file>./references/2016author/2016author.bib</file>
+      <file>./references/2017author/2017author.bib</file>
       <file>./references/2018author/2018author.bib</file>
+      <file>./references/2019author/2019author.bib</file>
+      <file>./references/2020author/2020author.bib</file>
+      <file>./references/2021author/2021author.bib</file>
     </requires>
   </external>
 </requests>

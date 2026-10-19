@@ -209,7 +209,7 @@ validate_reference_types() {
                 entry_type="$(printf '%s' "${BASH_REMATCH[1]}" |
                     tr '[:upper:]' '[:lower:]')"
                 case "$entry_type" in
-                    article|book|misc|phdthesis)
+                    article|book|misc|phdthesis|inproceedings)
                         entry_key="${BASH_REMATCH[2]}"
                         [[ "$entry_key" == "$reference_id" ]] ||
                             die "reference key $entry_key in $bibliography_file:$line_number must match directory $reference_id"
@@ -218,7 +218,7 @@ validate_reference_types() {
                     comment|preamble|string)
                         ;;
                     *)
-                        die "unsupported reference type @$entry_type in $bibliography_file:$line_number; use @article, @book, @misc, or @phdthesis"
+                        die "unsupported reference type @$entry_type in $bibliography_file:$line_number; use @article, @book, @misc, @phdthesis, or @inproceedings"
                         ;;
                 esac
             fi
@@ -226,6 +226,20 @@ validate_reference_types() {
         [[ "$found_reference" == true ]] ||
             die "no citeable reference found in $bibliography_file"
     done
+}
+
+validate_reference_fields() {
+    local bibliography_file
+    local -a bibliography_options=()
+
+    [[ -n "${BIBLIOGRAPHY_FILES[*]-}" ]] || return 0
+    require_command pandoc
+    for bibliography_file in "${BIBLIOGRAPHY_FILES[@]}"; do
+        bibliography_options+=(--bibliography="$bibliography_file")
+    done
+    pandoc --from=markdown --to=plain --fail-if-warnings \
+        --lua-filter="$SCRIPT_DIR/references.lua" \
+        "${bibliography_options[@]}" /dev/null >/dev/null
 }
 
 read_document_source() {
@@ -513,6 +527,7 @@ render_pdf() {
     resolve_reference_directory
     collect_cited_bibliographies
     validate_reference_types
+    validate_reference_fields
     mkdir -p -- "$PDF_OUTPUT_DIR"
     write_pdf_build_config
 
@@ -615,10 +630,7 @@ render_md() {
     if [[ -n "${BIBLIOGRAPHY_FILES[*]-}" ]]; then
         [[ -f "$citation_style_file" ]] ||
             die "missing citation style: $citation_style_file"
-        citation_options+=(
-            --csl="$citation_style_file"
-            --citeproc
-        )
+        citation_options+=(--csl="$citation_style_file")
         for bibliography_entry in "${BIBLIOGRAPHY_FILES[@]}"; do
             citation_options+=(--bibliography="$bibliography_entry")
         done
@@ -626,13 +638,15 @@ render_md() {
 
     require_command pandoc
     validate_reference_types
+    validate_reference_fields
     mkdir -p -- "$MD_OUTPUT_DIR"
     write_markdown_build_file
     rm -f -- "$md_temp_file"
 
     if [[ "$VERBOSE" == true ]]; then
         if ! pandoc --from=latex --to=gfm --wrap=none --fail-if-warnings \
-            --lua-filter="$SCRIPT_DIR/validate-md.lua" \
+            --lua-filter="$SCRIPT_DIR/markdown.lua" \
+            --lua-filter="$SCRIPT_DIR/references.lua" \
             "${template_options[@]}" \
             "${citation_options[@]}" \
             "$MARKDOWN_BUILD_FILE" -o "$md_temp_file"; then
@@ -640,7 +654,8 @@ render_md() {
             die "Markdown build failed"
         fi
     elif ! pandoc --from=latex --to=gfm --wrap=none \
-        --fail-if-warnings --lua-filter="$SCRIPT_DIR/validate-md.lua" \
+        --fail-if-warnings --lua-filter="$SCRIPT_DIR/markdown.lua" \
+        --lua-filter="$SCRIPT_DIR/references.lua" \
         "${template_options[@]}" \
         "${citation_options[@]}" \
         "$MARKDOWN_BUILD_FILE" -o "$md_temp_file" >/dev/null; then

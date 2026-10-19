@@ -6,7 +6,7 @@
 
 **Affiliations:** <sup>1</sup>\<Affiliation Content\>
 
-**Date:** 2026/10/08
+**Date:** 2026/10/18
 
 ## Abstract
 
@@ -84,7 +84,7 @@ $$
 
 Test Hyper-References: [\<Theorem Title 1\>](#theorem-theorem-title-1) [\<Definition Title 1\>](#definition-definition-title-1) [\<Equation Title 1\>](#equation-equation-title-1) [\<Figure Title 1\>](#figure-figure-title-1)  
 
-Test Citations: \[[1](#ref-1970author), [2](#ref-2002author), [3](#ref-2013author), [4](#ref-2018author)\]  
+Test Citations: \[[1](#ref-2001author), [2](#ref-2002author), [3](#ref-2003author), [4](#ref-2004author), [5](#ref-2005author), [6](#ref-2006author), [7](#ref-2007author), [8](#ref-2008author), [9](#ref-2009author), [10](#ref-2010author), [11](#ref-2011author), [12](#ref-2012author), [13](#ref-2013author), [14](#ref-2014author), [15](#ref-2015author), [16](#ref-2016author), [17](#ref-2017author), [18](#ref-2018author), [19](#ref-2019author), [20](#ref-2020author), [21](#ref-2021author)\]  
 
 Test Code Output: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
 
@@ -127,7 +127,7 @@ $$
 
 Test Hyper-References: [\<Theorem Title 2\>](#theorem-theorem-title-2) [\<Definition Title 2\>](#definition-definition-title-2) [\<Equation Title 2\>](#equation-equation-title-2) [\<Figure Title 2\>](#figure-figure-title-2)  
 
-Test Citations: \[[1](#ref-1970author), [2](#ref-2002author), [3](#ref-2013author), [4](#ref-2018author)\]  
+Test Citations: \[[1](#ref-2001author), [2](#ref-2002author), [3](#ref-2003author), [4](#ref-2004author), [5](#ref-2005author), [6](#ref-2006author), [7](#ref-2007author), [8](#ref-2008author), [9](#ref-2009author), [10](#ref-2010author), [11](#ref-2011author), [12](#ref-2012author), [13](#ref-2013author), [14](#ref-2014author), [15](#ref-2015author), [16](#ref-2016author), [17](#ref-2017author), [18](#ref-2018author), [19](#ref-2019author), [20](#ref-2020author), [21](#ref-2021author)\]  
 
 Test Code Output: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
 
@@ -197,27 +197,129 @@ Test Code Output: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
 
 <div id="refs" class="references csl-bib-body">
 
-<div id="ref-1970author" class="csl-entry">
+<div id="ref-2001author" class="csl-entry">
 
-<span class="csl-left-margin">\[1\] </span><span class="csl-right-inline">(Paper) <span class="smallcaps">\<Authors\></span>, *\<Title\>*, \<Journal Abbreviation\>, 1 (1970), pp. 1–10.</span>
+<span class="csl-left-margin">\[1\] </span><span class="csl-right-inline">(Journal Paper) <span class="smallcaps">J. A. Smith</span> and <span class="smallcaps">J. Brown</span>, *A journal paper with a page range*, J. Test., 2 (2001), pp. 1–10.</span>
 
 </div>
 
 <div id="ref-2002author" class="csl-entry">
 
-<span class="csl-left-margin">\[2\] </span><span class="csl-right-inline">(Book) <span class="smallcaps">\<Authors\></span>, *\<Title\>*, \<Publisher\>, \<Publisher Location\>, 2002.</span>
+<span class="csl-left-margin">\[2\] </span><span class="csl-right-inline">(Journal Paper) <span class="smallcaps">J. A. Smith</span> and <span class="smallcaps">J. Brown</span>, *A journal paper with an article number*, J. Test., 3 (2002), 031505 (12 pages).</span>
+
+</div>
+
+<div id="ref-2003author" class="csl-entry">
+
+<span class="csl-left-margin">\[3\] </span><span class="csl-right-inline">(Journal Paper) <span class="smallcaps">J. A. Smith</span> and <span class="smallcaps">J. Brown</span>, *A single-page journal paper*, J. Test., 4 (2003), p. 7.</span>
+
+</div>
+
+<div id="ref-2004author" class="csl-entry">
+
+<span class="csl-left-margin">\[4\] </span><span class="csl-right-inline">(Journal Paper) <span class="smallcaps">J. A. Smith</span> and <span class="smallcaps">J. Brown</span>, *A journal paper with an abbreviated journal name*, J. Test., 8 (2004), A12.</span>
+
+</div>
+
+<div id="ref-2005author" class="csl-entry">
+
+<span class="csl-left-margin">\[5\] </span><span class="csl-right-inline">(Journal Paper) <span class="smallcaps">J. A. Smith</span> and <span class="smallcaps">J. Brown</span>, *A journal paper in press*, J. Test., to appear.</span>
+
+</div>
+
+<div id="ref-2006author" class="csl-entry">
+
+<span class="csl-left-margin">\[6\] </span><span class="csl-right-inline">(Journal Paper) <span class="smallcaps">J. A. Smith</span> and <span class="smallcaps">J. Brown</span>, *A one-page journal paper with an article number*, J. Test., 3 (2006), 031505 (1 page).</span>
+
+</div>
+
+<div id="ref-2007author" class="csl-entry">
+
+<span class="csl-left-margin">\[7\] </span><span class="csl-right-inline">(Journal Paper) <span class="smallcaps">J. A. Smith</span> and <span class="smallcaps">J. Brown</span>, *A published journal paper*, J. Test., 2 (2007), pp. 1–10.</span>
+
+</div>
+
+<div id="ref-2008author" class="csl-entry">
+
+<span class="csl-left-margin">\[8\] </span><span class="csl-right-inline">(Preprint) <span class="smallcaps">J. A. Smith</span> and <span class="smallcaps">J. Brown</span>, *An Institutional Preprint*, preprint TR-01, Example University, Boston, 2008.</span>
+
+</div>
+
+<div id="ref-2009author" class="csl-entry">
+
+<span class="csl-left-margin">\[9\] </span><span class="csl-right-inline">(Preprint) <span class="smallcaps">J. A. Smith</span> and <span class="smallcaps">J. Brown</span>, *An Online Preprint*, preprint, <https://arxiv.org/abs/0000.00000>, 2009.</span>
+
+</div>
+
+<div id="ref-2010author" class="csl-entry">
+
+<span class="csl-left-margin">\[10\] </span><span class="csl-right-inline">(Preprint) <span class="smallcaps">J. A. Smith</span> and <span class="smallcaps">J. Brown</span>, *A Manuscript*, manuscript, 2010.</span>
+
+</div>
+
+<div id="ref-2011author" class="csl-entry">
+
+<span class="csl-left-margin">\[11\] </span><span class="csl-right-inline">(Preprint) <span class="smallcaps">J. A. Smith</span> and <span class="smallcaps">J. Brown</span>, *An Online Preprint with an Access Date*, preprint, <https://example.org/preprint_v1> (accessed 3 Feb. 2025), 2011.</span>
+
+</div>
+
+<div id="ref-2012author" class="csl-entry">
+
+<span class="csl-left-margin">\[12\] </span><span class="csl-right-inline">(Preprint) <span class="smallcaps">J. A. Smith</span> and <span class="smallcaps">J. Brown</span>, *A Social Science Research Network Preprint*, preprint, SSRN: 0000000, 2012.</span>
 
 </div>
 
 <div id="ref-2013author" class="csl-entry">
 
-<span class="csl-left-margin">\[3\] </span><span class="csl-right-inline">(Preprint) <span class="smallcaps">\<Authors\></span>, *\<Title\>*, 2013, <https://www.google.com/search?q=test>.</span>
+<span class="csl-left-margin">\[13\] </span><span class="csl-right-inline">(Book) <span class="smallcaps">J. Smith</span> and <span class="smallcaps">J. Brown</span>, eds., *An Edited Book*, 2nd ed., Test Ser. 5, SIAM, Philadelphia, 2013.</span>
+
+</div>
+
+<div id="ref-2014author" class="csl-entry">
+
+<span class="csl-left-margin">\[14\] </span><span class="csl-right-inline">(Book) <span class="smallcaps">J. A. Smith</span> and <span class="smallcaps">J. Brown</span>, *A Book Title*, SIAM, Philadelphia, 2014.</span>
+
+</div>
+
+<div id="ref-2015author" class="csl-entry">
+
+<span class="csl-left-margin">\[15\] </span><span class="csl-right-inline">(Book) <span class="smallcaps">J. A. Smith</span> and <span class="smallcaps">J. Brown</span>, *A Book with an Editor*, J. Editor, ed., SIAM, Philadelphia, 2015.</span>
+
+</div>
+
+<div id="ref-2016author" class="csl-entry">
+
+<span class="csl-left-margin">\[16\] </span><span class="csl-right-inline">(Thesis) <span class="smallcaps">J. A. Smith</span> and <span class="smallcaps">J. Brown</span>, *A Thesis Title*, PhD thesis, Example University, Boston, 2016.</span>
+
+</div>
+
+<div id="ref-2017author" class="csl-entry">
+
+<span class="csl-left-margin">\[17\] </span><span class="csl-right-inline">(Conference Paper) <span class="smallcaps">J. A. Smith</span> and <span class="smallcaps">J. Brown</span>, *A conference paper with a publisher*, in Proceedings of a Conference, SIAM, 2017.</span>
 
 </div>
 
 <div id="ref-2018author" class="csl-entry">
 
-<span class="csl-left-margin">\[4\] </span><span class="csl-right-inline">(Thesis) <span class="smallcaps">\<Authors\></span>, *\<Title\>*, PhD thesis, \<School\>, \<School Location\>, 2018.</span>
+<span class="csl-left-margin">\[18\] </span><span class="csl-right-inline">(Conference Paper) <span class="smallcaps">J. A. Smith</span> and <span class="smallcaps">J. Brown</span>, *A conference paper with a sponsoring organization*, in Proceedings of Another Conference, Paris, 2018, Example Society, pp. 10–20.</span>
+
+</div>
+
+<div id="ref-2019author" class="csl-entry">
+
+<span class="csl-left-margin">\[19\] </span><span class="csl-right-inline">(Conference Paper) <span class="smallcaps">J. A. Smith</span> and <span class="smallcaps">J. Brown</span>, *A paper in a proceedings book*, in Collected Conference Papers, Test Ser. 6, J. Editor, ed., SIAM, Philadelphia, 2019, pp. 21–30.</span>
+
+</div>
+
+<div id="ref-2020author" class="csl-entry">
+
+<span class="csl-left-margin">\[20\] </span><span class="csl-right-inline">(Conference Paper) <span class="smallcaps">J. A. Smith</span> and <span class="smallcaps">J. Brown</span>, *A paper in journal proceedings*, J. Conf. Test., 7 (2020), pp. 31–40.</span>
+
+</div>
+
+<div id="ref-2021author" class="csl-entry">
+
+<span class="csl-left-margin">\[21\] </span><span class="csl-right-inline">(Conference Paper) <span class="smallcaps">J. A. Smith</span> and <span class="smallcaps">J. Brown</span>, *A paper in an edited proceedings series*, in Conference with Editors, J. Editor and J. Editor, eds., Conf. Ser. 8, Example Society, SIAM, 2021.</span>
 
 </div>
 
