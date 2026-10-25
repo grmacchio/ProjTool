@@ -27,6 +27,11 @@
     "latex-workshop.latex.recipe.default": "gen media",
     "latex-workshop.latex.autoBuild.run": "onSave",
     "latex-workshop.latex.outDir": "%DIR%/output/media/pdf",
+    "projtool.folding.enabled": true,
+    "[latex]": {
+        "editor.foldingStrategy": "auto",
+        "editor.defaultFoldingRangeProvider": null
+    },
     "latex-workshop.view.outline.sections": [
         "part",
         "chapter|genFront|genPart",

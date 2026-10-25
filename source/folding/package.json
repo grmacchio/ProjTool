@@ -1,0 +1,34 @@
+{
+    "name": "projtool-folding",
+    "displayName": "ProjTool Folding",
+    "description": "Fold ProjTool parts and subparts with multiline titles.",
+    "version": "0.1.0",
+    "publisher": "projtool",
+    "license": "MIT",
+    "engines": {
+        "vscode": "^1.80.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "activationEvents": [
+        "onLanguage:latex"
+    ],
+    "main": "./extension.js",
+    "extensionDependencies": [
+        "james-yu.latex-workshop"
+    ],
+    "contributes": {
+        "configuration": {
+            "title": "ProjTool Folding",
+            "properties": {
+                "projtool.folding.enabled": {
+                    "type": "boolean",
+                    "default": false,
+                    "scope": "resource",
+                    "description": "Add folding ranges for ProjTool parts and subparts, including multiline titles."
+                }
+            }
+        }
+    }
+}

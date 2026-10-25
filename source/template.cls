@@ -111,6 +111,8 @@
         \RequirePackage[colorlinks=true, linkcolor=crimson, citecolor=crimson,
                         urlcolor=crimson]{hyperref}
     }
+    \let\templateURLSubscript\sb
+    \preto\Url@MathSetup{\let\sb\templateURLSubscript}
     \RequirePackage[T1]{fontenc}
 }
 
@@ -359,15 +361,14 @@
 
 % Define references-related package.
 \newcommand{\loadReferencesPackage}{
-    \RequirePackage[
-        backend=biber,
-        style=numeric,
-        sorting=ynt,
-        sortcites=true,
-        giveninits=true,
-        isbn=false,
-        maxbibnames=99
-    ]{biblatex}
+    \newlength{\templateReferenceItemSep}
+    \newcommand{\templateFullReference}[1]{%
+        \ifcsdef{templateReference@##1}{%
+            \csuse{templateReference@##1}%
+        }{%
+            \ClassError{template}{Missing formatted reference ##1}{Rebuild with ProjTool.}%
+        }%
+    }
     \InputIfFileExists{\jobname.projtool.cfg}{}{
         \ClassError{template}
             {Missing explicit references configuration}
@@ -387,246 +388,13 @@
         }{}%
         \global\toggletrue{templateHasCitations}%
     }
-    \DeclareSourcemap{
-        \maps[datatype=bibtex]{
-            \map[overwrite]{
-                \step[fieldsource=journal, match=\regexp{\AJournal\s+of\s+Tests\z}, final]
-                \step[fieldset=shortjournal, fieldvalue={J. Test.}]
-            }
-            \map[overwrite]{
-                \step[fieldsource=journal, match=\regexp{\AJournal\s+of\s+Test\s+Examples\z}, final]
-                \step[fieldset=shortjournal, fieldvalue={J. Test Ex.}]
-            }
-            \map[overwrite]{
-                \step[fieldsource=journal, match=\regexp{\AJournal\s+of\s+Conference\s+Tests\z}, final]
-                \step[fieldset=shortjournal, fieldvalue={J. Conf. Test.}]
-            }
-            \map[overwrite]{
-                \step[fieldsource=series, match=\regexp{\ATest\s+Series\z}, final]
-                \step[fieldset=series, fieldvalue={Test Ser.}]
-            }
-            \map[overwrite]{
-                \step[fieldsource=series, match=\regexp{\AConference\s+Series\z}, final]
-                \step[fieldset=series, fieldvalue={Conf. Ser.}]
-            }
-            \map[overwrite]{
-                \step[fieldsource=publisher, match=\regexp{\ASociety\s+for\s+Industrial\s+and\s+Applied\s+Mathematics\z}, final]
-                \step[fieldset=publisher, fieldvalue={SIAM}]
-            }
-            \map[overwrite]{
-                \step[fieldsource=archiveprefix, match=\regexp{\ASocial\s+Science\s+Research\s+Network\z}, final]
-                \step[fieldset=archiveprefix, fieldvalue={SSRN}]
-            }
-            \map{
-                \pertype{article}
-                \pertype{inproceedings}
-                \step[fieldsource=title, match=\regexp{(:\s*)([A-Z])},
-                    replace=\regexp{$1\{$2\}}]
-            }
-        }
-    }
-    \DeclareNameAlias{default}{given-family}
-    \DeclareNameWrapperFormat{author}{\textsc{##1}}
-    \DeclareFieldFormat[article,inproceedings]{title}{\mkbibitalic{\MakeSentenceCase*{##1}}}
-    \DeclareFieldFormat[book,misc,thesis]{title}{\mkbibitalic{##1}}
-    \DeclareFieldFormat[article,inproceedings]{journaltitle}{##1\isdot}
-    \DeclareFieldFormat{shortjournal}{##1\isdot}
-    \DeclareFieldFormat{template:plain}{##1}
-    \DeclareFieldFormat[inproceedings]{booktitle}{##1}
-    \DeclareFieldFormat{doi}{\begingroup\let\sb=_\url{https://doi.org/##1}\endgroup}
-    \DeclareFieldFormat{eprint}{%
-        \begingroup\let\sb=_%
-        \ifboolexpr{test {\iffieldequalstr{eprinttype}{arxiv}} or test {\iffieldequalstr{eprinttype}{arXiv}}}
-            {\url{https://arxiv.org/abs/##1}}
-            {\iffieldundef{eprinttype}{}{\thefield{eprinttype}\addcolon\space}%
-             \nolinkurl{##1}}%
-        \endgroup}
-    \DeclareFieldFormat{url}{\begingroup\let\sb=_\url{##1}\endgroup}
-    \DeclareFieldFormat{urldate}{\mkbibparens{accessed\space##1}}
-    \DeclareFieldFormat{pages}{\mkpageprefix[pagination]{##1}}
-    \DeclareFieldFormat{eid}{##1}
-    \DeclareFieldFormat{template:volume}{vol.\space##1}
-    \DeclareFieldFormat{pubstate}{\ifstrequal{##1}{inpress}{to appear}{##1}}
-    \newbibmacro*{template:reference-type}{%
-        \ifentrytype{article}
-            {(Journal Paper)}
-            {\ifentrytype{book}
-                {(Book)}
-                {\ifentrytype{thesis}
-                    {(Thesis)}
-                    {\ifentrytype{inproceedings}
-                        {(Conference Paper)}
-                        {(Preprint)}}}}}
-    \newbibmacro*{template:editor-label}{%
-        \setunit{\addcomma\space}%
-        \ifnumgreater{\value{editor}}{1}
-            {\printtext{eds\adddot}}
-            {\printtext{ed\adddot}}}
-    \newbibmacro*{template:authors}{%
-        \ifnameundef{author}
-            {\printtext{\textsc{\printnames{editor}}}%
-             \usebibmacro{template:editor-label}}
-            {\printnames{author}}}
-    \newbibmacro*{template:editors}{%
-        \ifnameundef{editor}{}{%
-            \printnames{editor}%
-            \usebibmacro{template:editor-label}}}
-    \newbibmacro*{template:series}{%
-        \iffieldundef{series}
-            {\printfield[template:volume]{volume}}
-            {\printfield{series}%
-             \setunit{\addspace}%
-             \iffieldundef{volume}
-                 {\printfield{number}}
-                 {\printfield[template:plain]{volume}}}}
-    \newbibmacro*{template:reference-links}{%
-        \iffieldundef{doi}{}{%
-            \setunit{\addcomma\space}%
-            \printfield{doi}}%
-        \iffieldundef{url}{}{%
-            \setunit{\addcomma\space}%
-            \printfield{url}%
-            \iffieldundef{urlyear}{}{%
-                \setunit{\addspace}%
-                \printtext{\mkbibparens{accessed\space
-                    \iffieldundef{urlday}{}{\stripzeros{\thefield{urlday}}\space}%
-                    \iffieldundef{urlmonth}{}{\mkbibmonth{\thefield{urlmonth}}\space}%
-                    \printfield{urlyear}}}}}%
-        \iffieldundef{eprint}{}{%
-            \iffieldundef{url}{%
-                \setunit{\addcomma\space}%
-                \printfield{eprint}}{}}}
-    \newbibmacro*{template:journal}{%
-        \iffieldundef{shortjournal}
-            {\printfield{journaltitle}}
-            {\printfield{shortjournal}}%
-        \setunit{\addcomma\space}%
-        \ifboolexpr{test {\iffieldequalstr{pubstate}{submitted}} or test {\iffieldequalstr{pubstate}{inpress}}}
-            {\printfield{pubstate}}{%
-            \printfield[template:plain]{volume}%
-            \setunit{\addspace}%
-            \printtext[parens]{\printfield{year}}%
-            \setunit{\addcomma\space}%
-            \printfield{eid}%
-            \iffieldundef{eid}{}{%
-                \iffieldundef{pagetotal}{}{%
-                    \setunit{\addspace}%
-                    \printtext[parens]{\printfield[template:plain]{pagetotal}\space\iffieldequalstr{pagetotal}{1}{page}{pages}}}}%
-            \setunit{\addcomma\space}%
-            \printfield{pages}}}
-    \newbibmacro*{template:publisher}{%
-        \printlist{organization}%
-        \setunit{\addcomma\space}%
-        \printlist{publisher}}
-    \newbibmacro*{template:conference}{%
-        \iffieldundef{journaltitle}{%
-            \printtext{in\space}\printfield{booktitle}%
-            \setunit{\addcomma\space}%
-            \iffieldequalstr{entrysubtype}{book}{%
-                \usebibmacro{template:series}%
-                \setunit{\addcomma\space}%
-                \usebibmacro{template:editors}%
-                \setunit{\addcomma\space}%
-                \printlist{publisher}%
-                \setunit{\addcomma\space}%
-                \printlist{location}%
-                \setunit{\addcomma\space}%
-                \printfield{year}}{%
-                \usebibmacro{template:editors}%
-                \setunit{\addcomma\space}%
-                \usebibmacro{template:series}%
-                \setunit{\addcomma\space}%
-                \iflistundef{location}{%
-                    \usebibmacro{template:publisher}%
-                    \setunit{\addcomma\space}%
-                    \printfield{year}}{%
-                    \printlist{location}%
-                    \setunit{\addcomma\space}%
-                    \printfield{year}%
-                    \setunit{\addcomma\space}%
-                    \usebibmacro{template:publisher}}}%
-            \setunit{\addcomma\space}%
-            \printfield{pages}}
-            {\usebibmacro{template:journal}}}
-    \newbibmacro*{template:preprint}{%
-        \iffieldundef{howpublished}
-            {\printtext{preprint}}
-            {\printfield{howpublished}}%
-        \setunit{\addspace}%
-        \printfield{number}%
-        \setunit{\addcomma\space}%
-        \iflistundef{institution}
-            {\printlist{organization}}
-            {\printlist{institution}}%
-        \setunit{\addcomma\space}%
-        \printlist{location}%
-        \usebibmacro{template:reference-links}%
-        \setunit{\addcomma\space}%
-        \printfield{year}}
-    \newbibmacro*{template:reference-entry}{%
-        \usebibmacro{template:reference-type}\addspace
-        \usebibmacro{template:authors}%
-        \setunit{\addcomma\space}%
-        \printfield{title}%
-        \setunit{\addcomma\space}%
-        \ifentrytype{article}
-            {\usebibmacro{template:journal}}{%
-        \ifentrytype{inproceedings}
-            {\usebibmacro{template:conference}}{%
-        \ifentrytype{book}{%
-            \printfield{edition}%
-            \setunit{\addcomma\space}%
-            \usebibmacro{template:series}%
-            \setunit{\addcomma\space}%
-            \ifnameundef{author}{}{\usebibmacro{template:editors}}%
-            \setunit{\addcomma\space}%
-            \printlist{publisher}%
-            \setunit{\addcomma\space}%
-            \printlist{location}%
-            \setunit{\addcomma\space}%
-            \printfield{year}}{%
-        \ifentrytype{thesis}{%
-            \iffieldundef{type}
-                {\printtext{PhD thesis}}
-                {\printfield{type}}%
-            \setunit{\addcomma\space}%
-            \printlist{institution}%
-            \setunit{\addcomma\space}%
-            \printlist{location}%
-            \setunit{\addcomma\space}%
-            \printfield{year}}
-            {\usebibmacro{template:preprint}}}}}%
-        \ifentrytype{misc}{}{\usebibmacro{template:reference-links}}%
-        \usebibmacro{finentry}}
-    \DeclareBibliographyDriver{article}{%
-        \usebibmacro{bibindex}%
-        \usebibmacro{begentry}%
-        \usebibmacro{template:reference-entry}}
-    \DeclareBibliographyDriver{book}{%
-        \usebibmacro{bibindex}%
-        \usebibmacro{begentry}%
-        \usebibmacro{template:reference-entry}}
-    \DeclareBibliographyDriver{thesis}{%
-        \usebibmacro{bibindex}%
-        \usebibmacro{begentry}%
-        \usebibmacro{template:reference-entry}}
-    \DeclareBibliographyDriver{inproceedings}{%
-        \usebibmacro{bibindex}%
-        \usebibmacro{begentry}%
-        \usebibmacro{template:reference-entry}}
-    \DeclareBibliographyDriver{misc}{%
-        \usebibmacro{bibindex}%
-        \usebibmacro{begentry}%
-        \usebibmacro{template:reference-entry}}
-    \DeclareCiteCommand{\templateFullReference}
-        {}
-        {\usebibmacro{template:reference-entry}}
-        {\multicitedelim}
-        {}
+    \ifcsdef{bibname}{\renewcommand{\bibname}{References}}{}
+    \ifcsdef{refname}{\renewcommand{\refname}{References}}{}
+    \apptocmd{\thebibliography}{\setlength{\itemsep}{\templateReferenceItemSep}}{}{}
     \newcommand{\templatePrintReferences}{
         \clearpage
         \phantomsection
-        \printbibliography[title={References}]
+        \templateBibliography
     }
     \newcommand{\genREF}[2]{%
         \ifstrequal{##1}{cite}{%
@@ -782,13 +550,13 @@
     \setlength{\templateCaptionSpace}{\baselineskip}
     \addtolength{\templateCaptionSpace}{2pt}
     \captionsetup[figure]{skip=\templateCaptionSpace}
-    \setlength{\bibitemsep}{\baselineskip}
-    \addtolength{\bibitemsep}{1.6pt}
+    \setlength{\templateReferenceItemSep}{\baselineskip}
+    \addtolength{\templateReferenceItemSep}{1.6pt}
     \renewcommand{\templatePrintReferences}{
         \clearpage
         \phantomsection
         \addcontentsline{toc}{chapter}{References}
-        \printbibliography[title={References}]
+        \templateBibliography
     }
     \let\c@figure\c@theorem
     \renewcommand{\thefigure}{\thetheorem}
@@ -883,7 +651,7 @@
         \hypersetup{pageanchor=false}
         \begin{titlepage}
             \centering
-            {\huge\bfseries \raisebox{-3pt}[\height][\depth]{#1}\par}
+            {\huge\bfseries \raisebox{-3pt}[\height][\depth]{\parbox{\linewidth}{\centering #1}}\par}
             \vfill
             {#2\par}
             \vfill
@@ -993,11 +761,10 @@
     \setlength{\templatePreprintCaptionSpace}{\baselineskip}
     \addtolength{\templatePreprintCaptionSpace}{2pt}
     \captionsetup[figure]{skip=\templatePreprintCaptionSpace}
-    \setlength{\bibitemsep}{\baselineskip}
-    \addtolength{\bibitemsep}{1.6pt}
-    \defbibheading{bibliography}[\refname]{
-        \section*{#1}
-        \vspace{-.5pt}}
+    \setlength{\templateReferenceItemSep}{\baselineskip}
+    \addtolength{\templateReferenceItemSep}{1.6pt}
+    \patchcmd{\thebibliography}{\section*{\refname}}
+        {\section*{\refname}\vspace{-.5pt}}{}{}
     \renewcommand{\templateProofsInitialSpacing}{\vspace{-1.8pt}}
     \counterwithin{theorem}{subsection}
     \let\c@figure\c@theorem
@@ -1117,7 +884,7 @@
         \clearpage
         \phantomsection
         \addcontentsline{toc}{section}{References}
-        \printbibliography[title={References}]
+        \templateBibliography
     }
 }{
     % Do nothing
@@ -1189,14 +956,14 @@
         \templatePresentationSetReferenceName{#1}%
         \begingroup%
         \edef\@thefnmark{\csuse{\templatePresentationReferenceName}}%
-        \beamer@framefootnotetext<*>{\templateFullReference{#1}}%
+        \beamer@framefootnotetext<*>{\let\newblock\space\templateFullReference{#1}}%
         \endgroup%
     }
     \newcommand{\templatePresentationCite}[1]{%
         \begingroup%
         \def\templatePresentationCiteDelimiter{}%
         \gdef\templatePresentationNewReferences{}%
-        \mkbibsuperscript{\forcsvlist{\templatePresentationCiteOne}{#1}}%
+        \textsuperscript{\forcsvlist{\templatePresentationCiteOne}{#1}}%
         \forlistloop{\templatePresentationFootnoteOne}{\templatePresentationNewReferences}%
         \endgroup%
     }
@@ -1407,11 +1174,10 @@
     \setlength{\templateNoteCaptionSpace}{\baselineskip}
     \addtolength{\templateNoteCaptionSpace}{2pt}
     \captionsetup[figure]{skip=\templateNoteCaptionSpace}
-    \setlength{\bibitemsep}{\baselineskip}
-    \addtolength{\bibitemsep}{1.6pt}
-    \defbibheading{bibliography}[\refname]{
-        \section*{#1}
-        \vspace{-.5pt}}
+    \setlength{\templateReferenceItemSep}{\baselineskip}
+    \addtolength{\templateReferenceItemSep}{1.6pt}
+    \patchcmd{\thebibliography}{\section*{\refname}}
+        {\section*{\refname}\vspace{-.5pt}}{}{}
     \renewcommand{\templateProofsInitialSpacing}{\vspace{-1.8pt}}
     \counterwithin{theorem}{subsection}
     \let\c@figure\c@theorem
@@ -1524,7 +1290,7 @@
         \clearpage
         \phantomsection
         \addcontentsline{toc}{section}{References}
-        \printbibliography[title={References}]
+        \templateBibliography
     }
 }{
     % Do nothing

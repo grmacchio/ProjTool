@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.8)  18 OCT 2026 19:41
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.8)  21 OCT 2026 16:28
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -11,7 +11,7 @@ LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
 
 (/Users/gregorymacchio/Documents/Mirror/laptop/global/writing/software/ProjTool
-/template.cls
+/source/template.cls
 (/usr/local/texlive/2025/texmf-dist/tex/latex/etoolbox/etoolbox.sty
 Package: etoolbox 2025/02/11 v2.5l e-TeX tools for LaTeX (JAW)
 \etb@tempcnta=\count196
@@ -777,256 +777,14 @@ Package: multicol 2024/09/14 v1.9i multicolumn formatting (FMi)
 \templateSubTOCSectionNumberWidth=\skip73
 \templateSubTOCSubsectionNumberWidth=\skip74
 \templateSubTOCSubsubsectionNumberWidth=\skip75
+\templateReferenceItemSep=\skip76
 
-(/usr/local/texlive/2025/texmf-dist/tex/latex/biblatex/biblatex.sty
-Package: biblatex 2024/03/21 v3.20 programmable bibliographies (PK/MW)
-
-(/usr/local/texlive/2025/texmf-dist/tex/latex/logreq/logreq.sty
-Package: logreq 2010/08/04 v1.0 xml request logger
-\lrq@indent=\count339
-
-(/usr/local/texlive/2025/texmf-dist/tex/latex/logreq/logreq.def
-File: logreq.def 2010/08/04 v1.0 logreq spec v1.0
-))
-(/usr/local/texlive/2025/texmf-dist/tex/latex/base/ifthen.sty
-Package: ifthen 2024/03/16 v1.1e Standard LaTeX ifthen package (DPC)
-)
-\c@tabx@nest=\count340
-\c@listtotal=\count341
-\c@listcount=\count342
-\c@liststart=\count343
-\c@liststop=\count344
-\c@citecount=\count345
-\c@citetotal=\count346
-\c@multicitecount=\count347
-\c@multicitetotal=\count348
-\c@instcount=\count349
-\c@maxnames=\count350
-\c@minnames=\count351
-\c@maxitems=\count352
-\c@minitems=\count353
-\c@citecounter=\count354
-\c@maxcitecounter=\count355
-\c@savedcitecounter=\count356
-\c@uniquelist=\count357
-\c@uniquename=\count358
-\c@refsection=\count359
-\c@refsegment=\count360
-\c@maxextratitle=\count361
-\c@maxextratitleyear=\count362
-\c@maxextraname=\count363
-\c@maxextradate=\count364
-\c@maxextraalpha=\count365
-\c@abbrvpenalty=\count366
-\c@highnamepenalty=\count367
-\c@lownamepenalty=\count368
-\c@maxparens=\count369
-\c@parenlevel=\count370
-\blx@tempcnta=\count371
-\blx@tempcntb=\count372
-\blx@tempcntc=\count373
-\c@blx@maxsection=\count374
-\blx@maxsegment@0=\count375
-\blx@notetype=\count376
-\blx@parenlevel@text=\count377
-\blx@parenlevel@foot=\count378
-\blx@sectionciteorder@0=\count379
-\blx@sectionciteorderinternal@0=\count380
-\blx@entrysetcounter=\count381
-\blx@biblioinstance=\count382
-\labelnumberwidth=\skip76
-\labelalphawidth=\skip77
-\biblabelsep=\skip78
-\bibitemsep=\skip79
-\bibnamesep=\skip80
-\bibinitsep=\skip81
-\bibparsep=\skip82
-\bibhang=\skip83
-\blx@bcfin=\read3
-\blx@bcfout=\write4
-\blx@langwohyphens=\language90
-\c@mincomprange=\count383
-\c@maxcomprange=\count384
-\c@mincompwidth=\count385
-Package biblatex Info: Trying to load biblatex default data model...
-Package biblatex Info: ... file 'blx-dm.def' found.
-
-(/usr/local/texlive/2025/texmf-dist/tex/latex/biblatex/blx-dm.def
-File: blx-dm.def 2024/03/21 v3.20 biblatex datamodel (PK/MW)
-)
-Package biblatex Info: Trying to load biblatex style data model...
-Package biblatex Info: ... file 'numeric.dbx' not found.
-Package biblatex Info: Trying to load biblatex custom data model...
-Package biblatex Info: ... file 'biblatex-dm.cfg' not found.
-\c@afterword=\count386
-\c@savedafterword=\count387
-\c@annotator=\count388
-\c@savedannotator=\count389
-\c@author=\count390
-\c@savedauthor=\count391
-\c@bookauthor=\count392
-\c@savedbookauthor=\count393
-\c@commentator=\count394
-\c@savedcommentator=\count395
-\c@editor=\count396
-\c@savededitor=\count397
-\c@editora=\count398
-\c@savededitora=\count399
-\c@editorb=\count400
-\c@savededitorb=\count401
-\c@editorc=\count402
-\c@savededitorc=\count403
-\c@foreword=\count404
-\c@savedforeword=\count405
-\c@holder=\count406
-\c@savedholder=\count407
-\c@introduction=\count408
-\c@savedintroduction=\count409
-\c@namea=\count410
-\c@savednamea=\count411
-\c@nameb=\count412
-\c@savednameb=\count413
-\c@namec=\count414
-\c@savednamec=\count415
-\c@translator=\count416
-\c@savedtranslator=\count417
-\c@shortauthor=\count418
-\c@savedshortauthor=\count419
-\c@shorteditor=\count420
-\c@savedshorteditor=\count421
-\c@labelname=\count422
-\c@savedlabelname=\count423
-\c@institution=\count424
-\c@savedinstitution=\count425
-\c@lista=\count426
-\c@savedlista=\count427
-\c@listb=\count428
-\c@savedlistb=\count429
-\c@listc=\count430
-\c@savedlistc=\count431
-\c@listd=\count432
-\c@savedlistd=\count433
-\c@liste=\count434
-\c@savedliste=\count435
-\c@listf=\count436
-\c@savedlistf=\count437
-\c@location=\count438
-\c@savedlocation=\count439
-\c@organization=\count440
-\c@savedorganization=\count441
-\c@origlocation=\count442
-\c@savedoriglocation=\count443
-\c@origpublisher=\count444
-\c@savedorigpublisher=\count445
-\c@publisher=\count446
-\c@savedpublisher=\count447
-\c@language=\count448
-\c@savedlanguage=\count449
-\c@origlanguage=\count450
-\c@savedoriglanguage=\count451
-\c@pageref=\count452
-\c@savedpageref=\count453
-\shorthandwidth=\skip84
-\shortjournalwidth=\skip85
-\shortserieswidth=\skip86
-\shorttitlewidth=\skip87
-\shortauthorwidth=\skip88
-\shorteditorwidth=\skip89
-\locallabelnumberwidth=\skip90
-\locallabelalphawidth=\skip91
-\localshorthandwidth=\skip92
-\localshortjournalwidth=\skip93
-\localshortserieswidth=\skip94
-\localshorttitlewidth=\skip95
-\localshortauthorwidth=\skip96
-\localshorteditorwidth=\skip97
-Package biblatex Info: Trying to load compatibility code...
-Package biblatex Info: ... file 'blx-compat.def' found.
-
-(/usr/local/texlive/2025/texmf-dist/tex/latex/biblatex/blx-compat.def
-File: blx-compat.def 2024/03/21 v3.20 biblatex compatibility (PK/MW)
-)
-Package biblatex Info: Trying to load generic definitions...
-Package biblatex Info: ... file 'biblatex.def' found.
-
-(/usr/local/texlive/2025/texmf-dist/tex/latex/biblatex/biblatex.def
-File: biblatex.def 2024/03/21 v3.20 biblatex compatibility (PK/MW)
-\c@textcitecount=\count454
-\c@textcitetotal=\count455
-\c@textcitemaxnames=\count456
-\c@biburlbigbreakpenalty=\count457
-\c@biburlbreakpenalty=\count458
-\c@biburlnumpenalty=\count459
-\c@biburlucpenalty=\count460
-\c@biburllcpenalty=\count461
-\biburlbigskip=\muskip22
-\biburlnumskip=\muskip23
-\biburlucskip=\muskip24
-\biburllcskip=\muskip25
-\c@smartand=\count462
-)
-Package biblatex Info: Trying to load bibliography style 'numeric'...
-Package biblatex Info: ... file 'numeric.bbx' found.
-
-(/usr/local/texlive/2025/texmf-dist/tex/latex/biblatex/bbx/numeric.bbx
-File: numeric.bbx 2024/03/21 v3.20 biblatex bibliography style (PK/MW)
-Package biblatex Info: Trying to load bibliography style 'standard'...
-Package biblatex Info: ... file 'standard.bbx' found.
-
-(/usr/local/texlive/2025/texmf-dist/tex/latex/biblatex/bbx/standard.bbx
-File: standard.bbx 2024/03/21 v3.20 biblatex bibliography style (PK/MW)
-\c@bbx:relatedcount=\count463
-\c@bbx:relatedtotal=\count464
-))
-Package biblatex Info: Trying to load citation style 'numeric'...
-Package biblatex Info: ... file 'numeric.cbx' found.
-
-(/usr/local/texlive/2025/texmf-dist/tex/latex/biblatex/cbx/numeric.cbx
-File: numeric.cbx 2024/03/21 v3.20 biblatex citation style (PK/MW)
-Package biblatex Info: Redefining '\cite'.
-Package biblatex Info: Redefining '\parencite'.
-Package biblatex Info: Redefining '\footcite'.
-Package biblatex Info: Redefining '\footcitetext'.
-Package biblatex Info: Redefining '\smartcite'.
-Package biblatex Info: Redefining '\supercite'.
-Package biblatex Info: Redefining '\textcite'.
-Package biblatex Info: Redefining '\textcites'.
-Package biblatex Info: Redefining '\cites'.
-Package biblatex Info: Redefining '\parencites'.
-Package biblatex Info: Redefining '\smartcites'.
-)
-Package biblatex Info: Trying to load configuration file...
-Package biblatex Info: ... file 'biblatex.cfg' found.
-
-(/usr/local/texlive/2025/texmf-dist/tex/latex/biblatex/biblatex.cfg
-File: biblatex.cfg 
-)
-Package biblatex Info: Input encoding 'utf8' detected.
-Package biblatex Info: Document encoding is UTF8 ....
-
-(/usr/local/texlive/2025/texmf-dist/tex/latex/l3kernel/expl3.sty
-Package: expl3 2025-01-18 L3 programming layer (loader) 
-
+(output/media/pdf/dissertation.projtool.cfg))
 (/usr/local/texlive/2025/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2024-05-08 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count465
+\l__color_backend_stack_int=\count339
 \l__pdf_internal_box=\box118
-))
-Package biblatex Info: ... and expl3
-(biblatex)             2025-01-18 L3 programming layer (loader) 
-(biblatex)             is new enough (at least 2020/04/06),
-(biblatex)             setting 'casechanger=expl3'.
-
-(/usr/local/texlive/2025/texmf-dist/tex/latex/biblatex/blx-case-expl3.sty
-(/usr/local/texlive/2025/texmf-dist/tex/latex/l3packages/xparse/xparse.sty
-Package: xparse 2024-08-16 L3 Experimental document command parser
 )
-Package: blx-case-expl3 2024/03/21 v3.20 expl3 case changing code for biblatex
-))
-(output/media/pdf/dissertation.projtool.cfg))
-\@quotelevel=\count466
-\@quotereset=\count467
-
 (output/media/pdf/dissertation.aux)
 \openout1 = `dissertation.aux'.
 
@@ -1085,16 +843,16 @@ LaTeX Font Info:    ... okay on input line 3.
 
 (/usr/local/texlive/2025/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count468
+\scratchcounter=\count340
 \scratchdimen=\dimen304
 \scratchbox=\box119
-\nofMPsegments=\count469
-\nofMParguments=\count470
+\nofMPsegments=\count341
+\nofMParguments=\count342
 \everyMPshowfont=\toks46
-\MPscratchCnt=\count471
+\MPscratchCnt=\count343
 \MPscratchDim=\dimen305
-\MPnumerator=\count472
-\makeMPintoPDFobject=\count473
+\MPnumerator=\count344
+\makeMPintoPDFobject=\count345
 \everyMPtoPDFconversion=\toks47
 ) (/usr/local/texlive/2025/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
@@ -1108,30 +866,13 @@ e
 Package hyperref Info: Link coloring ON on input line 3.
 
 (output/media/pdf/dissertation.out) (output/media/pdf/dissertation.out)
-\@outlinefile=\write5
-\openout5 = `dissertation.out'.
+\@outlinefile=\write4
+\openout4 = `dissertation.out'.
 
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: float package is loaded.
 Package caption Info: End \AtBeginDocument code.
-\Etoc@tf=\read4
-Package biblatex Info: Trying to load language 'english'...
-Package biblatex Info: ... file 'english.lbx' found.
-
-(/usr/local/texlive/2025/texmf-dist/tex/latex/biblatex/lbx/english.lbx
-File: english.lbx 2024/03/21 v3.20 biblatex localization (PK/MW)
-)
-Package biblatex Info: Input encoding 'utf8' detected.
-Package biblatex Info: Automatic encoding selection.
-(biblatex)             Assuming data encoding 'utf8'.
-\openout4 = `dissertation.bcf'.
-
-Package biblatex Info: Trying to load bibliographic data...
-Package biblatex Info: ... file 'dissertation.bbl' found.
-
-(output/media/pdf/dissertation.bbl)
-Package biblatex Info: Reference section=0 on input line 3.
-Package biblatex Info: Reference segment=0 on input line 3.
+\Etoc@tf=\read3
 Package hyperref Info: Option `pageanchor' set `false' on input line 19.
 
 
@@ -1147,8 +888,8 @@ Package hyperref Info: Option `pageanchor' set `true' on input line 19.
 [1
 
 ]
-\tf@toc=\write6
-\openout6 = `dissertation.toc'.
+\tf@toc=\write5
+\openout5 = `dissertation.toc'.
 
 
 
@@ -1177,16 +918,16 @@ Chapter 1.
 <./output/results/julia/exp.png, id=113, 602.25pt x 401.5pt>
 File: ./output/results/julia/exp.png Graphic file (type png)
 <use ./output/results/julia/exp.png>
-Package pdftex.def Info: ./output/results/julia/exp.png  used on input line 115
+Package pdftex.def Info: ./output/results/julia/exp.png  used on input line 107
 .
 (pdftex.def)             Requested size: 187.89914pt x 125.26627pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 115--115
+Underfull \hbox (badness 10000) in paragraph at lines 107--107
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 115--115
+Underfull \hbox (badness 10000) in paragraph at lines 107--107
 
  []
 
@@ -1196,19 +937,19 @@ Underfull \hbox (badness 10000) in paragraph at lines 115--115
 
 
  <./output/results/julia/exp.png>]
-<./output/results/python/quadratic.png, id=179, 409.7709pt x 312.2064pt>
+<./output/results/python/quadratic.png, id=140, 409.7709pt x 312.2064pt>
 File: ./output/results/python/quadratic.png Graphic file (type png)
 <use ./output/results/python/quadratic.png>
 Package pdftex.def Info: ./output/results/python/quadratic.png  used on input l
-ine 115.
+ine 107.
 (pdftex.def)             Requested size: 187.89914pt x 143.15935pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 115--115
+Underfull \hbox (badness 10000) in paragraph at lines 107--107
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 115--115
+Underfull \hbox (badness 10000) in paragraph at lines 107--107
 
  []
 
@@ -1223,11 +964,11 @@ Chapter 2.
 ]
 Chapter 3.
 LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <20.74> not available
-(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 150.
+(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 142.
 File: ./output/results/python/quadratic.png Graphic file (type png)
 <use ./output/results/python/quadratic.png>
 Package pdftex.def Info: ./output/results/python/quadratic.png  used on input l
-ine 150.
+ine 142.
 (pdftex.def)             Requested size: 187.89914pt x 143.15935pt.
 
 
@@ -1238,38 +979,26 @@ ine 150.
 [5
 
 ]
-Overfull \hbox (0.72136pt too wide) in paragraph at lines 154--154
-[]\T1/cmr/m/n/10.95 (Preprint) \T1/cmr/m/sc/10.95 J. A. Smith and J. Brown\T1/c
-mr/m/n/10.95 , \T1/cmr/m/it/10.95 A So-cial Sci-ence Re-search Net-work Preprin
-t\T1/cmr/m/n/10.95 , preprint,
- []
-
-
 
 [6
 
 
-]
-
-[7] (output/media/pdf/dissertation.aux)
+] (output/media/pdf/dissertation.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
 Package rerunfilecheck Info: File `dissertation.out' has not changed.
 (rerunfilecheck)             Checksum: E71D7C6ED39F1182DF0813AC4180CD24;2371.
-Package logreq Info: Writing requests to 'dissertation.run.xml'.
-\openout1 = `dissertation.run.xml'.
-
  ) 
 Here is how much of TeX's memory you used:
- 31909 strings out of 473190
- 604610 string characters out of 5715801
- 1423302 words of memory out of 5000000
- 54642 multiletter control sequences out of 15000+600000
+ 24389 strings out of 473190
+ 447513 string characters out of 5715801
+ 839902 words of memory out of 5000000
+ 47196 multiletter control sequences out of 15000+600000
  570950 words of font info for 65 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 121i,8n,123p,802b,1470s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 121i,8n,123p,650b,729s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb
 ></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><
 /usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></us
@@ -1282,10 +1011,10 @@ xlive/2025/texmf-dist/fonts/type1/public/cm-super/sfsl1095.pfb></usr/local/texl
 ive/2025/texmf-dist/fonts/type1/public/cm-super/sfti1095.pfb></usr/local/texliv
 e/2025/texmf-dist/fonts/type1/public/cm-super/sftt1095.pfb></usr/local/texlive/
 2025/texmf-dist/fonts/type1/public/cm-super/sftt2074.pfb>
-Output written on output/media/pdf/dissertation.pdf (11 pages, 261380 bytes).
+Output written on output/media/pdf/dissertation.pdf (10 pages, 236709 bytes).
 PDF statistics:
- 342 PDF objects out of 1000 (max. 8388607)
- 299 compressed objects within 3 object streams
- 76 named destinations out of 1000 (max. 500000)
+ 274 PDF objects out of 1000 (max. 8388607)
+ 232 compressed objects within 3 object streams
+ 56 named destinations out of 1000 (max. 500000)
  143 words of extra memory for PDF output out of 10000 (max. 10000000)
 

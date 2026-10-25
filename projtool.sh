@@ -38,6 +38,7 @@ Prompts for the creator name, GitHub URL, and initial version.
 Copies the selected example, including all output contents, into the current directory.
 Renames the main TeX file and example-named media files to the project name.
 Excludes TYPE.md, TYPE.pdf, README.md, and .DS_Store.
+Sets up multiline section folding automatically when VS Code is installed.
 Creates LICENSE.txt, initializes Git, creates the initial commit and version
 tag, and pushes the main branch and tag to GitHub.
 Existing paths are never overwritten.
@@ -189,7 +190,7 @@ collect_cited_bibliographies() {
     done
 }
 
-validate_reference_types() {
+validate_reference_keys() {
     local bibliography_file
     local entry_pattern='^[[:space:]]*@([[:alpha:]]+)[[:space:]]*[{(][[:space:]]*([^,[:space:]}]+)'
     local entry_key
@@ -210,16 +211,13 @@ validate_reference_types() {
                 entry_type="$(printf '%s' "${BASH_REMATCH[1]}" |
                     tr '[:upper:]' '[:lower:]')"
                 case "$entry_type" in
-                    article|book|misc|phdthesis|inproceedings)
+                    comment|preamble|string)
+                        ;;
+                    *)
                         entry_key="${BASH_REMATCH[2]}"
                         [[ "$entry_key" == "$reference_id" ]] ||
                             die "reference key $entry_key in $bibliography_file:$line_number must match directory $reference_id"
                         found_reference=true
-                        ;;
-                    comment|preamble|string)
-                        ;;
-                    *)
-                        die "unsupported reference type @$entry_type in $bibliography_file:$line_number; use @article, @book, @misc, @phdthesis, or @inproceedings"
                         ;;
                 esac
             fi
@@ -240,6 +238,7 @@ validate_reference_fields() {
     done
     pandoc --from=markdown --to=plain --fail-if-warnings \
         --lua-filter="$SOURCE_DIR/references.lua" \
+        --metadata=reference-check:true \
         "${bibliography_options[@]}" /dev/null >/dev/null
 }
 
@@ -336,17 +335,19 @@ resolve_reference_directory() {
 write_pdf_build_config() {
     local bibliography_file
     local config_file="$PDF_OUTPUT_DIR/$DOCUMENT_STEM.projtool.cfg"
-    local relative_bibliography_file
+    local -a bibliography_options=()
 
     printf '\\def\\templateReferencesPath{%s}\n' "$REFERENCE_LOCATION" \
         > "$config_file"
     if [[ -n "${BIBLIOGRAPHY_FILES[*]-}" ]]; then
+        require_command bibtexu
         for bibliography_file in "${BIBLIOGRAPHY_FILES[@]}"; do
-            relative_bibliography_file="${bibliography_file#"$REFERENCE_DIR"/}"
-            printf '\\addbibresource{%s/%s}\n' \
-                "$REFERENCE_LOCATION" "$relative_bibliography_file" \
-                >> "$config_file"
+            bibliography_options+=(--bibliography="$bibliography_file")
         done
+        pandoc --from=markdown --to=plain --fail-if-warnings \
+            --lua-filter="$SOURCE_DIR/references.lua" \
+            --metadata="reference-output:$config_file" \
+            "${bibliography_options[@]}" /dev/null >/dev/null
     fi
 }
 
@@ -527,9 +528,15 @@ render_pdf() {
     require_command latexmk
     resolve_reference_directory
     collect_cited_bibliographies
-    validate_reference_types
+    validate_reference_keys
     validate_reference_fields
     mkdir -p -- "$PDF_OUTPUT_DIR"
+    if [[ -f "$PDF_OUTPUT_DIR/$DOCUMENT_STEM.bcf" ]]; then
+        local extension
+        for extension in aux bbl bcf blg fdb_latexmk fls run.xml; do
+            rm -f -- "$PDF_OUTPUT_DIR/$DOCUMENT_STEM.$extension"
+        done
+    fi
     write_pdf_build_config
 
     if [[ "$VERBOSE" == true ]]; then
@@ -617,7 +624,6 @@ render_md() {
     local md_file="$MD_OUTPUT_DIR/$DOCUMENT_STEM.md"
     local md_temp_file="$MD_OUTPUT_DIR/.$DOCUMENT_STEM.md.tmp"
     local bibliography_entry
-    local citation_style_file="$SOURCE_DIR/references.csl"
     local -a citation_options=()
     local -a template_options=(--metadata="template-type:${TEMPLATE_TYPE:-dissertation}")
     local link_citations=true
@@ -629,16 +635,14 @@ render_md() {
     collect_cited_bibliographies
 
     if [[ -n "${BIBLIOGRAPHY_FILES[*]-}" ]]; then
-        [[ -f "$citation_style_file" ]] ||
-            die "missing citation style: $citation_style_file"
-        citation_options+=(--csl="$citation_style_file")
+        require_command bibtexu
         for bibliography_entry in "${BIBLIOGRAPHY_FILES[@]}"; do
             citation_options+=(--bibliography="$bibliography_entry")
         done
     fi
 
     require_command pandoc
-    validate_reference_types
+    validate_reference_keys
     validate_reference_fields
     mkdir -p -- "$MD_OUTPUT_DIR"
     write_markdown_build_file
@@ -735,6 +739,28 @@ remove_path() {
     fi
 }
 
+setup_editor_folding() {
+    local code_command
+    local installed_extensions
+
+    code_command="$(command -v code || true)"
+    if [[ -z "$code_command" && -x "/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code" ]]; then
+        code_command="/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code"
+    fi
+    if [[ -z "$code_command" ]]; then
+        printf 'VS Code not found; editor folding setup skipped.\n'
+        return
+    fi
+
+    installed_extensions="$("$code_command" --list-extensions --show-versions)" ||
+        die "could not check VS Code extensions"
+    if printf '%s\n' "$installed_extensions" | grep -Fqx 'projtool.projtool-folding@0.1.0'; then
+        return
+    fi
+    "$code_command" --install-extension "$SOURCE_DIR/folding/projtool-folding.vsix" --force ||
+        die "could not install VS Code folding support"
+}
+
 main_init() {
     local example_type
     local source_dir
@@ -806,6 +832,8 @@ main_init() {
         fi
     done
 
+    setup_editor_folding
+
     for entry in "${entries[@]}"; do
         name="$(basename -- "$entry")"
         if [[ "$name" == "$example_type.tex" ]]; then
@@ -820,7 +848,7 @@ main_init() {
             name="$(basename -- "$media_file")"
             entry="$target_dir/${media_file#"$source_dir"/}"
             destination="${entry%/*}/$project_stem${name#"$example_type"}"
-            if [[ -e "$destination" || -L "$destination" ]]; then
+            if [[ ( -e "$destination" || -L "$destination" ) && ! "$entry" -ef "$destination" ]]; then
                 die "destination already exists: $destination"
             fi
             mv -- "$entry" "$destination"

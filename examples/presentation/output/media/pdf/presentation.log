@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.8)  18 OCT 2026 17:35
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.8)  21 OCT 2026 16:40
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -11,7 +11,7 @@ LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
 
 (/Users/gregorymacchio/Documents/Mirror/laptop/global/writing/software/ProjTool
-/template.cls
+/source/template.cls
 (/usr/local/texlive/2025/texmf-dist/tex/latex/etoolbox/etoolbox.sty
 Package: etoolbox 2025/02/11 v2.5l e-TeX tools for LaTeX (JAW)
 \etb@tempcnta=\count196
@@ -710,7 +710,7 @@ y)))
 (/usr/local/texlive/2025/texmf-dist/tex/latex/appendixnumberbeamer/appendixnumb
 erbeamer.sty)
 \c@templatePartObject=\count345
-Package hyperref Info: Option `colorlinks' set `true' on input line 1345.
+Package hyperref Info: Option `colorlinks' set `true' on input line 1112.
  (/usr/local/texlive/2025/texmf-dist/tex/latex/base/fontenc.sty
 Package: fontenc 2021/04/29 v2.0v Standard LaTeX package
 )
@@ -861,251 +861,8 @@ th.
 \MDopostkern=\muskip20
 \MDodotkern=\muskip21
 )
-(/usr/local/texlive/2025/texmf-dist/tex/latex/biblatex/biblatex.sty
-Package: biblatex 2024/03/21 v3.20 programmable bibliographies (PK/MW)
+\templateReferenceItemSep=\skip70
 
-(/usr/local/texlive/2025/texmf-dist/tex/latex/logreq/logreq.sty
-Package: logreq 2010/08/04 v1.0 xml request logger
-\lrq@indent=\count362
-
-(/usr/local/texlive/2025/texmf-dist/tex/latex/logreq/logreq.def
-File: logreq.def 2010/08/04 v1.0 logreq spec v1.0
-))
-(/usr/local/texlive/2025/texmf-dist/tex/latex/base/ifthen.sty
-Package: ifthen 2024/03/16 v1.1e Standard LaTeX ifthen package (DPC)
-)
-\c@tabx@nest=\count363
-\c@listtotal=\count364
-\c@listcount=\count365
-\c@liststart=\count366
-\c@liststop=\count367
-\c@citecount=\count368
-\c@citetotal=\count369
-\c@multicitecount=\count370
-\c@multicitetotal=\count371
-\c@instcount=\count372
-\c@maxnames=\count373
-\c@minnames=\count374
-\c@maxitems=\count375
-\c@minitems=\count376
-\c@citecounter=\count377
-\c@maxcitecounter=\count378
-\c@savedcitecounter=\count379
-\c@uniquelist=\count380
-\c@uniquename=\count381
-\c@refsection=\count382
-\c@refsegment=\count383
-\c@maxextratitle=\count384
-\c@maxextratitleyear=\count385
-\c@maxextraname=\count386
-\c@maxextradate=\count387
-\c@maxextraalpha=\count388
-\c@abbrvpenalty=\count389
-\c@highnamepenalty=\count390
-\c@lownamepenalty=\count391
-\c@maxparens=\count392
-\c@parenlevel=\count393
-\blx@tempcnta=\count394
-\blx@tempcntb=\count395
-\blx@tempcntc=\count396
-\c@blx@maxsection=\count397
-\blx@maxsegment@0=\count398
-\blx@notetype=\count399
-\blx@parenlevel@text=\count400
-\blx@parenlevel@foot=\count401
-\blx@sectionciteorder@0=\count402
-\blx@sectionciteorderinternal@0=\count403
-\blx@entrysetcounter=\count404
-\blx@biblioinstance=\count405
-\labelnumberwidth=\skip70
-\labelalphawidth=\skip71
-\biblabelsep=\skip72
-\bibitemsep=\skip73
-\bibnamesep=\skip74
-\bibinitsep=\skip75
-\bibparsep=\skip76
-\bibhang=\skip77
-\blx@bcfin=\read3
-\blx@bcfout=\write5
-\blx@langwohyphens=\language90
-\c@mincomprange=\count406
-\c@maxcomprange=\count407
-\c@mincompwidth=\count408
-Package biblatex Info: Trying to load biblatex default data model...
-Package biblatex Info: ... file 'blx-dm.def' found.
-
-(/usr/local/texlive/2025/texmf-dist/tex/latex/biblatex/blx-dm.def
-File: blx-dm.def 2024/03/21 v3.20 biblatex datamodel (PK/MW)
-)
-Package biblatex Info: Trying to load biblatex style data model...
-Package biblatex Info: ... file 'numeric.dbx' not found.
-Package biblatex Info: Trying to load biblatex custom data model...
-Package biblatex Info: ... file 'biblatex-dm.cfg' not found.
-\c@afterword=\count409
-\c@savedafterword=\count410
-\c@annotator=\count411
-\c@savedannotator=\count412
-\c@author=\count413
-\c@savedauthor=\count414
-\c@bookauthor=\count415
-\c@savedbookauthor=\count416
-\c@commentator=\count417
-\c@savedcommentator=\count418
-\c@editor=\count419
-\c@savededitor=\count420
-\c@editora=\count421
-\c@savededitora=\count422
-\c@editorb=\count423
-\c@savededitorb=\count424
-\c@editorc=\count425
-\c@savededitorc=\count426
-\c@foreword=\count427
-\c@savedforeword=\count428
-\c@holder=\count429
-\c@savedholder=\count430
-\c@introduction=\count431
-\c@savedintroduction=\count432
-\c@namea=\count433
-\c@savednamea=\count434
-\c@nameb=\count435
-\c@savednameb=\count436
-\c@namec=\count437
-\c@savednamec=\count438
-\c@translator=\count439
-\c@savedtranslator=\count440
-\c@shortauthor=\count441
-\c@savedshortauthor=\count442
-\c@shorteditor=\count443
-\c@savedshorteditor=\count444
-\c@labelname=\count445
-\c@savedlabelname=\count446
-\c@institution=\count447
-\c@savedinstitution=\count448
-\c@lista=\count449
-\c@savedlista=\count450
-\c@listb=\count451
-\c@savedlistb=\count452
-\c@listc=\count453
-\c@savedlistc=\count454
-\c@listd=\count455
-\c@savedlistd=\count456
-\c@liste=\count457
-\c@savedliste=\count458
-\c@listf=\count459
-\c@savedlistf=\count460
-\c@location=\count461
-\c@savedlocation=\count462
-\c@organization=\count463
-\c@savedorganization=\count464
-\c@origlocation=\count465
-\c@savedoriglocation=\count466
-\c@origpublisher=\count467
-\c@savedorigpublisher=\count468
-\c@publisher=\count469
-\c@savedpublisher=\count470
-\c@language=\count471
-\c@savedlanguage=\count472
-\c@origlanguage=\count473
-\c@savedoriglanguage=\count474
-\c@pageref=\count475
-\c@savedpageref=\count476
-\shorthandwidth=\skip78
-\shortjournalwidth=\skip79
-\shortserieswidth=\skip80
-\shorttitlewidth=\skip81
-\shortauthorwidth=\skip82
-\shorteditorwidth=\skip83
-\locallabelnumberwidth=\skip84
-\locallabelalphawidth=\skip85
-\localshorthandwidth=\skip86
-\localshortjournalwidth=\skip87
-\localshortserieswidth=\skip88
-\localshorttitlewidth=\skip89
-\localshortauthorwidth=\skip90
-\localshorteditorwidth=\skip91
-Package biblatex Info: Trying to load compatibility code...
-Package biblatex Info: ... file 'blx-compat.def' found.
-
-(/usr/local/texlive/2025/texmf-dist/tex/latex/biblatex/blx-compat.def
-File: blx-compat.def 2024/03/21 v3.20 biblatex compatibility (PK/MW)
-)
-Package biblatex Info: Trying to load generic definitions...
-Package biblatex Info: ... file 'biblatex.def' found.
-
-(/usr/local/texlive/2025/texmf-dist/tex/latex/biblatex/biblatex.def
-File: biblatex.def 2024/03/21 v3.20 biblatex compatibility (PK/MW)
-\c@textcitecount=\count477
-\c@textcitetotal=\count478
-\c@textcitemaxnames=\count479
-\c@biburlbigbreakpenalty=\count480
-\c@biburlbreakpenalty=\count481
-\c@biburlnumpenalty=\count482
-\c@biburlucpenalty=\count483
-\c@biburllcpenalty=\count484
-\biburlbigskip=\muskip22
-\biburlnumskip=\muskip23
-\biburlucskip=\muskip24
-\biburllcskip=\muskip25
-\c@smartand=\count485
-)
-Package biblatex Info: Trying to load bibliography style 'numeric'...
-Package biblatex Info: ... file 'numeric.bbx' found.
-
-(/usr/local/texlive/2025/texmf-dist/tex/latex/biblatex/bbx/numeric.bbx
-File: numeric.bbx 2024/03/21 v3.20 biblatex bibliography style (PK/MW)
-Package biblatex Info: Trying to load bibliography style 'standard'...
-Package biblatex Info: ... file 'standard.bbx' found.
-
-(/usr/local/texlive/2025/texmf-dist/tex/latex/biblatex/bbx/standard.bbx
-File: standard.bbx 2024/03/21 v3.20 biblatex bibliography style (PK/MW)
-\c@bbx:relatedcount=\count486
-\c@bbx:relatedtotal=\count487
-))
-Package biblatex Info: Trying to load citation style 'numeric'...
-Package biblatex Info: ... file 'numeric.cbx' found.
-
-(/usr/local/texlive/2025/texmf-dist/tex/latex/biblatex/cbx/numeric.cbx
-File: numeric.cbx 2024/03/21 v3.20 biblatex citation style (PK/MW)
-Package biblatex Info: Redefining '\cite'.
-Package biblatex Info: Redefining '\parencite'.
-Package biblatex Info: Redefining '\footcite'.
-Package biblatex Info: Redefining '\footcitetext'.
-Package biblatex Info: Redefining '\smartcite'.
-Package biblatex Info: Redefining '\supercite'.
-Package biblatex Info: Redefining '\textcite'.
-Package biblatex Info: Redefining '\textcites'.
-Package biblatex Info: Redefining '\cites'.
-Package biblatex Info: Redefining '\parencites'.
-Package biblatex Info: Redefining '\smartcites'.
-)
-Package biblatex Info: Trying to load configuration file...
-Package biblatex Info: ... file 'biblatex.cfg' found.
-
-(/usr/local/texlive/2025/texmf-dist/tex/latex/biblatex/biblatex.cfg
-File: biblatex.cfg 
-)
-Package biblatex Info: Input encoding 'utf8' detected.
-Package biblatex Info: Document encoding is UTF8 ....
-
-(/usr/local/texlive/2025/texmf-dist/tex/latex/l3kernel/expl3.sty
-Package: expl3 2025-01-18 L3 programming layer (loader) 
-
-(/usr/local/texlive/2025/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
-File: l3backend-pdftex.def 2024-05-08 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count488
-\l__pdf_internal_box=\box86
-))
-Package biblatex Info: ... and expl3
-(biblatex)             2025-01-18 L3 programming layer (loader) 
-(biblatex)             is new enough (at least 2020/04/06),
-(biblatex)             setting 'casechanger=expl3'.
-
-(/usr/local/texlive/2025/texmf-dist/tex/latex/biblatex/blx-case-expl3.sty
-(/usr/local/texlive/2025/texmf-dist/tex/latex/l3packages/xparse/xparse.sty
-Package: xparse 2024-08-16 L3 Experimental document command parser
-)
-Package: blx-case-expl3 2024/03/21 v3.20 expl3 case changing code for biblatex
-))
 (output/media/pdf/presentation.projtool.cfg)
 (/usr/local/texlive/2025/texmf-dist/tex/latex/beamer/beamerthemeMadrid.sty
 (/usr/local/texlive/2025/texmf-dist/tex/latex/beamer/beamercolorthemewhale.sty)
@@ -1119,11 +876,13 @@ sty))
 (/usr/local/texlive/2025/texmf-dist/tex/latex/beamer/beamercolorthemestructure.
 sty)
 (/usr/local/texlive/2025/texmf-dist/tex/latex/beamer/beamerfontthemeserif.sty)
-\c@templatePresentationFrame=\count489
+\c@templatePresentationFrame=\count362
 \templatePresentationFootnoteHeight=\dimen327
+) (/usr/local/texlive/2025/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
+File: l3backend-pdftex.def 2024-05-08 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count363
+\l__pdf_internal_box=\box86
 )
-\@quotelevel=\count490
-\@quotereset=\count491
 (output/media/pdf/presentation.aux)
 \openout1 = `presentation.aux'.
 
@@ -1182,16 +941,16 @@ LaTeX Font Info:    ... okay on input line 5.
 
 (/usr/local/texlive/2025/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count492
+\scratchcounter=\count364
 \scratchdimen=\dimen328
 \scratchbox=\box87
-\nofMPsegments=\count493
-\nofMParguments=\count494
+\nofMPsegments=\count365
+\nofMParguments=\count366
 \everyMPshowfont=\toks50
-\MPscratchCnt=\count495
+\MPscratchCnt=\count367
 \MPscratchDim=\dimen329
-\MPnumerator=\count496
-\makeMPintoPDFobject=\count497
+\MPnumerator=\count368
+\makeMPintoPDFobject=\count369
 \everyMPtoPDFconversion=\toks51
 ) (/usr/local/texlive/2025/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
@@ -1205,8 +964,8 @@ e
 Package hyperref Info: Link coloring ON on input line 5.
 
 (output/media/pdf/presentation.out) (output/media/pdf/presentation.out)
-\@outlinefile=\write6
-\openout6 = `presentation.out'.
+\@outlinefile=\write5
+\openout5 = `presentation.out'.
 
 
 (/usr/local/texlive/2025/texmf-dist/tex/latex/translator/translator-basic-dicti
@@ -1236,23 +995,6 @@ Dictionary: translator-theorem-dictionary, Language: English
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: float package is loaded.
 Package caption Info: End \AtBeginDocument code.
-Package biblatex Info: Trying to load language 'english'...
-Package biblatex Info: ... file 'english.lbx' found.
-
-(/usr/local/texlive/2025/texmf-dist/tex/latex/biblatex/lbx/english.lbx
-File: english.lbx 2024/03/21 v3.20 biblatex localization (PK/MW)
-)
-Package biblatex Info: Input encoding 'utf8' detected.
-Package biblatex Info: Automatic encoding selection.
-(biblatex)             Assuming data encoding 'utf8'.
-\openout5 = `presentation.bcf'.
-
-Package biblatex Info: Trying to load bibliographic data...
-Package biblatex Info: ... file 'presentation.bbl' found.
-
-(output/media/pdf/presentation.bbl)
-Package biblatex Info: Reference section=0 on input line 5.
-Package biblatex Info: Reference segment=0 on input line 5.
  (output/media/pdf/presentation.nav)
 
 Package hyperref Warning: Option `pdfauthor' has already been used,
@@ -1276,22 +1018,22 @@ al/texlive/2025/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}]
 <./output/results/julia/exp.png, id=78, 602.25pt x 401.5pt>
 File: ./output/results/julia/exp.png Graphic file (type png)
 <use ./output/results/julia/exp.png>
-Package pdftex.def Info: ./output/results/julia/exp.png  used on input line 78.
+Package pdftex.def Info: ./output/results/julia/exp.png  used on input line 66.
 
 (pdftex.def)             Requested size: 152.45494pt x 101.63678pt.
 
-Overfull \hbox (21.90005pt too wide) in paragraph at lines 78--78
+Overfull \hbox (21.90005pt too wide) in paragraph at lines 66--66
 [][]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 78--78
+Underfull \hbox (badness 10000) in paragraph at lines 66--66
 
  []
 
 
 Class beamer Warning: Frame text is shrunk by a factor of 30.85785 percent inst
-ead of 10 percent on input line 78.
+ead of 10 percent on input line 66.
 
 
 
@@ -1300,22 +1042,22 @@ ead of 10 percent on input line 78.
  <./output/results/julia/exp.png>]
 File: ./output/results/julia/exp.png Graphic file (type png)
 <use ./output/results/julia/exp.png>
-Package pdftex.def Info: ./output/results/julia/exp.png  used on input line 78.
+Package pdftex.def Info: ./output/results/julia/exp.png  used on input line 66.
 
 (pdftex.def)             Requested size: 152.45494pt x 101.63678pt.
 
-Overfull \hbox (21.90005pt too wide) in paragraph at lines 78--78
+Overfull \hbox (21.90005pt too wide) in paragraph at lines 66--66
 [][]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 78--78
+Underfull \hbox (badness 10000) in paragraph at lines 66--66
 
  []
 
 
 Class beamer Warning: Frame text is shrunk by a factor of 30.85785 percent inst
-ead of 10 percent on input line 78.
+ead of 10 percent on input line 66.
 
 
 
@@ -1324,22 +1066,22 @@ ead of 10 percent on input line 78.
 ]
 File: ./output/results/julia/exp.png Graphic file (type png)
 <use ./output/results/julia/exp.png>
-Package pdftex.def Info: ./output/results/julia/exp.png  used on input line 78.
+Package pdftex.def Info: ./output/results/julia/exp.png  used on input line 66.
 
 (pdftex.def)             Requested size: 152.45494pt x 101.63678pt.
 
-Overfull \hbox (21.90005pt too wide) in paragraph at lines 78--78
+Overfull \hbox (21.90005pt too wide) in paragraph at lines 66--66
 [][]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 78--78
+Underfull \hbox (badness 10000) in paragraph at lines 66--66
 
  []
 
 
 Class beamer Warning: Frame text is shrunk by a factor of 30.85785 percent inst
-ead of 10 percent on input line 78.
+ead of 10 percent on input line 66.
 
 
 
@@ -1348,22 +1090,22 @@ ead of 10 percent on input line 78.
 ]
 File: ./output/results/julia/exp.png Graphic file (type png)
 <use ./output/results/julia/exp.png>
-Package pdftex.def Info: ./output/results/julia/exp.png  used on input line 78.
+Package pdftex.def Info: ./output/results/julia/exp.png  used on input line 66.
 
 (pdftex.def)             Requested size: 152.45494pt x 101.63678pt.
 
-Overfull \hbox (21.90005pt too wide) in paragraph at lines 78--78
+Overfull \hbox (21.90005pt too wide) in paragraph at lines 66--66
 [][]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 78--78
+Underfull \hbox (badness 10000) in paragraph at lines 66--66
 
  []
 
 
 Class beamer Warning: Frame text is shrunk by a factor of 30.85785 percent inst
-ead of 10 percent on input line 78.
+ead of 10 percent on input line 66.
 
 
 
@@ -1372,22 +1114,22 @@ ead of 10 percent on input line 78.
 ]
 File: ./output/results/julia/exp.png Graphic file (type png)
 <use ./output/results/julia/exp.png>
-Package pdftex.def Info: ./output/results/julia/exp.png  used on input line 78.
+Package pdftex.def Info: ./output/results/julia/exp.png  used on input line 66.
 
 (pdftex.def)             Requested size: 152.45494pt x 101.63678pt.
 
-Overfull \hbox (21.90005pt too wide) in paragraph at lines 78--78
+Overfull \hbox (21.90005pt too wide) in paragraph at lines 66--66
 [][]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 78--78
+Underfull \hbox (badness 10000) in paragraph at lines 66--66
 
  []
 
 
 Class beamer Warning: Frame text is shrunk by a factor of 30.85785 percent inst
-ead of 10 percent on input line 78.
+ead of 10 percent on input line 66.
 
 
 
@@ -1396,34 +1138,34 @@ ead of 10 percent on input line 78.
 ]
 File: ./output/results/julia/exp.png Graphic file (type png)
 <use ./output/results/julia/exp.png>
-Package pdftex.def Info: ./output/results/julia/exp.png  used on input line 78.
+Package pdftex.def Info: ./output/results/julia/exp.png  used on input line 66.
 
 (pdftex.def)             Requested size: 152.45494pt x 101.63678pt.
 
-Overfull \hbox (21.90005pt too wide) in paragraph at lines 78--78
+Overfull \hbox (21.90005pt too wide) in paragraph at lines 66--66
 [][]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 78--78
+Underfull \hbox (badness 10000) in paragraph at lines 66--66
 
  []
 
 
 Class beamer Warning: Frame text is shrunk by a factor of 30.85785 percent inst
-ead of 10 percent on input line 78.
+ead of 10 percent on input line 66.
 
 
 
 [9
 
 ]
-LaTeX Font Info:    Trying to load font information for U+msa on input line 78.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 66.
 
  (/usr/local/texlive/2025/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 78.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 66.
 
 
 (/usr/local/texlive/2025/texmf-dist/tex/latex/amsfonts/umsb.fd
@@ -1448,37 +1190,77 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
 [14
 
-]
+] (output/media/pdf/presentation.toc)
 
 [15
 
 ]
+File: ./output/results/julia/exp.png Graphic file (type png)
+<use ./output/results/julia/exp.png>
+Package pdftex.def Info: ./output/results/julia/exp.png  used on input line 117
+.
+(pdftex.def)             Requested size: 152.45494pt x 101.63678pt.
+
+Overfull \hbox (21.90005pt too wide) in paragraph at lines 117--117
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 117--117
+
+ []
+
+
+Class beamer Warning: Frame text is shrunk by a factor of 30.85785 percent inst
+ead of 10 percent on input line 117.
+
+
 
 [16
 
-] (output/media/pdf/presentation.toc)
+]
+File: ./output/results/julia/exp.png Graphic file (type png)
+<use ./output/results/julia/exp.png>
+Package pdftex.def Info: ./output/results/julia/exp.png  used on input line 117
+.
+(pdftex.def)             Requested size: 152.45494pt x 101.63678pt.
+
+Overfull \hbox (21.90005pt too wide) in paragraph at lines 117--117
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 117--117
+
+ []
+
+
+Class beamer Warning: Frame text is shrunk by a factor of 30.85785 percent inst
+ead of 10 percent on input line 117.
+
+
 
 [17
 
 ]
 File: ./output/results/julia/exp.png Graphic file (type png)
 <use ./output/results/julia/exp.png>
-Package pdftex.def Info: ./output/results/julia/exp.png  used on input line 141
+Package pdftex.def Info: ./output/results/julia/exp.png  used on input line 117
 .
 (pdftex.def)             Requested size: 152.45494pt x 101.63678pt.
 
-Overfull \hbox (21.90005pt too wide) in paragraph at lines 141--141
+Overfull \hbox (21.90005pt too wide) in paragraph at lines 117--117
 [][]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 141--141
+Underfull \hbox (badness 10000) in paragraph at lines 117--117
 
  []
 
 
 Class beamer Warning: Frame text is shrunk by a factor of 30.85785 percent inst
-ead of 10 percent on input line 141.
+ead of 10 percent on input line 117.
 
 
 
@@ -1487,22 +1269,22 @@ ead of 10 percent on input line 141.
 ]
 File: ./output/results/julia/exp.png Graphic file (type png)
 <use ./output/results/julia/exp.png>
-Package pdftex.def Info: ./output/results/julia/exp.png  used on input line 141
+Package pdftex.def Info: ./output/results/julia/exp.png  used on input line 117
 .
 (pdftex.def)             Requested size: 152.45494pt x 101.63678pt.
 
-Overfull \hbox (21.90005pt too wide) in paragraph at lines 141--141
+Overfull \hbox (21.90005pt too wide) in paragraph at lines 117--117
 [][]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 141--141
+Underfull \hbox (badness 10000) in paragraph at lines 117--117
 
  []
 
 
 Class beamer Warning: Frame text is shrunk by a factor of 30.85785 percent inst
-ead of 10 percent on input line 141.
+ead of 10 percent on input line 117.
 
 
 
@@ -1511,22 +1293,22 @@ ead of 10 percent on input line 141.
 ]
 File: ./output/results/julia/exp.png Graphic file (type png)
 <use ./output/results/julia/exp.png>
-Package pdftex.def Info: ./output/results/julia/exp.png  used on input line 141
+Package pdftex.def Info: ./output/results/julia/exp.png  used on input line 117
 .
 (pdftex.def)             Requested size: 152.45494pt x 101.63678pt.
 
-Overfull \hbox (21.90005pt too wide) in paragraph at lines 141--141
+Overfull \hbox (21.90005pt too wide) in paragraph at lines 117--117
 [][]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 141--141
+Underfull \hbox (badness 10000) in paragraph at lines 117--117
 
  []
 
 
 Class beamer Warning: Frame text is shrunk by a factor of 30.85785 percent inst
-ead of 10 percent on input line 141.
+ead of 10 percent on input line 117.
 
 
 
@@ -1535,72 +1317,32 @@ ead of 10 percent on input line 141.
 ]
 File: ./output/results/julia/exp.png Graphic file (type png)
 <use ./output/results/julia/exp.png>
-Package pdftex.def Info: ./output/results/julia/exp.png  used on input line 141
+Package pdftex.def Info: ./output/results/julia/exp.png  used on input line 117
 .
 (pdftex.def)             Requested size: 152.45494pt x 101.63678pt.
 
-Overfull \hbox (21.90005pt too wide) in paragraph at lines 141--141
+Overfull \hbox (21.90005pt too wide) in paragraph at lines 117--117
 [][]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 141--141
+Underfull \hbox (badness 10000) in paragraph at lines 117--117
 
  []
 
 
 Class beamer Warning: Frame text is shrunk by a factor of 30.85785 percent inst
-ead of 10 percent on input line 141.
+ead of 10 percent on input line 117.
 
 
 
 [21
 
 ]
-File: ./output/results/julia/exp.png Graphic file (type png)
-<use ./output/results/julia/exp.png>
-Package pdftex.def Info: ./output/results/julia/exp.png  used on input line 141
-.
-(pdftex.def)             Requested size: 152.45494pt x 101.63678pt.
-
-Overfull \hbox (21.90005pt too wide) in paragraph at lines 141--141
-[][]
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 141--141
-
- []
-
-
-Class beamer Warning: Frame text is shrunk by a factor of 30.85785 percent inst
-ead of 10 percent on input line 141.
-
-
 
 [22
 
 ]
-File: ./output/results/julia/exp.png Graphic file (type png)
-<use ./output/results/julia/exp.png>
-Package pdftex.def Info: ./output/results/julia/exp.png  used on input line 141
-.
-(pdftex.def)             Requested size: 152.45494pt x 101.63678pt.
-
-Overfull \hbox (21.90005pt too wide) in paragraph at lines 141--141
-[][]
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 141--141
-
- []
-
-
-Class beamer Warning: Frame text is shrunk by a factor of 30.85785 percent inst
-ead of 10 percent on input line 141.
-
-
 
 [23
 
@@ -1616,11 +1358,11 @@ ead of 10 percent on input line 141.
 
 [26
 
-]
+] (output/media/pdf/presentation.toc)
 
 [27
 
-]
+] (output/media/pdf/presentation.toc)
 
 [28
 
@@ -1632,11 +1374,11 @@ ead of 10 percent on input line 141.
 
 [30
 
-] (output/media/pdf/presentation.toc)
+]
 
 [31
 
-] (output/media/pdf/presentation.toc)
+]
 
 [32
 
@@ -1673,30 +1415,14 @@ ead of 10 percent on input line 141.
 [40
 
 ]
+\tf@nav=\write6
+\openout6 = `presentation.nav'.
 
-[41
+\tf@toc=\write7
+\openout7 = `presentation.toc'.
 
-]
-
-[42
-
-]
-
-[43
-
-]
-
-[44
-
-]
-\tf@nav=\write7
-\openout7 = `presentation.nav'.
-
-\tf@toc=\write8
-\openout8 = `presentation.toc'.
-
-\tf@snm=\write9
-\openout9 = `presentation.snm'.
+\tf@snm=\write8
+\openout8 = `presentation.snm'.
 
  (output/media/pdf/presentation.aux)
  ***********
@@ -1705,18 +1431,15 @@ L3 programming layer <2025-01-18>
  ***********
 Package rerunfilecheck Info: File `presentation.out' has not changed.
 (rerunfilecheck)             Checksum: A159BDEAD422CCEC8C0E6C535421291D;539.
-Package logreq Info: Writing requests to 'presentation.run.xml'.
-\openout1 = `presentation.run.xml'.
-
  ) 
 Here is how much of TeX's memory you used:
- 35303 strings out of 473190
- 710848 string characters out of 5715801
- 1496422 words of memory out of 5000000
- 57837 multiletter control sequences out of 15000+600000
+ 27719 strings out of 473190
+ 551009 string characters out of 5715801
+ 907791 words of memory out of 5000000
+ 50315 multiletter control sequences out of 15000+600000
  576348 words of font info for 75 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 144i,11n,139p,1503b,1372s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 144i,11n,139p,1503b,784s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb
 ></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><
 /usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></us
@@ -1735,10 +1458,10 @@ exmf-dist/fonts/type1/public/cm-super/sfti0600.pfb></usr/local/texlive/2025/tex
 mf-dist/fonts/type1/public/cm-super/sfti1095.pfb></usr/local/texlive/2025/texmf
 -dist/fonts/type1/public/cm-super/sftt0800.pfb></usr/local/texlive/2025/texmf-d
 ist/fonts/type1/public/cm-super/sftt1095.pfb>
-Output written on output/media/pdf/presentation.pdf (44 pages, 416321 bytes).
+Output written on output/media/pdf/presentation.pdf (40 pages, 353156 bytes).
 PDF statistics:
- 478 PDF objects out of 1000 (max. 8388607)
- 374 compressed objects within 4 object streams
- 101 named destinations out of 1000 (max. 500000)
+ 444 PDF objects out of 1000 (max. 8388607)
+ 344 compressed objects within 4 object streams
+ 93 named destinations out of 1000 (max. 500000)
  146 words of extra memory for PDF output out of 10000 (max. 10000000)
 
