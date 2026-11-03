@@ -330,6 +330,8 @@ local function normalize(record)
     local f, kind = {}, record.kind
     for name, value in pairs(record.fields) do f[name] = value end
     f.year = f.year or (f.date or ""):match("^(%d%d%d%d)")
+    f.sortyear = (f.origdate or ""):match("^%s*(%d%d%d%d)") or
+        (f.origyear or ""):match("^%s*(%d%d%d%d)") or f.year or "9999"
     f.address = f.address or f.location
     f.journal = f.shortjournal or journal_name(f.journal or f.journaltitle)
     f.school = f.school or f.institution
@@ -447,7 +449,7 @@ FUNCTION {periodical}
 local function format_entries(entries)
     local source_dir = pandoc.path.directory(PANDOC_SCRIPT_FILE)
     local style = read_file(pandoc.path.join({source_dir, "siamplain.bst"}))
-    style = style:gsub("{ address", "{ pubstate\n    translator\n    origdate\n    address", 1)
+    style = style:gsub("{ address", "{ pubstate\n    translator\n    origdate\n    sortyear\n    address", 1)
     style = style:gsub("\nFUNCTION {book}\n(.-)\nFUNCTION {booklet}", function(book)
         book = book:gsub("  note output", "  format.translation output\n  new.block\n  note output", 1)
         return "\n" .. translation_style .. "\nFUNCTION {book}\n" .. book .. "\nFUNCTION {booklet}"
@@ -457,6 +459,18 @@ local function format_entries(entries)
         '{ pagetotal duplicate$ "1" = { "~page" } { "~pages" } if$ * }', 1)
     style = style:gsub("\nREAD\n", "\n" .. periodical_style .. "\nREAD\n", 1)
     style = style:gsub('type%$ "inbook" =\n  or', 'type$ "inbook" =\n  or\n  type$ "periodical" =\n  or', 1)
+    style = style:gsub("\nITERATE {presort}\n", [[
+FUNCTION {chronological.presort}
+{ presort
+  sortyear field.or.null sortify
+  "    " *
+  sort.key$ *
+  #1 entry.max$ substring$
+  'sort.key$ :=
+}
+
+ITERATE {chronological.presort}
+]], 1)
     local keys, bibliography = {}, {}
     for key in pairs(entries) do keys[#keys + 1] = key end
     table.sort(keys)
