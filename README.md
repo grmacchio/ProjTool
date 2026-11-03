@@ -100,12 +100,19 @@ Often one needs to update the ``LICENSE.txt`` dates, commit a version, and push
 the current branch. In ``ProjTool``, this is done using the following command.
 
 ```bash
-projtool cpush -m "Commit message" -v v0.0.0
+projtool cpush -m "Commit message" -v 0.0.0
 ```
 
-If one does not want to commit a version, just omit everything after ``-v``. To
-make an official release, of a specific version go to the "Releases" tab in
-your respective GitHub repository after using ``projtool cpush`` with ``-v``.
+The version must be three nonnegative integers separated by dots, without a
+``v`` prefix. Each successful ``cpush`` creates an annotated version tag and
+pushes both the current branch and that tag to ``origin``.
+
+Omit ``-v VERSION`` to increase the patch number of the nearest version tag in
+the current branch's history by 1. For example, ``7.5.3`` becomes ``7.5.4``:
+
+```bash
+projtool cpush -m "Commit message"
+```
 
 ## Removing Project Material
 

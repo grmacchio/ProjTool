@@ -34,7 +34,7 @@ Examples:
   projtool init preprint
   projtool init presentation
 
-Prompts for the creator name, GitHub URL, and initial version.
+Prompts for the creator name, GitHub URL, and initial version (MAJOR.MINOR.PATCH).
 Copies the selected example, including all output contents, into the current directory.
 Renames the main TeX file and example-named media files to the project name.
 Excludes TYPE.md, TYPE.pdf, README.md, and .DS_Store.
@@ -51,16 +51,19 @@ Usage: projtool cpush -m MESSAGE [-v VERSION]
 
 Examples:
   projtool cpush -m "Revise introduction"
-  projtool cpush -m "Release v0.2.0" -v v0.2.0
+  projtool cpush -m "Release 0.2.0" -v 0.2.0
 
 Options:
   -m MESSAGE           Commit message
-  -v VERSION           Create an annotated release tag
+  -v VERSION           Set the version tag as MAJOR.MINOR.PATCH (three integers)
 
 Updates the ending copyright year in LICENSE.txt and stages the license.
 Commit other project changes with git add before running cpush. The commit is
-pushed to origin; with -v, the current branch and version tag are pushed
-together.
+pushed to origin together with an annotated version tag. Without -v, the patch
+number of the nearest version tag in the current branch's history is increased
+by 1 (7.5.3 becomes 7.5.4). Older v-prefixed tags are recognized when finding
+the previous version; new tags never have a v prefix. If there is no previous
+version tag, specify the first version with -v.
 EOF
 }
 
@@ -364,8 +367,44 @@ prompt_required() {
 validate_version() {
     local version="$1"
 
-    git check-ref-format "refs/tags/$version" >/dev/null 2>&1 ||
-        die "invalid version tag: $version"
+    [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] ||
+        die "invalid version tag: $version; use three nonnegative integers separated by dots (e.g. 0.1.0), without a v prefix"
+}
+
+next_version() {
+    local project_dir="$1"
+    local tag
+    local version
+    local patch
+    local digit
+    local suffix=""
+    local -a matches=()
+
+    while IFS= read -r tag; do
+        if [[ "$tag" =~ ^v?[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            matches+=(--match "$tag")
+        fi
+    done < <(git -C "$project_dir" tag --merged HEAD)
+
+    [[ ${#matches[@]} -gt 0 ]] ||
+        die "no version tag found in commit history; specify the first version with -v MAJOR.MINOR.PATCH"
+    version="$(git -C "$project_dir" describe --tags --abbrev=0 "${matches[@]}" HEAD)" ||
+        die "could not determine the previous version tag"
+    version="${version#v}"
+    patch="${version##*.}"
+
+    while [[ "$patch" == *9 ]]; do
+        suffix="0$suffix"
+        patch="${patch%?}"
+    done
+    if [[ -z "$patch" ]]; then
+        patch=1
+    else
+        digit="${patch: -1}"
+        patch="${patch%?}$((digit + 1))"
+    fi
+
+    printf '%s.%s%s\n' "${version%.*}" "$patch" "$suffix"
 }
 
 write_project_license() {
@@ -802,7 +841,7 @@ main_init() {
     creator_name="$PROMPT_VALUE"
     prompt_required "Enter GitHub URL: "
     github_url="$PROMPT_VALUE"
-    prompt_required "Enter Version: "
+    prompt_required "Enter Version (MAJOR.MINOR.PATCH): "
     version="$PROMPT_VALUE"
     validate_version "$version"
 
@@ -912,6 +951,7 @@ main_cpush() {
             -v|--version)
                 [[ $# -ge 2 ]] || die "missing version after $1"
                 version="$2"
+                validate_version "$version"
                 shift 2
                 ;;
             *)
@@ -931,11 +971,11 @@ main_cpush() {
         die "Git remote not found: origin"
     license_file="$project_dir/LICENSE.txt"
 
-    if [[ -n "$version" ]]; then
-        validate_version "$version"
-        if git -C "$project_dir" rev-parse -q --verify "refs/tags/$version" >/dev/null; then
-            die "version tag already exists: $version"
-        fi
+    if [[ -z "$version" ]]; then
+        version="$(next_version "$project_dir")"
+    fi
+    if git -C "$project_dir" rev-parse -q --verify "refs/tags/$version" >/dev/null; then
+        die "version tag already exists: $version"
     fi
 
     update_license_years "$license_file"
@@ -943,14 +983,10 @@ main_cpush() {
 
     git -C "$project_dir" commit -m "$message"
 
-    if [[ -n "$version" ]]; then
-        git -C "$project_dir" tag -a "$version" -m "$project_name $version"
-        git -C "$project_dir" push origin "$current_branch" "$version"
-    else
-        git -C "$project_dir" push origin "$current_branch"
-    fi
+    git -C "$project_dir" tag -a "$version" -m "$project_name $version"
+    git -C "$project_dir" push origin "refs/heads/$current_branch" "refs/tags/$version"
 
-    printf '✓ changes pushed for %s\n' "$project_name"
+    printf '✓ changes pushed for %s (%s)\n' "$project_name" "$version"
 }
 
 main_gen() {
