@@ -34,6 +34,9 @@ cd ProjTool
 bash install.sh
 ```
 
+On Windows, run the installation and ProjTool commands in Git Bash. Install
+LaTeX and Pandoc and add them to your Windows user PATH before opening Git Bash.
+
 After installation, make sure to open a new terminal so that the ``projtool``
 command is available.
 

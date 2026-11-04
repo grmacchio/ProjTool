@@ -272,7 +272,7 @@ validate_reference_fields() {
     pandoc --from=markdown --to=plain --fail-if-warnings \
         --lua-filter="$SOURCE_DIR/references.lua" \
         --metadata=reference-check:true \
-        "${bibliography_options[@]}" /dev/null >/dev/null
+        "${bibliography_options[@]}" </dev/null >/dev/null
 }
 
 read_document_source() {
@@ -382,6 +382,10 @@ write_pdf_build_config() {
     local config_file="$PDF_OUTPUT_DIR/$DOCUMENT_STEM.projtool.cfg"
     local -a bibliography_options=()
 
+    if command -v cygpath >/dev/null 2>&1; then
+        config_file="$(cygpath -m "$config_file")"
+    fi
+
     printf '\\def\\templateReferencesPath{%s}\n' "$REFERENCE_LOCATION" \
         > "$config_file"
     if [[ -n "${BIBLIOGRAPHY_FILES[*]-}" ]]; then
@@ -392,7 +396,7 @@ write_pdf_build_config() {
         pandoc --from=markdown --to=plain --fail-if-warnings \
             --lua-filter="$SOURCE_DIR/references.lua" \
             --metadata="reference-output:$config_file" \
-            "${bibliography_options[@]}" /dev/null >/dev/null
+            "${bibliography_options[@]}" </dev/null >/dev/null
     fi
 }
 

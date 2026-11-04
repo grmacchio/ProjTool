@@ -149,12 +149,24 @@ end
 
 local function slug(content)
     local value = pandoc.utils.stringify(content):lower()
-    value = value:gsub("[^%w]+", "-")
+    value = value:gsub("[^a-z0-9]+", "-")
     value = value:gsub("^%-+", ""):gsub("%-+$", "")
     if value == "" then
         return "item"
     end
     return value
+end
+
+local function heading_identifier(state, prefix, title)
+    local base = prefix .. "-" .. slug(title)
+    local identifier = base
+    local suffix = 1
+    while state.heading_ids[identifier] do
+        suffix = suffix + 1
+        identifier = base .. "-" .. suffix
+    end
+    state.heading_ids[identifier] = true
+    return identifier
 end
 
 local reference_prefixes = {
@@ -511,6 +523,7 @@ function Pandoc(document)
     local output = {}
     local proofs = {}
     local state = {
+        heading_ids = {},
         chapter = 0,
         section = 0,
         object = 0,
@@ -568,7 +581,7 @@ function Pandoc(document)
                 state.chapter = state.chapter + 1
                 number = tostring(state.chapter)
             end
-            local identifier = "chapter-" .. slug(part_title)
+            local identifier = heading_identifier(state, "chapter", part_title)
             append(output, anchor(identifier))
             if presentation then
                 append(output, pandoc.Header(2, part_title))
@@ -600,7 +613,7 @@ function Pandoc(document)
                 state.object = 0
                 number = state.chapter .. "." .. state.section
             end
-            local identifier = "section-" .. slug(subpart_title)
+            local identifier = heading_identifier(state, "section", subpart_title)
             append(output, anchor(identifier))
             if presentation then
                 append(output, pandoc.Header(subpart_level, subpart_title))
