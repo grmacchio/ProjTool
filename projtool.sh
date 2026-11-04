@@ -350,19 +350,31 @@ read_document_options() {
 }
 
 resolve_reference_directory() {
-    local location="$REFERENCE_LOCATION"
+    local locations="${REFERENCE_LOCATION//$'\n'/ },"
+    local location
+    local candidate
+    local windows_path='^[[:alpha:]]:/'
 
     REFERENCE_DIR=""
-    [[ -n "$location" ]] || return 0
+    [[ -n "$REFERENCE_LOCATION" ]] || return 0
 
-    if [[ "$location" == /* ]]; then
-        REFERENCE_DIR="$location"
-    else
-        REFERENCE_DIR="$TARGET_DIR/$location"
-    fi
-    [[ -d "$REFERENCE_DIR" ]] ||
-        die "references folder not found: $location"
-    REFERENCE_DIR="$(cd -- "$REFERENCE_DIR" && pwd)"
+    while [[ "$locations" == *,* ]]; do
+        location="${locations%%,*}"
+        locations="${locations#*,}"
+        location="${location#"${location%%[![:space:]]*}"}"
+        location="${location%"${location##*[![:space:]]}"}"
+        [[ -n "$location" ]] || die "references folder cannot be empty"
+        if [[ "$location" == /* || "$location" =~ $windows_path ]]; then
+            candidate="$location"
+        else
+            candidate="$TARGET_DIR/$location"
+        fi
+        if [[ -z "$REFERENCE_DIR" && -d "$candidate" ]]; then
+            REFERENCE_DIR="$(cd -- "$candidate" && pwd)"
+        fi
+    done
+    [[ -n "$REFERENCE_DIR" ]] ||
+        die "no references folder found; tried: $REFERENCE_LOCATION"
 }
 
 write_pdf_build_config() {

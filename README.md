@@ -94,6 +94,22 @@ To generate project material use the following commands.
 To collect all build files, run ``-w verbose`` at the end of any generation
 command.
 
+## Reference Locations
+
+Set `references` in the main TeX file to one folder or an ordered list of
+fallback folders:
+
+```latex
+\documentclass[note, references={/Users/name/Library/Mobile Documents/com~apple~CloudDocs/References/Formatted, C:/Users/name/iCloudDrive/References/Formatted}]{template}
+```
+
+ProjTool uses the first existing folder for both PDF and Markdown references.
+It reports all attempted locations if none exists. Each folder must contain
+all cited references; missing citations do not cause a switch to another folder.
+Relative paths are resolved from the project directory. Use forward slashes
+in Windows paths, preserve spaces in folder names, and separate locations with
+commas. A single location such as `references={./references}` still works.
+
 ## Committing Project Material
 
 Often one needs to update the ``LICENSE.txt`` dates, commit a version, and push
