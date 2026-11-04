@@ -1,3 +1,7 @@
+using Pkg
+Pkg.activate(@__DIR__)
+Pkg.instantiate()
+
 using Plots
 
 mkpath("./output/results/julia")

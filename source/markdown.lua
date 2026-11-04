@@ -54,7 +54,23 @@ function Image(image)
     return image
 end
 
+local function trim_trailing_breaks(block)
+    while #block.content > 0 do
+        local kind = block.content[#block.content].t
+        if kind ~= "LineBreak" and kind ~= "SoftBreak" and kind ~= "Space" then
+            break
+        end
+        table.remove(block.content)
+    end
+    return block
+end
+
+function Plain(block)
+    return trim_trailing_breaks(block)
+end
+
 function Para(paragraph)
+    paragraph = trim_trailing_breaks(paragraph)
     if #paragraph.content == 1 and paragraph.content[1].t == "Image" then
         local image = paragraph.content[1]
         local width = image.attributes and image.attributes.width
@@ -70,27 +86,7 @@ function Para(paragraph)
         return pandoc.RawBlock("html", html)
     end
 
-    local text = pandoc.utils.stringify(paragraph)
-    if not text:find("Test Hyper%-References:") or
-        not text:find("Test References:") or
-        not text:find("Test Code Output:") then
-        return nil
-    end
-
-    local blocks = {}
-    local content = {}
-    for _, inline in ipairs(paragraph.content) do
-        if inline.t == "LineBreak" then
-            append(blocks, pandoc.Para(content))
-            content = {}
-        else
-            append(content, inline)
-        end
-    end
-    if #content > 0 then
-        append(blocks, pandoc.Para(content))
-    end
-    return blocks
+    return paragraph
 end
 
 local function marker_content(block, marker)
@@ -500,6 +496,18 @@ local function emit_references(output, state, include_in_toc, bold_title)
     append(output, pandoc.Header(2, title))
 end
 
+local function style_link_code(link)
+    return link:walk({
+        Code = function(code)
+            code.attributes.style = "color: inherit; text-decoration: inherit;"
+            local html = pandoc.write(
+                pandoc.Pandoc({pandoc.Plain({code})}), "html",
+                pandoc.WriterOptions({wrap_text = "none"}))
+            return pandoc.RawInline("html", html:gsub("\n$", ""))
+        end
+    })
+end
+
 function Pandoc(document)
     local template_type = pandoc.utils.stringify(
         document.meta["template-type"] or "dissertation")
@@ -815,5 +823,7 @@ function Pandoc(document)
         end
     end
 
-    return render_generated_math(pandoc.Pandoc(final_output, document.meta))
+    return render_generated_math(pandoc.Pandoc(final_output, document.meta)):walk({
+        Link = style_link_code
+    })
 end

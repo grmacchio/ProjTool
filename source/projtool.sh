@@ -2,9 +2,9 @@
 
 set -Eeuo pipefail
 
-SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
-SOURCE_DIR="$SCRIPT_DIR/source"
-COLLECTION_DIR="$(cd -- "$SCRIPT_DIR/.." && pwd)"
+SOURCE_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+PROJTOOL_DIR="$(cd -- "$SOURCE_DIR/.." && pwd)"
+COLLECTION_DIR="$(cd -- "$PROJTOOL_DIR/.." && pwd)"
 MODE=""
 TEMPLATE_TYPE=""
 CITATION_IDS=()
@@ -458,7 +458,7 @@ write_project_license() {
     local project_name="$2"
     local creator_name="$3"
     local github_url="$4"
-    local license_template="$SCRIPT_DIR/LICENSE.txt"
+    local license_template="$PROJTOOL_DIR/LICENSE.txt"
     local license_file="$target_dir/LICENSE.txt"
     local license_temp
     local current_year
@@ -601,6 +601,16 @@ run_results_stage() {
         export PROJTOOL_VERBOSE="$VERBOSE"
         export JULIA_PROJECT="${JULIA_PROJECT:-$julia_project}"
         export GKSwstype="${GKSwstype:-nul}"
+        export PROJTOOL_NOTEBOOK_RUNNER="$SOURCE_DIR/run_notebook.py"
+        jupyter() {
+            if [[ "${1:-}" == execute ]]; then
+                shift
+                command python "$PROJTOOL_NOTEBOOK_RUNNER" "$@"
+            else
+                command jupyter "$@"
+            fi
+        }
+        export -f jupyter
         if [[ "$VERBOSE" == true ]]; then
             bash -e ./results.sh
         else
@@ -856,9 +866,6 @@ main_init() {
     local line
     local media_file
     local -a entries=()
-    local projtool_command
-    local settings_file
-    local settings_temp
     local target_name
     local project_stem
     local creator_name
@@ -875,7 +882,7 @@ main_init() {
     example_type="$(printf '%s' "$1" | tr '[:upper:]' '[:lower:]')"
     [[ "$example_type" =~ ^[a-z0-9][a-z0-9_-]*$ ]] ||
         die "invalid example type: $1"
-    source_dir="$SCRIPT_DIR/examples/$example_type"
+    source_dir="$PROJTOOL_DIR/examples/$example_type"
     [[ -d "$source_dir" ]] || die "example not found: $example_type"
     target_dir="$(pwd)"
     target_name="$(basename -- "$target_dir")"
@@ -939,22 +946,6 @@ main_init() {
             mv -- "$entry" "$destination"
         done < <(find "$source_dir/output/media" \( -type f -o -type l \) \
             -name "$example_type.*" -print0)
-    fi
-
-    settings_file="$target_dir/.vscode/settings.json"
-    if [[ -f "$settings_file" ]]; then
-        settings_temp="$(mktemp "$target_dir/.projtool-settings.XXXXXX")"
-        cp -p -- "$settings_file" "$settings_temp"
-        projtool_command="$SCRIPT_DIR/projtool.sh"
-        projtool_command="${projtool_command//\\/\\\\}"
-        projtool_command="${projtool_command//\"/\\\"}"
-        while IFS= read -r line || [[ -n "$line" ]]; do
-            if [[ "$line" == *'"command": "../../projtool.sh"'* ]]; then
-                line="${line%%../../projtool.sh*}$projtool_command${line#*../../projtool.sh}"
-            fi
-            printf '%s\n' "$line"
-        done < "$settings_file" > "$settings_temp"
-        mv -f -- "$settings_temp" "$settings_file"
     fi
 
     write_project_license "$target_dir" "$target_name" "$creator_name" "$github_url"

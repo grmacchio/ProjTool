@@ -1,0 +1,7 @@
+jupyter>=1.1
+nbclient>=0.10
+ipykernel>=7.3
+jupyter-client>=8.9
+pyzmq>=27.3
+matplotlib>=3.8
+numpy>=1.26

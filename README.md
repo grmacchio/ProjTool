@@ -11,45 +11,53 @@ the following project types:
 
 ## Installing and Uninstalling ProjTool
 
-### Dependencies
-
-Before one installs ``ProjTool`` you need the following dependencies.
-
-- [Git](https://git-scm.com/)
-- LaTeX distribution that provides `pdflatex`, `latexmk`, and `bibtexu`
-(Unicode-aware BibTeX)
-- [Pandoc](https://pandoc.org/)
-- If you want to run the example code, download
-[Julia 1.10 or later](https://julialang.org/)
-
 ### Install
 
-First, ``cd`` to the proper directory where you want to install ``ProjTool``.
-After you have navigated to the desired directory, clone the repository and run
-the installer as described below.
+Download and extract
+[ProjTool](https://github.com/grmacchio/ProjTool/archive/refs/heads/main.zip),
+or clone the repository if Git is already installed. On macOS or Linux, open
+a terminal in the ProjTool folder and run:
 
 ```bash
-git clone https://github.com/grmacchio/ProjTool.git ProjTool
-cd ProjTool
-bash install.sh
+bash install/mac/install.sh
 ```
 
-On Windows, run the installation and ProjTool commands in Git Bash. Install
-LaTeX and Pandoc and add them to your Windows user PATH before opening Git Bash.
+On Windows, open PowerShell in the ProjTool folder and run the command below.
+It also installs Git Bash when needed, so no tools need to be installed
+beforehand:
 
-After installation, make sure to open a new terminal so that the ``projtool``
-command is available.
+```powershell
+.\install\windows\install.cmd
+```
+
+The installer installs missing Git, Pandoc, LaTeX, Julia, and Python
+dependencies. It prepares the Julia packages and a dedicated Python environment
+containing Jupyter, NumPy, and Matplotlib, so `projtool gen all` needs no
+manual package setup. First-time downloads and compilation can take several
+minutes.
+
+The installer adds a real `projtool` command to your user PATH. You can then
+use `projtool` from any directory; on Windows, PowerShell, Command Prompt, and
+Git Bash are supported. Remember to open a new terminal and fully restart VS
+Code after installation.
 
 ### Uninstall
 
-To uninstall ``ProjTool``, navigate to the cloned repository and run:
+On macOS or Linux, run this from the ProjTool folder:
 
 ```bash
-bash uninstall.sh
+bash uninstall/mac/uninstall.sh
 ```
 
-After uninstallation, make sure to open a new terminal so that the ``projtool``
-command is no longer available.
+Or, from Windows PowerShell:
+
+```powershell
+.\uninstall\windows\uninstall.cmd
+```
+
+The uninstaller removes the ProjTool launcher, its PATH setup, and its
+dedicated Python environment. Shared runtimes and the Julia package cache are
+retained. Restart terminals and VS Code afterward.
 
 ## Initializing a Project
 
@@ -69,7 +77,7 @@ section folding. No separate editor setup is needed.
 
  After running the aforementioned command the user will be
 prompted to provide the creator name, GitHub URL, and initial version, e.g.
-``v0.0.0``, for the project. Once the information is provided, the project will
+``0.0.0``, for the project. Once the information is provided, the project will
 do the following.
 
 - Copy the desired template, in this case ``note``.

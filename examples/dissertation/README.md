@@ -10,7 +10,7 @@ This project includes a [PDF file](./dissertation.pdf) and [Markdown file](./dis
 
 **Advisor:** \<Advisor Content\>
 
-**Date:** 2026/10/22
+**Date:** 2026/11/04
 
 ## Abstract
 
@@ -30,7 +30,7 @@ This project includes a [PDF file](./dissertation.pdf) and [Markdown file](./dis
 - [2 \<Chapter Title 2\>](#chapter-chapter-title-2)
   - [2.1 \<Section Title 3\>](#section-section-title-3)
   - [2.2 \<Section Title 4\>](#section-section-title-4)
-- [3 `<Chapter Title 3>`](#chapter-chapter-title-3)
+- [3 <code style="color: inherit; text-decoration: inherit;">&lt;Chapter Title 3&gt;</code>](#chapter-chapter-title-3)
   - [3.1 Theorem: \<Theorem Title 3\>](#theorem-theorem-title-3)
   - [3.2 Definition: \<Definition Title 3\>](#definition-definition-title-3)
   - [3.3 Figure: \<Figure Title 3\>](#figure-figure-title-3)
@@ -61,17 +61,18 @@ This project includes a [PDF file](./dissertation.pdf) and [Markdown file](./dis
 \<Section Content 1a\>
 
 $$
-\begin{aligned}
+\begin{align*}
                 f(x) = x^2
-\end{aligned}
+\end{align*}
 $$
 
 \<Section Content 1b\>
 
 <a id="equation-equation-title-1"></a>
+
 $$
 \begin{align*}
-f(x) = x^3 \tag{<Equation Title 1>}
+                f(x) = x^3 \tag{<Equation Title 1>}
 \end{align*}
 $$
 
@@ -90,12 +91,14 @@ $$
 **Definition 1.1.2** (\<Definition Title 1\>)**.** \<Definition Statement 1\>
 
 <p align="center"><img src="./output/results/julia/exp.png" alt="image" width="40%" style="image-rendering: pixelated; image-rendering: crisp-edges;"></p>
+
 <a id="figure-figure-title-1"></a>
+
 <p align="center"><strong>Figure 1.1.3</strong> (&lt;Figure Title 1&gt;)<strong>.</strong> &lt;Figure Caption 1&gt;</p>
 
-Test Hyper-References: [\<Theorem Title 1\>](#theorem-theorem-title-1) [\<Definition Title 1\>](#definition-definition-title-1) [\<Equation Title 1\>](#equation-equation-title-1) [\<Figure Title 1\>](#figure-figure-title-1)  
+Test Hyper-References: [\<Theorem Title 1\>](#theorem-theorem-title-1) [\<Definition Title 1\>](#definition-definition-title-1) [\<Equation Title 1\>](#equation-equation-title-1) [\<Figure Title 1\>](#figure-figure-title-1)
 
-Test Citations: \[[1](#ref-2001author), [2](#ref-2002author)\]  
+Test Citations: \[[1](#ref-2001author), [2](#ref-2002author)\]
 
 Test Code Output: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
 
@@ -106,17 +109,18 @@ Test Code Output: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
 \<Section Content 2a\>
 
 $$
-\begin{aligned}
+\begin{align*}
                 f(x) = x^2
-\end{aligned}
+\end{align*}
 $$
 
 \<Section Content 2b\>
 
 <a id="equation-equation-title-2"></a>
+
 $$
 \begin{align*}
-f(x) = x^3 \tag{<Equation Title 2>}
+                f(x) = x^3 \tag{<Equation Title 2>}
 \end{align*}
 $$
 
@@ -133,12 +137,14 @@ $$
 **Definition** (\<Definition Title 2\>)**.** \<Definition Statement 2\>
 
 <p align="center"><img src="./output/results/python/quadratic.png" alt="image" width="40%" style="image-rendering: pixelated; image-rendering: crisp-edges;"></p>
+
 <a id="figure-figure-title-2"></a>
+
 <p align="center"><strong>Figure</strong> (&lt;Figure Title 2&gt;)<strong>.</strong> &lt;Figure Caption 2&gt;</p>
 
-Test Hyper-References: [\<Theorem Title 2\>](#theorem-theorem-title-2) [\<Definition Title 2\>](#definition-definition-title-2) [\<Equation Title 2\>](#equation-equation-title-2) [\<Figure Title 2\>](#figure-figure-title-2)  
+Test Hyper-References: [\<Theorem Title 2\>](#theorem-theorem-title-2) [\<Definition Title 2\>](#definition-definition-title-2) [\<Equation Title 2\>](#equation-equation-title-2) [\<Figure Title 2\>](#figure-figure-title-2)
 
-Test Citations: \[[1](#ref-2001author), [2](#ref-2002author)\]  
+Test Citations: \[[1](#ref-2001author), [2](#ref-2002author)\]
 
 Test Code Output: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
 
@@ -184,8 +190,11 @@ Test Code Output: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
 **Definition 3.2** (\<Definition Title 3\>)**.** \<Definition Statement 3\>
 
 <p align="center"><img src="./output/results/python/quadratic.png" alt="image" width="40%" style="image-rendering: pixelated; image-rendering: crisp-edges;"></p>
+
 <a id="figure-figure-title-3"></a>
+
 <p align="center"><strong>Figure 3.3</strong> (&lt;Figure Title 3&gt;)<strong>.</strong> &lt;Figure Caption 3&gt;</p>
+
 <a id="proofs"></a>
 
 ## Proofs

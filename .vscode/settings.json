@@ -46,6 +46,7 @@
         "definecolor",
         "definitionstar",
         "dimexpr",
+        "documentclass",
         "dottedtocline",
         "endgroup",
         "endlist",
@@ -69,7 +70,9 @@
         "framenumber",
         "frontmatter",
         "gappto",
+        "gcpush",
         "gobblethree",
+        "gpull",
         "Hfigure",
         "Hfootnote",
         "howpublished",
@@ -109,6 +112,7 @@
         "mathdots",
         "mathinsection",
         "mathrm",
+        "Matplotlib",
         "maxbibnames",
         "mkbibbrackets",
         "nameuse",
@@ -130,6 +134,7 @@
         "openany",
         "pageanchor",
         "pagetotal",
+        "Pandoc",
         "parindent",
         "parsep",
         "patchcmd",
@@ -184,6 +189,7 @@
         "usetheme",
         "varepsilon",
         "xcolor",
-        "xlabel"
+        "xlabel",
+        "ylabel"
     ]
 }

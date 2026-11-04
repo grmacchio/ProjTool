@@ -19,7 +19,7 @@
     "latex-workshop.latex.tools": [
         {
             "name": "gen media",
-            "command": "../../projtool.sh",
+            "command": "projtool",
             "args": ["gen", "media"],
             "cwd": "%DIR%"
         }
