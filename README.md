@@ -114,6 +114,25 @@ the current branch's history by 1. For example, ``7.5.3`` becomes ``7.5.4``:
 projtool cpush -m "Commit message"
 ```
 
+## Working with a Git Superproject
+
+Run these commands from the git superproject repository. The following command
+runs `git pull --ff-only`, followed by `git submodule update --init
+--recursive` only if the pull succeeds.
+
+```bash
+projtool gpull
+```
+
+The following command ensures every submodule is initialized, has no
+uncommitted or untracked changes, and matches its fetched remote branch
+exactly, then `git add .` is run, the changes are committed, and finally
+`git push --recurse-submodules=check` is run.
+
+```bash
+projtool gcpush
+```
+
 ## Removing Project Material
 
 To remove project material, use the following commands.
@@ -127,7 +146,6 @@ To remove project material, use the following commands.
 | `projtool rem output` | `output/` |
 | `projtool rem readme` | Root `README.md`, PDF, and Markdown files |
 | `projtool rem all` | `output/` & root `README.md`, PDF, and Markdown files |
-
 
 ## Important Notes
 

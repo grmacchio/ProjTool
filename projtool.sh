@@ -17,6 +17,8 @@ Usage: projtool COMMAND ...
 Commands:
   init                Initialize the current directory from an example
   cpush               Commit and push project changes
+  gpull               Pull the current repository and update its submodules
+  gcpush              Check submodules, stage all changes, commit, and push
   gen                 Generate results, media, or a README
   rem                 Remove generated output or README files
 
@@ -64,6 +66,34 @@ number of the nearest version tag in the current branch's history is increased
 by 1 (7.5.3 becomes 7.5.4). Older v-prefixed tags are recognized when finding
 the previous version; new tags never have a v prefix. If there is no previous
 version tag, specify the first version with -v.
+EOF
+}
+
+usage_gpull() {
+    cat <<'EOF'
+Usage: projtool gpull
+
+Runs git pull --ff-only, then git submodule update --init --recursive.
+Uses the root of the current Git repository, including when run from a subdirectory.
+Submodules are checked out at the commits recorded by the repository and may
+be left in detached HEAD state.
+EOF
+}
+
+usage_gcpush() {
+    cat <<'EOF'
+Usage: projtool gcpush
+
+Checks every submodule, including nested ones, before staging anything.
+Each must be initialized, have no uncommitted or untracked changes, and match
+its freshly fetched origin branch. The target is submodule.NAME.branch from
+Git configuration or .gitmodules, falling back to origin's default branch.
+A branch value of . uses the containing repository's current branch name.
+
+Then runs git add . at the repository root, commits with the message
+"Update YYYYMMDDHH" using local time (24-hour HH), and runs
+git push --recurse-submodules=check. Each step must succeed before continuing.
+If there is nothing to commit, the push is skipped. No version tag is created.
 EOF
 }
 
@@ -989,6 +1019,113 @@ main_cpush() {
     printf '✓ changes pushed for %s (%s)\n' "$project_name" "$version"
 }
 
+check_submodules() {
+    local project_dir="$1"
+    local submodule_status
+    local line
+
+    submodule_status="$(git -C "$project_dir" submodule status --recursive)" ||
+        die "could not inspect submodules"
+    while IFS= read -r line; do
+        case "$line" in
+            -*) die "uninitialized submodule: ${line#* }" ;;
+            U*) die "conflicted submodule: ${line#* }" ;;
+        esac
+    done <<< "$submodule_status"
+
+    git -C "$project_dir" submodule foreach --quiet --recursive '
+        fail() {
+            printf "projtool gcpush: submodule %s: %s\n" "$displaypath" "$*" >&2
+            exit 1
+        }
+
+        changes=$(git status --porcelain --untracked-files=all --ignore-submodules=none) ||
+            fail "could not inspect working directory"
+        [ -z "$changes" ] || fail "uncommitted or untracked changes"
+
+        branch=$(git -C "$toplevel" config --get "submodule.$name.branch") ||
+            branch=$(git -C "$toplevel" config -f .gitmodules --get "submodule.$name.branch") ||
+            branch=""
+        case "$branch" in
+            .)
+                branch=$(git -C "$toplevel" symbolic-ref --quiet --short HEAD) ||
+                    fail "branch is . but the containing repository has a detached HEAD"
+                ;;
+            "")
+                remote_head=$(git ls-remote --symref origin HEAD) ||
+                    fail "could not query origin"
+                branch=$(printf "%s\n" "$remote_head" |
+                    while read -r marker ref target; do
+                        if [ "$marker" = "ref:" ] && [ "$target" = "HEAD" ] &&
+                            [ "$ref" != "${ref#refs/heads/}" ]; then
+                            printf "%s\n" "${ref#refs/heads/}"
+                            break
+                        fi
+                    done)
+                [ -n "$branch" ] || fail "origin has no default branch; configure submodule.$name.branch"
+                ;;
+        esac
+        git check-ref-format "refs/heads/$branch" >/dev/null ||
+            fail "invalid target branch: $branch"
+        git fetch --no-recurse-submodules origin "+refs/heads/$branch:refs/remotes/origin/$branch" ||
+            fail "could not fetch origin/$branch"
+        current=$(git rev-parse --verify HEAD) || fail "could not read HEAD"
+        remote=$(git rev-parse --verify "refs/remotes/origin/$branch") ||
+            fail "could not read origin/$branch"
+
+        if [ "$current" != "$remote" ]; then
+            if git merge-base --is-ancestor "$remote" "$current"; then
+                reason="ahead of"
+            elif git merge-base --is-ancestor "$current" "$remote"; then
+                reason="behind"
+            else
+                reason="diverged from"
+            fi
+            fail "$reason origin/$branch"
+        fi
+    ' || die "submodule checks failed; staging and commit skipped"
+}
+
+main_gpull() {
+    local project_dir
+
+    if [[ $# -eq 1 && ( "$1" == -h || "$1" == --help ) ]]; then
+        usage_gpull
+        return
+    fi
+    [[ $# -eq 0 ]] || die "gpull takes no arguments"
+    require_command git
+    project_dir="$(git rev-parse --show-toplevel 2>/dev/null)" ||
+        die "working directory is not a Git repository"
+
+    git -C "$project_dir" pull --ff-only
+    git -C "$project_dir" submodule update --init --recursive
+}
+
+main_gcpush() {
+    local project_dir
+    local timestamp
+
+    if [[ $# -eq 1 && ( "$1" == -h || "$1" == --help ) ]]; then
+        usage_gcpush
+        return
+    fi
+    [[ $# -eq 0 ]] || die "gcpush takes no arguments"
+    require_command git
+    require_command date
+    project_dir="$(git rev-parse --show-toplevel 2>/dev/null)" ||
+        die "working directory is not a Git repository"
+    git -C "$project_dir" symbolic-ref --quiet HEAD >/dev/null ||
+        die "cannot gcpush from a detached HEAD"
+
+    check_submodules "$project_dir"
+    timestamp="$(date +%Y%m%d%H)" || die "could not determine the current date"
+    [[ "$timestamp" =~ ^[0-9]{10}$ ]] || die "invalid date: $timestamp"
+    git -C "$project_dir" add .
+    git -C "$project_dir" commit -m "Update $timestamp"
+    git -C "$project_dir" push --recurse-submodules=check
+}
+
 main_gen() {
     [[ $# -eq 0 ]] && { usage_gen; exit 2; }
     [[ "$1" == "-h" || "$1" == "--help" ]] && { usage_gen; exit 0; }
@@ -1112,6 +1249,8 @@ shift
 case "$MODE" in
     init) main_init "$@" ;;
     cpush) main_cpush "$@" ;;
+    gpull) main_gpull "$@" ;;
+    gcpush) main_gcpush "$@" ;;
     gen) main_gen "$@" ;;
     rem) main_rem "$@" ;;
     *)
