@@ -663,6 +663,47 @@ write_markdown_source() {
     ' "$DOCUMENT_FILE"
 }
 
+write_markdown_math_commands() {
+    awk '
+        function brace_balance(text, position, character, change) {
+            change = 0
+            for (position = 1; position <= length(text); position++) {
+                character = substr(text, position, 1)
+                if (character == "\\") {
+                    position++
+                } else if (character == "%") {
+                    break
+                } else if (character == "{") {
+                    change++
+                } else if (character == "}") {
+                    change--
+                }
+            }
+            return change
+        }
+        /^[[:space:]]*\\newcommand\{\\loadMathPackage\}/ {
+            math_package = 1
+            next
+        }
+        math_package && /^[[:space:]]*\\theoremstyle/ {
+            exit
+        }
+        math_package && (depth > 0 ||
+            /^[[:space:]]*\\(newcommand|renewcommand|providecommand)\*?[[:space:]]*\{\\/) {
+            depth += brace_balance($0)
+            line = $0
+            gsub(/##/, "#", line)
+            print line
+            commands++
+        }
+        END {
+            if (!math_package || !commands || depth != 0) {
+                exit 1
+            }
+        }
+    ' "$SOURCE_DIR/template.cls"
+}
+
 write_markdown_build_file() {
     local front_command
     local part_command='\newcommand{\genPart}[4]{\subsection{\textbf{LaTeXToPart} \textbf{#2} \textbf{#3} #1}#4}'
@@ -693,6 +734,7 @@ write_markdown_build_file() {
     fi
 
     {
+        write_markdown_math_commands || die "could not load template math commands"
         printf '\\newcommand{\\genDATE}{%s}\n' "$(date '+%Y/%m/%d')"
         printf '%s\n' \
             "$front_command" \
