@@ -24,6 +24,24 @@ local function nonempty(value)
     return value and value:gsub("[%s{}]", "") ~= "" and not value:match("^%s*<[^>]+>%s*$")
 end
 
+local function isbn_number(value)
+    local number = value:gsub("[{}%s%-]", ""):upper()
+    local total = 0
+    if #number == 10 and number:sub(1, 9):match("^%d+$") and
+        number:sub(10):match("^[%dX]$") then
+        for index = 1, 10 do
+            local digit = number:sub(index, index)
+            total = total + (digit == "X" and 10 or tonumber(digit)) * (11 - index)
+        end
+        if total % 11 == 0 then return number end
+    elseif #number == 13 and number:match("^97[89]%d+$") then
+        for index = 1, 13 do
+            total = total + tonumber(number:sub(index, index)) * (index % 2 == 0 and 3 or 1)
+        end
+        if total % 10 == 0 then return number end
+    end
+end
+
 local function read_entries(paths)
     local entries = {}
     local macros = {
@@ -174,6 +192,9 @@ local function validate(key, record)
     if #missing > 0 then
         error("Reference " .. key .. " (@" .. kind .. ") in " .. record.path ..
             " is missing: " .. table.concat(missing, "; "), 0)
+    end
+    if nonempty(f.isbn) and not isbn_number(f.isbn) then
+        error("Invalid ISBN in reference " .. key .. " in " .. record.path .. ": " .. f.isbn, 0)
     end
 end
 
@@ -389,6 +410,13 @@ local function normalize(record)
             f[name] = f[name]:gsub("([^\\])([%%#])", "%1\\%2"):gsub("^([%%#])", "\\%1")
         end
     end
+    if nonempty(f.isbn) then
+        f.isbnurl = "https://www.worldcat.org/isbn/" .. isbn_number(f.isbn)
+        f.isbn = f.isbn:gsub("[{}]", ""):upper():match("^%s*(.-)%s*$")
+    else
+        f.isbn = nil
+        f.isbnurl = nil
+    end
     if kind ~= "article" and f.pubstate == "inpress" then
         f.note = nonempty(f.note) and (f.note .. "; to appear") or "To appear"
         f.pubstate = nil
@@ -399,6 +427,15 @@ local function normalize(record)
     end
     return kind, f
 end
+
+local isbn_style = [[
+FUNCTION {format.isbn}
+{ isbn empty$
+    { "" }
+    { "ISBN: \href{" isbnurl * "}{" * isbn * "}" * }
+  if$
+}
+]]
 
 local translation_style = [[
 FUNCTION {format.translation}
@@ -449,7 +486,8 @@ FUNCTION {periodical}
 local function format_entries(entries)
     local source_dir = pandoc.path.directory(PANDOC_SCRIPT_FILE)
     local style = read_file(pandoc.path.join({source_dir, "siamplain.bst"}))
-    style = style:gsub("{ address", "{ pubstate\n    translator\n    origdate\n    sortyear\n    address", 1)
+    style = style:gsub("{ address", "{ pubstate\n    translator\n    origdate\n    sortyear\n    isbn\n    isbnurl\n    address", 1)
+    style = style:gsub("\nFUNCTION {format.url}", "\n" .. isbn_style .. "\nFUNCTION {format.url}", 1)
     style = style:gsub("\nFUNCTION {book}\n(.-)\nFUNCTION {booklet}", function(book)
         book = book:gsub("  note output", "  format.translation output\n  new.block\n  note output", 1)
         return "\n" .. translation_style .. "\nFUNCTION {book}\n" .. book .. "\nFUNCTION {booklet}"
@@ -458,6 +496,7 @@ local function format_entries(entries)
     style = style:gsub('{ pagetotal "~pages" %* }',
         '{ pagetotal duplicate$ "1" = { "~page" } { "~pages" } if$ * }', 1)
     style = style:gsub("\nREAD\n", "\n" .. periodical_style .. "\nREAD\n", 1)
+    style = style:gsub("  new.block\n  note output", "  new.block\n  format.isbn output\n  new.block\n  note output")
     style = style:gsub('type%$ "inbook" =\n  or', 'type$ "inbook" =\n  or\n  type$ "periodical" =\n  or', 1)
     style = style:gsub("\nITERATE {presort}\n", [[
 FUNCTION {chronological.presort}
