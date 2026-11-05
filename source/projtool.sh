@@ -73,10 +73,15 @@ usage_gpull() {
     cat <<'EOF'
 Usage: projtool gpull
 
-Runs git pull --ff-only, then git submodule update --init --recursive.
+Fast-forwards the current repository, then initializes and updates every submodule.
 Uses the root of the current Git repository, including when run from a subdirectory.
-Submodules are checked out at the commits recorded by the repository and may
-be left in detached HEAD state.
+Each submodule is attached to its configured branch, or origin's default branch,
+and fast-forwarded so HEAD, the local branch, and origin/BRANCH agree.
+A configured branch of . follows the containing repository's branch.
+Nested submodules are updated after their containing repository.
+Stops for uncommitted files, unpublished commits, or diverged branches.
+Does not reset, rebase, stash, commit, or push. Updated submodule versions can
+leave the containing repository modified; use gcpush to record them.
 EOF
 }
 
@@ -1135,8 +1140,100 @@ check_submodules() {
     ' || die "submodule checks failed; staging and commit skipped"
 }
 
+gpull_target_branch() {
+    local parent_dir="$1"
+    local module_name="$2"
+    local module_dir="$3"
+    local target_branch
+    local remote_head
+    local marker ref target
+    local uses_default=false
+
+    target_branch="$(git -C "$parent_dir" config --get "submodule.$module_name.branch")" ||
+        target_branch="$(git -C "$parent_dir" config -f .gitmodules --get "submodule.$module_name.branch")" ||
+        target_branch=""
+    case "$target_branch" in
+        .)
+            target_branch="$(git -C "$parent_dir" symbolic-ref --quiet --short HEAD)" ||
+                die "submodule $module_name: branch is . but its containing repository has no active branch"
+            ;;
+        "")
+            uses_default=true
+            remote_head="$(git -C "$module_dir" ls-remote --symref origin HEAD)" ||
+                die "submodule $module_name: could not query origin"
+            while read -r marker ref target; do
+                if [[ "$marker" == ref: && "$target" == HEAD && "$ref" == refs/heads/* ]]; then
+                    target_branch="${ref#refs/heads/}"
+                    break
+                fi
+            done <<< "$remote_head"
+            [[ -n "$target_branch" ]] ||
+                die "submodule $module_name: origin has no default branch; configure submodule.$module_name.branch"
+            ;;
+    esac
+    [[ "$target_branch" != -* ]] && git check-ref-format "refs/heads/$target_branch" >/dev/null ||
+        die "submodule $module_name: invalid target branch: $target_branch"
+    printf '%s %s\n' "$target_branch" "$uses_default"
+}
+
+gpull_submodules() {
+    local parent_dir="$1"
+    local entry setting module_name module_path module_dir
+    local target_branch remote_commit current_commit local_commit changes branch_selection uses_default
+
+    [[ -f "$parent_dir/.gitmodules" ]] || return 0
+    git -C "$parent_dir" config -f .gitmodules --list >/dev/null ||
+        die "could not read $parent_dir/.gitmodules"
+    while IFS= read -r -d '' entry; do
+        setting="${entry%%$'\n'*}"
+        module_path="${entry#*$'\n'}"
+        module_name="${setting#submodule.}"
+        module_name="${module_name%.path}"
+        module_dir="$parent_dir/$module_path"
+
+        git -C "$parent_dir" submodule init -- "$module_path" ||
+            die "could not initialize submodule configuration for $module_dir"
+        if [[ ! -e "$module_dir/.git" ]]; then
+            git -c submodule.recurse=false -C "$parent_dir" submodule update --init --checkout -- "$module_path" ||
+                die "could not initialize submodule $module_dir"
+        fi
+        changes="$(git -C "$module_dir" status --porcelain --untracked-files=all --ignore-submodules=all)" ||
+            die "could not inspect submodule $module_dir"
+        [[ -z "$changes" ]] || die "submodule $module_dir has uncommitted or untracked files; save them before gpull"
+
+        branch_selection="$(gpull_target_branch "$parent_dir" "$module_name" "$module_dir")" || exit 1
+        read -r target_branch uses_default <<< "$branch_selection"
+        git -C "$module_dir" fetch --no-recurse-submodules origin "+refs/heads/$target_branch:refs/remotes/origin/$target_branch" ||
+            die "submodule $module_dir: could not fetch origin/$target_branch"
+        if [[ "$uses_default" == true ]]; then
+            git -C "$module_dir" symbolic-ref refs/remotes/origin/HEAD "refs/remotes/origin/$target_branch"
+        fi
+        remote_commit="$(git -C "$module_dir" rev-parse --verify "refs/remotes/origin/$target_branch")"
+        current_commit="$(git -C "$module_dir" rev-parse --verify HEAD)"
+        git -C "$module_dir" merge-base --is-ancestor "$current_commit" "$remote_commit" ||
+            die "submodule $module_dir: HEAD has commits outside origin/$target_branch; push or resolve them before gpull"
+
+        if git -C "$module_dir" show-ref --verify --quiet "refs/heads/$target_branch"; then
+            local_commit="$(git -C "$module_dir" rev-parse --verify "refs/heads/$target_branch")"
+            git -C "$module_dir" merge-base --is-ancestor "$local_commit" "$remote_commit" ||
+                die "submodule $module_dir: local $target_branch has commits outside origin/$target_branch; push or resolve them before gpull"
+            git -C "$module_dir" switch --no-recurse-submodules --no-overwrite-ignore -- "$target_branch" ||
+                die "submodule $module_dir: could not activate $target_branch"
+        else
+            git -C "$module_dir" switch --no-recurse-submodules --no-overwrite-ignore -c "$target_branch" --track "origin/$target_branch" ||
+                die "submodule $module_dir: could not create $target_branch"
+        fi
+        git -c submodule.recurse=false -C "$module_dir" merge --ff-only --no-autostash "refs/remotes/origin/$target_branch" ||
+            die "submodule $module_dir: could not fast-forward $target_branch"
+        git -C "$module_dir" branch --set-upstream-to="origin/$target_branch" -- "$target_branch" ||
+            die "submodule $module_dir: could not set the upstream branch"
+        gpull_submodules "$module_dir"
+    done < <(git -C "$parent_dir" config --null -f .gitmodules --get-regexp '^submodule\..*\.path$')
+}
+
 main_gpull() {
     local project_dir
+    local changes
 
     if [[ $# -eq 1 && ( "$1" == -h || "$1" == --help ) ]]; then
         usage_gpull
@@ -1147,8 +1244,21 @@ main_gpull() {
     project_dir="$(git rev-parse --show-toplevel 2>/dev/null)" ||
         die "working directory is not a Git repository"
 
-    git -C "$project_dir" pull --ff-only
-    git -C "$project_dir" submodule update --init --recursive
+    git -C "$project_dir" symbolic-ref --quiet HEAD >/dev/null ||
+        die "the current repository has no active branch; switch to its working branch before gpull"
+    changes="$(git -C "$project_dir" status --porcelain --untracked-files=all --ignore-submodules=all)"
+    [[ -z "$changes" ]] || die "the current repository has uncommitted or untracked files; save them before gpull"
+    git -C "$project_dir" submodule foreach --quiet --recursive '
+        changes=$(git status --porcelain --untracked-files=all --ignore-submodules=all) || exit 1
+        if [ -n "$changes" ]; then
+            printf "projtool gpull: submodule %s has uncommitted or untracked files; save them before gpull\n" "$displaypath" >&2
+            exit 1
+        fi
+    ' || die "submodule checks failed; pull skipped"
+
+    git -C "$project_dir" pull --no-rebase --ff-only --no-autostash --recurse-submodules=no
+    gpull_submodules "$project_dir"
+    printf '✓ repository and submodule branches updated\n'
 }
 
 main_gcpush() {
