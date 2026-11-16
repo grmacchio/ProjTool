@@ -1,4 +1,5 @@
 @echo off
 setlocal DisableDelayedExpansion
+cd /d "%USERPROFILE%"
 "%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -ExecutionPolicy Bypass -File "%~dp0uninstall.ps1" %*
 exit /b %errorlevel%

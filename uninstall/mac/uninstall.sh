@@ -1,61 +1,29 @@
 #!/usr/bin/env bash
-
 set -Eeuo pipefail
 
-state_dir="${XDG_CONFIG_HOME:-$HOME/.config}/projtool"
-projtool_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/../.." && pwd)"
-if [[ -f "$state_dir/install.json" ]]; then
-    exec powershell.exe -NoProfile -ExecutionPolicy Bypass -File "$(cygpath -w "$projtool_dir/uninstall/windows/uninstall.ps1")"
+ROOT="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/../.." && pwd -P)"
+CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/projtool"
+[[ "$ROOT" != / && "$ROOT" != "$HOME" && -f "$ROOT/source/projtool" && -f "$ROOT/install/mac/install.sh" ]] || { printf '%s\n' 'Could not identify the ProjTool repository safely.' >&2; exit 1; }
+if [[ -f "$CONFIG/root" ]]; then
+    IFS= read -r REGISTERED < "$CONFIG/root"
+    [[ "$REGISTERED" == "$ROOT" ]] || { printf 'A different ProjTool directory is registered: %s\n' "$REGISTERED" >&2; exit 1; }
 fi
+printf 'This will permanently delete %s and everything inside it, including uncommitted files.\n' "$ROOT"
+printf '%s ' 'Type DELETE to uninstall ProjTool:'
+IFS= read -r ANSWER
+[[ "$ANSWER" == DELETE ]] || { printf '%s\n' 'Uninstall cancelled.'; exit 0; }
 
-remove_line() {
-    local temporary_file
-    [[ -f "$1" ]] || return 0
-    temporary_file="$(mktemp "${TMPDIR:-/tmp}/projtool-uninstall.XXXXXX")"
-    while IFS= read -r line || [[ -n "$line" ]]; do
-        [[ "$line" == "$2" ]] || printf '%s\n' "$line"
-    done < "$1" > "$temporary_file"
-    cat "$temporary_file" > "$1"
-    rm -- "$temporary_file"
-}
-
-if [[ -f "$state_dir/install-v2" ]]; then
-    {
-        IFS= read -r launcher || true
-        IFS= read -r profile_line || true
-    } < "$state_dir/install-v2"
-    if [[ -e "$launcher" ]]; then
-        grep -Fqx 'PROJTOOL_LAUNCHER=1' "$launcher" || {
-            printf 'Refusing to remove an unrelated file: %s\n' "$launcher" >&2
-            exit 1
-        }
-        rm -- "$launcher"
-    fi
-    while IFS= read -r profile; do
-        remove_line "$profile" "$profile_line"
-    done < "$state_dir/profiles"
-    rm -- "$state_dir/install-v2" "$state_dir/path" "$state_dir/profiles"
-elif [[ -f "$state_dir/install" ]]; then
-    {
-        IFS= read -r profile || true
-        IFS= read -r alias_line || true
-    } < "$state_dir/install"
-    remove_line "$profile" "$alias_line"
-    rm -- "$state_dir/install"
-else
-    printf 'projtool is not installed.\n'
-    exit 0
+if [[ -f "$CONFIG/path-line" && -f "$CONFIG/profiles" ]]; then
+    IFS= read -r PATH_LINE < "$CONFIG/path-line"
+    while IFS= read -r PROFILE; do
+        [[ -f "$PROFILE" ]] || continue
+        TEMPORARY="$(mktemp -t projtool-profile)"
+        PROJTOOL_PATH_LINE="$PATH_LINE" awk '$0 != ENVIRON["PROJTOOL_PATH_LINE"]' "$PROFILE" > "$TEMPORARY"
+        cat "$TEMPORARY" > "$PROFILE"
+        rm -f -- "$TEMPORARY"
+    done < "$CONFIG/profiles"
 fi
-if [[ -f "$state_dir/python-environment" ]]; then
-    IFS= read -r python_environment < "$state_dir/python-environment"
-    if [[ -e "$python_environment" ]]; then
-        [[ "$python_environment" == "${XDG_DATA_HOME:-$HOME/.local/share}/projtool/python" && -f "$python_environment/.projtool-owned" ]] || {
-            printf 'Refusing to remove an unmanaged Python environment.\n' >&2
-            exit 1
-        }
-        rm -rf -- "$python_environment"
-    fi
-    rm -- "$state_dir/python-environment"
-fi
-rmdir -- "$state_dir" 2>/dev/null || true
-printf 'Uninstalled projtool. The managed Python environment was removed. Shared runtimes and packages are retained. Restart terminals and VS Code.\n'
+cd -- "$HOME"
+rm -rf -- "$ROOT"
+if [[ -f "$CONFIG/root" ]]; then rm -rf -- "$CONFIG"; fi
+printf '%s\n' 'The ProjTool directory is deleted and the projtool command is no longer in PATH.' 'The dependencies are not deleted so as not to interfere with unrelated code on your machine.' 'Open a new terminal and restart VS Code to refresh PATH.'

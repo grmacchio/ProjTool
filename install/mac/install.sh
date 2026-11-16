@@ -1,250 +1,134 @@
 #!/usr/bin/env bash
-
 set -Eeuo pipefail
 
-projtool_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/../.." && pwd)"
-case "$(uname -s)" in
-    MINGW*|MSYS*|CYGWIN*)
-        exec powershell.exe -NoProfile -ExecutionPolicy Bypass -File "$(cygpath -w "$projtool_dir/install/windows/install.ps1")"
-        ;;
-    Darwin|Linux) ;;
-    *) printf 'Unsupported operating system: %s\n' "$(uname -s)" >&2; exit 1 ;;
+ROOT="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/../.." && pwd -P)"
+CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/projtool"
+COMPONENT="${1:-all}"
+PYTHON=""
+CONDA=""
+PROVIDER=""
+export PYTHONDONTWRITEBYTECODE=1
+unset PYTHONHOME PYTHONPATH
+
+case "$COMPONENT" in
+    -h|--help) printf '%s\n' 'Usage: bash install/mac/install.sh [all|python|julia]'; exit 0 ;;
+    all|python|julia) ;;
+    *) printf 'Unknown component: %s\n' "$COMPONENT" >&2; exit 2 ;;
 esac
+[[ $# -le 1 ]] || { printf '%s\n' 'Too many arguments.' >&2; exit 2; }
+[[ "$(uname -s)" == Darwin ]] || { printf '%s\n' 'Use this installer on macOS.' >&2; exit 1; }
 
-state_dir="${XDG_CONFIG_HOME:-$HOME/.config}/projtool"
-bin_dir="$HOME/.local/bin"
-temporary_dir="$(mktemp -d "${TMPDIR:-/tmp}/projtool-install.XXXXXX")"
-trap 'rm -rf -- "$temporary_dir"' EXIT
-
-find_python() {
-    local candidate
-    while IFS= read -r candidate; do
-        if "$candidate" -c 'import sys, venv, ensurepip; sys.exit(sys.version_info < (3, 10))' >/dev/null 2>&1; then
-            printf '%s\n' "$candidate"
-            return 0
-        fi
-    done < <(type -a -p python3 python 2>/dev/null || true)
-    return 1
+ask() {
+    printf '%s ' "$1"
+    IFS= read -r ANSWER || { printf '\nSetup cancelled.\n' >&2; exit 130; }
 }
 
-fail() { printf '%s\n' "$*" >&2; exit 1; }
-
-add_path() {
-    [[ -d "$1" ]] || return 0
-    case ":$PATH:" in *":$1:"*) ;; *) export PATH="$1:$PATH" ;; esac
+find_standard() {
+    local candidate version
+    PYTHON="$(
+        for candidate in /Library/Frameworks/Python.framework/Versions/3.*/bin/python3; do
+            [[ -x "$candidate" ]] || continue
+            if version="$("$candidate" -I -c 'import sys; assert sys.version_info >= (3,10); print(".".join(map(str,sys.version_info[:3])))' 2>/dev/null)"; then
+                printf '%s %s\n' "$version" "$candidate"
+            fi
+        done | sort -t. -k1,1nr -k2,2nr -k3,3nr | head -n 1 | cut -d' ' -f2-
+    )"
+    [[ -n "$PYTHON" ]]
 }
 
-run_privileged() {
-    if [[ "$(id -u)" == 0 ]]; then "$@"; else sudo "$@"; fi
-}
-
-download() {
-    curl -fL --retry 3 --connect-timeout 20 "$1" -o "$2"
-}
-
-release_asset() {
-    local url
-    url="$(curl -fsSL --retry 3 "https://api.github.com/repos/$1/releases/latest" |
-        grep -oE '"browser_download_url"[[:space:]]*:[[:space:]]*"[^"]+"' |
-        sed -E 's/^[^:]+:[[:space:]]*"(.*)"$/\1/' | grep -E "$2")" ||
-        fail "Cannot identify the $1 download for this computer."
-    [[ "$url" != *$'\n'* ]] || fail "Ambiguous download for $1."
-    download "$url" "$3"
-}
-
-for directory in /opt/homebrew/bin /usr/local/bin /Library/TeX/texbin \
-    "$HOME/.juliaup/bin" "$HOME/Library/TinyTeX/bin/universal-darwin" "$HOME/.TinyTeX/bin/$(uname -m)-linux"; do
-    add_path "$directory"
-done
-
-if [[ "$(uname -s)" == Darwin ]]; then
-    if ! command -v brew >/dev/null 2>&1; then
-        download https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh "$temporary_dir/homebrew.sh"
-        /bin/bash "$temporary_dir/homebrew.sh"
-        add_path /opt/homebrew/bin
-        add_path /usr/local/bin
-    fi
-    brew update
-    for formula in git pandoc python; do
-        if brew list --versions "$formula" >/dev/null 2>&1; then
-            brew upgrade "$formula"
-        else
-            brew install "$formula"
-        fi
+install_standard() {
+    local index version listing package temporary signature
+    index="$(curl -fsSL https://www.python.org/ftp/python/)"
+    package=""
+    for version in $(printf '%s' "$index" | sed -nE 's/.*href="(3\.[0-9]+\.[0-9]+)\/".*/\1/p' | sort -t. -k1,1nr -k2,2nr -k3,3nr); do
+        listing="$(curl -fsSL "https://www.python.org/ftp/python/$version/")"
+        package="$(printf '%s' "$listing" | sed -nE "s/.*href=\"(python-${version//./\.}-macos[^\"]*\.pkg)\".*/\1/p" | head -n 1)"
+        [[ -z "$package" ]] || break
     done
-    export PATH="$(brew --prefix python)/libexec/bin:$(brew --prefix python)/bin:$(brew --prefix git)/bin:$(brew --prefix pandoc)/bin:$PATH"
-else
-    if command -v apt-get >/dev/null 2>&1; then
-        run_privileged apt-get update
-        run_privileged apt-get install -y git pandoc perl curl xz-utils python3 python3-venv
-    elif command -v dnf >/dev/null 2>&1; then
-        run_privileged dnf upgrade -y git pandoc python3
-        run_privileged dnf install -y git pandoc perl curl xz python3 python3-pip
-    elif command -v pacman >/dev/null 2>&1; then
-        run_privileged pacman -Syu --needed --noconfirm git pandoc perl curl xz python python-pip
-    else
-        fail 'Automatic dependency installation requires apt-get, dnf, or pacman on Linux.'
-    fi
-fi
+    [[ -n "$package" ]] || { printf '%s\n' 'Could not find a stable macOS Python installer on python.org.' >&2; return 1; }
+    temporary="$(mktemp -d -t projtool-python)"
+    printf 'Downloading Python %s from python.org. macOS will require administrator permission.\n' "$version"
+    curl -fSL "https://www.python.org/ftp/python/$version/$package" -o "$temporary/python.pkg"
+    signature="$(pkgutil --check-signature "$temporary/python.pkg")"
+    [[ "$signature" == *"Python Software Foundation"* ]] || { printf '%s\n' 'The Python installer signature did not match the Python Software Foundation.' >&2; return 1; }
+    sudo /usr/sbin/installer -pkg "$temporary/python.pkg" -target /
+    rm -f -- "$temporary/python.pkg"
+    rmdir -- "$temporary"
+    find_standard || { printf '%s\n' 'Python was installed but its framework could not be located.' >&2; return 1; }
+    local minor certificates
+    minor="$("$PYTHON" -I -c 'import sys; print(f"{sys.version_info.major}.{sys.version_info.minor}")')"
+    certificates="/Applications/Python $minor/Install Certificates.command"
+    [[ ! -f "$certificates" ]] || bash "$certificates"
+}
 
-python_command="$(find_python)" || fail 'Python 3.10 or later with venv is required.'
-tex_year="$(curl -fsSL --retry 3 https://api.github.com/repos/rstudio/tinytex-releases/releases/latest |
-    "$python_command" -c 'import json,re,sys; print(re.search(r"\d{4}",json.load(sys.stdin)["tag_name"])[0])')"
-if [[ "$(uname -s)" == Darwin ]]; then
-    tinytex_dir="$HOME/Library/TinyTeX"
-    archive_pattern='/TinyTeX-1-darwin-v[0-9.]+\.tar\.xz$'
-else
-    tinytex_dir="$HOME/.TinyTeX"
-    case "$(uname -m)" in
-        x86_64) tex_arch=x86_64 ;;
-        aarch64|arm64) tex_arch=arm64 ;;
-        *) fail "Unsupported TinyTeX architecture: $(uname -m)" ;;
-    esac
-    archive_pattern="/TinyTeX-1-linux-$tex_arch-v[0-9.]+\\.tar\\.xz$"
-fi
-tex_current=false
-for executable in "$tinytex_dir"/bin/*/pdflatex; do
-    if [[ -x "$executable" ]] && "$executable" --version | grep -Fq "TeX Live $tex_year"; then
-        tex_current=true
-    fi
-done
-if [[ "$tex_current" == false && -e "$tinytex_dir" ]]; then
-    tinytex_dir="${tinytex_dir}-${tex_year}"
-fi
-tex_current=false
-for executable in "$tinytex_dir"/bin/*/pdflatex; do
-    if [[ -x "$executable" ]] && "$executable" --version | grep -Fq "TeX Live $tex_year"; then
-        tex_current=true
-    fi
-done
-if [[ "$tex_current" == false ]]; then
-    [[ ! -e "$tinytex_dir" ]] || fail "An incomplete TinyTeX installation already exists: $tinytex_dir"
-    release_asset rstudio/tinytex-releases "$archive_pattern" "$temporary_dir/tinytex.tar.xz"
-    mkdir "$temporary_dir/tex"
-    tar -xf "$temporary_dir/tinytex.tar.xz" -C "$temporary_dir/tex"
-    for directory in "$temporary_dir/tex/TinyTeX" "$temporary_dir/tex/.TinyTeX"; do
-        if [[ -d "$directory" ]]; then
-            mkdir -p -- "$(dirname -- "$tinytex_dir")"
-            mv -- "$directory" "$tinytex_dir"
-            break
-        fi
+if [[ "$COMPONENT" != julia ]]; then
+    while :; do
+        ask 'What Python install would you like to use? The options are conda, homebrew, or standard, where standard means you have installed Python from python.org, which can be done here for you if desired.'
+        PROVIDER="$(printf '%s' "$ANSWER" | tr '[:upper:]' '[:lower:]')"
+        case "$PROVIDER" in
+            conda)
+                CONDA="${CONDA_EXE:-}"
+                if [[ ! -x "$CONDA" ]]; then CONDA="$(command -v conda || true)"; fi
+                if [[ ! -x "$CONDA" ]]; then
+                    for candidate in "$HOME/miniconda3/bin/conda" "$HOME/anaconda3/bin/conda" "$HOME/miniforge3/bin/conda" /opt/anaconda3/bin/conda /opt/miniconda3/bin/conda; do
+                        if [[ -x "$candidate" ]]; then CONDA="$candidate"; break; fi
+                    done
+                fi
+                if [[ ! -x "$CONDA" ]]; then printf '%s\n' 'Conda was not found on this machine.'; continue; fi
+                PYTHON="$("$CONDA" info --base)/bin/python"
+                [[ -x "$PYTHON" ]] || { printf '%s\n' 'The Conda base Python is missing.'; continue; }
+                break
+                ;;
+            homebrew)
+                BREW="$(command -v brew || true)"
+                if [[ ! -x "$BREW" ]]; then
+                    for candidate in /opt/homebrew/bin/brew /usr/local/bin/brew; do
+                        if [[ -x "$candidate" ]]; then BREW="$candidate"; break; fi
+                    done
+                fi
+                if [[ ! -x "$BREW" ]]; then printf '%s\n' 'Homebrew was not found on this machine.'; continue; fi
+                PYTHON="$("$BREW" --prefix)/bin/python3"
+                if [[ ! -x "$PYTHON" ]]; then
+                    BREW_PREFIX="$("$BREW" --prefix)"
+                    for candidate in "$BREW_PREFIX"/opt/python@*/bin/python3 "$BREW_PREFIX"/opt/python@*/bin/python3.[0-9]*; do
+                        [[ "$(basename -- "$candidate")" =~ ^python3(\.[0-9]+)?$ && -x "$candidate" ]] || continue
+                        if "$candidate" -I -c 'import sys; assert sys.version_info >= (3,10)' 2>/dev/null; then PYTHON="$candidate"; fi
+                    done
+                fi
+                if [[ ! -x "$PYTHON" ]]; then
+                    while :; do
+                        ask 'Homebrew has no linked Python 3. Install Python with Homebrew? [yes/no]'
+                        case "$ANSWER" in
+                            yes|y) "$BREW" install python; break ;;
+                            no|n) break ;;
+                            *) printf '%s\n' 'Choose yes or no.' ;;
+                        esac
+                    done
+                    [[ -x "$PYTHON" ]] || continue
+                fi
+                break
+                ;;
+            standard)
+                if ! find_standard; then
+                    while :; do
+                        ask 'A standard Python 3.10+ installation was not found. Install the newest stable Python from python.org? [yes/no]'
+                        case "$ANSWER" in
+                            yes|y) install_standard; break ;;
+                            no|n) break ;;
+                            *) printf '%s\n' 'Choose yes or no.' ;;
+                        esac
+                    done
+                    [[ -n "$PYTHON" ]] || continue
+                fi
+                break
+                ;;
+            *) printf '%s\n' 'Choose conda, homebrew, or standard.' ;;
+        esac
     done
-fi
-for directory in "$tinytex_dir"/bin/*; do
-    [[ -d "$directory" ]] && export PATH="$directory:$PATH"
-done
-command -v pdflatex >/dev/null 2>&1 || fail 'TinyTeX installation could not be verified.'
-tlmgr option repository https://ctan.math.illinois.edu/systems/texlive/tlnet
-tlmgr update --self --all
-
-required_packages=()
-while IFS='|' read -r package probe; do
-    required_packages+=("$package")
-done < "$projtool_dir/source/tex-packages.txt"
-tlmgr install "${required_packages[@]}"
-
-required_julia_version="$(curl -fsSL --retry 3 https://julialang-s3.julialang.org/bin/versions.json |
-    "$python_command" -c 'import json,re,sys; r=json.load(sys.stdin); print(max((v for v,d in r.items() if d.get("stable") and re.fullmatch(r"\d+\.\d+\.\d+",v)),key=lambda v:tuple(map(int,v.split(".")))))')"
-if ! command -v juliaup >/dev/null 2>&1; then
-    download https://install.julialang.org "$temporary_dir/juliaup.sh"
-    sh "$temporary_dir/juliaup.sh" --yes --add-to-path=yes --default-channel="$required_julia_version"
-    add_path "$HOME/.juliaup/bin"
-fi
-juliaup add "$required_julia_version"
-juliaup default "$required_julia_version"
-julia_default_bin="$(dirname -- "$(command -v juliaup)")"
-julia_command="$("$julia_default_bin/julia" "+$required_julia_version" --startup-file=no -e 'print(Sys.BINDIR)')/julia"
-[[ "$("$julia_command" --startup-file=no -e 'print(VERSION)')" == "$required_julia_version" ]] || fail 'Julia version verification failed.'
-export PATH="$julia_default_bin:$PATH"
-printf 'Default Julia is %s.\n' "$required_julia_version"
-python_environment="${XDG_DATA_HOME:-$HOME/.local/share}/projtool/python"
-"$python_command" "$projtool_dir/source/install_python.py" "$python_environment" "$projtool_dir/source/python-requirements.txt"
-julia_projects=()
-for kind in dissertation note preprint presentation; do
-    julia_projects+=("$projtool_dir/examples/$kind/code/julia")
-done
-"$julia_command" --startup-file=no "$projtool_dir/source/prepare_julia.jl" "${julia_projects[@]}"
-
-for command_name in git pandoc pdflatex latexmk bibtexu julia; do
-    "$command_name" --version > "$temporary_dir/version"
-    sed -n '1p' "$temporary_dir/version"
-done
-while IFS='|' read -r package probe; do
-    [[ "$probe" == @* ]] || kpsewhich "$probe" >/dev/null || fail "LaTeX package verification failed: $package"
-done < "$projtool_dir/source/tex-packages.txt"
-
-mkdir -p -- "$bin_dir" "$state_dir"
-launcher="$bin_dir/projtool"
-if [[ -e "$launcher" || -L "$launcher" ]]; then
-    grep -Fqx 'PROJTOOL_LAUNCHER=1' "$launcher" || fail "Refusing to replace an unrelated launcher: $launcher"
+    exec "$PYTHON" "$ROOT/source/configure.py" --component "$COMPONENT" --provider "$PROVIDER" --python "$PYTHON" --conda "$CONDA"
 fi
 
-dependency_path="$python_environment/bin:$bin_dir"
-for command_name in git pandoc pdflatex latexmk bibtexu julia; do
-    directory="$(dirname -- "$(command -v "$command_name")")"
-    case ":$dependency_path:" in *":$directory:"*) ;; *) dependency_path="$dependency_path:$directory" ;; esac
-done
-{
-    printf '#!/bin/bash\nPROJTOOL_LAUNCHER=1\nexport PATH=%q:"$PATH"\n' "$dependency_path"
-    printf 'export JUPYTER_PATH=%q\n' "$python_environment/share/jupyter"
-    printf 'exec /bin/bash %q "$@"\n' "$projtool_dir/source/projtool.sh"
-} > "$temporary_dir/projtool"
-chmod 755 "$temporary_dir/projtool"
-mv -- "$temporary_dir/projtool" "$launcher"
-
-if [[ -f "$state_dir/install" ]]; then
-    {
-        IFS= read -r old_profile || true
-        IFS= read -r old_alias || true
-    } < "$state_dir/install"
-    [[ "$old_alias" == 'alias projtool='* ]] || fail 'Unrecognized previous ProjTool installation record.'
-    if [[ -f "$old_profile" ]]; then
-        while IFS= read -r line || [[ -n "$line" ]]; do
-            [[ "$line" == "$old_alias" ]] || printf '%s\n' "$line"
-        done < "$old_profile" > "$temporary_dir/profile"
-        cat "$temporary_dir/profile" > "$old_profile"
-    fi
-    rm -- "$state_dir/install"
-fi
-
-dependency_state="${XDG_CONFIG_HOME:-$HOME/.config}/projtool-dependencies"
-mkdir -p -- "$dependency_state"
-global_python_path="$(dirname -- "$python_command")"
-if [[ "$(uname -s)" == Darwin ]]; then
-    global_python_path="$(brew --prefix python)/libexec/bin:$global_python_path"
-fi
-global_dependency_path="$python_environment/bin:$global_python_path:$julia_default_bin"
-for command_name in git pandoc pdflatex latexmk bibtexu; do
-    directory="$(dirname -- "$(command -v "$command_name")")"
-    case ":$global_dependency_path:" in *":$directory:"*) ;; *) global_dependency_path="$global_dependency_path:$directory" ;; esac
-done
-printf 'case "$PATH:" in %q*) ;; *) export PATH=%q:"$PATH" ;; esac\n' "$global_dependency_path:" "$global_dependency_path" > "$dependency_state/path"
-printf -v dependency_profile_line '[ ! -f %q ] || . %q' "$dependency_state/path" "$dependency_state/path"
-
-printf 'case ":$PATH:" in *:%q:*) ;; *) export PATH=%q:"$PATH" ;; esac\n' "$bin_dir" "$bin_dir" > "$state_dir/path"
-printf -v profile_line '[ ! -f %q ] || . %q' "$state_dir/path" "$state_dir/path"
-printf '%s\n' "$launcher" "$profile_line" > "$state_dir/install-v2"
-printf '%s\n' "$python_environment" > "$state_dir/python-environment"
-touch "$state_dir/profiles"
-profiles=("$HOME/.profile")
-case "$(basename -- "${SHELL:-bash}")" in
-    zsh) profiles+=("${ZDOTDIR:-$HOME}/.zprofile" "${ZDOTDIR:-$HOME}/.zshrc") ;;
-    bash) profiles+=("$HOME/.bash_profile" "$HOME/.bashrc") ;;
-    *) fail 'ProjTool currently supports bash and zsh shell setup.' ;;
-esac
-for profile in "$HOME/.bash_profile" "$HOME/.bashrc" "${ZDOTDIR:-$HOME}/.zprofile" "${ZDOTDIR:-$HOME}/.zshrc"; do
-    [[ ! -f "$profile" ]] || profiles+=("$profile")
-done
-for profile in "${profiles[@]}"; do
-    mkdir -p -- "$(dirname -- "$profile")"
-    touch "$profile"
-    if ! grep -Fqx -- "$dependency_profile_line" "$profile"; then
-        printf '\n%s\n' "$dependency_profile_line" >> "$profile"
-    fi
-    if ! grep -Fqx -- "$profile_line" "$profile"; then
-        printf '\n%s\n' "$profile_line" >> "$profile"
-        printf '%s\n' "$profile" >> "$state_dir/profiles"
-    fi
-done
-"$launcher" --help >/dev/null
-printf 'Installed projtool and its dependencies. Open a new terminal and fully restart VS Code.\n'
+if [[ -f "$CONFIG/python-executable" ]]; then IFS= read -r PYTHON < "$CONFIG/python-executable"; fi
+if [[ ! -x "$PYTHON" ]]; then find_standard || PYTHON=/usr/bin/python3; fi
+[[ -x "$PYTHON" ]] || { printf '%s\n' 'Run projtool update python first to configure Python.' >&2; exit 1; }
+exec "$PYTHON" "$ROOT/source/configure.py" --component julia

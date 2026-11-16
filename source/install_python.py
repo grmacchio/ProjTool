@@ -1,54 +1,40 @@
+import json
 import os
-import shutil
 import subprocess
-import sys
-import uuid
-import venv
-from pathlib import Path
-
-def remove_environment(path):
-    target = str(path.resolve())
-    if sys.platform == "win32":
-        target = "\\\\?\\" + target
-    shutil.rmtree(target)
 
 
-prefix = Path(sys.argv[1])
-requirements = Path(sys.argv[2])
-marker = prefix / ".projtool-owned"
-executable = prefix / ("Scripts/python.exe" if sys.platform == "win32" else "bin/python")
-if prefix.exists() and not marker.is_file():
-    raise RuntimeError(f"Refusing to modify an unmanaged Python environment: {prefix}")
-current = subprocess.run(
-    [str(executable), "-c", "import sys; print(sys.version.split()[0])"],
-    text=True, capture_output=True,
-) if executable.is_file() else None
-rebuild = current is None or current.returncode != 0 or current.stdout.strip() != sys.version.split()[0]
-pip_environment = os.environ.copy()
-pip_environment.setdefault("PYYAML_FORCE_LIBYAML", "0")
-backup = None
-created = False
-if rebuild and prefix.exists():
-    backup = prefix.with_name(prefix.name + ".backup-" + uuid.uuid4().hex)
-    prefix.rename(backup)
-try:
-    if not prefix.exists():
-        created = True
-        venv.EnvBuilder(with_pip=True, upgrade_deps=True).create(prefix)
-        marker.write_text("ProjTool managed Python environment\n", encoding="utf-8")
-    subprocess.run([str(executable), "-m", "pip", "install", "--disable-pip-version-check",
-                    "--upgrade", "--upgrade-strategy", "eager", "-r", str(requirements)], check=True, env=pip_environment)
-    subprocess.run([str(executable), "-m", "ipykernel", "install", "--prefix", str(prefix),
-                    "--name", "projtool", "--display-name", "ProjTool"], check=True)
-    subprocess.run([str(executable), "-c",
-                    "import jupyter_core, nbclient, ipykernel, numpy, matplotlib, zmq; "
-                    "assert zmq.has('curve'), 'The installed ZeroMQ library lacks encryption support'"], check=True)
-except BaseException:
-    if created and prefix.exists():
-        remove_environment(prefix)
-    if backup:
-        backup.rename(prefix)
-    raise
-else:
-    if backup:
-        remove_environment(backup)
+def python_command(selection):
+    command = [selection["executable"]]
+    if selection.get("conda"):
+        command = [selection["conda"], "run", "--no-capture-output", "-p", selection["prefix"]] + command
+    return command
+
+
+def inspect_python(executable, command=None):
+    probe = "import json,sys; print(json.dumps(dict(executable=sys.executable,prefix=sys.prefix,base_prefix=sys.base_prefix,version=list(sys.version_info[:3]))))"
+    result = subprocess.run((command or [str(executable)]) + ["-I", "-c", probe], check=True, text=True, capture_output=True)
+    info = json.loads(result.stdout.strip().splitlines()[-1])
+    if info["version"] < [3, 10]:
+        raise RuntimeError("ProjTool requires Python 3.10 or newer.")
+    return info
+
+
+def install_packages(selection, requirements, config_dir):
+    command = python_command(selection)
+    environment = os.environ.copy()
+    for variable in ("PYTHONHOME", "PYTHONPATH", "PIP_TARGET", "PIP_PREFIX", "PIP_USER"):
+        environment.pop(variable, None)
+    environment["PIP_CONFIG_FILE"] = os.devnull
+    environment["PYTHONNOUSERSITE"] = "1"
+    pip = subprocess.run(command + ["-m", "pip", "--version"], env=environment, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    if pip.returncode:
+        subprocess.run(command + ["-m", "ensurepip", "--upgrade"], check=True, env=environment)
+    subprocess.run(command + ["-m", "pip", "install", "--disable-pip-version-check", "--no-user", "--upgrade", "-r", str(requirements)], check=True, env=environment)
+    subprocess.run(command + ["-c", "import jupyter_core, nbclient, ipykernel, numpy, matplotlib, zmq; assert zmq.has('curve'), 'ZeroMQ encryption support is required'"], check=True, env=environment)
+    kernel_dir = config_dir / "share/jupyter/kernels/projtool"
+    kernel_dir.mkdir(parents=True, exist_ok=True)
+    result = subprocess.run(command + ["-c", "import json; from ipykernel.kernelspec import get_kernel_dict; print(json.dumps(get_kernel_dict()))"], check=True, env=environment, text=True, capture_output=True)
+    kernel = json.loads(result.stdout.strip().splitlines()[-1])
+    kernel["argv"] = command + kernel["argv"][1:]
+    kernel["display_name"] = "ProjTool"
+    (kernel_dir / "kernel.json").write_text(json.dumps(kernel, indent=2) + "\n", encoding="utf-8")

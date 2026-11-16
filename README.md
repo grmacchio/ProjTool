@@ -15,7 +15,7 @@ the following project types:
 
 Download and extract
 [ProjTool](https://github.com/grmacchio/ProjTool/archive/refs/heads/main.zip),
-or clone the repository if Git is already installed. On macOS or Linux, open
+or clone the repository if Git is already installed. On macOS, open
 a terminal in the ProjTool folder and run:
 
 ```bash
@@ -23,27 +23,73 @@ bash install/mac/install.sh
 ```
 
 On Windows, open PowerShell in the ProjTool folder and run the command below.
-It also installs Git Bash when needed, so no tools need to be installed
-beforehand:
+The installer also installs [Git for Windows](https://git-scm.com/install/windows)
+if missing, because ProjTool uses its Bash shell to run commands:
 
 ```powershell
 .\install\windows\install.cmd
 ```
 
-The installer installs missing Git, Pandoc, LaTeX, Julia, and Python
-dependencies. It prepares the Julia packages and a dedicated Python environment
-containing Jupyter, NumPy, and Matplotlib, so `projtool gen all` needs no
-manual package setup. First-time downloads and compilation can take several
-minutes.
+The installer asks which Python installation to use:
 
-The installer adds a real `projtool` command to your user PATH. You can then
+- **Conda:** choose from the existing Conda environments. Missing Conda returns
+  you to the installation question; ProjTool does not install Conda.
+- **Homebrew (macOS):** choose an existing venv by path or create `projtool`.
+  Missing Homebrew returns you to the installation question.
+- **Standard:** use Python from [python.org](https://www.python.org). If missing,
+  you can download and install its newest stable version. Choose its base
+  environment or a venv named `projtool` for ProjTool's Python dependencies.
+
+Python must be 3.10 or newer. New venvs live at `~/.venvs/projtool` (on Windows,
+`%USERPROFILE%\.venvs\projtool`). An existing venv there is reused only when it
+belongs to the selected Python installation. ProjTool never deletes or rebuilds
+an existing environment. Environments must be outside the ProjTool repository.
+
+Next, choose an installed Juliaup channel. If Juliaup is missing, the installer
+installs it with stable Julia on the `release` channel. Your selected channel is
+used to prepare the example Julia projects and to run ProjTool results. Choosing
+an existing channel does not change Juliaup's global default or update its Julia
+runtime; use `juliaup update CHANNEL` for that.
+
+Python packages from `source/python-requirements.txt` and the example Julia
+packages are installed or updated in the selected environments. Shared base or
+Conda environments will therefore have their packages changed. First-time
+downloads and compilation can take several minutes. Git, Pandoc, and a working
+LaTeX installation are separate prerequisites for the commands that need them
+(Git is installed automatically on Windows if missing).
+
+The installer adds the repository's `source` directory to your user PATH. You can then
 use `projtool` from any directory; on Windows, PowerShell, Command Prompt, and
 Git Bash are supported. Remember to open a new terminal and fully restart VS
-Code after installation.
+Code after installation. Keep the repository at its installed location.
+
+`source/projtool` is the main Bash script. It also contains the Python, Jupyter,
+and Julia forwarding functions used by `results.sh` and its child Bash scripts.
+These functions use your saved runtime selections during result generation.
+Windows starts the same script through `projtool.cmd` and `launch.ps1`.
+
+Selections and the ProjTool Jupyter kernel are stored in
+`${XDG_CONFIG_HOME:-~/.config}/projtool` (`%USERPROFILE%\.config\projtool` on
+Windows unless `XDG_CONFIG_HOME` is set). Selected Python and Julia runtimes are
+applied when ProjTool runs results; your terminal's Python and Julia defaults
+are not switched.
+
+### Update
+
+```sh
+projtool update
+projtool update python
+projtool update julia
+```
+
+The first command repeats both selection questions. The other commands repeat
+only the named component's setup. Each installs or updates that component's
+packages, and saves its new selection. Updating one component preserves the
+other component's selection.
 
 ### Uninstall
 
-On macOS or Linux, run this from the ProjTool folder:
+On macOS, run this from the ProjTool folder:
 
 ```bash
 bash uninstall/mac/uninstall.sh
@@ -55,9 +101,11 @@ Or, from Windows PowerShell:
 .\uninstall\windows\uninstall.cmd
 ```
 
-The uninstaller removes the ProjTool launcher, its PATH setup, and its
-dedicated Python environment. Shared runtimes and the Julia package cache are
-retained. Restart terminals and VS Code afterward.
+The uninstaller asks you to type `DELETE`, then permanently deletes the entire
+ProjTool repository, including uncommitted files, and removes its PATH entry and
+settings. Python installations, environments, packages, Juliaup, Julia versions,
+and shared Julia packages are retained to avoid interfering with unrelated code.
+Restart terminals and VS Code afterward.
 
 ## Initializing a Project
 

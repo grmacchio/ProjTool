@@ -1,6 +1,10 @@
 {
     "latex-workshop.latex.autoBuild.run": "never",
 
+    "files.associations": {
+        "projtool": "shellscript"
+    },
+
     "editor.rulers": [
         79
     ],
