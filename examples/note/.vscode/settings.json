@@ -26,7 +26,7 @@
     ],
     "latex-workshop.latex.recipe.default": "gen media",
     "latex-workshop.latex.autoBuild.run": "onSave",
-    "latex-workshop.latex.outDir": "%DIR%/output/media/pdf",
+    "latex-workshop.latex.outDir": "%DIR%/Output/Media/PDF",
     "projtool.folding.enabled": true,
     "[latex]": {
         "editor.foldingStrategy": "auto",

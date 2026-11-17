@@ -11,68 +11,141 @@ the following project types:
 
 ## Installing and Uninstalling ProjTool
 
-### Install
+### Install Commands
 
-Download and extract
-[ProjTool](https://github.com/grmacchio/ProjTool/archive/refs/heads/main.zip),
-or clone the repository if Git is already installed. On macOS, open
-a terminal in the ProjTool folder and run:
+Download and extract the zip downloaded from
+[ProjTool](https://github.com/grmacchio); alternatively, clone the repository
+if Git is already installed. Before running the installer script, we invite
+you to take a look at [Install Details](#install-details) before proceeding.
+
+On macOS, open a terminal in the ProjTool directory and run the following and
+respond to the prompts as they appear.
 
 ```bash
-bash install/mac/install.sh
+bash Source/Install/install.sh
 ```
 
-On Windows, open PowerShell in the ProjTool folder and run the command below.
-The installer also installs [Git for Windows](https://git-scm.com/install/windows)
-if missing, because ProjTool uses its Bash shell to run commands:
+On Windows, open a PowerShell in the ProjTool directory and run the following
+and respond to the prompts as they appear.
 
 ```powershell
-.\install\windows\install.cmd
+.\Source\Install\install.cmd
 ```
 
-The installer asks which Python installation to use:
+### Uninstall Commands
 
-- **Conda:** choose from the existing Conda environments. Missing Conda returns
-  you to the installation question; ProjTool does not install Conda.
-- **Homebrew (macOS):** choose an existing venv by path or create `projtool`.
-  Missing Homebrew returns you to the installation question.
-- **Standard:** use Python from [python.org](https://www.python.org). If missing,
-  you can download and install its newest stable version. Choose its base
-  environment or a venv named `projtool` for ProjTool's Python dependencies.
+On macOS, run this from the ProjTool folder:
 
-Python must be 3.10 or newer. New venvs live at `~/.venvs/projtool` (on Windows,
-`%USERPROFILE%\.venvs\projtool`). An existing venv there is reused only when it
-belongs to the selected Python installation. ProjTool never deletes or rebuilds
-an existing environment. Environments must be outside the ProjTool repository.
+```bash
+bash Source/Uninstall/uninstall.sh
+```
 
-Next, choose an installed Juliaup channel. If Juliaup is missing, the installer
-installs it with stable Julia on the `release` channel. Your selected channel is
-used to prepare the example Julia projects and to run ProjTool results. Choosing
-an existing channel does not change Juliaup's global default or update its Julia
-runtime; use `juliaup update CHANNEL` for that.
+Or, from Windows PowerShell:
 
-Python packages from `source/python-requirements.txt` and the example Julia
+```powershell
+.\Source\Uninstall\uninstall.cmd
+```
+
+The uninstaller asks you to type `DELETE`, then permanently deletes the entire
+ProjTool repository, including uncommitted files, and removes its PATH entry and
+settings. Python installations, environments, packages, Juliaup, Julia versions,
+and shared Julia packages are retained to avoid interfering with unrelated code.
+Homebrew, Conda, Git, Pandoc, and TeX distributions are also retained.
+Restart terminals and VS Code afterward.
+
+### Install Details
+
+The installer installs or updates
+[Git for Windows](https://git-scm.com/install/windows), because ProjTool uses
+its Bash shell to run commands:
+
+
+On macOS, the installer uses Homebrew to install or update Git to its latest
+stable release. If Homebrew is missing, it asks permission to download and
+install it. Answering `no` denies installation because Homebrew is required
+for this Git setup. Existing Homebrew is updated before installing packages.
+Apple's Git is left in place; ProjTool uses the updated Homebrew Git.
+
+The installer asks which Python installation to use: ``conda``, ``homebrew``
+(macOS only), or ``standard``.
+
+- **Conda:** Choose from the existing Conda environments. If Conda is missing,
+  the installer offers the latest stable Miniconda at `~/miniconda3`
+  (`%USERPROFILE%\miniconda3` on Windows), verifies its download, and updates
+  Conda using its stable default channels. Conda may ask you to accept its
+  channel terms and confirm the update. Declining the download returns to
+  Python selection. An existing installation is never overwritten.
+- **Homebrew:** Install or update Homebrew's stable Python formula, then choose
+  an existing virtual environment by path or create the `projtool` virtual
+  environment. If needed, the installer asks to download Homebrew first.
+- **Standard:** If the standard Python installation, from
+  [python.org](https://www.python.org), is missing then the user is asked if
+  they would like the installer to download and install Python's newest stable
+  version. After, the user is asked to choose its base environment or a virtual
+  environment named `projtool` for ProjTool's Python dependencies.
+
+New virtual environments live at
+`~/.venvs/projtool` (on Windows, `%USERPROFILE%\.venvs\projtool`). An existing
+virtual environment there is reused only when it belongs to the selected Python
+installation.
+
+Once Python is dealt with, the installer checks for Juliaup. If it is missing,
+the user is asked to download it. Answering `no` denies installation because
+Juliaup is required. A new installation uses stable Julia on the `release`
+channel; an existing installation lets you choose an installed Juliaup
+channel. Your selected channel is used to prepare the example
+Julia projects and to run ProjTool results. Choosing an existing channel does
+not change Juliaup's global default or update its Julia runtime; use `juliaup
+update <Channel>` for that.
+
+Python packages from `Source/Install/Python/python-requirements.txt` and the example Julia
 packages are installed or updated in the selected environments. Shared base or
 Conda environments will therefore have their packages changed. First-time
-downloads and compilation can take several minutes. Git, Pandoc, and a working
-LaTeX installation are separate prerequisites for the commands that need them
-(Git is installed automatically on Windows if missing).
+downloads and compilation can take several minutes.
 
-The installer adds the repository's `source` directory to your user PATH. You can then
+The full installer also installs or updates Pandoc to the latest stable release
+and tests the available LaTeX distributions by compiling a small document:
+
+- A working TeX Live, MacTeX, or TinyTeX installation is updated from the stable
+  TeX Live repository. An older annual release is upgraded alongside the old
+  installation. The new release receives ProjTool's required packages and their
+  dependencies, without copying the old installation's entire package list.
+  The old installation and its local custom files are preserved; ProjTool
+  selects the new release after verification. Interrupted annual installations
+  can resume using their existing package manager.
+- A working MiKTeX installation is updated from its stable package repository.
+- If no working distribution is found, the latest stable monthly
+  [TinyTeX release](https://github.com/rstudio/tinytex-releases/releases/latest)
+  is installed, on either macOS or Windows. An existing directory is preserved
+  by using a separate destination when necessary.
+
+The 25 direct TeX requirements come from `Source/Install/TeX/tex-packages.txt`;
+TeX also installs their dependencies. TeX Live updates use one resolved mirror
+for the whole run and update only these packages and the package manager.
+Unrelated installed packages are left alone. The
+installer checks Git and Pandoc versions, verifies the required TeX commands,
+and compiles all four ProjTool template types before reporting success. A failed
+download, update, or check stops setup with an error; completed updates are
+not rolled back. Before changing a protected system TeX installation, ProjTool
+explains the administrator request. On macOS, enter your administrator login
+password when prompted; no characters appear while typing.
+
+The installer adds the repository's `Source/Commands` directory to your user PATH. You can then
 use `projtool` from any directory; on Windows, PowerShell, Command Prompt, and
 Git Bash are supported. Remember to open a new terminal and fully restart VS
 Code after installation. Keep the repository at its installed location.
 
-`source/projtool` is the main Bash script. It also contains the Python, Jupyter,
+`Source/Commands/projtool` is the main Bash script. It also contains the Python, Jupyter,
 and Julia forwarding functions used by `results.sh` and its child Bash scripts.
 These functions use your saved runtime selections during result generation.
-Windows starts the same script through `projtool.cmd` and `launch.ps1`.
+Windows starts the same script through `projtool.cmd` and `projtool.ps1`.
 
 Selections and the ProjTool Jupyter kernel are stored in
 `${XDG_CONFIG_HOME:-~/.config}/projtool` (`%USERPROFILE%\.config\projtool` on
 Windows unless `XDG_CONFIG_HOME` is set). Selected Python and Julia runtimes are
 applied when ProjTool runs results; your terminal's Python and Julia defaults
-are not switched.
+are not switched. The selected Git, Pandoc, and TeX directories are also saved
+there so ProjTool can find them in a new terminal.
 
 ### Update
 
@@ -82,30 +155,11 @@ projtool update python
 projtool update julia
 ```
 
-The first command repeats both selection questions. The other commands repeat
+The first command repeats Python and Julia selection and updates Git, Pandoc,
+and TeX. The other commands repeat
 only the named component's setup. Each installs or updates that component's
 packages, and saves its new selection. Updating one component preserves the
 other component's selection.
-
-### Uninstall
-
-On macOS, run this from the ProjTool folder:
-
-```bash
-bash uninstall/mac/uninstall.sh
-```
-
-Or, from Windows PowerShell:
-
-```powershell
-.\uninstall\windows\uninstall.cmd
-```
-
-The uninstaller asks you to type `DELETE`, then permanently deletes the entire
-ProjTool repository, including uncommitted files, and removes its PATH entry and
-settings. Python installations, environments, packages, Juliaup, Julia versions,
-and shared Julia packages are retained to avoid interfering with unrelated code.
-Restart terminals and VS Code afterward.
 
 ## Initializing a Project
 
@@ -142,13 +196,17 @@ To generate project material use the following commands.
 
 | Command | Action |
 | --- | --- |
-| `projtool gen results` | Run `results.sh` and update `output/results/` |
+| `projtool gen results` | Run `results.sh` and update `Output/Results/` |
 | `projtool gen pdf` | Generate only the PDF |
 | `projtool gen md` | Generate only the Markdown |
 | `projtool gen media` | Generate the PDF and Markdown without running code |
 | `projtool gen output` | Generate results, PDF, and Markdown |
-| `projtool gen readme` | Copy media to project directory and create README |
-| `projtool gen all` | Generate output, copy media, and create README |
+| `projtool gen readme` | Create README with links to media in `Output/Media/` |
+| `projtool gen all` | Generate output and create README |
+
+README generation leaves the PDF and Markdown in `Output/Media/PDF/` and
+`Output/Media/MD/`. It includes the Markdown content in `README.md` with image
+paths adjusted for the project directory.
 
 To collect all build files, run ``-w verbose`` at the end of any generation
 command.
@@ -167,7 +225,7 @@ It reports all attempted locations if none exists. Each folder must contain
 all cited references; missing citations do not cause a switch to another folder.
 Relative paths are resolved from the project directory. Use forward slashes
 in Windows paths, preserve spaces in folder names, and separate locations with
-commas. A single location such as `references={./references}` still works.
+commas. A single location such as `references={./References}` still works.
 
 ## Committing Project Material
 
@@ -214,13 +272,16 @@ To remove project material, use the following commands.
 
 | Command | Removes |
 | --- | --- |
-| `projtool rem results` | `output/results/` |
-| `projtool rem pdf` | `output/media/pdf/` |
-| `projtool rem md` | `output/media/md/` |
-| `projtool rem media` | `output/media/` |
-| `projtool rem output` | `output/` |
-| `projtool rem readme` | Root `README.md`, PDF, and Markdown files |
-| `projtool rem all` | `output/` & root `README.md`, PDF, and Markdown files |
+| `projtool rem results` | `Output/Results/` |
+| `projtool rem pdf` | `Output/Media/PDF/` |
+| `projtool rem md` | `Output/Media/MD/` |
+| `projtool rem media` | `Output/Media/` |
+| `projtool rem output` | `Output/` |
+| `projtool rem readme` | Root `README.md` |
+| `projtool rem all` | `Output/` & root `README.md` |
+
+`projtool rem all` reports `Removing: Output.` and `Removing: README.md.`
+before reporting `✓ Done.`.
 
 ## Important Notes
 

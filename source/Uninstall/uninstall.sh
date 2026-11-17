@@ -3,7 +3,7 @@ set -Eeuo pipefail
 
 ROOT="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/../.." && pwd -P)"
 CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/projtool"
-[[ "$ROOT" != / && "$ROOT" != "$HOME" && -f "$ROOT/source/projtool" && -f "$ROOT/install/mac/install.sh" ]] || { printf '%s\n' 'Could not identify the ProjTool repository safely.' >&2; exit 1; }
+[[ "$ROOT" != / && "$ROOT" != "$HOME" && -f "$ROOT/Source/Commands/projtool" && -f "$ROOT/Source/Install/install.sh" ]] || { printf '%s\n' 'Could not identify the ProjTool repository safely.' >&2; exit 1; }
 if [[ -f "$CONFIG/root" ]]; then
     IFS= read -r REGISTERED < "$CONFIG/root"
     [[ "$REGISTERED" == "$ROOT" ]] || { printf 'A different ProjTool directory is registered: %s\n' "$REGISTERED" >&2; exit 1; }

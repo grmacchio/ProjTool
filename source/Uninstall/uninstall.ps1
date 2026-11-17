@@ -1,9 +1,9 @@
 $ErrorActionPreference = 'Stop'
 $Root = (Resolve-Path (Join-Path $PSScriptRoot '..\..')).Path
-$Source = Join-Path $Root 'source'
+$Source = Join-Path $Root 'Source\Commands'
 $ConfigHome = if ($env:XDG_CONFIG_HOME) { $env:XDG_CONFIG_HOME } else { Join-Path $env:USERPROFILE '.config' }
 $Config = Join-Path $ConfigHome 'projtool'
-if ($Root -eq $env:USERPROFILE -or $Root -eq [IO.Path]::GetPathRoot($Root) -or -not (Test-Path (Join-Path $Root 'source\projtool'))) { throw 'Could not identify the ProjTool repository safely.' }
+if ($Root -eq $env:USERPROFILE -or $Root -eq [IO.Path]::GetPathRoot($Root) -or -not (Test-Path (Join-Path $Root 'Source\Commands\projtool'))) { throw 'Could not identify the ProjTool repository safely.' }
 $RegisteredFile = Join-Path $Config 'root'
 if (Test-Path -LiteralPath $RegisteredFile) {
     $Registered = (Get-Content -LiteralPath $RegisteredFile -Raw).Trim()

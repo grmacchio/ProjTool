@@ -97,6 +97,7 @@
         "itemindent",
         "itemsep",
         "journaltitle",
+        "Juliaup",
         "labelfont",
         "labelnumber",
         "labelprefix",
@@ -190,8 +191,10 @@
         "urlstyle",
         "usecolortheme",
         "usefonttheme",
+        "USERPROFILE",
         "usetheme",
         "varepsilon",
+        "venvs",
         "xcolor",
         "xlabel",
         "ylabel"

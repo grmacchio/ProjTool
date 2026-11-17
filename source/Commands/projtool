@@ -2,7 +2,7 @@
 
 set -Eeuo pipefail
 
-SOURCE_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+SOURCE_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
 PROJTOOL_DIR="$(cd -- "$SOURCE_DIR/.." && pwd)"
 COLLECTION_DIR="$(cd -- "$PROJTOOL_DIR/.." && pwd)"
 MODE=""
@@ -113,27 +113,27 @@ Examples:
   projtool gen output
   projtool gen readme
   projtool gen all
-  projtool gen all -f ./examples/dissertation -w verbose
-  projtool gen pdf -f ./examples/dissertation
-  projtool gen pdf -f ./examples/dissertation -w verbose
-  projtool gen md -f ./examples/dissertation
-  projtool gen md -f ./examples/dissertation -w verbose
+  projtool gen all -f ./Examples/Dissertation -w verbose
+  projtool gen pdf -f ./Examples/Dissertation
+  projtool gen pdf -f ./Examples/Dissertation -w verbose
+  projtool gen md -f ./Examples/Dissertation
+  projtool gen md -f ./Examples/Dissertation -w verbose
 
 Actions:
-  results             Write results to TARGET/output/results
+  results             Write results to TARGET/Output/Results
   media               Generate both PDF and Markdown
   output              Generate results, PDF, and Markdown
-  readme              Copy generated media and write TARGET/README.md
-  all                 Generate output, copy media, and write TARGET/README.md
-  pdf                 Generate PDF in TARGET/output/media/pdf
-  md                  Generate Markdown in TARGET/output/media/md
+  readme              Write TARGET/README.md linking to generated media
+  all                 Generate output and write TARGET/README.md
+  pdf                 Generate PDF in TARGET/Output/Media/PDF
+  md                  Generate Markdown in TARGET/Output/Media/MD
 
 Options:
   -f TARGET           Read source files from TARGET; defaults to the working directory
   -w verbose          Show tool output in the terminal
 
 Choose which code files run by listing them explicitly in TARGET/results.sh.
-The script runs from TARGET and writes generated files to TARGET/output/results.
+The script runs from TARGET and writes generated files to TARGET/Output/Results.
 PDF and Markdown generation never run source code; run results separately when needed.
 EOF
 }
@@ -146,20 +146,20 @@ Examples:
   projtool rem output
   projtool rem readme
   projtool rem all
-  projtool rem all -f ./examples/dissertation
+  projtool rem all -f ./Examples/Dissertation
   projtool rem results
-  projtool rem media -f ./examples/dissertation
-  projtool rem pdf -f ./examples/dissertation
-  projtool rem md -f ./examples/dissertation
+  projtool rem media -f ./Examples/Dissertation
+  projtool rem pdf -f ./Examples/Dissertation
+  projtool rem md -f ./Examples/Dissertation
 
 Scopes:
-  output              Remove TARGET/output
-  readme              Remove TARGET/README.md, NAME.pdf, and NAME.md
-  all                 Remove output, README.md, NAME.pdf, and NAME.md
-  results             Remove TARGET/output/results
-  media               Remove TARGET/output/media
-  pdf                 Remove TARGET/output/media/pdf
-  md                  Remove TARGET/output/media/md
+  output              Remove TARGET/Output
+  readme              Remove TARGET/README.md
+  all                 Remove TARGET/Output and TARGET/README.md
+  results             Remove TARGET/Output/Results
+  media               Remove TARGET/Output/Media
+  pdf                 Remove TARGET/Output/Media/PDF
+  md                  Remove TARGET/Output/Media/MD
 
 Options:
   -f TARGET           Remove files from TARGET; defaults to the working directory
@@ -276,7 +276,7 @@ validate_reference_fields() {
         bibliography_options+=(--bibliography="$bibliography_file")
     done
     pandoc --from=markdown --to=plain --fail-if-warnings \
-        --lua-filter="$SOURCE_DIR/references.lua" \
+        --lua-filter="$SOURCE_DIR/References/references.lua" \
         --metadata=reference-check:true \
         "${bibliography_options[@]}" </dev/null >/dev/null
 }
@@ -400,7 +400,7 @@ write_pdf_build_config() {
             bibliography_options+=(--bibliography="$bibliography_file")
         done
         pandoc --from=markdown --to=plain --fail-if-warnings \
-            --lua-filter="$SOURCE_DIR/references.lua" \
+            --lua-filter="$SOURCE_DIR/References/references.lua" \
             --metadata="reference-output:$config_file" \
             "${bibliography_options[@]}" </dev/null >/dev/null
     fi
@@ -573,11 +573,18 @@ resolve_target() {
             DOCUMENT_STEM="$(basename -- "${DOCUMENT_FILE%.tex}")"
         fi
     fi
-    OUTPUT_DIR="$TARGET_DIR/output"
+    for candidate in "$TARGET_DIR"/*.tex; do
+        if [[ "$candidate" -ef "$DOCUMENT_FILE" ]]; then
+            DOCUMENT_FILE="$candidate"
+            DOCUMENT_STEM="$(basename -- "${candidate%.tex}")"
+            break
+        fi
+    done
+    OUTPUT_DIR="$TARGET_DIR/Output"
     RESULTS_SCRIPT="$TARGET_DIR/results.sh"
-    MEDIA_OUTPUT_DIR="$OUTPUT_DIR/media"
-    PDF_OUTPUT_DIR="$MEDIA_OUTPUT_DIR/pdf"
-    MD_OUTPUT_DIR="$MEDIA_OUTPUT_DIR/md"
+    MEDIA_OUTPUT_DIR="$OUTPUT_DIR/Media"
+    PDF_OUTPUT_DIR="$MEDIA_OUTPUT_DIR/PDF"
+    MD_OUTPUT_DIR="$MEDIA_OUTPUT_DIR/MD"
 }
 
 cleanup_source_build_files() {
@@ -594,14 +601,14 @@ cleanup_source_build_files() {
 }
 
 run_results_stage() {
-    local julia_project="$TARGET_DIR/code"
+    local julia_project="$TARGET_DIR/Code"
 
     [[ -f "$RESULTS_SCRIPT" ]] || die "missing results runner: $RESULTS_SCRIPT"
-    if [[ -f "$TARGET_DIR/code/julia/Project.toml" ]]; then
-        julia_project="$TARGET_DIR/code/julia"
+    if [[ -f "$TARGET_DIR/Code/Julia/Project.toml" ]]; then
+        julia_project="$TARGET_DIR/Code/Julia"
     fi
 
-    printf '%s\n' '-> running results.sh'
+    printf '%s\n' '-> Generating: Output/Results.'
     (
         local runtime="${XDG_CONFIG_HOME:-$HOME/.config}/projtool/runtime.sh"
         if [[ "$(uname -s)" == MINGW* || "$(uname -s)" == MSYS* ]]; then
@@ -620,7 +627,7 @@ run_results_stage() {
         export PROJTOOL_VERBOSE="$VERBOSE"
         export JULIA_PROJECT="${JULIA_PROJECT:-$julia_project}"
         export GKSwstype="${GKSwstype:-nul}"
-        export PROJTOOL_NOTEBOOK_RUNNER="$SOURCE_DIR/run_notebook.py"
+        export PROJTOOL_NOTEBOOK_RUNNER="$SOURCE_DIR/Commands/Jupyter/run_notebook.py"
         python() {
             [[ -n "${PROJTOOL_PYTHON:-}" ]] || { printf '%s\n' 'Run projtool update python first.' >&2; return 1; }
             if [[ -n "${PROJTOOL_CONDA:-}" ]]; then
@@ -735,7 +742,7 @@ write_markdown_math_commands() {
                 exit 1
             }
         }
-    ' "$SOURCE_DIR/template.cls"
+    ' "$SOURCE_DIR/TeX/template.cls"
 }
 
 write_markdown_build_file() {
@@ -821,8 +828,8 @@ render_md() {
 
     if [[ "$VERBOSE" == true ]]; then
         if ! pandoc --from=latex --to=gfm --wrap=none --fail-if-warnings \
-            --lua-filter="$SOURCE_DIR/markdown.lua" \
-            --lua-filter="$SOURCE_DIR/references.lua" \
+            --lua-filter="$SOURCE_DIR/ToMD/markdown.lua" \
+            --lua-filter="$SOURCE_DIR/References/references.lua" \
             "${template_options[@]}" \
             "${citation_options[@]}" \
             "$MARKDOWN_BUILD_FILE" -o "$md_temp_file"; then
@@ -830,8 +837,8 @@ render_md() {
             die "Markdown build failed"
         fi
     elif ! pandoc --from=latex --to=gfm --wrap=none \
-        --fail-if-warnings --lua-filter="$SOURCE_DIR/markdown.lua" \
-        --lua-filter="$SOURCE_DIR/references.lua" \
+        --fail-if-warnings --lua-filter="$SOURCE_DIR/ToMD/markdown.lua" \
+        --lua-filter="$SOURCE_DIR/References/references.lua" \
         "${template_options[@]}" \
         "${citation_options[@]}" \
         "$MARKDOWN_BUILD_FILE" -o "$md_temp_file" >/dev/null; then
@@ -847,11 +854,18 @@ render_md() {
 
 render_media() {
     local format
+    local label
 
     [[ -f "$DOCUMENT_FILE" ]] || die "missing document source: $DOCUMENT_FILE"
     read_document_options
+    if [[ $# -gt 1 ]]; then
+        printf '%s\n' "-> Generating: ${MEDIA_OUTPUT_DIR#"$TARGET_DIR"/}."
+    fi
     for format in "$@"; do
-        printf '%s\n' "-> generating $DOCUMENT_STEM as $format"
+        if [[ "$ACTION" != all ]]; then
+            label="$(printf '%s' "$format" | tr '[:lower:]' '[:upper:]')"
+            printf '%s\n' "-> Generating: ${MEDIA_OUTPUT_DIR#"$TARGET_DIR"/}/$label."
+        fi
         (cd -- "$TARGET_DIR" && "render_$format")
     done
 }
@@ -859,8 +873,8 @@ render_media() {
 write_readme() {
     local pdf_file="$PDF_OUTPUT_DIR/$DOCUMENT_STEM.pdf"
     local md_file="$MD_OUTPUT_DIR/$DOCUMENT_STEM.md"
-    local target_pdf="$TARGET_DIR/$DOCUMENT_STEM.pdf"
-    local target_md="$TARGET_DIR/$DOCUMENT_STEM.md"
+    local pdf_link="./${pdf_file#"$TARGET_DIR"/}"
+    local md_link="./${md_file#"$TARGET_DIR"/}"
     local readme_file="$TARGET_DIR/README.md"
     local has_pdf=false
     local has_md=false
@@ -872,42 +886,35 @@ write_readme() {
 
     case "$has_pdf:$has_md" in
         true:false)
-            intro="This project includes a [PDF file](./$DOCUMENT_STEM.pdf)."
+            intro="This project includes a [PDF file]($pdf_link)."
             ;;
         false:true)
-            intro="This project includes a [Markdown file](./$DOCUMENT_STEM.md). The Markdown file is included below for convenience."
+            intro="This project includes a [Markdown file]($md_link). The Markdown file is included below for convenience."
             ;;
         true:true)
-            intro="This project includes a [PDF file](./$DOCUMENT_STEM.pdf) and [Markdown file](./$DOCUMENT_STEM.md). The Markdown file is included below for convenience."
+            intro="This project includes a [PDF file]($pdf_link) and [Markdown file]($md_link). The Markdown file is included below for convenience."
             ;;
         false:false)
             die "no generated PDF or Markdown found in $MEDIA_OUTPUT_DIR"
             ;;
     esac
 
-    [[ "$has_pdf" == true ]] && cp -f -- "$pdf_file" "$target_pdf"
-    if [[ "$has_md" == true ]]; then
-        sed -e 's#](../../results/#](./output/results/#g' \
-            -e 's#src="../../results/#src="./output/results/#g' \
-            "$md_file" > "$target_md"
-    fi
+    printf '%s\n' '-> Generating: README.md.'
     printf '%s %s\n' "$intro" "$repeatability" > "$readme_file"
 
     if [[ "$has_md" == true ]]; then
         printf '\n' >> "$readme_file"
-        cat -- "$target_md" >> "$readme_file"
+        sed -e 's#](../../Results/#](./Output/Results/#g' \
+            -e 's#src="../../Results/#src="./Output/Results/#g' \
+            "$md_file" >> "$readme_file"
     fi
 }
 
 remove_path() {
     local path="$1"
 
-    if [[ -e "$path" || -L "$path" ]]; then
-        printf '%s\n' "-> removing $path"
-        rm -rf -- "$path"
-    else
-        printf '%s\n' "-> already absent: $path"
-    fi
+    printf '%s\n' "-> Removing: ${path#"$TARGET_DIR"/}."
+    rm -rf -- "$path"
 }
 
 setup_editor_folding() {
@@ -928,7 +935,7 @@ setup_editor_folding() {
     if printf '%s\n' "$installed_extensions" | grep -Fqx 'projtool.projtool-folding@0.1.0'; then
         return
     fi
-    "$code_command" --install-extension "$SOURCE_DIR/vscode/format/folding/projtool-folding.vsix" --force ||
+    "$code_command" --install-extension "$SOURCE_DIR/VSCode/Format/Folding/projtool-folding.vsix" --force ||
         die "could not install VS Code folding support"
 }
 
@@ -958,8 +965,14 @@ main_init() {
     example_type="$(printf '%s' "$1" | tr '[:upper:]' '[:lower:]')"
     [[ "$example_type" =~ ^[a-z0-9][a-z0-9_-]*$ ]] ||
         die "invalid example type: $1"
-    source_dir="$PROJTOOL_DIR/examples/$example_type"
-    [[ -d "$source_dir" ]] || die "example not found: $example_type"
+    source_dir=""
+    while IFS= read -r -d '' entry; do
+        name="$(basename -- "$entry" | tr '[:upper:]' '[:lower:]')"
+        [[ "$name" == "$example_type" ]] || continue
+        [[ -z "$source_dir" ]] || die "multiple examples match: $example_type"
+        source_dir="$entry"
+    done < <(find "$PROJTOOL_DIR/Examples" -mindepth 1 -maxdepth 1 -type d -print0)
+    [[ -n "$source_dir" ]] || die "example not found: $example_type"
     target_dir="$(pwd)"
     target_name="$(basename -- "$target_dir")"
     project_stem="${target_name%_template}"
@@ -1011,7 +1024,7 @@ main_init() {
         cp -R -p -- "$entry" "$destination"
     done
 
-    if [[ "$project_stem" != "$example_type" && -d "$source_dir/output/media" ]]; then
+    if [[ "$project_stem" != "$example_type" && -d "$source_dir/Output/Media" ]]; then
         while IFS= read -r -d '' media_file; do
             name="$(basename -- "$media_file")"
             entry="$target_dir/${media_file#"$source_dir"/}"
@@ -1020,7 +1033,7 @@ main_init() {
                 die "destination already exists: $destination"
             fi
             mv -- "$entry" "$destination"
-        done < <(find "$source_dir/output/media" \( -type f -o -type l \) \
+        done < <(find "$source_dir/Output/Media" \( -type f -o -type l \) \
             -name "$example_type.*" -print0)
     fi
 
@@ -1374,7 +1387,7 @@ main_gen() {
             ;;
     esac
 
-    printf '✓ %s generated for %s\n' "$ACTION" "$TARGET_NAME"
+    printf '%s\n' '✓ Done.'
 }
 
 main_rem() {
@@ -1401,12 +1414,12 @@ main_rem() {
     done
 
     case "$SCOPE" in
-        all|output) OUTPUT_PATH="output" ;;
+        all|output) OUTPUT_PATH="Output" ;;
         readme) ;;
-        results) OUTPUT_PATH="output/results" ;;
-        media) OUTPUT_PATH="output/media" ;;
-        pdf) OUTPUT_PATH="output/media/pdf" ;;
-        md) OUTPUT_PATH="output/media/md" ;;
+        results) OUTPUT_PATH="Output/Results" ;;
+        media) OUTPUT_PATH="Output/Media" ;;
+        pdf) OUTPUT_PATH="Output/Media/PDF" ;;
+        md) OUTPUT_PATH="Output/Media/MD" ;;
         *) die "unsupported scope: $SCOPE" ;;
     esac
 
@@ -1420,12 +1433,10 @@ main_rem() {
         remove_path "$TARGET_DIR/$OUTPUT_PATH"
     fi
     if [[ "$SCOPE" == all || "$SCOPE" == readme ]]; then
-        remove_path "$TARGET_DIR/$DOCUMENT_STEM.pdf"
-        remove_path "$TARGET_DIR/$DOCUMENT_STEM.md"
         remove_path "$TARGET_DIR/README.md"
     fi
 
-    printf '✓ %s removed from %s\n' "$SCOPE" "$TARGET_NAME"
+    printf '%s\n' '✓ Done.'
 }
 
 [[ $# -eq 0 ]] && { usage; exit 2; }
@@ -1434,17 +1445,28 @@ main_rem() {
 MODE="$(printf '%s' "$1" | tr '[:upper:]' '[:lower:]')"
 shift
 
+RUNTIME_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/projtool/runtime.sh"
+if [[ "$(uname -s)" == MINGW* || "$(uname -s)" == MSYS* ]]; then
+    RUNTIME_FILE="$(cygpath -u "$RUNTIME_FILE")"
+fi
+if [[ -f "$RUNTIME_FILE" ]]; then
+    source "$RUNTIME_FILE"
+    if [[ -n "${PROJTOOL_TOOL_PATH:-}" ]]; then
+        export PATH="$PROJTOOL_TOOL_PATH:$PATH"
+    fi
+fi
+
 case "$MODE" in
     update)
         if [[ "${1:-}" == --help || "${1:-}" == -h ]]; then
-            printf '%s\n' 'Usage: projtool update [python|julia]' 'Choose Python and Julia again, or update only the named component.'
+            printf '%s\n' 'Usage: projtool update [python|julia]' 'Update all dependencies and choose Python and Julia again, or update only the named component.'
             exit 0
         fi
         [[ $# -le 1 ]] || die 'Usage: projtool update [python|julia]'
         case "${1:-all}" in all|python|julia) ;; *) die 'Usage: projtool update [python|julia]' ;; esac
         case "$(uname -s)" in
-            Darwin) exec bash "$PROJTOOL_DIR/install/mac/install.sh" "${1:-all}" ;;
-            MINGW*|MSYS*) exec powershell.exe -NoProfile -ExecutionPolicy Bypass -File "$(cygpath -w "$PROJTOOL_DIR/install/windows/install.ps1")" -Component "${1:-all}" ;;
+            Darwin) exec bash "$SOURCE_DIR/Install/install.sh" "${1:-all}" ;;
+            MINGW*|MSYS*) exec powershell.exe -NoProfile -ExecutionPolicy Bypass -File "$(cygpath -w "$SOURCE_DIR/Install/install.ps1")" -Component "${1:-all}" ;;
             *) die 'The installer supports macOS and Windows.' ;;
         esac
         ;;

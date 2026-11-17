@@ -1,4 +1,4 @@
-This project includes a [PDF file](./dissertation.pdf) and [Markdown file](./dissertation.md). The Markdown file is included below for convenience. To ensure repeatability, see [ProjTool](https://github.com/grmacchio/LaTeXTo) on how to regenerate this project from its source files.
+This project includes a [PDF file](./Output/Media/PDF/dissertation.pdf) and [Markdown file](./Output/Media/MD/dissertation.md). The Markdown file is included below for convenience. To ensure repeatability, see [ProjTool](https://github.com/grmacchio/LaTeXTo) on how to regenerate this project from its source files.
 
 ## \<Title Content\>
 
@@ -10,7 +10,7 @@ This project includes a [PDF file](./dissertation.pdf) and [Markdown file](./dis
 
 **Advisor:** \<Advisor Content\>
 
-**Date:** 2026/11/04
+**Date:** 2026/11/16
 
 ## Abstract
 
@@ -90,7 +90,7 @@ $$
 
 **Definition 1.1.2** (\<Definition Title 1\>)**.** \<Definition Statement 1\>
 
-<p align="center"><img src="./output/results/julia/exp.png" alt="image" width="40%" style="image-rendering: pixelated; image-rendering: crisp-edges;"></p>
+<p align="center"><img src="./Output/Results/Julia/exp.png" alt="image" width="40%" style="image-rendering: pixelated; image-rendering: crisp-edges;"></p>
 
 <a id="figure-figure-title-1"></a>
 
@@ -98,7 +98,7 @@ $$
 
 Test Hyper-References: [\<Theorem Title 1\>](#theorem-theorem-title-1) [\<Definition Title 1\>](#definition-definition-title-1) [\<Equation Title 1\>](#equation-equation-title-1) [\<Figure Title 1\>](#figure-figure-title-1)
 
-Test Citations: \[[1](#ref-2001author), [2](#ref-2002author)\]
+Test Citations: \[[1](#ref-2001Author), [2](#ref-2002Author)\]
 
 Test Code Output: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
 
@@ -136,7 +136,7 @@ $$
 
 **Definition** (\<Definition Title 2\>)**.** \<Definition Statement 2\>
 
-<p align="center"><img src="./output/results/python/quadratic.png" alt="image" width="40%" style="image-rendering: pixelated; image-rendering: crisp-edges;"></p>
+<p align="center"><img src="./Output/Results/Python/quadratic.png" alt="image" width="40%" style="image-rendering: pixelated; image-rendering: crisp-edges;"></p>
 
 <a id="figure-figure-title-2"></a>
 
@@ -144,7 +144,7 @@ $$
 
 Test Hyper-References: [\<Theorem Title 2\>](#theorem-theorem-title-2) [\<Definition Title 2\>](#definition-definition-title-2) [\<Equation Title 2\>](#equation-equation-title-2) [\<Figure Title 2\>](#figure-figure-title-2)
 
-Test Citations: \[[1](#ref-2001author), [2](#ref-2002author)\]
+Test Citations: \[[1](#ref-2001Author), [2](#ref-2002Author)\]
 
 Test Code Output: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
 
@@ -189,7 +189,7 @@ Test Code Output: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
 
 **Definition 3.2** (\<Definition Title 3\>)**.** \<Definition Statement 3\>
 
-<p align="center"><img src="./output/results/python/quadratic.png" alt="image" width="40%" style="image-rendering: pixelated; image-rendering: crisp-edges;"></p>
+<p align="center"><img src="./Output/Results/Python/quadratic.png" alt="image" width="40%" style="image-rendering: pixelated; image-rendering: crisp-edges;"></p>
 
 <a id="figure-figure-title-3"></a>
 
@@ -216,6 +216,6 @@ Test Code Output: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
 ## References
 
 <div id="refs" class="references">
-<div id="ref-2001author" style="margin: 1em 0; padding-left: 2.5em; text-indent: -2.5em;"><span style="display: inline-block; width: 2.5em; text-indent: 0;">[1]</span><span><span style="font-variant: small-caps;">J. A. Smith and J. Brown</span></span>, <span><em>A journal paper with a page range</em></span>, J. Test., 2 (2001), pp. 1–10.</div>
-<div id="ref-2002author" style="margin: 1em 0; padding-left: 2.5em; text-indent: -2.5em;"><span style="display: inline-block; width: 2.5em; text-indent: 0;">[2]</span><span><span style="font-variant: small-caps;">J. A. Smith and J. Brown</span></span>, <span><em>A journal paper with an article number</em></span>, J. Test., 3 (2002), 031505 (12 pages).</div>
+<div id="ref-2001Author" style="margin: 1em 0; padding-left: 2.5em; text-indent: -2.5em;"><span style="display: inline-block; width: 2.5em; text-indent: 0;">[1]</span><span><span style="font-variant: small-caps;">J. A. Smith and J. Brown</span></span>, <span><em>A journal paper with a page range</em></span>, J. Test., 2 (2001), pp. 1–10.</div>
+<div id="ref-2002Author" style="margin: 1em 0; padding-left: 2.5em; text-indent: -2.5em;"><span style="display: inline-block; width: 2.5em; text-indent: 0;">[2]</span><span><span style="font-variant: small-caps;">J. A. Smith and J. Brown</span></span>, <span><em>A journal paper with an article number</em></span>, J. Test., 3 (2002), 031505 (12 pages).</div>
 </div>

@@ -1,4 +1,4 @@
-This project includes a [PDF file](./presentation.pdf) and [Markdown file](./presentation.md). The Markdown file is included below for convenience. To ensure repeatability, see [ProjTool](https://github.com/grmacchio/LaTeXTo) on how to regenerate this project from its source files.
+This project includes a [PDF file](./Output/Media/PDF/presentation.pdf) and [Markdown file](./Output/Media/MD/presentation.md). The Markdown file is included below for convenience. To ensure repeatability, see [ProjTool](https://github.com/grmacchio/LaTeXTo) on how to regenerate this project from its source files.
 
 ## **Title**: \<Title Content\>
 
@@ -8,7 +8,7 @@ This project includes a [PDF file](./presentation.pdf) and [Markdown file](./pre
 
 **Acknowledgments:** \<Acknowledgments Content\>
 
-**Date:** 2026/11/04
+**Date:** 2026/11/16
 
 <a id="table-of-contents"></a>
 
@@ -37,7 +37,7 @@ This project includes a [PDF file](./presentation.pdf) and [Markdown file](./pre
 
 **Theorem** (\<Theorem Title 1\>)**.** \<Theorem Statement 1\>
 
-<p align="center"><img src="./output/results/julia/exp.png" alt="image" width="40%" style="image-rendering: pixelated; image-rendering: crisp-edges;"></p>
+<p align="center"><img src="./Output/Results/Julia/exp.png" alt="image" width="40%" style="image-rendering: pixelated; image-rendering: crisp-edges;"></p>
 
 <a id="figure-figure-title-1"></a>
 
@@ -101,7 +101,7 @@ This project includes a [PDF file](./presentation.pdf) and [Markdown file](./pre
 
 **Theorem** (\<Theorem Title 4\>)**.** \<Theorem Statement 4\>
 
-<p align="center"><img src="./output/results/julia/exp.png" alt="image" width="40%" style="image-rendering: pixelated; image-rendering: crisp-edges;"></p>
+<p align="center"><img src="./Output/Results/Julia/exp.png" alt="image" width="40%" style="image-rendering: pixelated; image-rendering: crisp-edges;"></p>
 
 <a id="figure-figure-title-4"></a>
 

@@ -84,6 +84,30 @@ function Get-Conda {
     return $Candidates | Where-Object { $_ -and (Test-Path -LiteralPath $_ -PathType Leaf) } | Select-Object -First 1
 }
 
+function Install-Conda {
+    do { $Answer = (Read-Host 'Conda was not found. Download and install the latest stable Miniconda? [yes/no]').Trim().ToLowerInvariant() } until ($Answer -in @('yes', 'y', 'no', 'n'))
+    if ($Answer -in @('no', 'n')) { return $null }
+    if (-not [Environment]::Is64BitOperatingSystem) { throw 'Current Miniconda requires 64-bit Windows.' }
+    $Destination = Join-Path $env:USERPROFILE 'miniconda3'
+    if (Test-Path -LiteralPath $Destination) { throw "$Destination already exists; refusing to overwrite it." }
+    $Filename = 'Miniconda3-latest-Windows-x86_64.exe'
+    $Index = (Invoke-WebRequest 'https://repo.anaconda.com/miniconda/' -UseBasicParsing).Content
+    $Row = [regex]::Match($Index, '(?s)href="' + [regex]::Escape($Filename) + '".*?</tr>').Value
+    $ExpectedHash = [regex]::Match($Row, '<td>([0-9a-f]{64})</td>').Groups[1].Value
+    if (-not $ExpectedHash) { throw 'Could not find the official Miniconda checksum.' }
+    $Temporary = Join-Path ([IO.Path]::GetTempPath()) ('projtool-conda-' + [guid]::NewGuid().ToString() + '.exe')
+    try {
+        Invoke-WebRequest "https://repo.anaconda.com/miniconda/$Filename" -OutFile $Temporary -UseBasicParsing
+        if ((Get-FileHash -Algorithm SHA256 -LiteralPath $Temporary).Hash -ine $ExpectedHash) { throw 'Miniconda download checksum mismatch.' }
+        $Process = Start-Process -FilePath $Temporary -ArgumentList "/InstallationType=JustMe /RegisterPython=0 /AddToPath=0 /S /D=$Destination" -PassThru -Wait
+        if ($Process.ExitCode -ne 0) { throw "Miniconda installation exited with code $($Process.ExitCode)." }
+    } finally { Remove-Item -LiteralPath $Temporary -Force -ErrorAction SilentlyContinue }
+    $Conda = Join-Path $Destination 'Scripts\conda.exe'
+    & $Conda update --name base --override-channels --channel defaults conda | Out-Host
+    if ($LASTEXITCODE -ne 0) { throw 'Conda could not be updated to its stable release.' }
+    return $Conda
+}
+
 function Get-GitBash {
     $Candidates = @("$env:ProgramFiles\Git\bin\bash.exe", "${env:ProgramFiles(x86)}\Git\bin\bash.exe", "$env:LOCALAPPDATA\Programs\Git\bin\bash.exe")
     foreach ($Registry in @('HKCU:\Software\GitForWindows', 'HKLM:\Software\GitForWindows')) {
@@ -95,22 +119,41 @@ function Get-GitBash {
     return $Candidates | Where-Object { Test-Path -LiteralPath $_ -PathType Leaf } | Select-Object -First 1
 }
 
-function Install-GitBash {
+function Install-GitBash([string]$ExistingBash) {
     $Architecture = if ($env:PROCESSOR_ARCHITECTURE -eq 'ARM64' -or $env:PROCESSOR_ARCHITEW6432 -eq 'ARM64') { 'arm64' } else { '64-bit' }
     $Release = Invoke-RestMethod 'https://api.github.com/repos/git-for-windows/git/releases/latest'
+    if ($Release.draft -or $Release.prerelease) { throw 'The Git release is not stable.' }
+    if ($ExistingBash) {
+        $ExistingGit = Join-Path (Split-Path (Split-Path $ExistingBash)) 'cmd\git.exe'
+        if (Test-Path -LiteralPath $ExistingGit) {
+            $Installed = & $ExistingGit --version
+            if ($LASTEXITCODE -eq 0 -and $Installed.Trim() -eq ('git version ' + $Release.tag_name.TrimStart('v'))) {
+                Write-Host "Git is already current: $($Release.tag_name)."
+                return $ExistingBash
+            }
+        }
+    }
     $Asset = $Release.assets | Where-Object { $_.name -match "^Git-[0-9].*-$Architecture\.exe$" } | Select-Object -First 1
     if (-not $Asset -or $Asset.browser_download_url -notlike 'https://github.com/git-for-windows/git/releases/download/*') { throw 'Could not locate the official Git for Windows installer.' }
     $Temporary = Join-Path ([IO.Path]::GetTempPath()) ('projtool-git-' + [guid]::NewGuid().ToString() + '.exe')
     try {
-        Write-Host 'Installing Git for Windows to provide the Bash shell required by ProjTool.'
+        Write-Host "Installing or upgrading Git for Windows to $($Release.tag_name)."
         Invoke-WebRequest $Asset.browser_download_url -OutFile $Temporary -UseBasicParsing
         if ((Get-AuthenticodeSignature -FilePath $Temporary).Status -ne 'Valid') { throw 'The Git installer signature could not be verified.' }
-        $Destination = Join-Path $env:LOCALAPPDATA 'Programs\Git'
-        $Process = Start-Process -FilePath $Temporary -ArgumentList "/VERYSILENT /NORESTART /CURRENTUSER /SP- /DIR=`"$Destination`"" -PassThru -Wait
+        if ($Asset.digest -match '^sha256:([0-9a-f]{64})$' -and (Get-FileHash -Algorithm SHA256 -LiteralPath $Temporary).Hash -ine $Matches[1]) { throw 'Git download checksum mismatch.' }
+        $Destination = if ($ExistingBash) { Split-Path (Split-Path $ExistingBash) } else { Join-Path $env:LOCALAPPDATA 'Programs\Git' }
+        $AllUsers = $ExistingBash -and -not $Destination.StartsWith($env:USERPROFILE, [StringComparison]::OrdinalIgnoreCase)
+        $Scope = if ($AllUsers) { '/ALLUSERS' } else { '/CURRENTUSER' }
+        $Options = @{ FilePath = $Temporary; ArgumentList = "/VERYSILENT /NORESTART $Scope /SP- /DIR=`"$Destination`""; PassThru = $true; Wait = $true }
+        if ($AllUsers) { $Options.Verb = 'RunAs' }
+        $Process = Start-Process @Options
         if ($Process.ExitCode -ne 0) { throw "The Git installer exited with code $($Process.ExitCode)." }
     } finally { Remove-Item -LiteralPath $Temporary -Force -ErrorAction SilentlyContinue }
-    $Bash = Get-GitBash
-    if (-not $Bash) { throw 'Git Bash was installed but could not be located. Reopen PowerShell and rerun the installer.' }
+    $Bash = Join-Path $Destination 'bin\bash.exe'
+    if (-not (Test-Path -LiteralPath $Bash)) { throw 'The updated Git Bash executable is missing.' }
+    $Git = Join-Path $Destination 'cmd\git.exe'
+    $Installed = & $Git --version
+    if ($LASTEXITCODE -ne 0 -or $Installed.Trim() -ne ('git version ' + $Release.tag_name.TrimStart('v'))) { throw 'The installed Git version does not match the latest stable release.' }
     return $Bash
 }
 
@@ -124,7 +167,8 @@ try {
             switch ($Provider) {
                 'conda' {
                     $Conda = Get-Conda
-                    if (-not $Conda) { Write-Host 'Conda was not found on this machine.'; break }
+                    if (-not $Conda) { $Conda = Install-Conda }
+                    if (-not $Conda) { break }
                     $Base = & $Conda info --base
                     if ($LASTEXITCODE -ne 0) { throw 'Conda could not report its installation directory.' }
                     $Python = Join-Path ($Base | Select-Object -Last 1) 'python.exe'
@@ -147,15 +191,17 @@ try {
         if (-not $Python) { throw 'Run projtool update python first to configure Python.' }
     }
     $Bash = Get-GitBash
-    if (-not $Bash) { $Bash = Install-GitBash }
-    $SetupArguments = @((Join-Path $Root 'source\configure.py'), '--component', $Component, '--bash', $Bash)
+    if (-not $Bash -or $Component -eq 'all') { $Bash = Install-GitBash $Bash }
+    $env:PROJTOOL_GIT_BIN = Join-Path (Split-Path (Split-Path $Bash)) 'cmd'
+    $env:Path = "$env:PROJTOOL_GIT_BIN;$env:Path"
+    $SetupArguments = @((Join-Path $Root 'Source\Install\Configure\configure.py'), '--component', $Component, '--bash', $Bash)
     if ($Component -ne 'julia') {
         $SetupArguments += @('--provider', $Provider, '--python', $Python)
         if ($Provider -eq 'conda') { $SetupArguments += @('--conda', $Conda) }
     }
     & $Python @SetupArguments
     if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-    $Source = Join-Path $Root 'source'
+    $Source = Join-Path $Root 'Source\Commands'
     $env:Path = "$Source;$env:Path"
 } catch {
     Write-Error $_

@@ -6,7 +6,7 @@
 
 **Acknowledgments:** \<Acknowledgments Content\>
 
-**Date:** 2026/11/04
+**Date:** 2026/11/16
 
 <a id="table-of-contents"></a>
 
@@ -35,7 +35,7 @@
 
 **Theorem** (\<Theorem Title 1\>)**.** \<Theorem Statement 1\>
 
-<p align="center"><img src="../../results/julia/exp.png" alt="image" width="40%" style="image-rendering: pixelated; image-rendering: crisp-edges;"></p>
+<p align="center"><img src="../../Results/Julia/exp.png" alt="image" width="40%" style="image-rendering: pixelated; image-rendering: crisp-edges;"></p>
 
 <a id="figure-figure-title-1"></a>
 
@@ -99,7 +99,7 @@
 
 **Theorem** (\<Theorem Title 4\>)**.** \<Theorem Statement 4\>
 
-<p align="center"><img src="../../results/julia/exp.png" alt="image" width="40%" style="image-rendering: pixelated; image-rendering: crisp-edges;"></p>
+<p align="center"><img src="../../Results/Julia/exp.png" alt="image" width="40%" style="image-rendering: pixelated; image-rendering: crisp-edges;"></p>
 
 <a id="figure-figure-title-4"></a>
 

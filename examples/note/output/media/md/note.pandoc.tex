@@ -1,4 +1,39 @@
-\newcommand{\genDATE}{2026/11/04}
+    \newcommand{\Arg}{\mathrm{Arg} \:}
+    \newcommand{\ra}{\rightarrow}
+    \newcommand{\la}{\leftarrow}
+    \newcommand{\p}{\partial}
+    \newcommand{\floor}[1]{\left \lfloor #1 \right \rfloor}
+    \renewcommand{\d}{\mathrm{d}}
+    \newcommand{\D}{\mathrm{D}}
+    \newcommand{\bbm}{ \begin{bmatrix}}
+    \newcommand{\ebm}{ \end{bmatrix} }
+    \newcommand{\tr}{\mathrm{tr}}
+    \newcommand{\td}[2]{\frac{\d #1}{\d #2}}
+    \newcommand{\ep}{\varepsilon}
+    \renewcommand{\Re}[1]{\mathrm{Re}\left(#1\right)}
+    \renewcommand{\Im}[1]{\mathrm{Im}\left(#1\right)}
+    \newcommand{\lra}{\Rightarrow}
+    \newcommand{\lla}{\Leftarrow}
+    \newcommand{\R}{\mathbb{R}}
+    \newcommand{\C}{\mathbb{C}}
+    \newcommand{\Q}{\mathbb{Q}}
+    \newcommand{\N}{\mathbb{N}}
+    \newcommand{\Z}{\mathbb{Z}}
+    \newcommand{\norm}[1]{\left\| #1 \right\|}
+    \renewcommand{\exp}[1]{\mathrm{exp}\left( #1 \right)}
+    \newcommand{\Log}{\mathrm{Log} \:}
+    \newcommand{\abs}[1]{\left| #1 \right|}
+    \renewcommand{\sb}[1]{\left[ #1 \right]}
+    \newcommand{\cb}[1]{\left\{ #1 \right\}}
+    \newcommand{\pb}[1]{\left( #1 \right)}
+    \newcommand{\innerprod}[2]{\langle #1, #2 \rangle}
+    \newcommand{\pd}[3]{\frac{\partial^{#1} #2}{\partial^{#1} #3}}
+    \newcommand{\sgn}{\text{sgn}}
+    \newcommand{\E}[1]{\mathbb{E}\sb{#1}}
+    \newcommand{\Var}[1]{\mathrm{Var}\sb{#1}}
+    \newcommand{\Range}{\text{Range}\:}
+    \newcommand{\mathinsection}[1]{\texorpdfstring{$#1$}{}}
+\newcommand{\genDATE}{2026/11/16}
 \newcommand{\genFront}[5]{\subsection{#1}\textbf{Authors:} #2\par\textbf{Affiliations:} #3\par\textbf{Date:} #4\par\subsection{Acknowledgments}#5\subsection{\textbf{LaTeXToTOC}}}
 \newcommand{\genPart}[4]{\subsection{\textbf{LaTeXToPart} \textbf{#2} \textbf{#3} #1}#4}
 \newcommand{\genSubPart}[4]{\subsubsection{\textbf{LaTeXToSubPart} \textbf{#2} \textbf{#3} #1}#4}
@@ -10,7 +45,7 @@
 \newcommand{\genLabel}[1]{\tag{#1}\label{projtool-eq:#1}}
 \newcommand{\genREF}[2]{\href{latex-to-ref:#1}{#2}}
 \newcommand{\genProofs}{\subsection{\textbf{LaTeXToProofs}}}
-\documentclass[note, references={./references}]{template}
+\documentclass[note, references={./References}]{template}
 
 \begin{document}
 
@@ -53,7 +88,7 @@
             }
 
             \genFIG{<Figure Title 1>}{inh}{inh}{H}{0.40}
-            {./output/results/julia/exp.png}{
+            {./Output/Results/Julia/exp.png}{
                 <Figure Caption 1>
             }
 
@@ -65,11 +100,11 @@
 \par
 
             \noindent Test Citations:
-            \genREF{cite}{2001author, 2002author} \\
+            \genREF{cite}{2001Author, 2002Author} \\
 \par
 
             \noindent Test Code Output:
-            \input{./output/results/julia/natural_numbers.tex}
+            \input{./Output/Results/Julia/natural_numbers.tex}
 
         }
 
@@ -96,7 +131,7 @@
             }
 
             \genFIG{<Figure Title 2>}{nonum}{notoc}{H}{0.40}
-            {./output/results/python/quadratic.png}{
+            {./Output/Results/Python/quadratic.png}{
                 <Figure Caption 2>
             }
 
@@ -108,11 +143,11 @@
 \par
 
             \noindent Test Citations:
-            \genREF{cite}{2001author, 2002author} \\
+            \genREF{cite}{2001Author, 2002Author} \\
 \par
 
             \noindent Test Code Output:
-            \input{./output/results/julia/natural_numbers.tex}
+            \input{./Output/Results/Julia/natural_numbers.tex}
 
         }
 
@@ -147,7 +182,7 @@
             }
 
             \genFIG{<Figure Title 3>}{num}{toc}{H}{0.40}
-            {./output/results/python/quadratic.png}{
+            {./Output/Results/Python/quadratic.png}{
                 <Figure Caption 3>
             }
 

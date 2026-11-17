@@ -50,7 +50,7 @@ function Image(image)
     end
     file:close()
 
-    image.src = source:gsub("^%./output/results/", "../../results/")
+    image.src = source:gsub("^%./Output/Results/", "../../Results/")
     return image
 end
 
