@@ -7,6 +7,7 @@ bibtexu|@bibtexu
 cancel|cancel.sty
 caption|caption.sty
 cm-super|sfrm1000.pfb
+ec|ecrm2074.tfm
 etoc|etoc.sty
 etoolbox|etoolbox.sty
 float|float.sty

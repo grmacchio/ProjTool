@@ -6,7 +6,7 @@ This project includes a [PDF file](./Output/Media/PDF/note.pdf) and [Markdown fi
 
 **Affiliations:** <sup>1</sup>\<Affiliation Content\>
 
-**Date:** 2026/11/16
+**Date:** 2026/11/17
 
 ## Acknowledgments
 

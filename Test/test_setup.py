@@ -11,7 +11,6 @@ import sys
 import tempfile
 import tarfile
 import unittest
-import zipfile
 from unittest.mock import Mock, patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "Source/Install/Configure"))
@@ -171,7 +170,9 @@ class DependencySetupTests(unittest.TestCase):
         self.addCleanup(self.temporary.cleanup)
         self.directory = Path(self.temporary.name).resolve()
         for mocked in (patch.object(configure, "WINDOWS", False), patch.object(Path, "home", return_value=self.directory),
-                       patch.dict(os.environ, {}, clear=False)):
+                       patch.dict(os.environ, {}, clear=False),
+                       patch.object(configure, "run", side_effect=AssertionError("Unmocked external command")),
+                       patch.object(configure.urllib.request, "urlopen", side_effect=AssertionError("Unmocked network request"))):
             mocked.start()
             self.addCleanup(mocked.stop)
 
@@ -181,6 +182,162 @@ class DependencySetupTests(unittest.TestCase):
             suffix = ".bat" if windows and name == "tlmgr" else ".exe" if windows else ""
             (directory / (name + suffix)).touch()
         return directory
+
+    def tinytex(self, root, windows=False):
+        directory = self.tools(root / "bin" / ("windows" if windows else "universal-darwin"), windows)
+        (root / "tlpkg").mkdir(exist_ok=True)
+        (root / "tlpkg/texlive.tlpdb").touch()
+        (root / ".tinytex").touch()
+        return directory
+
+    @contextlib.contextmanager
+    def tex_update(self, windows=False, query=None, works=True):
+        with contextlib.ExitStack() as stack:
+            for mocked in (patch.object(configure, "WINDOWS", windows),
+                           patch.dict(os.environ, {name: str(self.directory) for name in ("APPDATA", "LOCALAPPDATA", "ProgramData")}),
+                           patch.object(configure.shutil, "which", return_value=None),
+                           patch("builtins.input", return_value="yes"),
+                           patch.object(configure, "tex_repository", return_value=("https://one-mirror.invalid/tlnet", 2026)),
+                           patch.object(configure, "output", side_effect=query or (lambda command: "TeX Live version 2026" if "--version" in command else "/found/package.sty")),
+                           patch.object(configure, "run"),
+                           patch.object(configure, "latex_works", return_value=works)):
+                stack.enter_context(mocked)
+            updates = stack.enter_context(patch.object(configure, "managed_tex_run"))
+            packages = stack.enter_context(patch.object(configure, "texlive_packages", return_value=["latex-bin", "latexmk", "ec"]))
+            yield updates, packages
+
+    def test_tinytex_decline_stops_setup_on_both_platforms_before_tex_actions(self):
+        for windows in (False, True):
+            with self.subTest(windows=windows), patch.object(configure, "WINDOWS", windows), patch.object(sys, "argv", ["configure.py", "--provider", "standard", "--python", "/fake/python"]), patch.object(configure, "load_settings", return_value={}), patch.object(configure, "configure_python"), patch.object(configure, "configure_julia"), patch.object(configure, "configure_pandoc"), patch.object(configure.shutil, "which", return_value="/fake/git"), patch.object(configure, "output", return_value="git version 2.56.1"), patch.object(configure, "fetch", return_value=b'<a href="git-2.56.1.tar.xz">stable</a>'), patch.object(configure, "tex_repository") as repository, patch.object(configure, "tinytex_directories") as discover, patch.object(configure, "install_tinytex") as install, patch.object(configure, "save_settings") as save, patch.object(configure, "register_command") as register, patch("builtins.input", return_value="no") as answer:
+                with self.assertRaisesRegex(RuntimeError, "Installation denied because TinyTeX is required for ProjTool"):
+                    configure.main()
+                self.assertIn("Install or update TinyTeX with all required ProjTool packages?", answer.call_args.args[0])
+                for action in (repository, discover, install, save, register):
+                    action.assert_not_called()
+
+    def test_tinytex_requires_explicit_yes(self):
+        with self.tex_update(), patch("builtins.input", side_effect=["", "maybe", "NO"]) as answer, patch.object(configure, "tex_repository") as repository:
+            with self.assertRaisesRegex(RuntimeError, "Installation denied"):
+                configure.configure_tex({})
+        self.assertEqual(answer.call_count, 3)
+        repository.assert_not_called()
+
+    def test_fresh_and_existing_tinytex_install_all_requirements_on_both_platforms(self):
+        for windows in (False, True):
+            for existing in (False, True):
+                with self.subTest(windows=windows, existing=existing), self.tex_update(windows) as (updates, packages):
+                    root = self.directory / f"selected-{windows}-{existing}"
+                    directory = self.tinytex(root, windows)
+                    settings = {"tex_directory": str(directory)} if existing else {}
+                    with patch.object(configure, "install_tinytex", return_value=directory) as install:
+                        configure.configure_tex(settings)
+                    self.assertEqual(install.call_count, int(not existing))
+                    commands = [call.args[0] for call in updates.call_args_list]
+                    self.assertEqual(commands[0][-2:], ["update", "--self"])
+                    self.assertEqual(commands[1][3:], ["install", "latex-bin", "latexmk", "ec"])
+                    self.assertEqual(commands[2][3:], ["update", "latex-bin", "latexmk", "ec"])
+                    self.assertTrue(all(command[2] == "https://one-mirror.invalid/tlnet" for command in commands))
+                    self.assertFalse(any("--all" in command for command in commands))
+                    requirements = [line.split("|")[0] for line in (configure.ROOT / "Source/Install/TeX/tex-packages.txt").read_text().splitlines()]
+                    self.assertEqual(packages.call_args.args[2], requirements)
+                    configure.latex_works.assert_called_once_with(directory, complete=True)
+                    self.assertEqual(settings["tex_directory"], str(directory))
+                    self.assertEqual(settings["tool_paths"][0], str(directory))
+
+    def test_texlive_and_miktex_are_not_used_in_place_of_tinytex(self):
+        for windows in (False, True):
+            with self.subTest(windows=windows), self.tex_update(windows):
+                generic = self.tools(self.directory / f"texlive-{windows}/2026/bin/native", windows)
+                (generic.parents[1] / "tlpkg").mkdir()
+                (generic.parents[1] / "tlpkg/texlive.tlpdb").touch()
+                miktex = self.tools(self.directory / f"MiKTeX-{windows}/bin/native", windows)
+                directory = self.tinytex(self.directory / f"new-tinytex-{windows}", windows)
+                settings = {"tex_directory": str(generic), "tool_paths": [str(generic), str(miktex)]}
+                with patch.object(configure.shutil, "which", return_value=str(configure.executable(generic, "tlmgr"))), patch.object(configure, "install_tinytex", return_value=directory) as install:
+                    configure.configure_tex(settings)
+                install.assert_called_once()
+                self.assertEqual(settings["tex_directory"], str(directory))
+                self.assertTrue(configure.executable(generic, "pdflatex").is_file())
+
+    def test_older_tinytex_uses_new_bundle_and_preserves_previous_files(self):
+        for windows in (False, True):
+            old = self.tinytex(self.directory / f"old-{windows}", windows)
+            new = self.tinytex(self.directory / f"new-{windows}", windows)
+            keep = old.parents[1] / "custom.sty"
+            keep.write_text("custom content")
+            def query(command):
+                if "--version" in command:
+                    return "TeX Live version " + ("2025" if Path(command[0]).parent == old else "2026")
+                return "/found/package.sty"
+            with self.subTest(windows=windows), self.tex_update(windows, query), patch.object(configure, "install_tinytex", return_value=new) as install:
+                settings = {"tex_directory": str(old)}
+                configure.configure_tex(settings)
+            install.assert_called_once()
+            self.assertEqual(settings["tex_directory"], str(new))
+            self.assertEqual(keep.read_text(), "custom content")
+
+    def test_newer_tinytex_is_not_downgraded(self):
+        directory = self.tinytex(self.directory / "future")
+        with self.tex_update(query=lambda command: "TeX Live version 2027") as (updates, packages), patch.object(configure, "install_tinytex") as install:
+            with self.assertRaisesRegex(RuntimeError, "refusing to downgrade"):
+                configure.configure_tex({"tex_directory": str(directory)})
+        install.assert_not_called()
+        updates.assert_not_called()
+
+    def test_incompatible_stable_bundle_stops_before_package_updates(self):
+        directory = self.tinytex(self.directory / "release")
+        with self.tex_update(query=lambda command: "TeX Live version 2025") as (updates, packages), patch.object(configure, "install_tinytex", return_value=directory):
+            with self.assertRaisesRegex(RuntimeError, "matching TinyTeX release"):
+                configure.configure_tex({})
+        updates.assert_not_called()
+
+    def test_failed_compile_missing_fonts_and_failed_update_prevent_success(self):
+        directory = self.tinytex(self.directory / "failure")
+        for failure, message in (("compile", "cannot compile"), ("font", "ecrm2074.tfm"), ("update", "download failed")):
+            def query(command):
+                if failure == "font" and command[-1] == "ecrm2074.tfm":
+                    return ""
+                return "TeX Live version 2026" if "--version" in command else "/found/package.sty"
+            with self.subTest(failure=failure), self.tex_update(query=query, works=failure != "compile") as (updates, packages), patch.object(configure, "install_tinytex", return_value=directory):
+                if failure == "update":
+                    updates.side_effect = RuntimeError("download failed")
+                settings = {}
+                with self.assertRaisesRegex(RuntimeError, message):
+                    configure.configure_tex(settings)
+                self.assertNotIn("tex_directory", settings)
+
+    def test_tinytex_discovery_finds_default_custom_and_versioned_roots(self):
+        for windows in (False, True):
+            with self.subTest(windows=windows), self.tex_update(windows):
+                parent = self.directory if windows else self.directory / "Library"
+                default = self.tinytex(parent / "TinyTeX", windows)
+                versioned = self.tinytex(parent / "TinyTeX-v2026.11", windows)
+                custom = self.tinytex(self.directory / f"custom-{windows}", windows)
+                settings = {"tex_directory": str(custom), "tool_paths": [str(custom)]}
+                self.assertEqual(configure.tinytex_directories(settings), [custom, default, versioned])
+
+    def test_partial_tinytex_is_resumed_without_another_download(self):
+        root = self.directory / "Library/TinyTeX-v2026.11"
+        directory = self.tinytex(root)
+        (directory / "pdflatex").unlink()
+        (self.directory / "Library/TinyTeX").mkdir()
+        with patch.object(configure, "stable_release", return_value={"tag_name": "v2026.11"}), patch.object(configure, "download_asset") as download, patch.object(configure, "output", return_value="TeX Live version 2026"):
+            self.assertEqual(configure.install_tinytex(), directory)
+        download.assert_not_called()
+
+    def test_template_checks_compile_all_types_and_large_fonts(self):
+        directory = self.tools(self.directory / "compiler")
+        kinds = []
+        def compile_document(command, cwd, **kwargs):
+            kinds.append(cwd.name)
+            source = (cwd / "check.tex").read_text()
+            self.assertIn("\\Huge", source)
+            self.assertIn("-no-shell-escape", command)
+            self.assertEqual(Path(command[0]).parent, directory)
+            (cwd / "check.pdf").write_bytes(b"%PDF-1.4")
+        with patch.object(configure, "run", side_effect=compile_document):
+            self.assertTrue(configure.latex_works(directory, complete=True))
+        self.assertEqual(kinds, ["note", "preprint", "presentation", "dissertation"])
 
     def test_unstable_releases_and_unverified_downloads_are_rejected(self):
         for release in ({"tag_name": "daily"}, {"tag_name": "v1", "prerelease": True}, {"tag_name": "v1", "draft": True}):
@@ -202,68 +359,7 @@ class DependencySetupTests(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError, "Unsafe path"):
             configure.unpack_tar(archive, self.directory / "unpack")
         self.assertFalse((self.directory / "escaped").exists())
-        archive = self.directory / "unsafe.zip"
-        with zipfile.ZipFile(archive, "w") as stream:
-            stream.writestr("../escaped", "x")
-        with self.assertRaisesRegex(RuntimeError, "Unsafe path"):
-            configure.unpack_zip(archive, self.directory / "unpack")
-        self.assertFalse((self.directory / "escaped").exists())
 
-    def test_tex_missing_broken_and_current_installations(self):
-        for state in ("missing", "broken", "current"):
-            with self.subTest(state=state):
-                directory = self.tools(self.directory / state / "2026/bin/native")
-                settings = {}
-                candidates = [] if state == "missing" else [directory]
-                def works(path, complete=False):
-                    return complete or state == "current"
-                def query(command):
-                    return str(directory.parents[1]) if "-var-value=TEXMFROOT" in command else "TeX Live (https://tug.org/texlive) version 2026"
-                with patch.object(configure, "tex_directories", return_value=candidates), patch.object(configure, "latex_works", side_effect=works) as verify, patch.object(configure, "install_tinytex", return_value=directory) as tinytex, patch.object(configure, "tex_repository", return_value=("https://example.invalid/tlnet", 2026)), patch.object(configure, "output", side_effect=query), patch.object(configure, "managed_tex_run") as update, patch.object(configure, "texlive_packages", return_value=["latexmk", "bibtexu"]), patch.object(configure, "run"):
-                    configure.configure_tex(settings)
-                self.assertEqual(tinytex.call_count, int(state != "current"))
-                commands = [call.args[0] for call in update.call_args_list]
-                self.assertEqual(commands[0][-2:], ["update", "--self"])
-                self.assertEqual(commands[1][-3:], ["install", "latexmk", "bibtexu"])
-                self.assertEqual(commands[2][-3:], ["update", "latexmk", "bibtexu"])
-                self.assertFalse(any("--all" in command for command in commands))
-                verify.assert_any_call(directory, complete=True)
-                self.assertEqual(settings["tex_directory"], str(directory))
-
-    def test_annual_texlive_upgrade_preserves_old_install_and_custom_files(self):
-        root = self.directory / "texlive/2025"
-        directory = self.tools(root / "bin/native")
-        local = root / "texmf-local/custom.sty"
-        local.parent.mkdir()
-        local.write_text("custom content")
-        target = root.with_name("2026")
-        archive = io.BytesIO()
-        with tarfile.open(fileobj=archive, mode="w:gz") as stream:
-            member = tarfile.TarInfo("install-tl-20261116/install-tl")
-            member.size = 1
-            stream.addfile(member, io.BytesIO(b"x"))
-        calls = []
-        def install(command, directory):
-            calls.append(command)
-            if "-profile" in command:
-                profile = Path(command[command.index("-profile") + 1]).read_text()
-                self.assertIn("selected_scheme scheme-infraonly", profile)
-                self.assertIn(target.as_posix(), profile)
-                self.tools(target / "bin/native")
-        def query(command):
-            if "--only-installed" in command:
-                return "amsmath\nretired-package\n"
-            if "--only-remote" in command:
-                return "amsmath\nlatex-bin\n"
-            return str(target)
-        with patch.object(configure, "fetch", return_value=archive.getvalue()), patch.object(configure, "output", side_effect=query), patch.object(configure, "managed_tex_run", side_effect=install):
-            updated = configure.upgrade_texlive_year(directory, root, "https://example.invalid/tlnet", 2026)
-        self.assertEqual(updated, target / "bin/native")
-        self.assertTrue((directory / "pdflatex").exists())
-        self.assertEqual(local.read_text(), "custom content")
-        self.assertEqual((target / "texmf-local/custom.sty").read_text(), "custom content")
-        self.assertFalse(any("install" in command for command in calls))
-        self.assertFalse(any("retired-package" in command for command in calls))
 
     def test_tinytex_uses_stable_archive_and_preserves_existing_directory(self):
         archive = io.BytesIO()
@@ -274,7 +370,7 @@ class DependencySetupTests(unittest.TestCase):
                 member.mode = 0o755
                 stream.addfile(member, io.BytesIO(b"x"))
         data = archive.getvalue()
-        release = {"tag_name": "v2026.11", "assets": [{"name": "TinyTeX-1-darwin-v2026.11.tar.xz", "browser_download_url": "https://github.com/rstudio/tinytex-releases/releases/download/v2026.11/TinyTeX-1-darwin-v2026.11.tar.xz", "digest": "sha256:" + hashlib.sha256(data).hexdigest()}]}
+        release = {"tag_name": "v2026.11", "assets": [{"name": "TinyTeX-0-darwin-v2026.11.tar.xz", "browser_download_url": "https://github.com/rstudio/tinytex-releases/releases/download/v2026.11/TinyTeX-0-darwin-v2026.11.tar.xz", "digest": "sha256:" + hashlib.sha256(data).hexdigest()}]}
         old = self.directory / "Library/TinyTeX/keep.txt"
         old.parent.mkdir(parents=True)
         old.write_text("keep")
@@ -283,30 +379,6 @@ class DependencySetupTests(unittest.TestCase):
         self.assertEqual(directory, self.directory / "Library/TinyTeX-v2026.11/bin/universal-darwin")
         self.assertEqual(old.read_text(), "keep")
 
-    def test_windows_annual_upgrade_uses_windows_archive_without_cloning_packages(self):
-        root = self.directory / "texlive/2025"
-        directory = self.tools(root / "bin/windows", windows=True)
-        perl = root / "tlpkg/tlperl/bin/perl.exe"
-        perl.parent.mkdir(parents=True)
-        perl.touch()
-        target = root.with_name("2026")
-        archive = io.BytesIO()
-        with zipfile.ZipFile(archive, "w") as stream:
-            stream.writestr("install-tl-20261116/install-tl", "installer")
-        packages = ["package-" + str(index) for index in range(250)]
-        def query(command):
-            return "\n".join(packages) if "info" in command else str(target)
-        def install(command, directory):
-            if "-profile" in command:
-                self.assertEqual(command[0], perl)
-                self.tools(target / "bin/windows", windows=True)
-        with patch.object(configure, "WINDOWS", True), patch.object(configure, "fetch", return_value=archive.getvalue()) as download, patch.object(configure, "output", side_effect=query), patch.object(configure, "managed_tex_run", side_effect=install) as run:
-            updated = configure.upgrade_texlive_year(directory, root, "https://example.invalid/tlnet", 2026)
-        self.assertEqual(updated, target / "bin/windows")
-        download.assert_called_once_with("https://example.invalid/tlnet/install-tl.zip")
-        batches = [call.args[0][4:] for call in run.call_args_list if "install" in call.args[0]]
-        self.assertEqual(batches, [])
-        self.assertTrue((directory / "pdflatex.exe").exists())
 
     def test_windows_tinytex_uses_stable_self_extracting_archive(self):
         release = {"tag_name": "v2026.11"}
@@ -347,12 +419,6 @@ class DependencySetupTests(unittest.TestCase):
             configure.configure_pandoc(settings)
         self.assertIn(str(directory), settings["tool_paths"])
 
-    def test_failed_tex_check_prevents_success(self):
-        directory = self.tools(self.directory / "tex/bin/native")
-        with patch.object(configure, "tex_directories", return_value=[]), patch.object(configure, "install_tinytex", return_value=directory), patch.object(configure, "tex_repository", return_value=("https://example.invalid/tlnet", 2026)), patch.object(configure, "output", return_value="TeX Live version 2026"), patch.object(configure, "managed_tex_run"), patch.object(configure, "texlive_packages", return_value=["latex-bin"]), patch.object(configure, "run"), patch.object(configure, "latex_works", return_value=False):
-            with self.assertRaisesRegex(RuntimeError, "cannot compile"):
-                configure.configure_tex({})
-
     def test_full_setup_orders_python_julia_dependencies_then_registration(self):
         sequence = Mock()
         with patch.object(sys, "argv", ["configure.py", "--provider", "standard", "--python", "/fake/python"]), patch.object(configure, "load_settings", return_value={}), patch.object(configure, "configure_python", sequence.python), patch.object(configure, "configure_julia", sequence.julia), patch.object(configure, "configure_dependencies", sequence.dependencies), patch.object(configure, "register_command", sequence.register):
@@ -376,18 +442,6 @@ class DependencySetupTests(unittest.TestCase):
                 configure.configure_dependencies({})
         pandoc.assert_not_called()
         save.assert_not_called()
-
-    def test_miktex_updates_stable_packages_and_verifies_no_updates_remain(self):
-        directory = self.tools(self.directory / "MiKTeX", windows=True)
-        (directory / "tlmgr.bat").unlink()
-        for name in ("miktex.exe", "mpm.exe"):
-            (directory / name).touch()
-        with patch.object(configure, "WINDOWS", True), patch.object(configure, "tex_directories", return_value=[directory]), patch.object(configure, "latex_works", return_value=True), patch.object(configure, "output", return_value="https://example.invalid/stable") as output, patch.object(configure, "managed_tex_run") as managed, patch.object(configure, "run"):
-            configure.configure_tex({})
-        self.assertIn("--repository-release-state=stable", output.call_args.args[0])
-        commands = [call.args[0] for call in managed.call_args_list]
-        self.assertEqual([command[2] for command in commands], ["update-package-database", "update", "install", "check-update"])
-        self.assertTrue(all("https://example.invalid/stable" in command for command in commands))
 
     def test_saved_tool_paths_preserve_stable_symlinks(self):
         real = self.directory / "Cellar/tool/1/bin"
@@ -419,22 +473,6 @@ class DependencySetupTests(unittest.TestCase):
             packages = configure.texlive_packages("tlmgr", "https://one-mirror.invalid", ["latex-bin"])
         self.assertEqual(packages, ["core", "latex", "latex-bin", "pdftex.universal-darwin"])
 
-    def test_annual_upgrade_resumes_an_incomplete_installation(self):
-        root = self.directory / "texlive/2025"
-        old = self.tools(root / "bin/native")
-        target = root.with_name("2026")
-        new = self.tools(target / "bin/native")
-        (new / "pdflatex").unlink()
-        (target / "tlpkg").mkdir()
-        (target / "tlpkg/texlive.tlpdb").touch()
-        def query(command):
-            return "TeX Live version 2026" if "--version" in command else str(target)
-        with patch.object(configure, "output", side_effect=query), patch.object(configure, "fetch") as download, patch.object(configure, "managed_tex_run") as run:
-            updated = configure.upgrade_texlive_year(old, root, "https://one-mirror.invalid", 2026)
-        self.assertEqual(updated, new)
-        download.assert_not_called()
-        run.assert_not_called()
-        self.assertTrue((old / "pdflatex").exists())
 
     def test_mac_tex_password_prompt_explains_administrator_access(self):
         messages = io.StringIO()
@@ -665,7 +703,11 @@ class ProjToolCommandTests(unittest.TestCase):
                 self.assertTrue({"Code", "References", "Output"}.issubset(names))
                 self.assertNotIn("README.md", names)
                 self.assertNotIn(name.lower() + ".md", names)
-                self.assertTrue((project / "Output/Media/PDF" / (project.name + ".pdf")).is_file())
+                source_pdf = configure.ROOT / "Examples" / name / "Output/Media/PDF" / (name.lower() + ".pdf")
+                copied_pdf = project / "Output/Media/PDF" / (project.name + ".pdf")
+                self.assertEqual(copied_pdf.is_file(), source_pdf.is_file())
+                if source_pdf.is_file():
+                    self.assertEqual(copied_pdf.read_bytes(), source_pdf.read_bytes())
 
     def test_rem_output_preserves_project_sources(self):
         output = self.project / "Output/Results"

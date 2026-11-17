@@ -16,7 +16,6 @@ import tarfile
 import urllib.error
 import urllib.request
 import uuid
-import zipfile
 
 ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT / "Source/Install/Python"))
@@ -331,21 +330,25 @@ def configure_pandoc(settings):
     run([pandoc, "--from=markdown", "--to=html"], input="ProjTool", text=True, capture_output=True)
 
 
-def tex_directories(settings):
-    directories = [Path(path) for path in settings.get("tool_paths", [])]
-    current = shutil.which("pdflatex")
-    if current:
-        directories.append(Path(current).parent)
-    if WINDOWS:
-        roots = [Path(os.environ.get(name, str(Path.home()))) for name in ("APPDATA", "LOCALAPPDATA", "ProgramData", "ProgramFiles")]
-        for root in roots:
-            directories.extend([root / "TinyTeX/bin/windows", root / "MiKTeX/miktex/bin/x64", root / "Programs/MiKTeX/miktex/bin/x64"])
-        directories.extend(Path(os.environ.get("SystemDrive", "C:") + "/texlive").glob("*/bin/windows"))
-    else:
-        directories.append(Path("/Library/TeX/texbin"))
-        directories.extend((Path.home() / "Library/TinyTeX/bin").glob("*"))
-        directories.extend(Path("/usr/local/texlive").glob("*/bin/*"))
-    return list(dict.fromkeys(path for path in directories if executable(path, "pdflatex")))
+def tinytex_directory(root):
+    root = Path(root).resolve()
+    if not (root / "tlpkg/texlive.tlpdb").is_file():
+        return None
+    if root.name.lower() not in ("tinytex", ".tinytex") and not (root / ".tinytex").is_file():
+        return None
+    return next((path for path in sorted((root / "bin").glob("*")) if executable(path, "tlmgr")), None)
+
+
+def tinytex_directories(settings):
+    paths = [Path(path) for path in [settings.get("tex_directory"), *settings.get("tool_paths", []), shutil.which("tlmgr")] if path]
+    roots = []
+    for path in paths:
+        roots.extend(path.resolve().parents)
+    parents = [Path(os.environ.get(name, str(Path.home()))) for name in ("APPDATA", "LOCALAPPDATA", "ProgramData")] if WINDOWS else [Path.home() / "Library"]
+    for parent in parents:
+        roots.append(parent / "TinyTeX")
+        roots.extend(sorted(parent.glob("TinyTeX-*"), reverse=True))
+    return list(dict.fromkeys(directory for root in dict.fromkeys(roots) if (directory := tinytex_directory(root))))
 
 
 def latex_works(directory, complete=False):
@@ -355,17 +358,17 @@ def latex_works(directory, complete=False):
     environment = dict(os.environ, PATH=str(directory) + os.pathsep + os.environ.get("PATH", ""))
     environment["TEXINPUTS"] = str(ROOT / "Source/TeX") + "//" + os.pathsep + environment.get("TEXINPUTS", "")
     try:
-        version = output([compiler, "--version"])
-        flags = ["--disable-installer"] if "MiKTeX" in version else []
         with tempfile.TemporaryDirectory(prefix="projtool-tex-check-") as temporary:
             for kind in (("note", "preprint", "presentation", "dissertation") if complete else ("article",)):
                 folder = Path(temporary) / kind
                 folder.mkdir()
                 (folder / "check.projtool.cfg").write_text(r"\def\templateReferencesPath{.}" + "\n")
                 documentclass = r"\documentclass{article}" if kind == "article" else rf"\documentclass[{kind}, references={{.}}]{{template}}"
-                body = r"\begin{frame}ProjTool: $x^2$.\end{frame}" if kind == "presentation" else r"ProjTool: $x^2$."
+                body = r"{\Huge ProjTool}\par\textbf{Font check}: $x^2$."
+                if kind == "presentation":
+                    body = r"\begin{frame}" + body + r"\end{frame}"
                 (folder / "check.tex").write_text(documentclass + "\n" + r"\begin{document}" + body + r"\end{document}" + "\n")
-                run([compiler, *flags, "-interaction=nonstopmode", "-halt-on-error", "-no-shell-escape", "check.tex"], cwd=folder, env=environment, capture_output=True, timeout=90)
+                run([compiler, "-interaction=nonstopmode", "-halt-on-error", "-no-shell-escape", "check.tex"], cwd=folder, env=environment, capture_output=True, timeout=90)
                 if not (folder / "check.pdf").read_bytes().startswith(b"%PDF"):
                     return False
     except (OSError, subprocess.SubprocessError) as error:
@@ -411,16 +414,6 @@ def unpack_tar(archive, destination):
             stream.extractall(destination)
 
 
-def unpack_zip(archive, destination):
-    destination = Path(destination).resolve()
-    with zipfile.ZipFile(archive) as stream:
-        for member in stream.infolist():
-            path = (destination / member.filename).resolve()
-            if not path.is_relative_to(destination) or (member.external_attr >> 16) & 0o170000 == 0o120000:
-                raise RuntimeError("Unsafe path in downloaded archive.")
-        stream.extractall(destination)
-
-
 def install_tinytex():
     release = stable_release("rstudio/tinytex-releases")
     default = (Path(os.environ["APPDATA"]) / "TinyTeX") if WINDOWS else (Path.home() / "Library/TinyTeX")
@@ -428,14 +421,17 @@ def install_tinytex():
         default = Path(os.environ["ProgramData"]) / "TinyTeX"
     target = outside_repository(default if not default.exists() else default.with_name("TinyTeX-" + release["tag_name"]))
     if target.exists():
-        candidates = list((target / "bin").glob("*"))
-        working = next((directory for directory in candidates if latex_works(directory)), None)
-        if working:
-            return working
+        directory = tinytex_directory(target)
+        if directory:
+            try:
+                if re.search(r"TeX Live.*version \d{4}", output([executable(directory, "tlmgr"), "--version"])):
+                    return directory
+            except (OSError, subprocess.SubprocessError):
+                pass
         target = target.with_name(target.name + "-" + uuid.uuid4().hex[:8])
     print(f"Installing stable TinyTeX {release['tag_name']} at {target}.", flush=True)
     with tempfile.TemporaryDirectory(prefix="projtool-tinytex-") as temporary:
-        pattern = r"TinyTeX-1-windows-v.*\.exe" if WINDOWS else r"TinyTeX-1-darwin-v.*\.tar\.xz"
+        pattern = r"TinyTeX-0-windows-v.*\.exe" if WINDOWS else r"TinyTeX-0-darwin-v.*\.tar\.xz"
         archive = download_asset("rstudio/tinytex-releases", release, pattern, temporary)
         if WINDOWS:
             run([archive, "-y"], cwd=temporary)
@@ -444,8 +440,14 @@ def install_tinytex():
         extracted = next((path for path in Path(temporary).iterdir() if path.is_dir() and (path / "tlpkg/texlive.tlpdb").is_file()), None)
         if extracted is None:
             raise RuntimeError("The TinyTeX archive has no TeX Live installation.")
+        (extracted / ".tinytex").touch()
         target.parent.mkdir(parents=True, exist_ok=True)
-        shutil.move(str(extracted), target)
+        if WINDOWS and not os.access(target.parent, os.W_OK):
+            quote = lambda value: "'" + str(value).replace("'", "''") + "'"
+            script = "$ErrorActionPreference = 'Stop'; Move-Item -LiteralPath " + quote(extracted) + " -Destination " + quote(target)
+            managed_tex_run(["powershell.exe", "-NoProfile", "-Command", script], target.parent)
+        else:
+            shutil.move(str(extracted), target)
     directory = next((path for path in (target / "bin").iterdir() if executable(path, "tlmgr")), None)
     if directory is None:
         raise RuntimeError("TinyTeX's package manager is missing.")
@@ -458,11 +460,11 @@ def managed_tex_run(command, directory, **kwargs):
     if os.access(directory, os.W_OK):
         return run(command, **kwargs)
     if not TEX_ADMIN_NOTICE_SHOWN:
-        print(f"Administrator permission is required to change TeX files at {directory}.", flush=True)
+        print(f"Administrator permission is required to change TinyTeX files at {directory}.", flush=True)
         if not WINDOWS:
             print("Enter your Mac administrator login password if prompted. Nothing appears while you type. Press Control+C to cancel.", flush=True)
         else:
-            print("Windows will ask you to approve the TeX update.", flush=True)
+            print("Windows will ask you to approve the TinyTeX update.", flush=True)
         TEX_ADMIN_NOTICE_SHOWN = True
     if not WINDOWS:
         return run(["sudo", "-p", "ProjTool: Mac administrator password (typing is hidden): ", *command], **kwargs)
@@ -471,62 +473,6 @@ def managed_tex_run(command, directory, **kwargs):
     launcher = ("$p = Start-Process -FilePath " + quote(command[0]) + " -ArgumentList " + quote(arguments) +
                 " -Verb RunAs -Wait -PassThru; exit $p.ExitCode")
     return run(["powershell.exe", "-NoProfile", "-Command", launcher], **kwargs)
-
-
-def upgrade_texlive_year(directory, root, repository, year):
-    updated = None
-    if (root / ".tinytex").exists() or "tinytex" in root.name.lower():
-        updated = install_tinytex()
-        if not re.search(r"TeX Live.*version " + str(year) + r"\b", output([executable(updated, "tlmgr"), "--version"])):
-            updated = None
-    if updated is None:
-        target = root.with_name(str(year)) if root.name.isdigit() else root.with_name(root.name + "-" + str(year))
-        outside_repository(target)
-        if target.exists():
-            updated = next((path for path in (target / "bin").glob("*") if executable(path, "tlmgr") and executable(path, "kpsewhich")), None)
-            if updated is None or not (target / "tlpkg/texlive.tlpdb").is_file():
-                raise RuntimeError(f"The upgrade destination exists without a usable TeX Live package manager: {target}")
-            version = output([executable(updated, "tlmgr"), "--version"])
-            actual_root = Path(output([executable(updated, "kpsewhich"), "-var-value=TEXMFROOT"]))
-            if not re.search(r"TeX Live.*version " + str(year) + r"\b", version) or actual_root.resolve() != target.resolve():
-                raise RuntimeError(f"The existing upgrade destination does not contain TeX Live {year}: {target}")
-            print(f"Resuming TeX Live {year} at {target}; only ProjTool's required packages will be installed or updated.", flush=True)
-        else:
-            print(f"Installing TeX Live {year} at {target} for ProjTool. The older installation at {root} will be kept.", flush=True)
-            with tempfile.TemporaryDirectory(prefix="projtool-texlive-") as temporary:
-                filename = "install-tl.zip" if WINDOWS else "install-tl-unx.tar.gz"
-                archive = Path(temporary) / filename
-                archive.write_bytes(fetch(repository + "/" + filename))
-                (unpack_zip if WINDOWS else unpack_tar)(archive, temporary)
-                installer = next(Path(temporary).glob("install-tl-*/install-tl"), None)
-                if installer is None:
-                    raise RuntimeError("The TeX Live download has no installer.")
-                profile = Path(temporary) / "texlive.profile"
-                profile.write_text(f"selected_scheme scheme-infraonly\nTEXDIR {target.as_posix()}\noption_doc 0\noption_src 0\n")
-                perl = root / "tlpkg/tlperl/bin/perl.exe" if WINDOWS else Path("/usr/bin/perl")
-                if not perl.is_file():
-                    raise RuntimeError("Perl is required to upgrade TeX Live to its current annual release.")
-                managed_tex_run([perl, installer, "-no-gui", "-profile", profile, "-repository", repository], root.parent)
-            updated = next((path for path in (target / "bin").iterdir() if executable(path, "tlmgr")), None)
-            if updated is None:
-                raise RuntimeError("The upgraded TeX Live package manager is missing.")
-    print(f"Preserving the previous TeX installation at {root}.", flush=True)
-    manager = executable(updated, "tlmgr")
-    old_local = root / "texmf-local"
-    new_root = Path(output([executable(updated, "kpsewhich"), "-var-value=TEXMFROOT"]))
-    if old_local.is_dir() and old_local.resolve() != (new_root / "texmf-local").resolve():
-        if os.access(new_root, os.W_OK):
-            shutil.copytree(old_local, new_root / "texmf-local", dirs_exist_ok=True)
-        elif WINDOWS:
-            quote = lambda value: "'" + str(value).replace("'", "''") + "'"
-            script = "$ErrorActionPreference = 'Stop'; Copy-Item -LiteralPath " + quote(old_local) + " -Destination " + quote(new_root) + " -Recurse -Force"
-            managed_tex_run(["powershell.exe", "-NoProfile", "-Command", script], new_root)
-        else:
-            managed_tex_run(["mkdir", "-p", new_root / "texmf-local"], new_root)
-            managed_tex_run(["cp", "-R", str(old_local) + "/.", new_root / "texmf-local"], new_root)
-        managed_tex_run([manager, "conf", "texmf", "TEXMFLOCAL", new_root / "texmf-local"], updated)
-        managed_tex_run([executable(updated, "mktexlsr")], updated)
-    return updated
 
 
 def texlive_packages(manager, repository, requirements):
@@ -550,59 +496,50 @@ def texlive_packages(manager, repository, requirements):
 
 
 def configure_tex(settings):
-    directory = next((path for path in tex_directories(settings) if latex_works(path)), None)
-    if directory is None:
-        directory = install_tinytex()
-    else:
-        print(f"Updating the working TeX distribution at {directory}.", flush=True)
-    use_tool_paths(settings, [directory])
-    manager = executable(directory, "tlmgr")
-    requirements = [line.split("|", 1) for line in (ROOT / "Source/Install/TeX/tex-packages.txt").read_text().splitlines() if line.strip()]
-    print(f"Preparing {len(requirements)} ProjTool TeX requirements and their dependencies.", flush=True)
-    if manager:
-        repository, year = tex_repository()
-        print(f"Using one TeX download mirror throughout this update: {repository}", flush=True)
-        root = Path(output([executable(directory, "kpsewhich"), "-var-value=TEXMFROOT"]))
-        version = output([manager, "--version"])
+    choice = ask("TinyTeX is required for ProjTool. Install or update TinyTeX with all required ProjTool packages? [yes/no]", ("yes", "no"))
+    if choice == "no":
+        raise RuntimeError("Installation denied because TinyTeX is required for ProjTool.")
+    repository, year = tex_repository()
+    directory = None
+    for candidate in tinytex_directories(settings):
+        try:
+            version = output([executable(candidate, "tlmgr"), "--version"])
+        except (OSError, subprocess.SubprocessError):
+            continue
         match = re.search(r"TeX Live.*version (\d{4})", version)
         if not match:
-            raise RuntimeError("Could not determine the installed TeX Live release.")
-        if int(match[1]) < year:
-            directory = upgrade_texlive_year(directory, root, repository, year)
-            use_tool_paths(settings, [directory])
-            manager = executable(directory, "tlmgr")
-        elif int(match[1]) > year:
-            raise RuntimeError("The installed TeX Live release is newer than the stable repository; refusing to downgrade it.")
-        managed_tex_run([manager, "--repository", repository, "update", "--self"], directory)
-        packages = texlive_packages(manager, repository, [package for package, probe in requirements])
-        print(f"Selected {len(packages)} TeX packages, including dependencies. Unrelated installed packages will be left alone.", flush=True)
-        for action in ("install", "update"):
-            for start in range(0, len(packages), 100):
-                managed_tex_run([manager, "--repository", repository, action, *packages[start:start + 100]], directory)
-        final_version = output([manager, "--version"])
-        if not re.search(r"TeX Live.*version " + str(year) + r"\b", final_version):
-            raise RuntimeError("TeX Live did not reach the current stable annual release.")
-    else:
-        miktex = executable(directory, "miktex")
-        mpm = executable(directory, "mpm")
-        if not miktex or not mpm:
-            raise RuntimeError(f"The working TeX installation at {directory} has no supported update manager.")
-        repository = output([mpm, "--repository-release-state=stable", "--pick-repository-url"])
-        prefix = [miktex] if os.access(directory, os.W_OK) else [miktex, "--admin"]
-        for action in ("update-package-database", "update"):
-            managed_tex_run([*prefix, "packages", action, "--repository", repository], directory)
-        packages = [package for package, probe in requirements if not probe.startswith("@")]
-        managed_tex_run([*prefix, "packages", "install", "--repository", repository, *packages, "latexmk"], directory)
-        if not all(executable(directory, name) for name in ("latexmk", "bibtexu")):
-            managed_tex_run([*prefix, "packages", "upgrade", "--repository", repository, "complete"], directory)
-        managed_tex_run([*prefix, "packages", "check-update", "--repository", repository], directory)
+            continue
+        if int(match[1]) > year:
+            raise RuntimeError("The installed TinyTeX is newer than the stable repository; refusing to downgrade it.")
+        if int(match[1]) == year:
+            directory = candidate
+            break
+        print(f"Keeping the older TinyTeX at {candidate.parents[1]}; a current TinyTeX installation is required.", flush=True)
+    if directory is None:
+        directory = install_tinytex()
+    manager = executable(directory, "tlmgr")
+    version = output([manager, "--version"])
+    if not re.search(r"TeX Live.*version " + str(year) + r"\b", version):
+        raise RuntimeError(f"The latest stable TinyTeX download does not match the stable TeX Live {year} repository. Try again when the matching TinyTeX release is available.")
+    use_tool_paths(settings, [directory])
+    print(f"Updating TinyTeX at {directory} using {repository}.", flush=True)
+    requirements = [line.split("|", 1) for line in (ROOT / "Source/Install/TeX/tex-packages.txt").read_text().splitlines() if line.strip()]
+    managed_tex_run([manager, "--repository", repository, "update", "--self"], directory)
+    packages = texlive_packages(manager, repository, [package for package, probe in requirements])
+    print(f"Installing or updating {len(packages)} ProjTool TeX packages, including dependencies.", flush=True)
+    for action in ("install", "update"):
+        for start in range(0, len(packages), 100):
+            managed_tex_run([manager, "--repository", repository, action, *packages[start:start + 100]], directory)
     for name in ("pdflatex", "latexmk", "bibtexu", "kpsewhich"):
         tool = executable(directory, name)
         if not tool:
-            raise RuntimeError(f"The TeX installation is missing {name}.")
+            raise RuntimeError(f"TinyTeX is missing {name}.")
         run([tool, "--version"], capture_output=True)
+    for package, probe in requirements:
+        if not probe.startswith("@") and not output([executable(directory, "kpsewhich"), probe]):
+            raise RuntimeError(f"TinyTeX is missing {probe} from required package {package}.")
     if not latex_works(directory, complete=True):
-        raise RuntimeError("The updated TeX distribution cannot compile ProjTool's templates.")
+        raise RuntimeError("The updated TinyTeX cannot compile ProjTool's templates.")
     settings["tex_directory"] = str(directory)
 
 
@@ -702,6 +639,6 @@ if __name__ == "__main__":
     except (EOFError, KeyboardInterrupt):
         print("\nSetup cancelled.", file=sys.stderr)
         sys.exit(130)
-    except (RuntimeError, OSError, ValueError, subprocess.SubprocessError, tarfile.TarError, zipfile.BadZipFile) as error:
+    except (RuntimeError, OSError, ValueError, subprocess.SubprocessError, tarfile.TarError) as error:
         print(f"ProjTool setup failed: {error}", file=sys.stderr)
         sys.exit(1)

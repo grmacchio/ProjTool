@@ -14,9 +14,10 @@ the following project types:
 ### Installing
 
 Download and extract the zip downloaded from
-[``ProjTool``](https://github.com/grmacchio); alternatively, clone the repository
-if ``Git`` is already installed. Before running the installer script, we invite
-you to take a look at [The Details](#the-details) before proceeding.
+[``ProjTool``](https://github.com/grmacchio); alternatively, clone the
+repository if ``Git`` is already installed. Before running the installer
+script, we invite you to take a look at [The Details](#the-details) before
+proceeding.
 
 On macOS, open a terminal in the ``ProjTool`` directory and run the following
 and respond to the prompts as they appear.
@@ -43,10 +44,6 @@ projtool update python
 projtool update julia
 ```
 
-The first command updates ``Git``, ``Pandoc``, the working ``TeX`` distribution,
-and repeats the ``Python`` and ``Julia`` selection and updates them. The other
-commands repeat only the named component's setup.
-
 ### Uninstalling
 
 On macOS, run this from the ProjTool folder:
@@ -60,14 +57,6 @@ Or, from Windows PowerShell:
 ```powershell
 .\Source\Uninstall\uninstall.cmd
 ```
-
-The uninstaller asks you to type `DELETE`, then permanently deletes the entire
-``ProjTool`` repository, including uncommitted files, and removes its PATH
-entry and settings. ``Python`` installations, environments, packages,
-``Juliaup``, ``Julia`` versions, and shared ``Julia`` packages are retained to
-avoid interfering with unrelated code. ``Homebrew``, ``Conda``, ``Git``,
-``Pandoc``, and working ``TeX`` distribution are also retained. Restart
-terminals and VS Code afterward.
 
 ### Initializing a Project
 
@@ -157,7 +146,7 @@ pushing, and version tagging. This command has the following forms.
 projtool cpush -m "<Commit-Message>" -v <N.N.N>
 projtool cpush -m "<Commit-Message>"
 ```
-The symbols ``<N.N.N>`` represent the version tag, e.g., 1.2.3. The second
+The symbols ``<N.N.N>`` represent the version tag, e.g., ``1.2.3``. The second
 aforementioned command automatically increase the version by one for the third
 number, e.g., ``0.0.0`` will change to ``0.0.1``. Additionally, this command
 will update the ``LICENSE.txt`` file with the new dating.
@@ -166,54 +155,69 @@ will update the ``LICENSE.txt`` file with the new dating.
 
 ### Mac Install Details
 
-The installer uses Homebrew to install or update Git to its latest stable
-release. If Homebrew is missing, then the installer asks permission to download
-and install Homebrew. Answering `no` denies installation because Homebrew is
-required for this Git setup. Existing Homebrew is updated before installing
-packages. After installing Git, the installer proceeds to update/install
-Pandoc and a working TeX distribution; if not working TeX distribution if found
-then an up-to-date TinyTeX install is executed.
+The installer uses ``Homebrew`` to install or update Git to its latest stable
+release. If ``Homebrew`` is missing, then the installer asks permission to
+download and install ``Homebrew``. Answering ``no`` denies installation because
+``Homebrew`` is required for this ``Git`` setup. Existing ``Homebrew`` is
+updated before installing packages. After installing ``Git``, the installer
+proceeds to update/install ``Pandoc``. Finally, the installer asks to update or
+install ``TinyTeX`` with all the required packages for ``ProjTool``. If the
+user answers ``no``, then the installation is denied because ``TinyTeX`` is
+required for ``ProjTool``.
 
-Once Git, Pandoc, and a working TeX distribution are installed, the installer
-will asks the user which Python installation to use: ``conda``, ``homebrew``,
-or ``standard``.
+Once ``Git``, ``Pandoc``, and ``TinyTeX`` are installed, the installer will
+asks the user which Python installation to use: ``conda``, ``homebrew``, or
+``standard``.
 
-- **Conda:** Choose from the existing Conda environments. If Conda is missing,
-  the installer offers the latest stable Miniconda at `~/miniconda3`, verifies
-  its download, and updates Conda using its stable default channels. Conda may
-  ask you to accept its channel terms and confirm the update. Declining the
-  download returns to Python selection. An existing installation is not
-  overwritten.
-- **Homebrew:** Install or update Homebrew's stable Python formula, then choose
-  an existing virtual environment by path or create the `projtool` virtual
-  environment. If needed, the installer asks to download Homebrew first.
-- **Standard:** If the standard Python installation, from
+- **``Conda``:** Choose from the existing ``Conda`` environments. If ``Conda`` is
+  missing, the installer offers the latest stable ``Miniconda`` at
+  ``~/miniconda3``, verifies its download, and updates ``Conda`` using its
+  stable default channels. ``Conda`` may ask you to accept its channel terms
+  and confirm the update. Declining the download returns to ``Python``
+  selection. An existing installation is not overwritten.
+- **``Homebrew``:** Install or update ``Homebrew``'s stable ``Python`` formula,
+  then choose an existing virtual environment by path or create the
+  ``projtool`` virtual environment. If needed, the installer asks to download
+  ``Homebrew`` first.
+- **``Standard``:** If the standard ``Python`` installation, from
   [python.org](https://www.python.org), is missing then the user is asked if
-  they would like the installer to download and install Python's newest stable
-  version. After, the user is asked to choose its base environment or a virtual
-  environment named `projtool` for ProjTool's Python dependencies.
+  they would like the installer to download and install ``Python``'s newest
+  stable version. After, the user is asked to choose its base environment or a
+  virtual environment named ``projtool`` for ``ProjTool``'s ``Python``
+  dependencies.
 
-New virtual environments live at
-`~/.venvs/projtool`. An existing virtual environment there is reused only when
-it belongs to the selected Python installation.
+New virtual environments live at `~/.venvs/projtool`. An existing virtual
+environment there is reused only when it belongs to the selected ``Python``
+installation.
 
-Once Python is dealt with, the installer checks for Juliaup. If it is missing,
-the user is asked to download it. Answering `no` denies installation because
-Juliaup is required. A new installation uses stable Julia on the `release`
-channel; an existing installation lets you choose an installed Juliaup
-channel. Your selected channel is used to prepare the example
-Julia projects and to run ProjTool results. Choosing an existing channel does
-not change Juliaup's global default or update its Julia runtime; use `juliaup
-update <Channel>` for that.
+Once ``Python`` is dealt with, the installer checks for ``Juliaup``. If it is
+missing, the user is asked to download it. Answering `no` denies installation
+because ``Juliaup`` is required. A new installation uses stable Julia on the
+``release`` channel; an existing installation lets you choose an installed
+``Juliaup`` channel. Your selected channel is used to prepare the example
+``Julia`` projects and to run ``ProjTool`` results. Choosing an existing
+channel does not change ``Juliaup``'s global default or update its ``Julia``
+runtime; use ``juliaup update <Channel>`` for that.
 
-The installer adds the repository's `Source/Commands` directory to your user
-PATH. You can then use `projtool` from any directory. Remember to open a new
-terminal and fully restart VS Code after installation. Keep the repository at
-its installed location. `Source/Commands/projtool` is the main Bash script. It
-also contains the Python, Jupyter, and Julia forwarding functions used by
-`results.sh` and its child Bash scripts. These functions use your saved runtime
-selections during result generation. Selections and the ProjTool Jupyter kernel
-are stored in `${XDG_CONFIG_HOME:-~/.config}/projtool`.
+The installer adds the repository's ``Source/Commands`` directory to your user
+``PATH``. You can then use ``projtool`` from any directory. Remember to open a
+new terminal and fully restart VS Code after installation. Keep the repository
+at its installed location. ``Source/Commands/projtool`` is the main ``Bash``
+script. It also contains the ``Python``, ``Jupyter``, and ``Julia`` forwarding
+functions used by ``results.sh`` and its child ``Bash`` scripts. These
+functions use your saved runtime selections during result generation.
+Selections and the ``ProjTool Jupyter`` kernel are stored in
+``${XDG_CONFIG_HOME:-~/.config}/projtool``.
+
+### Mac Uninstall Details
+
+The uninstaller asks you to type ``DELETE``, then permanently deletes the
+entire ``ProjTool`` repository, including uncommitted files, and removes its
+``PATH`` entry and settings. ``Python`` installations, environments, packages,
+``Juliaup``, ``Julia`` versions, and shared ``Julia`` packages are retained to
+avoid interfering with unrelated code. ``Homebrew``, ``Conda``, ``Git``,
+``Pandoc``, and ``TinyTeX`` are also retained. Restart terminals and VS Code
+afterward.
 
 ### Windows Install Details
 

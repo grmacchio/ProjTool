@@ -1,4 +1,4 @@
-\@ifundefined {etoctocstyle}{\let \etoc@startlocaltoc \@gobble \let \etoc@settocdepth \@gobble \let \etoc@depthtag \@gobble \let \etoc@setlocaltop \@gobble }{}
+\@ifundefined {etoctocstyle}{\let \etoc@startlocaltoc \@gobble \let \etoc@settocdepth \@gobble \let \etoc@depthtag \@gobble \let \etoc@setlocaltop \@gobble \let \etoc@setlocaltopname \@gobble }{}
 \contentsline {section}{\numberline {1}<Section Title 1>}{1}{section.1}%
 \etoc@startlocaltoc {2}
 \contentsline {subsection}{\numberline {1.1}<Subsection Title 1>}{1}{subsection.1.1}%
