@@ -221,57 +221,11 @@ afterward.
 
 ### Windows Install Details
 
-The installer installs or updates
-[Git for Windows](https://git-scm.com/install/windows), because ProjTool uses
-its Bash shell to run commands:
+TBC
 
-Once Git, Pandoc, and a working TeX distribution are installed, the installer
-will asks the user which Python installation to use: ``conda``, ``homebrew``,
-or ``standard``.
+### Windows Uninstall Details
 
-- **Conda:** Choose from the existing Conda environments. If Conda is missing,
-  the installer offers the latest stable Miniconda at `~/miniconda3`
-  (`%USERPROFILE%\miniconda3` on Windows), verifies its download, and updates
-  Conda using its stable default channels. Conda may ask you to accept its
-  channel terms and confirm the update. Declining the download returns to
-  Python selection. An existing installation is never overwritten.
-- **Homebrew:** Install or update Homebrew's stable Python formula, then choose
-  an existing virtual environment by path or create the `projtool` virtual
-  environment. If needed, the installer asks to download Homebrew first.
-- **Standard:** If the standard Python installation, from
-  [python.org](https://www.python.org), is missing then the user is asked if
-  they would like the installer to download and install Python's newest stable
-  version. After, the user is asked to choose its base environment or a virtual
-  environment named `projtool` for ProjTool's Python dependencies.
-
-New virtual environments live at
-`~/.venvs/projtool` (on Windows, `%USERPROFILE%\.venvs\projtool`). An existing
-virtual environment there is reused only when it belongs to the selected Python
-installation.
-
-Once Python is dealt with, the installer checks for Juliaup. If it is missing,
-the user is asked to download it. Answering `no` denies installation because
-Juliaup is required. A new installation uses stable Julia on the `release`
-channel; an existing installation lets you choose an installed Juliaup
-channel. Your selected channel is used to prepare the example
-Julia projects and to run ProjTool results. Choosing an existing channel does
-not change Juliaup's global default or update its Julia runtime; use `juliaup
-update <Channel>` for that.
-
-The installer adds the repository's `Source/Commands` directory to your user PATH. You can then
-use `projtool` from any directory; on Windows, PowerShell, Command Prompt, and
-Git Bash are supported. Remember to open a new terminal and fully restart VS
-Code after installation. Keep the repository at its installed location.
-`Source/Commands/projtool` is the main Bash script. It also contains the
-Python, Jupyter, and Julia forwarding functions used by `results.sh` and its
-child Bash scripts. These functions use your saved runtime selections during
-result generation. Windows starts the same script through `projtool.cmd` and
-`projtool.ps1`. Selections and the ProjTool Jupyter kernel are stored in
-`${XDG_CONFIG_HOME:-~/.config}/projtool` (`%USERPROFILE%\.config\projtool` on
-Windows unless `XDG_CONFIG_HOME` is set). Selected Python and Julia runtimes are
-applied when ProjTool runs results; your terminal's Python and Julia defaults
-are not switched. The selected Git, Pandoc, and TeX directories are also saved
-there so ProjTool can find them in a new terminal.
+TBC
 
 ## The Extras 
 
