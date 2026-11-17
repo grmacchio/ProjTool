@@ -778,6 +778,7 @@ write_markdown_build_file() {
         write_markdown_math_commands || die "could not load template math commands"
         printf '\\newcommand{\\genDATE}{%s}\n' "$(date '+%Y/%m/%d')"
         printf '%s\n' \
+            '\newcommand{\noindent}{{}}' \
             "$front_command" \
             "$part_command" \
             "$subpart_command" \
