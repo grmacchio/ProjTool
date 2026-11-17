@@ -271,6 +271,11 @@ there so ProjTool can find them in a new terminal.
 
 ## The Extras 
 
+### Artificial Intelligence Statement
+
+The artificial-intelligence tools provided by OpenAI were used and all
+pertinent chats can be accessed upon request.
+
 ### Working With a Git Superproject
 
 Run these commands from the git superproject repository. The following command
