@@ -16,8 +16,8 @@ class MarkdownTests(unittest.TestCase):
         self.addCleanup(temporary.cleanup)
         self.project = Path(temporary.name)
 
-    def render(self, body, template="note"):
-        source = self.project / "document.tex"
+    def render(self, body, template="note", stem="document"):
+        source = self.project / (stem + ".tex")
         source.write_text(
             "\\documentclass[" + template + "]{template}\n"
             "\\begin{document}\n" + body + "\n\\end{document}\n"
@@ -29,7 +29,15 @@ class MarkdownTests(unittest.TestCase):
             text=True, capture_output=True,
         )
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
-        return (self.project / "Output/Media/MD/document.md").read_text()
+        return (self.project / "Output/Media/MD" / (stem + ".md")).read_text()
+
+    def test_normalized_project_name_is_used_with_multiple_tex_sources(self):
+        self.project = self.project / "123StudyNoteHERE123"
+        self.project.mkdir()
+        (self.project / "section.tex").write_text("included source")
+        markdown = self.render("Normalized document.", stem="123_study_note_here_123")
+        self.assertIn("Normalized document.", markdown)
+        self.assertTrue((self.project / "Output/Media/MD/123_study_note_here_123.pandoc.tex").is_file())
 
     def test_bracketed_text_after_noindent_survives_conversion(self):
         body = r"""

@@ -81,6 +81,13 @@ do the following.
 - Generate a ``LICENSE.txt`` file with an MIT license for the code, a CC BY 4.0
 license for the media, and exclusions for any third-party content.
 
+The main ``TeX`` file and copied media files use a lowercase version of the
+folder name: An underscore is inserted before a capital following a lowercase
+letter or digit, and before a digit following a letter. Consecutive capitals
+remain together. For example, ``123StudyNoteHERE123`` produces
+``123_study_note_here_123.tex`` and media files with the same base name. A
+trailing ``_template`` is removed before applying these rules.
+
 The exclusions provided in ``LICENSE.txt`` are meant to clarify that any
 third-party content included in the project is not covered by the project's MIT
 or CC BY 4.0 licenses. Regardless, it is important not to include other peoples

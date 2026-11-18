@@ -680,7 +680,7 @@ class ProjToolCommandTests(unittest.TestCase):
         self.assertIn("Run projtool update python first.", result.stderr)
         self.assertFalse(self.calls.exists())
 
-    def test_init_finds_capitalized_examples_and_preserves_layout(self):
+    def initialize_project(self, project, template="note"):
         executable = self.bin / "git"
         executable.write_text("#!/usr/bin/env bash\nexit 0\n")
         executable.chmod(0o755)
@@ -688,15 +688,19 @@ class ProjToolCommandTests(unittest.TestCase):
         executable.write_text("#!/usr/bin/env bash\nprintf '%s\\n' 'projtool.projtool-folding@0.1.0'\n")
         executable.chmod(0o755)
         environment = dict(self.environment, PATH=str(self.bin) + os.pathsep + self.environment["PATH"])
+        project.mkdir(parents=True)
+        return subprocess.run([str(self.command), "init", template], cwd=project,
+                              env=environment, input="Test Author\nhttps://example.invalid/test.git\n1.0.0\n",
+                              text=True, capture_output=True)
+
+    def test_init_finds_capitalized_examples_and_preserves_layout(self):
         for name in ("Dissertation", "Note", "Preprint", "Presentation"):
             with self.subTest(example=name):
                 project = self.directory / ("Init" + name)
-                project.mkdir()
-                result = subprocess.run([str(self.command), "init", name.lower()], cwd=project,
-                                        env=environment, input="Test Author\nhttps://example.invalid/test.git\n1.0.0\n",
-                                        text=True, capture_output=True)
+                result = self.initialize_project(project, name.lower())
                 self.assertEqual(result.returncode, 0, result.stderr)
-                self.assertTrue((project / (project.name + ".tex")).is_file())
+                stem = "init_" + name.lower()
+                self.assertTrue((project / (stem + ".tex")).is_file())
                 self.assertTrue((project / "Code/Python/code.ipynb").is_file())
                 self.assertTrue((project / "References/2001Author/2001author.bib").is_file())
                 names = {path.name for path in project.iterdir()}
@@ -704,10 +708,78 @@ class ProjToolCommandTests(unittest.TestCase):
                 self.assertNotIn("README.md", names)
                 self.assertNotIn(name.lower() + ".md", names)
                 source_pdf = configure.ROOT / "Examples" / name / "Output/Media/PDF" / (name.lower() + ".pdf")
-                copied_pdf = project / "Output/Media/PDF" / (project.name + ".pdf")
+                copied_pdf = project / "Output/Media/PDF" / (stem + ".pdf")
                 self.assertEqual(copied_pdf.is_file(), source_pdf.is_file())
                 if source_pdf.is_file():
                     self.assertEqual(copied_pdf.read_bytes(), source_pdf.read_bytes())
+
+    def test_init_normalizes_document_and_all_copied_media_names(self):
+        examples = {
+            "123StudyNoteHERE123": "123_study_note_here_123",
+            "StudyNoteHERE": "study_note_here",
+            "123": "123",
+            "3P": "3_p",
+            "Po": "po",
+            "oo": "oo",
+            "yP": "y_p",
+            "HERE": "here",
+            "P1": "p_1",
+            "p1": "p_1",
+            "A1B2C3": "a_1_b_2_c_3",
+            "ABcDEf12G3h": "abc_def_12_g_3h",
+            "123lower": "123lower",
+            "study_note_here_123": "study_note_here_123",
+            "A_B-C": "a_b-c",
+            "Project With Spaces": "project with spaces",
+            "123StudyNoteHERE123_template": "123_study_note_here_123",
+        }
+        source = configure.ROOT / "Examples/Note"
+        media = source / "Output/Media"
+        for index, (name, stem) in enumerate(examples.items()):
+            with self.subTest(project=name):
+                project = self.directory / str(index) / name
+                result = self.initialize_project(project)
+                self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+                self.assertEqual(list(project.glob("*.tex")), [project / (stem + ".tex")])
+                self.assertEqual((project / (stem + ".tex")).read_bytes(), (source / "note.tex").read_bytes())
+                expected = {}
+                for path in media.rglob("*"):
+                    if path.is_file():
+                        relative = path.relative_to(media)
+                        if path.name.startswith("note."):
+                            relative = relative.with_name(stem + path.name[len("note"):])
+                        expected[relative] = path.read_bytes()
+                copied = {path.relative_to(project / "Output/Media"): path.read_bytes()
+                          for path in (project / "Output/Media").rglob("*") if path.is_file()}
+                self.assertEqual(copied, expected)
+
+    def test_generation_selects_normalized_document_with_multiple_tex_files(self):
+        project = self.directory / "123StudyNoteHERE123"
+        result = self.initialize_project(project)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        (project / "section.tex").write_text("included source")
+        (project / (project.name + ".tex")).write_text("old source")
+        result = subprocess.run([str(self.command), "gen", "readme", "-f", str(project)],
+                                env=self.environment, text=True, capture_output=True)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        intro = (project / "README.md").read_text().splitlines()[0]
+        self.assertIn("./Output/Media/PDF/123_study_note_here_123.pdf", intro)
+        self.assertIn("./Output/Media/MD/123_study_note_here_123.md", intro)
+
+    def test_generation_preserves_existing_document_names_with_multiple_tex_files(self):
+        for name in ("LegacyProject", "LegacyProject_template"):
+            with self.subTest(project=name):
+                project = self.directory / name
+                project.mkdir()
+                (project / "LegacyProject.tex").write_text("source")
+                (project / "section.tex").write_text("included source")
+                media = project / "Output/Media/MD"
+                media.mkdir(parents=True)
+                (media / "LegacyProject.md").write_text("existing media")
+                result = subprocess.run([str(self.command), "gen", "readme", "-f", str(project)],
+                                        env=self.environment, text=True, capture_output=True)
+                self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+                self.assertIn("./Output/Media/MD/LegacyProject.md", (project / "README.md").read_text())
 
     def test_rem_output_preserves_project_sources(self):
         output = self.project / "Output/Results"

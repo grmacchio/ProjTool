@@ -39,7 +39,9 @@ Examples:
 
 Prompts for the creator name, GitHub URL, and initial version (MAJOR.MINOR.PATCH).
 Copies the selected example, including all output contents, into the current directory.
-Renames the main TeX file and example-named media files to the project name.
+Renames the main TeX file and example-named media files using the folder name,
+lowercased with underscores before capitals following lowercase letters or digits,
+and before digits following letters. Consecutive capitals stay together.
 Excludes TYPE.md, TYPE.pdf, README.md, and .DS_Store.
 Sets up multiline section folding automatically when VS Code is installed.
 Creates LICENSE.txt, initializes Git, creates the initial commit and version
@@ -547,6 +549,12 @@ update_license_years() {
     mv -f -- "$license_temp" "$license_file"
 }
 
+project_document_stem() {
+    printf '%s\n' "${1%_template}" |
+        LC_ALL=C sed -E 's/([a-z0-9])([A-Z])/\1_\2/g; s/([a-zA-Z])([0-9])/\1_\2/g' |
+        LC_ALL=C tr '[:upper:]' '[:lower:]'
+}
+
 resolve_target() {
     local target="$1"
     local candidate
@@ -561,8 +569,12 @@ resolve_target() {
     fi
 
     TARGET_NAME="$(basename -- "$TARGET_DIR")"
-    DOCUMENT_STEM="${TARGET_NAME%_template}"
+    DOCUMENT_STEM="$(project_document_stem "$TARGET_NAME")"
     DOCUMENT_FILE="$TARGET_DIR/$DOCUMENT_STEM.tex"
+    if [[ ! -f "$DOCUMENT_FILE" && -f "$TARGET_DIR/${TARGET_NAME%_template}.tex" ]]; then
+        DOCUMENT_STEM="${TARGET_NAME%_template}"
+        DOCUMENT_FILE="$TARGET_DIR/$DOCUMENT_STEM.tex"
+    fi
     if [[ ! -f "$DOCUMENT_FILE" ]]; then
         while IFS= read -r -d '' candidate; do
             document_candidates+=("$candidate")
@@ -976,7 +988,7 @@ main_init() {
     [[ -n "$source_dir" ]] || die "example not found: $example_type"
     target_dir="$(pwd)"
     target_name="$(basename -- "$target_dir")"
-    project_stem="${target_name%_template}"
+    project_stem="$(project_document_stem "$target_name")"
     require_command git
     [[ ! -e "$target_dir/.git" ]] || die "working directory is already a Git repository"
 
