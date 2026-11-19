@@ -21,7 +21,6 @@ Commands:
   gcpush              Check submodules, stage all changes, commit, and push
   gen                 Generate results, media, or a README
   rem                 Remove generated output or README files
-  update [python|julia] Choose runtimes and install or update their dependencies
 
 Run "projtool COMMAND --help" for command details.
 EOF
@@ -641,7 +640,7 @@ run_results_stage() {
         export GKSwstype="${GKSwstype:-nul}"
         export PROJTOOL_NOTEBOOK_RUNNER="$SOURCE_DIR/Commands/Jupyter/run_notebook.py"
         python() {
-            [[ -n "${PROJTOOL_PYTHON:-}" ]] || { printf '%s\n' 'Run projtool update python first.' >&2; return 1; }
+            [[ -n "${PROJTOOL_PYTHON:-}" ]] || { printf '%s\n' 'Run the ProjTool installer with the python argument first.' >&2; return 1; }
             if [[ -n "${PROJTOOL_CONDA:-}" ]]; then
                 command "$PROJTOOL_CONDA" run --no-capture-output -p "$PROJTOOL_PYTHON_PREFIX" "$PROJTOOL_PYTHON" "$@"
             else
@@ -652,7 +651,7 @@ run_results_stage() {
             python "$@"
         }
         julia() {
-            [[ -n "${PROJTOOL_JULIA:-}" ]] || { printf '%s\n' 'Run projtool update julia first.' >&2; return 1; }
+            [[ -n "${PROJTOOL_JULIA:-}" ]] || { printf '%s\n' 'Run the ProjTool installer with the julia argument first.' >&2; return 1; }
             command "$PROJTOOL_JULIA" "+$PROJTOOL_JULIA_CHANNEL" "$@"
         }
         jupyter() {
@@ -1470,19 +1469,6 @@ if [[ -f "$RUNTIME_FILE" ]]; then
 fi
 
 case "$MODE" in
-    update)
-        if [[ "${1:-}" == --help || "${1:-}" == -h ]]; then
-            printf '%s\n' 'Usage: projtool update [python|julia]' 'Update all dependencies and choose Python and Julia again, or update only the named component.'
-            exit 0
-        fi
-        [[ $# -le 1 ]] || die 'Usage: projtool update [python|julia]'
-        case "${1:-all}" in all|python|julia) ;; *) die 'Usage: projtool update [python|julia]' ;; esac
-        case "$(uname -s)" in
-            Darwin) exec bash "$SOURCE_DIR/Install/install.sh" "${1:-all}" ;;
-            MINGW*|MSYS*) exec powershell.exe -NoProfile -ExecutionPolicy Bypass -File "$(cygpath -w "$SOURCE_DIR/Install/install.ps1")" -Component "${1:-all}" ;;
-            *) die 'The installer supports macOS and Windows.' ;;
-        esac
-        ;;
     init) main_init "$@" ;;
     cpush) main_cpush "$@" ;;
     gpull) main_gpull "$@" ;;

@@ -188,7 +188,7 @@ try {
         $SavedPython = Join-Path $Config 'python-executable'
         if (Test-Path -LiteralPath $SavedPython) { $Python = (Get-Content -LiteralPath $SavedPython -Raw).Trim() }
         if (-not $Python -or -not (Test-Path -LiteralPath $Python)) { $Python = Get-StandardPython }
-        if (-not $Python) { throw 'Run projtool update python first to configure Python.' }
+        if (-not $Python) { throw "Run the ProjTool installer with the python argument first to configure Python. This is required because ProjTool's general-configuration logic uses Python." }
     }
     $Bash = Get-GitBash
     if (-not $Bash -or $Component -eq 'all') { $Bash = Install-GitBash $Bash }

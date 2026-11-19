@@ -677,7 +677,7 @@ class ProjToolCommandTests(unittest.TestCase):
         self.variables["PROJTOOL_PYTHON"] = ""
         result = self.run_results("python3 --version\n")
         self.assertEqual(result.returncode, 1)
-        self.assertIn("Run projtool update python first.", result.stderr)
+        self.assertIn("Run the ProjTool installer with the python argument first.", result.stderr)
         self.assertFalse(self.calls.exists())
 
     def initialize_project(self, project, template="note"):

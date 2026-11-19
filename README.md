@@ -35,13 +35,20 @@ following and respond to the prompts as they appear.
 
 ### Updating
 
-After installing ProjTool, you can update its configuration using the following
-commands.
+After installing ProjTool, you can update its configuration by running the
+OS-specific installer again. You can also update only ``Python`` or ``Julia``
+individually. See the commands below for syntax.
 
 ```sh
-projtool update
-projtool update python
-projtool update julia
+bash Source/Install/install.sh
+bash Source/Install/install.sh python
+bash Source/Install/install.sh julia
+```
+
+```powershell
+.\Source\Install\install.cmd
+.\Source\Install\install.cmd python
+.\Source\Install\install.cmd julia
 ```
 
 ### Uninstalling
@@ -236,7 +243,7 @@ TBC
 
 ## The Extras 
 
-### Artificial Intelligence Statement
+### Artificial-Intelligence Statement
 
 The artificial-intelligence tools provided by OpenAI were used and all
 pertinent chats can be accessed upon request.

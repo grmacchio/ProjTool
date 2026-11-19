@@ -200,5 +200,5 @@ fi
 
 if [[ -f "$CONFIG/python-executable" ]]; then IFS= read -r PYTHON < "$CONFIG/python-executable"; fi
 if [[ ! -x "$PYTHON" ]]; then find_standard || PYTHON=/usr/bin/python3; fi
-[[ -x "$PYTHON" ]] || { printf '%s\n' 'Run projtool update python first to configure Python.' >&2; exit 1; }
+[[ -x "$PYTHON" ]] || { printf '%s\n' "Run the ProjTool installer with the python argument first to configure Python. This is required because ProjTool's general-configuration logic uses Python." >&2; exit 1; }
 exec "$PYTHON" "$ROOT/Source/Install/Configure/configure.py" --component julia
